@@ -1,0 +1,25 @@
+" Tab stuff
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+set autoindent
+filetype plugin indent on
+
+"Things
+set number
+set hlsearch
+set noerrorbells
+set showmatch
+set cursorline
+set wildmenu
+
+" Mouse
+set mouse=a
+set ttymouse=xterm2 " allows window resizing in tmux
+
+" Backspace
+set backspace=indent,eol,start
+
+syntax on
+colorscheme custom-base16-dark
