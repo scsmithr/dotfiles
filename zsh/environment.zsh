@@ -1,5 +1,9 @@
 export PATH=$PATH:$HOME/.bin/
 
+# Set default go workspace
+export GOPATH=$HOME/.go
+export PATH=$PATH:$HOME/.go/bin
+
 if [[ "$os" = "$linux_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/.cabal/bin

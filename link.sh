@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 # Symlink files to where they're expected to be found
 
 DIR="$(pwd)"
