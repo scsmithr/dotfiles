@@ -1,0 +1,2 @@
+CONFIG_LOCATION="$HOME/.config/zsh-config"
+source "$CONFIG_LOCATION/source-all.zsh"
