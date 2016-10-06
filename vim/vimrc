@@ -12,7 +12,10 @@ set hlsearch
 set noerrorbells
 set showmatch
 set cursorline
+
+" Wild menu/ completion
 set wildmenu
+set wildmode=longest:full,full
 
 " Mouse
 set mouse=a
