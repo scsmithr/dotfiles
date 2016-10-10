@@ -8,10 +8,11 @@ if [[ "$os" = "$linux_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/.cabal/bin
     export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
-
+    
 elif [[ "$os" = "$osx_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/Library/Haskell/bin
+    export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
     # Go
     export PATH=$PATH:/usr/local/go/bin
 
