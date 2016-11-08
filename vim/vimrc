@@ -1,10 +1,27 @@
+set nocompatible
+filetype off
+
+" Vundle
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+" Rust
+Plugin 'rust-lang/rust.vim'
+" Go
+Plugin 'fatih/vim-go'
+
+call vundle#end()
+filetype plugin indent on
+
 " Tab stuff
 set tabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
 set autoindent
-filetype plugin indent on
 
 "Things
 set number
@@ -26,3 +43,6 @@ set backspace=indent,eol,start
 
 syntax on
 colorscheme custom-base16-dark
+
+" vim-go settings
+let g:go_fmt_command = "goimports"
