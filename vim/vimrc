@@ -12,6 +12,8 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'rust-lang/rust.vim'
 " Go
 Plugin 'fatih/vim-go'
+" Git
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 filetype plugin indent on
