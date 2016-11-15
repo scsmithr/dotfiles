@@ -50,6 +50,8 @@ colorscheme custom-base16-dark
 
 " vim-go settings
 let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
 
 " Shortcuts
 " Ctrl-space to autocomplete
