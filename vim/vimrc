@@ -52,4 +52,5 @@ colorscheme custom-base16-dark
 let g:go_fmt_command = "goimports"
 
 " Shortcuts
-inoremap <C-@> <C-x><C-o> " Ctrl space to autocomplete
+" Ctrl-space to autocomplete
+inoremap <C-@> <C-x><C-o>
