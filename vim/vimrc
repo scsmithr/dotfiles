@@ -35,6 +35,7 @@ set cursorline
 " Wild menu/ completion
 set wildmenu
 set wildmode=longest:full,full
+set omnifunc=syntaxcomplete#Complete
 
 " Mouse
 set mouse=a
@@ -48,3 +49,6 @@ colorscheme custom-base16-dark
 
 " vim-go settings
 let g:go_fmt_command = "goimports"
+
+" Shortcuts
+inoremap <C-@> <C-x><C-o> " Ctrl space to autocomplete
