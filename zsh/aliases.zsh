@@ -21,3 +21,7 @@ alias man=run_man
 alias tarx='tar -xvf'
 alias targz='tar -zxvf'
 alias tarbz2= 'tar -jxvf'
+
+# Aliases for stack managed executables
+alias sghc='stack ghc'
+alias srunghc='stack runghc'
