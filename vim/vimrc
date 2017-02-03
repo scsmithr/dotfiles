@@ -34,6 +34,7 @@ set hlsearch
 set noerrorbells
 set showmatch
 set cursorline
+set showcmd
 
 " Wild menu/ completion
 set wildmenu
@@ -58,3 +59,7 @@ let g:go_highlight_methods = 1
 " Shortcuts
 " Ctrl-space to autocomplete
 inoremap <C-@> <C-x><C-o>
+
+" Toggle nerdtree with Ctrl-n
+nnoremap <C-n> :NERDTreeToggle<CR>
+
