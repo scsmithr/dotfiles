@@ -56,6 +56,10 @@ let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 
+" NERDTree settings
+" Expand dir, open files with single click
+let NERDTreeMouseMode = 3
+
 " Shortcuts
 " Ctrl-space to autocomplete
 inoremap <C-@> <C-x><C-o>
