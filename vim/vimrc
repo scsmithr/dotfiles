@@ -48,6 +48,9 @@ set ttymouse=xterm2 " allows window resizing in tmux
 " Backspace
 set backspace=indent,eol,start
 
+" Location for swap files
+set directory^=$HOME/.vim/tmp//
+
 syntax on
 colorscheme custom-base16-dark
 

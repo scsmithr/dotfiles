@@ -12,6 +12,7 @@ mkdir -p ~/.vim/colors
 ln -sv $DIR/vim/custom-base16-dark.vim ~/.vim/colors
 mkdir -p ~/.vim/syntax
 ln -sv $DIR/vim/syntax/haskell.vim ~/.vim/syntax
+mkdir -p ~/.vim/tmp # Location for swap files
 
 # zsh
 ZSH_CONF_DIR=~/.config/zsh-config
