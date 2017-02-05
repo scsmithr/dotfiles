@@ -20,6 +20,7 @@ Plugin 'scrooloose/nerdtree'
 
 call vundle#end()
 filetype plugin indent on
+set encoding=utf-8
 
 " Tab stuff
 set tabstop=4
@@ -62,6 +63,8 @@ let g:go_highlight_methods = 1
 " NERDTree settings
 " Expand dir, open files with single click
 let NERDTreeMouseMode = 3
+let NERDTreeShowHidden = 1
+let NERDTreeMinimalUI = 1
 
 " Shortcuts
 " Ctrl-space to autocomplete
