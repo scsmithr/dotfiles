@@ -25,6 +25,7 @@ HISTFILE=$HOME/.history
 SAVEHIST=1
 HISTSIZE=100
 setopt histverify
+setopt inc_append_history
 
 # Aliases
 source "$CONFIG_LOCATION/aliases.zsh"
