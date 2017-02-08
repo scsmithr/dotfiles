@@ -55,6 +55,18 @@ set directory^=$HOME/.vim/tmp//
 syntax on
 colorscheme custom-base16-dark
 
+" status line colors
+hi User1 ctermbg=blue ctermfg=black
+
+" Always show statusline
+set laststatus=2
+
+set statusline=
+set statusline +=%1*\ %n\ %*            " buffer num
+set statusline +=\ %f\ %m\ %r\ %*       " file name, modified, readonly
+set statusline +=%=                     " left/ right separator
+set statusline +=%1*\ %c\ %L\ %*        " cursor column, total lines
+
 " vim-go settings
 let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
