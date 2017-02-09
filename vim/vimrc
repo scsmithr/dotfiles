@@ -61,18 +61,17 @@ syntax on
 colorscheme custom-base16-dark
 
 " status line colors
-hi User1 ctermfg=green ctermbg=08
-hi User2 ctermfg=cyan ctermbg=08
+hi User1 ctermfg=00 ctermbg=02
+hi User2 ctermfg=00 ctermbg=15
 
 " Always show statusline
 set laststatus=2
 
 set statusline=
 set statusline +=%1*\ %n\ %*            " buffer num
-set statusline +=\%f\ %m\ %r\ %*       " file name, modified, readonly
+set statusline +=\ %f\ %m\ %r\ %*       " file name, modified, readonly
 set statusline +=%=                     " left/ right separator
-set statusline +=%2*\ %c\ %*            " cursor column
-set statusline +=\%L\ %*               " total lines
+set statusline +=%2*\ %c\ :\ %l/%L\ %*  " cursor column, current line, total
 
 " vim-go settings
 let g:go_fmt_command = "goimports"
@@ -87,6 +86,7 @@ let NERDTreeMinimalUI = 1
 
 " buftabline settings
 let g:buftabline_numbers = 1 " show buffer numbers
+let g:buftabline_show = 1 " Only show when there are multiple buffers
 
 " Shortcuts
 " Ctrl-space to autocomplete
