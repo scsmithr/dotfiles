@@ -19,6 +19,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 " Easy commenting
 Plugin 'tpope/vim-commentary'
+" Show buffers
+Plugin 'ap/vim-buftabline'
 
 call vundle#end()
 filetype plugin indent on
@@ -82,6 +84,9 @@ let g:go_highlight_methods = 1
 let NERDTreeMouseMode = 3
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
+
+" buftabline settings
+let g:buftabline_numbers = 1 " show buffer numbers
 
 " Shortcuts
 " Ctrl-space to autocomplete
