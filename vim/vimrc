@@ -36,6 +36,7 @@ set autoindent
 "Things
 set number
 set hlsearch
+set incsearch
 set noerrorbells
 set showmatch
 set cursorline
@@ -56,6 +57,9 @@ set backspace=indent,eol,start
 
 " Location for swap files
 set directory^=$HOME/.vim/tmp//
+
+" Switch buffers without having to save
+set hidden
 
 syntax on
 colorscheme custom-base16-dark
@@ -89,9 +93,19 @@ let g:buftabline_numbers = 1 " show buffer numbers
 let g:buftabline_show = 1 " Only show when there are multiple buffers
 
 " Shortcuts
+
+" Remap leader to ,
+let mapleader = ","
+
 " Ctrl-space to autocomplete
 inoremap <C-@> <C-x><C-o>
 
-" Toggle nerdtree with Ctrl-n
-nnoremap <C-n> :NERDTreeToggle<CR>
+" Toggle nerdtree with leader-n
+map <leader>n :NERDTreeToggle<CR>
 
+" Cycle betwen buffers using leader-a and leader-s
+map <leader>a :bp<CR>
+map <leader>s :bn<CR>
+
+" Delete current buffer with leader-bd
+map <leader>bd :bd<CR>
