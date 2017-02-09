@@ -36,6 +36,7 @@ set noerrorbells
 set showmatch
 set cursorline
 set showcmd
+set lazyredraw
 
 " Wild menu/ completion
 set wildmenu
