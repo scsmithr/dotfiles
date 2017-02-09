@@ -17,6 +17,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 " Nerdtree, file tree
 Plugin 'scrooloose/nerdtree'
+" Easy commenting
+Plugin 'tpope/vim-commentary'
 
 call vundle#end()
 filetype plugin indent on
