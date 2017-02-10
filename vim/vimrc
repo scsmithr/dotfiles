@@ -75,6 +75,7 @@ set statusline=
 set statusline +=%1*\ %n\ %*            " buffer num
 set statusline +=\ %f\ %m\ %r\ %*       " file name, modified, readonly
 set statusline +=%=                     " left/ right separator
+set statusline +=\ %y\ %*               " filetype
 set statusline +=%2*\ %c\ :\ %l/%L\ %*  " cursor column, current line, total
 
 " vim-go settings
