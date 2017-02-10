@@ -97,6 +97,12 @@ let g:buftabline_show = 1 " Only show when there are multiple buffers
 " Remap leader to ,
 let mapleader = ","
 
+" Move to windows with Ctrl-key
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
 " Ctrl-space to autocomplete
 inoremap <C-@> <C-x><C-o>
 
@@ -109,3 +115,7 @@ map <leader>s :bn<CR>
 
 " Delete current buffer with leader-bd
 map <leader>bd :bd<CR>
+
+" Clear search hl with leader-c
+map <leader>c :nohlsearch<CR>
+
