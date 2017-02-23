@@ -19,8 +19,6 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 " Easy commenting
 Plugin 'tpope/vim-commentary'
-" Show buffers
-Plugin 'ap/vim-buftabline'
 
 call vundle#end()
 filetype plugin indent on
@@ -64,19 +62,13 @@ set hidden
 syntax on
 colorscheme custom-base16-dark
 
-" status line colors
-hi User1 ctermfg=00 ctermbg=02
-hi User2 ctermfg=00 ctermbg=15
-
 " Always show statusline
 set laststatus=2
 
 set statusline=
-set statusline +=%1*\ %n\ %*            " buffer num
-set statusline +=\ %f\ %m\ %r\ %*       " file name, modified, readonly
-set statusline +=%=                     " left/ right separator
-set statusline +=\ %y\ %*               " filetype
-set statusline +=%2*\ %c\ :\ %l/%L\ %*  " cursor column, current line, total
+set statusline +=%f\ %m\ %r\ %*     " file name, modified, readonly
+set statusline +=%=                 " left/ right separator
+set statusline +=%c\ :\ %l/%L%*     " cursor column, current line, total
 
 " vim-go settings
 let g:go_fmt_command = "goimports"
@@ -91,10 +83,6 @@ let g:rustfmt_autosave = 1
 let NERDTreeMouseMode = 3
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
-
-" buftabline settings
-let g:buftabline_numbers = 1 " show buffer numbers
-let g:buftabline_show = 1 " Only show when there are multiple buffers
 
 " Shortcuts
 
