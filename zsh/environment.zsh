@@ -4,6 +4,9 @@ export PATH=$PATH:$HOME/.bin/
 export GOPATH=$HOME/.go
 export PATH=$PATH:$HOME/.go/bin
 
+# Cargo bins
+export PATH=$PATH:$HOME/.cargo/bin
+
 if [[ "$os" = "$linux_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/.cabal/bin
