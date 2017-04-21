@@ -17,5 +17,5 @@ mkdir -p ~/.vim/tmp # Location for swap files
 # zsh
 ZSH_CONF_DIR=~/.config/zsh-config
 mkdir -p $ZSH_CONF_DIR
-ln -sv $DIR/zsh/*.zsh $ZSH_CONF_DIR
+ln -sv $DIR/zsh/* $ZSH_CONF_DIR
 ln -sv $DIR/zsh/zshrc ~/.zshrc

@@ -36,3 +36,6 @@ source "$CONFIG_LOCATION/environment.zsh"
 # Functions
 source "$CONFIG_LOCATION/functions.zsh"
 
+# Language specific functions
+source "$CONFIG_LOCATION/langs/go.zsh"
+
