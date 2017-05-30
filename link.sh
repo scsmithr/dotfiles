@@ -14,6 +14,12 @@ mkdir -p ~/.vim/syntax
 ln -sv $DIR/vim/syntax/haskell.vim ~/.vim/syntax
 mkdir -p ~/.vim/tmp # Location for swap files
 
+# neovim
+mkdir -p ~/.config/nvim
+mkdir -p ~/.config/nvim/colors
+ln -sv $DIR/nvim/init.vim ~/.config/nvim
+ln -sv $DIR/nvim/base16-two.vim ~/.config/nvim/colors
+
 # zsh
 ZSH_CONF_DIR=~/.config/zsh-config
 mkdir -p $ZSH_CONF_DIR
