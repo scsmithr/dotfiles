@@ -1,5 +1,12 @@
 " Neovim configuration
 
+" Plugins (vim-plug)
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+call plug#end()
+
 " Tabs
 set tabstop=4
 set shiftwidth=4
@@ -36,6 +43,14 @@ set statusline +=%c\ :\ %l/%L%*     " cursor column, current line, total
 set termguicolors
 colorscheme base16-two
 
+" Plugin settings
+
+" NERDTree settings
+" Expand dir, open files with single click
+let NERDTreeMouseMode = 3
+let NERDTreeShowHidden = 1
+let NERDTreeMinimalUI = 1
+
 " Shortcuts
 
 " Leader
@@ -47,3 +62,6 @@ map <leader>s :bn<CR>
 
 " Clear search highlight with leader-c
 map <leader>c :nohlsearch<CR>
+
+" Toggle nerdtree with leader-n
+map <leader>n :NERDTreeToggle<CR>
