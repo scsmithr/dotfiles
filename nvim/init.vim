@@ -27,6 +27,11 @@ set hidden " switch between buffers without saving
 " Status line
 set laststatus=2
 
+set statusline=
+set statusline +=%f\ %m\ %r\ %*     " file name, modified, readonly
+set statusline +=%=                 " left/ right separator
+set statusline +=%c\ :\ %l/%L%*     " cursor column, current line, total
+
 " Syntax
 set termguicolors
 colorscheme base16-two
