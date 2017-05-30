@@ -12,6 +12,11 @@ elif [[ "$os" = "$osx_str" ]]; then
     alias usshfs='umount $HOME/Remote'
 fi
 
+# If neovim is installed, alias it to vim
+if hash nvim 2>/dev/null; then
+    alias vim=nvim
+fi
+
 alias tm=trash
 
 # man aliases
