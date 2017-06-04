@@ -59,15 +59,6 @@ refresh() {
     source "$CONFIG_LOCATION/source-all.zsh"
 }
 
-# Set the title of the window to a string
-title() {
-    if [[ "$#" -eq 0 ]]; then
-        print -Pn "\e]2;Terminal\a"
-    else
-        print -Pn "\e]2;$*\a"
-    fi
-}
-
 # Create a directory and cd into it
 mkcd() {
     if [[ "$#" -eq 0 ]]; then
