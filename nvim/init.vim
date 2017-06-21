@@ -4,6 +4,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'fatih/vim-go'
 
 call plug#end()
 
@@ -31,6 +32,9 @@ set guicursor= " Always use block cursor
 " Buffers
 set hidden " switch between buffers without saving
 
+" Full height vertical separator
+set fillchars+=vert:│
+
 " Status line
 set laststatus=2
 
@@ -50,6 +54,11 @@ colorscheme base16-two
 let NERDTreeMouseMode = 3
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
+
+" vim-go settings
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
 
 " Shortcuts
 
