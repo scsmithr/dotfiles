@@ -42,9 +42,15 @@ set fillchars+=vert:│
 set laststatus=2
 
 set statusline=
-set statusline +=%f\ %m\ %r\ %*     " file name, modified, readonly
-set statusline +=%=                 " left/ right separator
-set statusline +=%c\ :\ %l/%L%*     " cursor column, current line, total
+set statusline +=\[%n]  " buffer number
+set statusline +=\ %f     " file name
+set statusline +=\ %m   " modified
+set statusline +=\ %r   " readonly
+set statusline +=\ %*
+set statusline +=%=     " left/ right separator
+set statusline +=%c     " cursor column
+set statusline +=\ :
+set statusline +=\ %l/%L%* " current line, total
 
 " Syntax
 set termguicolors
