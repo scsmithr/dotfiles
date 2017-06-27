@@ -18,6 +18,9 @@ set autoindent
 " Show line numbers
 set number
 
+" Always keep 3 lines visible
+set scrolloff=3
+
 " Mouse
 set mouse=a
 
@@ -74,3 +77,10 @@ map <leader>c :nohlsearch<CR>
 
 " Toggle nerdtree with leader-n
 map <leader>n :NERDTreeToggle<CR>
+
+" Move to windows with Ctrl-key
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
