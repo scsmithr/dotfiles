@@ -11,6 +11,8 @@ if [[ "$os" = "$linux_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/.cabal/bin
     export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
+
+    export XKB_DEFAULT_OPTIONS=ctrl:nocaps
     
 elif [[ "$os" = "$osx_str" ]]; then
     #PATH
