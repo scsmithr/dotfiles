@@ -5,6 +5,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'fatih/vim-go'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
