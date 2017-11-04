@@ -24,6 +24,14 @@ if [[ "$os" = "$linux_str" ]]; then
         *)      /usr/bin/pacman "$@" ;;
         esac
     }
+
+    set_brightness() {
+        if [ "$#" -ne 1 ]; then
+            print "Invalid number of arguments"
+        else
+            ddcutil setvcp 10 $1
+        fi
+    }
 fi
 
 # Start ssh daemon
