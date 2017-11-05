@@ -11,6 +11,9 @@ if [[ "$os" = "$linux_str" ]]; then
     
     # set monitor brighness
     alias sb=set_brightness
+    alias sbr=set_brightness_rel
+    # get current brightness
+    alias gb=get_brightness
 elif [[ "$os" = "$osx_str" ]]; then
     alias ls='ls -G'
     # ssh aliases
