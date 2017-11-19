@@ -2,10 +2,18 @@
 if [[ "$os" = "$linux_str" ]]; then
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
+
     # Pacman aliases
     alias pacman=run_pacman
+
     # ssh aliases
     alias usshfs='fusermount -u $HOME/Remote'
+    
+    # set monitor brighness
+    alias sb=set_brightness
+    alias sbr=set_brightness_rel
+    # get current brightness
+    alias gb=get_brightness
 elif [[ "$os" = "$osx_str" ]]; then
     alias ls='ls -G'
     # ssh aliases

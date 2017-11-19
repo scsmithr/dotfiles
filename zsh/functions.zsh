@@ -24,6 +24,38 @@ if [[ "$os" = "$linux_str" ]]; then
         *)      /usr/bin/pacman "$@" ;;
         esac
     }
+
+    # Gets current brightness
+    get_brightness() {
+        outstr=$(ddcutil getvcp 10)
+        nums=$(echo -e $outstr | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ')
+        echo $nums | cut -d " " -f 3
+    }
+    
+    # Set brightness to given value
+    set_brightness() {
+        if [ "$#" -eq 1 ]; then
+            ddcutil setvcp 10 $1
+        else
+            print "Invalid number of arguments"
+        fi
+    }
+
+    # Set brightness relative to current value
+    set_brightness_rel() {
+        if [ "$#" -eq 1 ]; then
+            curr=$(get_brightness)
+            if [ "${1:0:1}" = "+" ]; then
+                set_brightness $(( curr + ${1:1} ))
+            elif [ "${1:0:1}" = "-" ]; then
+                set_brightness $(( curr - ${1:1} ))
+            else
+                print "Invalid argument"
+            fi
+        else 
+           print "Invalid number of arguments" 
+        fi  
+    }
 fi
 
 # Start ssh daemon
