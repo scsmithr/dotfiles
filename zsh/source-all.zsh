@@ -8,6 +8,13 @@ compinit
 promptinit
 colors
 
+# Version control
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+precmd() {
+    vcs_info
+}
+
 # Prompt
 source "$CONFIG_LOCATION/prompt.zsh"
 
