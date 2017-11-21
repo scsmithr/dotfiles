@@ -9,12 +9,14 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     MACHINE="%{$fg[cyan]%}%n@%m%{$reset_color%}:"
 fi
 
-CURR_DIR="%{$fg[blue]%}%~%{$reset_color%}"
+CURR_DIR="%{$fg[blue]%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%}"
 # Single quotes to delay eval
 VCS='${vcs_info_msg_0_}'
 
+TRUNC_WIDTH='${COLUMNS}'
+
 PROMPT="
-$MACHINE$CURR_DIR $VCS
+%${TRUNC_WIDTH}>...>$MACHINE$CURR_DIR $VCS%>>
 %{$fg[magenta]%}>%{$reset_color%} "
 
 RPROMPT=""
