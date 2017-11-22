@@ -104,15 +104,3 @@ mkcd() {
     fi
 }
 
-# move files/ directories to trash
-trash() {
-    if [[ "$#" -eq 0 ]]; then
-        print "No arguments"
-    else
-        if [ "$os" = "$linux_str" ]; then
-            mv "$@" "$HOME/.local/share/Trash/files/."
-        elif [ "$os" = "$osx_str" ]; then
-            mv "$@" "$HOME/.Trash/."
-        fi
-    fi
-}

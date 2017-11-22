@@ -22,7 +22,11 @@ fi
 
 alias nv=nvim
 
-alias tm=trash
+# Protect me from myself
+alias rm='echo "No."; false'
+
+# trash-cli
+alias tm=trash-put
 
 # man aliases
 alias man=run_man
