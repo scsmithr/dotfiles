@@ -54,8 +54,8 @@ set statusline +=\ :
 set statusline +=\ %l/%L%* " current line, total
 
 " Syntax
-set termguicolors
-colorscheme base16-two
+"set termguicolors
+"colorscheme base16-two
 
 " Plugin settings
 
