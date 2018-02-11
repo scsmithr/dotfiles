@@ -1,0 +1,7 @@
+xsetroot -cursor_name left_ptr
+hsetroot -solid "#282c34"
+compton -CGb -o 0 --no-fading-openclose -d :0
+xrdb ~/.Xresources
+xmodmap ~/.xmodmap
+
+exec xmonad

@@ -25,3 +25,20 @@ ZSH_CONF_DIR=~/.config/zsh-config
 mkdir -p $ZSH_CONF_DIR
 ln -sv $DIR/zsh/* $ZSH_CONF_DIR
 ln -sv $DIR/zsh/zshrc ~/.zshrc
+
+# xmonad
+mkdir -p ~/.xmonad
+ln -sv $DIR/xmonad/xmonad.hs ~/.xmonad
+
+# xmobar
+ln -sv $DIR/xmobar/xmobarrc ~/.xmobarrc
+
+# various x stuff
+ln -sv $DIR/x/xinitrc ~/.xinitrc
+ln -sv $DIR/x/xmodmap ~/.xmodmap
+ln -sv $DIR/x/Xresources ~/.Xresources
+
+# gtk
+mkdir -p ~/.config/gtk-3.0
+ln -sv $DIR/gtk/settings.ini ~/.config/gtk-3.0
+ln -sv $DIR/gtk/gtkrc-2.0 ~/.gtkrc-2.0

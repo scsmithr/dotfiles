@@ -1,0 +1,14 @@
+Config {
+    font = "xft:Source Code Pro:size=14:antialias=true",
+    bgColor = "#282c32",
+    fgColor = "#abb2bf",
+    position = Top,
+
+    commands = [
+        Run Date "%a %b %d,%l:%M %P" "date" 10,
+        Run StdinReader
+    ],
+    sepChar = "%",
+    alignSep = "}{",
+    template = "%StdinReader% }{ %date% "
+}

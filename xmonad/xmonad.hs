@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.StackSet
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -6,7 +7,13 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.MultiColumns
+import XMonad.Layout.Hidden
 
+import XMonad.Actions.DynamicWorkspaces
+import XMonad.Actions.CopyWindow(copy)
+import XMonad.Prompt
+
+import XMonad.Util.EZConfig
 
 import Data.List
 
@@ -19,26 +26,33 @@ layoutBg = bg
 selFg = bg
 selBg = "#61afef"
 
+dmenuCmd = "dmenu_run -fn \"Source Code Pro-15\"\
+    \ -nb \"" ++ bg ++ "\"\
+    \ -nf \"" ++ fg ++ "\"\ 
+    \ -sb \"" ++ selBg ++ "\"\
+    \ -sf \"" ++ selFg ++ "\"\
+    \ -p \">\""
+
 layoutIcon :: String -> String
 layoutIcon l
     | isInfixOf "Tall" l = "|="
     | isInfixOf "Full" l = "[]"
-    | isInfixOf "Three" l = "|||"
+    | isInfixOf "MultiCol" l = "|||"
     | otherwise = l
 
 myPP = xmobarPP {
     ppCurrent = xmobarColor selFg selBg . pad,
     ppHidden = xmobarColor fg bg . pad,
     ppVisible = xmobarColor fg bg . pad,
-    ppLayout = layoutIcon . xmobarColor layoutFg layoutBg,
+    ppLayout = xmobarColor layoutFg layoutBg . layoutIcon,
     ppTitle = (\s -> ""),
     ppSep = " "
 }
 
-myLayoutHook = smartBorders (tiled ||| Full ||| multiTile)
+myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| multiTile)
     where
         tiled = Tall nmaster delta ratio
-        multiTile = multiCol [1,1,1,1,1,0] 1 delta (-0.5)
+        multiTile = multiCol [1,1,0] 1 delta (-0.5)
         nmaster = 1
         ratio = 1/2
         delta = 3/100
@@ -46,8 +60,29 @@ myLayoutHook = smartBorders (tiled ||| Full ||| multiTile)
 
 toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
 
-main = do
-    xmonad =<< statusBar "xmobar" myPP toggleStruts defaultConfig {
+xConf = XPC { font          = "xft:Source Code Pro-15"
+        , bgColor           = bg
+        , fgColor           = fg
+        , fgHLight          = selFg
+        , bgHLight          = selBg
+        , borderColor       = bg
+        , promptBorderWidth = 1
+        , promptKeymap      = defaultXPKeymap
+        , completionKey     = (0,xK_Tab)
+        , changeModeKey     = xK_grave
+        , position          = Top
+        , height            = 30
+        , maxComplRows      = Nothing
+        , historySize       = 256
+        , historyFilter     = id
+        , defaultText       = []
+        , autoComplete      = Nothing
+        , showCompletionOnTab = False
+        , searchPredicate   = isPrefixOf
+        , alwaysHighlight   = False
+        }
+
+conf = defaultConfig {
         logHook = dynamicLogWithPP myPP,
         layoutHook = myLayoutHook,
 
@@ -57,4 +92,16 @@ main = do
         borderWidth = 2,
         normalBorderColor = bg,
         focusedBorderColor = border
-    }
+    } `additionalKeysP` 
+    [
+        ("M-p", spawn dmenuCmd),
+        ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\""),
+        ("M-b", spawn "firefox"),
+        ("M-t", selectWorkspace xConf),
+        ("M-S-t", renameWorkspace xConf),
+        ("M-m", withWorkspace xConf (windows . shift)),
+        ("M-S-d", removeEmptyWorkspace)
+    ]
+
+main = do 
+    xmonad =<< statusBar "xmobar" myPP toggleStruts conf 
