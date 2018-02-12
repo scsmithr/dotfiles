@@ -4,4 +4,7 @@ compton -CGb -o 0 --no-fading-openclose -d :0
 xrdb ~/.Xresources
 xmodmap ~/.xmodmap
 
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
 exec xmonad
