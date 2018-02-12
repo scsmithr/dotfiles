@@ -27,6 +27,9 @@ zstyle ':completion:*:*:*:*:users' list-colors '=*=$color[green]=$color[red]'
 zstyle ':completion:*' menu select
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
 # Control key fix
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
