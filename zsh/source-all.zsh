@@ -27,10 +27,14 @@ zstyle ':completion:*:*:*:*:users' list-colors '=*=$color[green]=$color[red]'
 zstyle ':completion:*' menu select
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
+# Control key fix
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 # History
 HISTFILE=$HOME/.history
-SAVEHIST=1
-HISTSIZE=100
+SAVEHIST=1000
+HISTSIZE=1000
 setopt histverify
 setopt inc_append_history
 
