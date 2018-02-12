@@ -11,6 +11,7 @@ import XMonad.Layout.Hidden
 
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.CopyWindow(copy)
+import XMonad.Actions.CycleWS
 import XMonad.Prompt
 
 import XMonad.Util.EZConfig
@@ -100,7 +101,9 @@ conf = defaultConfig {
         ("M-t", selectWorkspace xConf),
         ("M-S-t", renameWorkspace xConf),
         ("M-m", withWorkspace xConf (windows . shift)),
-        ("M-S-d", removeEmptyWorkspace)
+        ("M-S-d", removeEmptyWorkspace),
+        ("M-]", moveTo Next NonEmptyWS),
+        ("M-[", moveTo Prev NonEmptyWS)
     ]
 
 main = do 
