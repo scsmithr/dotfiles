@@ -26,6 +26,8 @@ layoutFg = "#c678dd"
 layoutBg = bg
 selFg = bg
 selBg = "#61afef"
+visFg = selBg
+visBg = bg
 
 dmenuCmd = "dmenu_run -fn \"Source Code Pro-15\"\
     \ -nb \"" ++ bg ++ "\"\
@@ -44,7 +46,7 @@ layoutIcon l
 myPP = xmobarPP {
     ppCurrent = xmobarColor selFg selBg . pad,
     ppHidden = xmobarColor fg bg . pad,
-    ppVisible = xmobarColor fg bg . pad,
+    ppVisible = xmobarColor visFg visBg . pad,
     ppLayout = xmobarColor layoutFg layoutBg . layoutIcon,
     ppTitle = (\s -> ""),
     ppSep = " "
