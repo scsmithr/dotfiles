@@ -4,7 +4,6 @@ Config {
     fgColor = "#abb2bf",
     position = Top,
     allDesktops = True,
-    pickBroadest = True,
 
     commands = [
         Run Date "%a %b %d,%l:%M %P" "date" 10,
