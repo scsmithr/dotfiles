@@ -99,7 +99,7 @@ conf = defaultConfig {
     [
         ("M-p", spawn dmenuCmd),
         ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\""),
-        ("M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& systemctl suspend"),
+        ("M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend"),
         ("M-b", spawn "firefox"),
         ("M-o", selectWorkspace xConf),
         ("M-S-o", renameWorkspace xConf),
