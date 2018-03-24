@@ -38,6 +38,10 @@ ln -sv $DIR/x/xinitrc ~/.xinitrc
 ln -sv $DIR/x/xmodmap ~/.xmodmap
 ln -sv $DIR/x/Xresources ~/.Xresources
 
+# dunst
+mkdir -p ~/.config/dunst
+ln -sv $DIR/dunst/dunstrc ~/.config/dunst
+
 # gtk
 mkdir -p ~/.config/gtk-3.0
 ln -sv $DIR/gtk/settings.ini ~/.config/gtk-3.0
