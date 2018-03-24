@@ -18,8 +18,6 @@ precmd() {
 # Prompt
 source "$CONFIG_LOCATION/prompt.zsh"
 
-setopt completealiases
-
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors 'reply=( "=(#b)(*$VAR)(?)*=00=$color[green]=$color[bg-green]" )'
 zstyle ':completion:*:*:*:*:hosts' list-colors '=*=30;41'
