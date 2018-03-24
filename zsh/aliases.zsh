@@ -20,6 +20,12 @@ elif [[ "$os" = "$osx_str" ]]; then
     alias usshfs='umount $HOME/Remote'
 fi
 
+# Some useful tmux alias
+alias t='tmux new-session -s' # Create new session, should pass name
+alias ta='tmux a -t' # Attach to a session
+alias tn='tmux new-session -t' # Attach to a session, independent control
+alias tk='tmux kill-session -t'
+
 alias nv=nvim
 
 # Protect me from myself
