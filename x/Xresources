@@ -1,4 +1,6 @@
-URxvt.font: xft:Source Code Pro:size=16
+Xcursor.size: 32
+
+URxvt.font: xft:Source Code Pro:size=12
 URxvt.scrollBar: false
 
 #define base00 #282c34
