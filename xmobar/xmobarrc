@@ -1,5 +1,5 @@
 Config {
-    font = "xft:Source Code Pro:size=12:antialias=true",
+    font = "xft:Source Code Pro Medium:size=12:antialias=true",
     bgColor = "#282c32",
     fgColor = "#abb2bf",
     position = Top,
