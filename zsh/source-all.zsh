@@ -31,6 +31,8 @@ zle -N bracketed-paste bracketed-paste-magic
 # Control key fix
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+bindkey "^[Od" backward-word
+bindkey "^[Oc" forward-word
 
 # History
 HISTFILE=$HOME/.history
