@@ -1,16 +1,16 @@
 import XMonad
-import XMonad.StackSet
+import qualified XMonad.StackSet as W
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
-import XMonad.Layout.MultiColumns
+import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Hidden
 
 import XMonad.Actions.DynamicWorkspaces
-import XMonad.Actions.CopyWindow(copy)
+import XMonad.Actions.CopyWindow(copy,kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Prompt
 
@@ -29,7 +29,7 @@ selBg = "#61afef"
 visFg = selBg
 visBg = bg
 
-dmenuCmd = "dmenu_run -fn \"Source Code Pro-15\"\
+dmenuCmd = "dmenu_run -fn \"Source Code Pro-13\"\
     \ -nb \"" ++ bg ++ "\"\
     \ -nf \"" ++ fg ++ "\"\ 
     \ -sb \"" ++ selBg ++ "\"\
@@ -38,10 +38,11 @@ dmenuCmd = "dmenu_run -fn \"Source Code Pro-15\"\
 
 layoutIcon :: String -> String
 layoutIcon l
-    | isInfixOf "Tall" l = "|="
-    | isInfixOf "Full" l = "[]"
-    | isInfixOf "MultiCol" l = "|||"
+    | t "Tall" l = "|="
+    | t "Full" l = "[]"
+    | t "ThreeCol" l = "|||"
     | otherwise = l
+    where t = isInfixOf
 
 myPP = xmobarPP {
     ppCurrent = xmobarColor selFg selBg . pad,
@@ -52,10 +53,10 @@ myPP = xmobarPP {
     ppSep = " "
 }
 
-myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| multiTile)
+myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| threeCol)
     where
         tiled = Tall nmaster delta ratio
-        multiTile = multiCol [1,1,0] 1 delta (-0.5)
+        threeCol = ThreeColMid nmaster delta ratio
         nmaster = 1
         ratio = 1/2
         delta = 3/100
@@ -63,7 +64,7 @@ myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| multiTile)
 
 toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
 
-xConf = XPC { font          = "xft:Source Code Pro-15"
+xConf = XPC { font          = "xft:Source Code Pro-12"
         , bgColor           = bg
         , fgColor           = fg
         , fgHLight          = selFg
@@ -81,7 +82,7 @@ xConf = XPC { font          = "xft:Source Code Pro-15"
         , defaultText       = []
         , autoComplete      = Nothing
         , showCompletionOnTab = False
-        , searchPredicate   = isPrefixOf
+        , searchPredicate   = isInfixOf
         , alwaysHighlight   = False
         }
 
@@ -95,18 +96,26 @@ conf = defaultConfig {
         borderWidth = 2,
         normalBorderColor = bg,
         focusedBorderColor = border
-    } `additionalKeysP` 
+    } 
+    `additionalKeysP` 
     [
-        ("M-p", spawn dmenuCmd),
+        -- lock/suspend
         ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\""),
         ("M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend"),
+
+        -- application shortcuts
+        ("M-p", spawn dmenuCmd),
         ("M-b", spawn "firefox"),
+
+        -- workspace management
         ("M-o", selectWorkspace xConf),
-        ("M-S-o", renameWorkspace xConf),
-        ("M-m", withWorkspace xConf (windows . shift)),
-        ("M-S-d", removeEmptyWorkspace),
+        ("M-r", renameWorkspace xConf),
+        ("M-m", withWorkspace xConf (windows . W.shift)),
+        ("M-S-m", withWorkspace xConf (windows . copy)),
+        ("M-S-c", kill1), -- Rebind close so it only closes the copy
+        ("M-S-<Backspace>", removeEmptyWorkspace),
         ("M-]", moveTo Next NonEmptyWS),
-        ("M-[", moveTo Prev NonEmptyWS)
+        ("M-[", moveTo Prev NonEmptyWS)   
     ]
 
 main = do 
