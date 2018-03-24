@@ -43,21 +43,12 @@ let s:cterm0B = "02"
 let s:cterm0C = "06"
 let s:cterm0D = "04"
 let s:cterm0E = "05"
-if exists('base16colorspace') && base16colorspace == "256"
-  let s:cterm01 = "18"
-  let s:cterm02 = "19"
-  let s:cterm04 = "20"
-  let s:cterm06 = "21"
-  let s:cterm09 = "16"
-  let s:cterm0F = "17"
-else
-  let s:cterm01 = "10"
-  let s:cterm02 = "11"
-  let s:cterm04 = "12"
-  let s:cterm06 = "13"
-  let s:cterm09 = "09"
-  let s:cterm0F = "14"
-endif
+let s:cterm01 = "00"
+let s:cterm02 = "08"
+let s:cterm04 = "07"
+let s:cterm06 = "13"
+let s:cterm09 = "09"
+let s:cterm0F = "14"
 
 " Neovim terminal colours
 if has("nvim")
