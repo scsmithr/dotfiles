@@ -13,7 +13,8 @@ if [[ "$os" = "$linux_str" ]]; then
     # Notify after a process has completed
     notify() {
         $@
-        notify-send "Process Completed" "$*"
+        notify-send $opt "Process Completed" "$*"
+        print -n '\a'
     }
 
     # Run pacman, prompting for password if needed

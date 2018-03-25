@@ -3,6 +3,7 @@ import qualified XMonad.StackSet as W
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.UrgencyHook
 
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
@@ -28,6 +29,7 @@ selFg = bg
 selBg = "#61afef"
 visFg = selBg
 visBg = bg
+urgentFg = "#e5c07b"
 
 dmenuCmd = "dmenu_run -fn \"Source Code Pro-13\"\
     \ -nb \"" ++ bg ++ "\"\
@@ -48,6 +50,7 @@ myPP = xmobarPP {
     ppCurrent = xmobarColor selFg selBg . pad,
     ppHidden = xmobarColor fg bg . pad,
     ppVisible = xmobarColor visFg visBg . pad,
+    ppUrgent = xmobarColor urgentFg bg . pad,
     ppLayout = xmobarColor layoutFg layoutBg . layoutIcon,
     ppTitle = (\s -> ""),
     ppSep = " "
@@ -86,7 +89,7 @@ xConf = XPC { font          = "xft:Source Code Pro-12"
         , alwaysHighlight   = False
         }
 
-conf = defaultConfig {
+conf = withUrgencyHook NoUrgencyHook $ defaultConfig {
         logHook = dynamicLogWithPP myPP,
         layoutHook = myLayoutHook,
 
@@ -115,7 +118,10 @@ conf = defaultConfig {
         ("M-S-c", kill1), -- Rebind close so it only closes the copy
         ("M-S-<Backspace>", removeEmptyWorkspace),
         ("M-]", moveTo Next NonEmptyWS),
-        ("M-[", moveTo Prev NonEmptyWS)   
+        ("M-[", moveTo Prev NonEmptyWS),
+
+        -- Urgent stuff
+        ("M-u", focusUrgent)
     ]
 
 main = do 

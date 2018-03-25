@@ -2,6 +2,7 @@ Xcursor.size: 32
 
 URxvt.font: xft:Source Code Pro Medium:size=14
 URxvt.scrollBar: false
+URxvt.urgentOnBell: true
 
 #define base00 #282c34
 #define base01 #353b45

@@ -14,6 +14,8 @@ if [[ "$os" = "$linux_str" ]]; then
     alias sbr=set_brightness_rel
     # get current brightness
     alias gb=get_brightness
+
+    alias no=notify
 elif [[ "$os" = "$osx_str" ]]; then
     alias ls='ls -G'
     # ssh aliases
