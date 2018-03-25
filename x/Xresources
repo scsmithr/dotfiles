@@ -1,6 +1,6 @@
 Xcursor.size: 32
 
-URxvt.font: xft:Source Code Pro Medium:size=14
+URxvt.font: xft:Source Code Pro Medium:size=12
 URxvt.scrollBar: false
 URxvt.urgentOnBell: true
 
