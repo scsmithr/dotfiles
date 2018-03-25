@@ -112,7 +112,7 @@ conf = withUrgencyHook NoUrgencyHook $ defaultConfig {
 
         -- workspace management
         ("M-o", selectWorkspace xConf),
-        ("M-r", renameWorkspace xConf),
+        ("M-S-o", renameWorkspace xConf),
         ("M-m", withWorkspace xConf (windows . W.shift)),
         ("M-S-m", withWorkspace xConf (windows . copy)),
         ("M-S-c", kill1), -- Rebind close so it only closes the copy
