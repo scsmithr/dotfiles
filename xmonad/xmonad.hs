@@ -67,18 +67,18 @@ myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| threeCol)
 
 toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
 
-xConf = XPC { font          = "xft:Source Code Pro-12"
+xConf = XPC { font          = "xft:Source Code Pro-13"
         , bgColor           = bg
         , fgColor           = fg
         , fgHLight          = selFg
         , bgHLight          = selBg
         , borderColor       = bg
-        , promptBorderWidth = 1
+        , promptBorderWidth = 0
         , promptKeymap      = defaultXPKeymap
         , completionKey     = (0,xK_Tab)
         , changeModeKey     = xK_grave
         , position          = Top
-        , height            = 30
+        , height            = 36
         , maxComplRows      = Nothing
         , historySize       = 256
         , historyFilter     = id

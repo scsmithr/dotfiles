@@ -3,7 +3,7 @@ hsetroot -solid "#282c34"
 compton -CGb -o 0 --no-fading-openclose -d :0
 
 if [ "$HOSTNAME" = "system12" ]; then
-    xrandr --dpi 120
+    xrandr --dpi 144
 fi;
 
 xrdb ~/.Xresources
