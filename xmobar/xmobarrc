@@ -17,5 +17,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ <fc=#545862> %wlp58s0wi% // %battery% </fc> %date% "
+    template = "%StdinReader% }{ <fc=#545862> %wlp58s0wi% - %battery% </fc> %date% "
 }
