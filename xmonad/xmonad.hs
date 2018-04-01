@@ -77,7 +77,7 @@ xConf = XPC { font          = "xft:Source Code Pro-13"
         , promptKeymap      = defaultXPKeymap
         , completionKey     = (0,xK_Tab)
         , changeModeKey     = xK_grave
-        , position          = Top
+        , position          = CenteredAt 0.5 0.25
         , height            = 36
         , maxComplRows      = Nothing
         , historySize       = 256

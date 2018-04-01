@@ -7,9 +7,13 @@ Config {
 
     commands = [
         Run Date "%l:%M %P" "date" 10,
+        Run Battery [
+            "-t", "<acstatus>",
+            "--", "-O", "", "-o", "bat <left>%"
+        ] 100,
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ %date% "
+    template = "%StdinReader% }{ %battery% %date% "
 }
