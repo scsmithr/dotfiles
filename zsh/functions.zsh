@@ -28,8 +28,8 @@ if [[ "$os" = "$linux_str" ]]; then
 
     # Gets current brightness
     get_brightness() {
-        outstr=$(ddcutil getvcp 10)
-        nums=$(echo -e $outstr | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ')
+        local outstr=$(ddcutil getvcp 10)
+        local nums=$(echo -e $outstr | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ')
         echo $nums | cut -d " " -f 3
     }
     
@@ -45,7 +45,7 @@ if [[ "$os" = "$linux_str" ]]; then
     # Set brightness relative to current value
     set_brightness_rel() {
         if [ "$#" -eq 1 ]; then
-            curr=$(get_brightness)
+            local curr=$(get_brightness)
             if [ "${1:0:1}" = "+" ]; then
                 set_brightness $(( curr + ${1:1} ))
             elif [ "${1:0:1}" = "-" ]; then
@@ -56,6 +56,27 @@ if [[ "$os" = "$linux_str" ]]; then
         else 
            print "Invalid number of arguments" 
         fi  
+    }
+
+    gcip() {
+        if [ "$#" -eq 1 ]; then
+            gcloud compute instances describe $1 | grep "natIP" | awk '{print $2}' | xargs echo -n
+        else
+            print "Invalid number of arguments" 
+        fi  
+    }
+
+    syncd() {
+        if [ "$#" -eq 2 ]; then
+            local remote_ip=$1
+            shift
+            local abs_path=$(realpath $1)
+            local local_dir=$(dirname $abs_path)
+            ssh $remote_ip "mkdir -p $local_dir"
+            lsyncd -nodaemon -delay 0 -rsyncssh $abs_path $remote_ip $abs_path
+        else 
+            print "Invalid number of arguments"
+        fi
     }
 fi
 

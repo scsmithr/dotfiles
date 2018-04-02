@@ -88,7 +88,7 @@ xConf =
         , promptKeymap = defaultXPKeymap
         , completionKey = (0, xK_Tab)
         , changeModeKey = xK_grave
-        , position = Top
+        , position = Bottom
         , height = 36
         , maxComplRows = Just 10
         , historySize = 256
@@ -138,7 +138,7 @@ conf =
     , ( "M-S-s"
       , spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend")
     -- application shortcuts
-    , ("M-p", launcherPrompt xConf)
+    , ("M-p", launcherPrompt xConf) -- replaces dmenu
     , ("M-b", spawn "firefox")
     -- workspace management
     , ("M-o", selectWorkspace xConf)

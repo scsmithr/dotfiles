@@ -26,6 +26,7 @@ fi
 alias t='tmux new-session -s' # Create new session, should pass name
 alias ta='tmux a -t' # Attach to a session
 alias tn='tmux new-session -t' # Attach to a session, independent control
+alias tl='tmux ls'
 alias tk='tmux kill-session -t'
 
 alias nv=nvim
