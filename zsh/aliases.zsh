@@ -22,6 +22,8 @@ elif [[ "$os" = "$osx_str" ]]; then
     alias usshfs='umount $HOME/Remote'
 fi
 
+alias gcssh='gcloud compute ssh'
+
 # Some useful tmux alias
 alias t='tmux new-session -s' # Create new session, should pass name
 alias ta='tmux a -t' # Attach to a session

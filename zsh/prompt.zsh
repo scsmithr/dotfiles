@@ -17,6 +17,6 @@ TRUNC_WIDTH='${COLUMNS}'
 
 PROMPT="
 %${TRUNC_WIDTH}>...>$MACHINE$CURR_DIR $VCS%>>
-%{$fg[magenta]%}>%{$reset_color%} "
+%{%(?.$fg[magenta].$fg[red])%}>%{$reset_color%} "
 
 RPROMPT=""
