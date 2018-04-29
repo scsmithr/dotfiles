@@ -10,6 +10,8 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
 
+import XMonad.Actions.SwapWorkspaces
+
 import XMonad.Actions.CopyWindow (copy, kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
@@ -36,11 +38,11 @@ layoutFg = "#c678dd"
 
 layoutBg = bg
 
-selFg = bg
+selFg = "#61afef"
 
-selBg = "#61afef"
+selBg = bg
 
-visFg = selBg
+visFg = "#98c379"
 
 visBg = bg
 
@@ -48,12 +50,13 @@ urgentFg = "#e5c07b"
 
 layoutIcon :: String -> String
 layoutIcon l
-    | t "Tall" l = "|="
-    | t "Full" l = "[]"
-    | t "ThreeCol" l = "|||"
+    | t "Tall" l = fmt "|="
+    | t "Full" l = fmt "[]"
+    | t "ThreeCol" l = fmt "|||"
     | otherwise = l
   where
     t = isInfixOf
+    fmt = pad
 
 myPP =
     xmobarPP
@@ -63,7 +66,7 @@ myPP =
         , ppUrgent = xmobarColor urgentFg bg . pad
         , ppLayout = xmobarColor layoutFg layoutBg . layoutIcon
         , ppTitle = const ""
-        , ppSep = " "
+        , ppSep = ""
         }
 
 myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| threeCol)
@@ -81,8 +84,8 @@ xConf =
         { font = "xft:Source Code Pro Medium-12"
         , bgColor = bg
         , fgColor = fg
-        , fgHLight = visFg
-        , bgHLight = visBg
+        , fgHLight = selFg
+        , bgHLight = selBg
         , borderColor = promptBorder
         , promptBorderWidth = 0
         , promptKeymap = defaultXPKeymap
@@ -121,6 +124,8 @@ launcherPrompt c = do
     cmds <- io getCommands
     mkXPrompt Launcher c (getShellCompl cmds $ searchPredicate c) spawn
 
+modm = mod4Mask
+
 conf =
     withUrgencyHook NoUrgencyHook $
     defaultConfig
@@ -128,7 +133,7 @@ conf =
         , layoutHook = myLayoutHook
         , focusFollowsMouse = False
         , terminal = "urxvt"
-        , modMask = mod4Mask
+        , modMask = modm
         , borderWidth = 2
         , normalBorderColor = mutedBg
         , focusedBorderColor = border
@@ -149,8 +154,10 @@ conf =
     , ("M-S-<Backspace>", removeEmptyWorkspace)
     , ("M-]", moveTo Next NonEmptyWS)
     , ("M-[", moveTo Prev NonEmptyWS)
-    -- Urgent stuff
-    , ("M-u", focusUrgent)
-    ]
+    ] `additionalKeys`
+    zip (zip (repeat modm) [xK_1 .. xK_9])
+        (map (withNthWorkspace W.greedyView) [0 ..]) `additionalKeys`
+    zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
+        (map (withNthWorkspace W.shift) [0 ..])
 
 main = xmonad =<< statusBar "xmobar" myPP toggleStruts conf
