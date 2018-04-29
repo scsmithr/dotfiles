@@ -21,6 +21,7 @@ import XMonad.Prompt.Shell
 
 import XMonad.Util.EZConfig
 
+import Data.Char
 import Data.List
 
 -- colors
@@ -58,10 +59,23 @@ layoutIcon l
     t = isInfixOf
     fmt = pad
 
+hideIfProjectWS :: WorkspaceId -> String
+hideIfProjectWS ws
+    | isNumber ws = ws
+    | otherwise = ""
+  where
+    isNumber "" = False
+    isNumber "." = False
+    isNumber xs =
+        case dropWhile isDigit xs of
+            "" -> True
+            ('.':ys) -> all isDigit ys
+            _ -> False
+
 myPP =
     xmobarPP
         { ppCurrent = xmobarColor selFg selBg . pad
-        , ppHidden = xmobarColor fg bg . pad
+        , ppHidden = xmobarColor fg bg . pad . hideIfProjectWS
         , ppVisible = xmobarColor visFg visBg . pad
         , ppUrgent = xmobarColor urgentFg bg . pad
         , ppLayout = xmobarColor layoutFg layoutBg . layoutIcon
