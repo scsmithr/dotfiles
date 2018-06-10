@@ -8,14 +8,12 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 
-import XMonad.Layout.Hidden
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
-import XMonad.Actions.SwapWorkspaces
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -41,19 +39,6 @@ layoutIcon l
     t = isInfixOf
     fmt = pad
 
-hideIfProjectWS :: WorkspaceId -> String
-hideIfProjectWS ws
-    | isNumber ws = ws
-    | otherwise = ""
-  where
-    isNumber "" = False
-    isNumber "." = False
-    isNumber xs =
-        case dropWhile isDigit xs of
-            "" -> True
-            ('.':ys) -> all isDigit ys
-            _ -> False
-
 myWorkspaces = ["def", "conn", "email", "web"]
 
 myKeys = [
@@ -74,6 +59,7 @@ myKeys = [
     , ("M-o", selectWorkspace xConf)
     , ("M-S-o", renameWorkspace xConf)
     , ("M-m", withWorkspace xConf (windows . W.shift))
+    , ("M-<Backspace>", removeWsPin)
     , ("M-S-<Backspace>", removeEmptyWorkspace)
     , ("M-]", moveTo Next NonEmptyWS)
     , ("M-[", moveTo Prev NonEmptyWS)
@@ -105,12 +91,30 @@ data PinnedWorkspaceState = PinnedWorkspaceState {
 
 instance ExtensionClass PinnedWorkspaceState where
     initialValue = PinnedWorkspaceState SM.empty
+    extensionType = PersistentExtension
 
 setPinnedIndex :: PinnedIndex -> X()
 setPinnedIndex idx = do
     wtag <- gets (W.currentTag . windowset)
     wmap <- XS.gets pinnedWorkspaceMap
-    XS.modify $ \s -> s {pinnedWorkspaceMap = SM.insert idx wtag wmap}
+    let cleared = clearIfPinned wmap wtag
+    XS.modify $ \s -> s {pinnedWorkspaceMap = SM.insert idx wtag cleared}
+    -- TODO: Shifting to this workspace is just used to force xmonad to 
+    -- trigger an event so that our log hook is called. Figure out how to 
+    -- avoid needing to shift.
+    withPinnedIndex W.shift idx
+
+removeWsPin :: X()
+removeWsPin = do
+    wtag <- gets (W.currentTag . windowset)
+    wmap <- XS.gets pinnedWorkspaceMap
+    XS.modify $ \s -> s {pinnedWorkspaceMap = clearIfPinned wmap wtag}
+    windows $ W.greedyView wtag -- Same "workaround" as above
+
+clearIfPinned :: (SM.Map PinnedIndex WorkspaceTag) -> WorkspaceId -> (SM.Map PinnedIndex WorkspaceTag)
+clearIfPinned wmap w = case pinnedLookup (SM.toList wmap) w of
+    Just idx -> SM.delete idx wmap
+    Nothing -> wmap
 
 withPinnedIndex :: (String -> WindowSet -> WindowSet) -> PinnedIndex -> X()
 withPinnedIndex job pidx = do
@@ -171,10 +175,8 @@ showWorkspace idx ws = case idx of
     Nothing -> ws
 
 myLogHook h = do
-    tags <- sortedWorkspaces
     wmap <- XS.gets pinnedWorkspaceMap
-
-    let getWorkspaceName fn color ws = xmobarColor color "" (fn  (pinnedLookup (SM.toList wmap) ws) ws)
+    let getWorkspaceName fn color ws = xmobarColor color "" (fn (pinnedLookup (SM.toList wmap) ws) ws)
    
     dynamicLogWithPP xmobarPP
         { ppCurrent = getWorkspaceName showWorkspace selFg
@@ -188,7 +190,7 @@ myLogHook h = do
         , ppOutput = hPutStrLn h
         }
 
-myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| threeCol)
+myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
   where
     tiled = Tall nmaster delta ratio
     threeCol = ThreeColMid nmaster delta ratio
@@ -206,7 +208,7 @@ xConf =
         , fgHLight = selFg
         , bgHLight = selBg
         , borderColor = promptBorder
-        , promptBorderWidth = 0
+        , promptBorderWidth = myBorderWidth
         , promptKeymap = defaultXPKeymap
         , completionKey = (0, xK_Tab)
         , changeModeKey = xK_grave
@@ -269,7 +271,7 @@ bg = "#282c32"
 mutedBg = "#2e3238"
 fg = "#abb2bf"
 border = "#c678dd"
-promptBorder = "#98c379"
+promptBorder = mutedBg
 layoutFg = "#c678dd"
 layoutBg = bg
 selFg = "#61afef"
@@ -282,16 +284,3 @@ urgentFg = "#e5c07b"
 myTerminal = "urxvt"
 myModMask = mod4Mask
 myBorderWidth = 3
-
--- helpers
-withNthVisibleWorkspace :: (String -> WindowSet -> WindowSet) -> Int -> X ()
-withNthVisibleWorkspace job wnum = do
-  ws <- sortedWorkspaces
-  case drop wnum ws of
-    (w:_) -> windows $ job w
-    [] -> return ()
-
-sortedWorkspaces :: X [WorkspaceId]
-sortedWorkspaces = do
-  sort <- getSortByPinned
-  gets (map W.tag . sort . W.workspaces . windowset)

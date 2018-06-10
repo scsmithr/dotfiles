@@ -2,9 +2,14 @@ xsetroot -cursor_name left_ptr
 hsetroot -solid "#282c34"
 compton -CGb -o 0 --no-fading-openclose -d :0
 
-if [ "$HOSTNAME" = "system12" ]; then
-    xrandr --dpi 144
-fi;
+case $HOSTNAME in
+    "system12")
+        xrandr --dpi 144
+        ;;
+    "system22")
+        xrandr --dpi 144
+        ;;
+esac
 
 xrdb ~/.Xresources
 xmodmap ~/.xmodmap
