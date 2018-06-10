@@ -1,5 +1,8 @@
 import XMonad
 import qualified XMonad.StackSet as W
+import qualified XMonad.Util.ExtensibleState as XS
+
+import System.Exit ( exitWith, ExitCode ( ExitSuccess ) )
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -10,44 +13,23 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
 
-import XMonad.Actions.SwapWorkspaces
-
-import XMonad.Actions.CopyWindow (copy, kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
+import XMonad.Actions.SwapWorkspaces
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 
 import XMonad.Util.EZConfig
+import XMonad.Util.Run ( spawnPipe, hPutStrLn )
+import XMonad.Util.WorkspaceCompare
 
 import Data.Char
+import Data.Maybe
 import Data.List
-
--- colors
-bg = "#282c32"
-
-mutedBg = "#24282e"
-
-fg = "#abb2bf"
-
-border = "#c678dd"
-
-promptBorder = "#98c379"
-
-layoutFg = "#c678dd"
-
-layoutBg = bg
-
-selFg = "#61afef"
-
-selBg = bg
-
-visFg = "#98c379"
-
-visBg = bg
-
-urgentFg = "#e5c07b"
+import Data.Function
+import qualified Data.Map as M ( fromList )
+import qualified Data.Map.Strict as SM
 
 layoutIcon :: String -> String
 layoutIcon l
@@ -72,15 +54,138 @@ hideIfProjectWS ws
             ('.':ys) -> all isDigit ys
             _ -> False
 
-myPP =
-    xmobarPP
-        { ppCurrent = xmobarColor selFg selBg . pad
-        , ppHidden = xmobarColor fg bg . pad . hideIfProjectWS
-        , ppVisible = xmobarColor visFg visBg . pad
-        , ppUrgent = xmobarColor urgentFg bg . pad
+myWorkspaces = ["def", "conn", "email", "web"]
+
+myKeys = [
+    -- Lock/sleep
+      ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\"")
+    , ( "M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend")
+    -- general shortcuts
+    , ("M-S-c", kill)
+    , ("M-<Space>", sendMessage NextLayout)
+    , ("M-q", spawn "xmonad --restart")
+    , ("M-S-q", io (exitWith ExitSuccess))
+    , ("M-t", withFocused $ windows . W.sink)
+    -- application shortcuts
+    , ("M-<Return>", spawn myTerminal)
+    , ("M-p", launcherPrompt xConf) -- replaces dmenu
+    , ("M-b", spawn "chromium")
+    -- workspace management
+    , ("M-o", selectWorkspace xConf)
+    , ("M-S-o", renameWorkspace xConf)
+    , ("M-m", withWorkspace xConf (windows . W.shift))
+    , ("M-S-<Backspace>", removeEmptyWorkspace)
+    , ("M-]", moveTo Next NonEmptyWS)
+    , ("M-[", moveTo Prev NonEmptyWS)
+    -- window management
+    , ("M-j", windows W.focusDown)
+    , ("M-k", windows W.focusUp)
+    , ("M-S-j", windows W.swapDown)
+    , ("M-S-k", windows W.swapUp)
+    , ("M-S-<Return>", windows W.swapMaster)
+    , ("M-h", sendMessage Shrink)
+    , ("M-l", sendMessage Expand)
+    , ("M-,", sendMessage (IncMasterN 1))
+    , ("M-.", sendMessage (IncMasterN (-1)))
+    -- function keys
+    , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10 -fps 60")
+    , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10 -fps 60")
+    , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-mute 0 false; pactl set-sink-volume 0 +5%")
+    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-mute 0 false; pactl set-sink-volume 0 -5%")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute 0 toggle")
+    ]
+
+type WorkspaceTag = String
+type PinnedIndex = Int
+
+data PinnedWorkspaceState = PinnedWorkspaceState {
+        pinnedWorkspaceMap :: SM.Map PinnedIndex WorkspaceTag
+    }
+    deriving (Typeable, Read, Show)
+
+instance ExtensionClass PinnedWorkspaceState where
+    initialValue = PinnedWorkspaceState SM.empty
+
+setPinnedIndex :: PinnedIndex -> X()
+setPinnedIndex idx = do
+    wtag <- gets (W.currentTag . windowset)
+    wmap <- XS.gets pinnedWorkspaceMap
+    XS.modify $ \s -> s {pinnedWorkspaceMap = SM.insert idx wtag wmap}
+
+withPinnedIndex :: (String -> WindowSet -> WindowSet) -> PinnedIndex -> X()
+withPinnedIndex job pidx = do
+    wtag <- ilookup pidx
+    maybe (return ()) (windows . job) wtag
+        where
+            ilookup :: PinnedIndex -> X (Maybe WorkspaceTag)
+            ilookup idx = SM.lookup idx `fmap` XS.gets pinnedWorkspaceMap
+
+myWorkspaceKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
+    ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..],
+        (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+    ]
+    ++
+    zip (zip (repeat (modm)) [xK_1..xK_9]) (map (withPinnedIndex W.greedyView) [1..])
+    ++
+    zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (withPinnedIndex W.shift) [1..])
+    ++
+    zip (zip (repeat (modm .|. controlMask)) [xK_1..xK_9]) (map (setPinnedIndex) [1..])
+
+pinnedCompare :: Maybe Int -> Maybe Int -> Ordering
+pinnedCompare Nothing Nothing = EQ
+pinnedCompare Nothing (Just _) = GT
+pinnedCompare (Just _) Nothing = LT
+pinnedCompare a b = compare a b
+
+pinnedLookup :: [(PinnedIndex, WorkspaceId)] -> WorkspaceId -> Maybe PinnedIndex
+pinnedLookup l w = 
+    case find (\(_,x) -> x == w) l of
+        Just p -> Just(fst p) 
+        Nothing -> Nothing
+
+getPinnedIdx :: X (WorkspaceId -> Maybe Int)
+getPinnedIdx = do
+    wmap <- XS.gets pinnedWorkspaceMap
+    return (pinnedLookup $ SM.toList wmap)
+
+getPinnedCompare :: X WorkspaceCompare
+getPinnedCompare = do
+    idx <- getPinnedIdx
+    return $ mconcat [pinnedCompare `on` idx, compare]
+
+getSortByPinned :: X WorkspaceSort
+getSortByPinned = mkWsSort getPinnedCompare
+
+indexPref :: PinnedIndex -> String -> String
+indexPref idx ws = (show idx) ++ ":" ++ ws
+
+hideIfNotPinned :: Maybe PinnedIndex -> String -> String
+hideIfNotPinned idx ws = case idx of
+    Just n -> indexPref n ws
+    Nothing -> ""
+
+showWorkspace :: Maybe PinnedIndex -> String -> String
+showWorkspace idx ws = case idx of
+    Just n -> indexPref n ws
+    Nothing -> ws
+
+myLogHook h = do
+    tags <- sortedWorkspaces
+    wmap <- XS.gets pinnedWorkspaceMap
+
+    let getWorkspaceName fn color ws = xmobarColor color "" (fn  (pinnedLookup (SM.toList wmap) ws) ws)
+   
+    dynamicLogWithPP xmobarPP
+        { ppCurrent = getWorkspaceName showWorkspace selFg
+        , ppHidden = getWorkspaceName hideIfNotPinned fg
+        , ppVisible = getWorkspaceName showWorkspace visFg
+        , ppUrgent = getWorkspaceName showWorkspace urgentFg
         , ppLayout = xmobarColor layoutFg layoutBg . layoutIcon
         , ppTitle = const ""
         , ppSep = ""
+        , ppSort = getSortByPinned
+        , ppOutput = hPutStrLn h
         }
 
 myLayoutHook = hiddenWindows $ smartBorders (tiled ||| Full ||| threeCol)
@@ -138,40 +243,55 @@ launcherPrompt c = do
     cmds <- io getCommands
     mkXPrompt Launcher c (getShellCompl cmds $ searchPredicate c) spawn
 
-modm = mod4Mask
+myStartupHook = return ()
 
-conf =
-    withUrgencyHook NoUrgencyHook $
-    defaultConfig
-        { logHook = dynamicLogWithPP myPP
-        , layoutHook = myLayoutHook
-        , focusFollowsMouse = False
-        , terminal = "urxvt"
-        , modMask = modm
-        , borderWidth = 2
-        , normalBorderColor = mutedBg
-        , focusedBorderColor = border
-        } `additionalKeysP`
-    -- lock/suspend
-    [ ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\"")
-    , ( "M-S-s"
-      , spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend")
-    -- application shortcuts
-    , ("M-p", launcherPrompt xConf) -- replaces dmenu
-    , ("M-b", spawn "firefox")
-    -- workspace management
-    , ("M-o", selectWorkspace xConf)
-    , ("M-S-o", renameWorkspace xConf)
-    , ("M-m", withWorkspace xConf (windows . W.shift))
-    , ("M-S-m", withWorkspace xConf (windows . copy))
-    , ("M-S-c", kill1) -- Rebind close so it only closes the copy
-    , ("M-S-<Backspace>", removeEmptyWorkspace)
-    , ("M-]", moveTo Next NonEmptyWS)
-    , ("M-[", moveTo Prev NonEmptyWS)
-    ] `additionalKeys`
-    zip (zip (repeat modm) [xK_1 .. xK_9])
-        (map (withNthWorkspace W.greedyView) [0 ..]) `additionalKeys`
-    zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
-        (map (withNthWorkspace W.shift) [0 ..])
+myManageHook = composeAll []
 
-main = xmonad =<< statusBar "xmobar" myPP toggleStruts conf
+myConfig pipe = withUrgencyHook NoUrgencyHook $ docks $ def
+    { logHook = myLogHook pipe
+    , manageHook = myManageHook
+    , layoutHook = avoidStruts $ myLayoutHook
+    , focusFollowsMouse = False
+    , workspaces = myWorkspaces
+    , keys = myWorkspaceKeys
+    , terminal = myTerminal
+    , modMask = myModMask
+    , borderWidth = myBorderWidth
+    , normalBorderColor = mutedBg
+    , focusedBorderColor = border
+    , startupHook = myStartupHook
+    } `additionalKeysP` myKeys
+
+main = xmonad . myConfig =<< spawnPipe "xmobar"
+
+-- colors
+bg = "#282c32"
+mutedBg = "#2e3238"
+fg = "#abb2bf"
+border = "#c678dd"
+promptBorder = "#98c379"
+layoutFg = "#c678dd"
+layoutBg = bg
+selFg = "#61afef"
+selBg = bg
+visFg = "#98c379"
+visBg = bg
+urgentFg = "#e5c07b"
+
+-- config vars
+myTerminal = "urxvt"
+myModMask = mod4Mask
+myBorderWidth = 3
+
+-- helpers
+withNthVisibleWorkspace :: (String -> WindowSet -> WindowSet) -> Int -> X ()
+withNthVisibleWorkspace job wnum = do
+  ws <- sortedWorkspaces
+  case drop wnum ws of
+    (w:_) -> windows $ job w
+    [] -> return ()
+
+sortedWorkspaces :: X [WorkspaceId]
+sortedWorkspaces = do
+  sort <- getSortByPinned
+  gets (map W.tag . sort . W.workspaces . windowset)
