@@ -1,21 +1,43 @@
 Config {
-    font = "xft:Source Code Pro Medium:size=12:antialias=true",
+    font = "xft:Source Code Pro Semibold:size=11:antialias=true",
     bgColor = "#282c32",
     fgColor = "#abb2bf",
     position = Top,
     allDesktops = False,
+    lowerOnStart = False,
+    hideOnStart = False,
+    persistent = True,
 
     commands = [
-        Run Date "%I:%M %P" "date" 10,
-        Run Wireless "wlp58s0" [
-            "-t", "wifi <essid>"
+        Run Date "%a, %b %d %I:%M%P" "date" 10,
+     
+        Run DynNetwork [
+            "--template", "down: <tx> up: <rx>",
+            "--suffix", "True",
+            "--width", "6",
+            "--padchars", "0",
+            "--Low",    "10000",       -- units: B/s
+            "--High",   "50000",       -- units: B/s
+            "--low",    "#61afef",
+            "--normal", "#c678dd",
+            "--high",   "#e06c75"
         ] 100,
+
         Run Battery [
-            "-t", "bat <left>%"
+            "--template" , "bat: <acstatus>",
+            "--Low",    "20",        -- units: %
+            "--High",   "80",        -- units: %
+            "--low",    "#e06c75",
+            
+            "--", -- Battery-specific options.
+            "-o", "<left>% (<timeleft>)", -- Discharging status.
+            "-O", "<left>% <fc=#98c379>(charging)</fc>",              -- AC "on" status.
+            "-i", "<left>% <fc=#61afef>(full)</fc>" -- Charged status.
         ] 100,
+
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ <fc=#545862> %wlp58s0wi% - %battery% </fc> %date% "
+    template = " %StdinReader% }{ %dynnetwork% | %battery% | %date% "
 }
