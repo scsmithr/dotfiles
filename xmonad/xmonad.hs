@@ -283,4 +283,4 @@ urgentFg = "#e5c07b"
 -- config vars
 myTerminal = "urxvt"
 myModMask = mod4Mask
-myBorderWidth = 3
+myBorderWidth = 2
