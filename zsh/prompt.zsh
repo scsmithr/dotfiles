@@ -2,6 +2,7 @@ setopt prompt_subst
 
 zstyle ':vcs_info:*' check-for-changes false # set true to show unstaged
 zstyle ':vcs_info:git*' formats "%{$fg[green]%}(%b%u)%{$reset_color%}"
+zstyle ':vcs_info:git*' actionformats "%{$fg[red]%}(%b%u)[%a]%{$reset_color%}"
 zstyle ':vcs_info:*' unstagedstr "*"
 
 MACHINE=""
