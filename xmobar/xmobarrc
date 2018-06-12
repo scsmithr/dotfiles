@@ -4,7 +4,7 @@ Config {
     fgColor = "#abb2bf",
     position = Top,
     allDesktops = False,
-    lowerOnStart = False,
+    lowerOnStart = True,
     hideOnStart = False,
     persistent = True,
 
@@ -12,7 +12,7 @@ Config {
         Run Date "%a, %b %d %I:%M%P" "date" 10,
      
         Run DynNetwork [
-            "--template", "down: <tx> up: <rx>",
+            "--template", "down: <rx> up: <tx>",
             "--suffix", "True",
             "--width", "6",
             "--padchars", "0",

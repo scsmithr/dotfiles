@@ -36,8 +36,8 @@ bindkey "^[Oc" forward-word
 
 # History
 HISTFILE=$HOME/.history
-SAVEHIST=1000
-HISTSIZE=1000
+SAVEHIST=10000
+HISTSIZE=10000
 setopt histverify
 setopt inc_append_history
 

@@ -51,6 +51,7 @@ myKeys = [
     , ("M-q", spawn "xmonad --restart")
     , ("M-S-q", io (exitWith ExitSuccess))
     , ("M-t", withFocused $ windows . W.sink)
+    , ("M-n", sendMessage ToggleStruts)
     -- application shortcuts
     , ("M-<Return>", spawn myTerminal)
     , ("M-p", launcherPrompt xConf) -- replaces dmenu
