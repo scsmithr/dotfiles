@@ -269,7 +269,7 @@ main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
 bg = "#282c32"
-mutedBg = "#2e3238"
+mutedBg = "#31363c"
 fg = "#abb2bf"
 border = "#c678dd"
 promptBorder = mutedBg
