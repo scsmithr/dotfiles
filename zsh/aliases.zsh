@@ -33,6 +33,8 @@ alias tk='tmux kill-session -t'
 
 alias nv=nvim
 
+alias grep='grep --color=always'
+
 # Protect me from myself
 alias rm='echo "No."; false'
 
