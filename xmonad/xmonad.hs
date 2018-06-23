@@ -75,8 +75,8 @@ myKeys = [
     , ("M-,", sendMessage (IncMasterN 1))
     , ("M-.", sendMessage (IncMasterN (-1)))
     -- function keys
-    , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 10 -fps 60")
-    , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 10 -fps 60")
+    , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 5 -fps 60")
+    , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 5 -fps 60")
     , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-mute 0 false; pactl set-sink-volume 0 +5%")
     , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-mute 0 false; pactl set-sink-volume 0 -5%")
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute 0 toggle")
