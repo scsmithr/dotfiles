@@ -11,6 +11,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Spacing
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
@@ -193,11 +194,12 @@ myLogHook h = do
 
 myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
   where
-    tiled = Tall nmaster delta ratio
-    threeCol = ThreeColMid nmaster delta ratio
+    tiled = smartSpacing gs $ Tall nmaster delta ratio
+    threeCol = smartSpacing gs $ ThreeColMid nmaster delta ratio
     nmaster = 1
     ratio = 1 / 2
     delta = 3 / 100
+    gs = 5
 
 toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
 
