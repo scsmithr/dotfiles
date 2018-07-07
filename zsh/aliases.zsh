@@ -41,6 +41,8 @@ alias rm='echo "No."; false'
 # trash-cli
 alias tm=trash-put
 
+alias mm='xmodmap ~/.xmodmap'
+
 # man aliases
 alias man=run_man
 
