@@ -1,0 +1,21 @@
+{
+    "workbench.activityBar.visible": false,
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorTheme": "One Dark Pro",
+    "editor.fontSize": 15,
+    "editor.fontFamily": "'Source Code Pro Medium'",
+    "editor.minimap.renderCharacters": false,
+    "editor.rulers": [
+        80
+    ],
+    "editor.minimap.enabled": false,
+    "vim.useSystemClipboard": true,
+    "go.lintTool": "gometalinter",
+     "go.lintFlags": [
+        "--fast",
+        "--aggregate",
+        "--disable=gotype"
+    ],
+    "problems.decorations.enabled": false,
+    "editor.lineNumbers": "on",
+}

@@ -33,6 +33,9 @@ ln -sv $DIR/xmonad/xmonad.hs ~/.xmonad
 # xmobar
 ln -sv $DIR/xmobar/xmobarrc ~/.xmobarrc
 
+# vscode
+ln -sv $DIR/vscode/settings.json ~/.config/Code/User
+
 # various x stuff
 ln -sv $DIR/x/xinitrc ~/.xinitrc
 ln -sv $DIR/x/xmodmap ~/.xmodmap
