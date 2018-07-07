@@ -18,4 +18,5 @@
     ],
     "problems.decorations.enabled": false,
     "editor.lineNumbers": "on",
+    "update.channel": "none"
 }
