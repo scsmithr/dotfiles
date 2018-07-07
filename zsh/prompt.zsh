@@ -7,7 +7,7 @@ zstyle ':vcs_info:*' unstagedstr "*"
 
 MACHINE=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    MACHINE="%{$fg[cyan]%}%n@%m%{$reset_color%}:"
+    MACHINE="%{$fg[magenta]%}%n@%m%{$reset_color%}:"
 fi
 
 CURR_DIR="%{$fg[blue]%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%}"
