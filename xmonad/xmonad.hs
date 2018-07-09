@@ -63,8 +63,7 @@ myKeys = [
     , ("M-m", withWorkspace xConf (windows . W.shift))
     , ("M-<Backspace>", removeWsPin)
     , ("M-S-<Backspace>", removeEmptyWorkspace)
-    , ("M-]", moveTo Next NonEmptyWS)
-    , ("M-[", moveTo Prev NonEmptyWS)
+    , ("M-u", toggleWS)
     -- window management
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
