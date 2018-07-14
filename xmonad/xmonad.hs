@@ -214,7 +214,7 @@ xConf =
         , promptKeymap = defaultXPKeymap
         , completionKey = (0, xK_Tab)
         , changeModeKey = xK_grave
-        , position = Top
+        , position = CenteredAt 0.4 0.5
         , height = 36
         , maxComplRows = Just 10
         , historySize = 256
@@ -269,11 +269,11 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ docks $ def
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
-bg = "#282c32"
+bg = "#282c34"
 mutedBg = "#31363c"
 fg = "#abb2bf"
 border = "#c678dd"
-promptBorder = mutedBg
+promptBorder = mutedBg 
 layoutFg = "#c678dd"
 layoutBg = bg
 selFg = "#61afef"
