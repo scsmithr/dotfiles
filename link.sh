@@ -36,6 +36,10 @@ ln -sv $DIR/xmobar/xmobarrc ~/.xmobarrc
 # vscode
 ln -sv $DIR/vscode/settings.json ~/.config/Code/User
 
+# bin/scripts
+mkdir -p ~/.bin
+ln -sv $DIR/bin/* ~/.bin
+
 # various x stuff
 ln -sv $DIR/x/xinitrc ~/.xinitrc
 ln -sv $DIR/x/xmodmap ~/.xmodmap

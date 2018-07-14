@@ -10,19 +10,11 @@ Config {
 
     commands = [
         Run Date "%a, %b %d %I:%M%P" "date" 10,
-     
-        Run DynNetwork [
-            "--template", "down: <rx> up: <tx>",
-            "--suffix", "True",
-            "--width", "6",
-            "--padchars", "0",
-            "--Low",    "10000",       -- units: B/s
-            "--High",   "50000",       -- units: B/s
-            "--low",    "#61afef",
-            "--normal", "#c678dd",
-            "--high",   "#e06c75"
-        ] 100,
 
+        Run Com "current_wifi.sh" [] "wifi" 100,
+
+        Run Com "current_vol.sh" ["<fc=#e5c07b>(mute)</fc>"] "vol" 100,
+     
         Run Battery [
             "--template" , "bat: <acstatus>",
             "--Low",    "20",        -- units: %
@@ -39,5 +31,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %StdinReader% }{ %dynnetwork% | %battery% | %date% "
+    template = " %StdinReader% }{ %wifi% | %vol% | %battery% | %date% "
 }
