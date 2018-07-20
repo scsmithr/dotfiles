@@ -59,8 +59,8 @@ if [[ "$os" = "$linux_str" ]]; then
     }
 
     gcip() {
-        if [ "$#" -eq 1 ]; then
-            gcloud compute instances describe $1 | grep "natIP" | awk '{print $2}' | xargs echo -n
+        if [ "$#" -ge 1 ]; then
+            gcloud compute instances describe $@ | grep "natIP" | awk '{print $2}' | xargs echo -n
         else
             print "Invalid number of arguments" 
         fi  
