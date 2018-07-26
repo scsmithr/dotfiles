@@ -3,6 +3,7 @@ export PATH=$PATH:$HOME/.bin/
 # Set default go workspace
 export GOPATH=$HOME/.go
 export PATH=$PATH:$HOME/.go/bin
+export PATH=$PATH:/usr/local/go/bin
 
 # Cargo bins
 export PATH=$PATH:$HOME/.cargo/bin
@@ -21,7 +22,4 @@ elif [[ "$os" = "$osx_str" ]]; then
     
     # Kubernetes
     export PATH=$PATH:$HOME/kubernetes/platforms/darwin/amd64
-
-    # Go
-    export PATH=$PATH:/usr/local/go/bin
 fi
