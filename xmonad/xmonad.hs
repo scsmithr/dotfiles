@@ -204,17 +204,17 @@ toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
 xConf =
     XPC
         { font = "xft:Source Code Pro Medium-12"
-        , bgColor = bg
+        , bgColor = mutedBg
         , fgColor = fg
         , fgHLight = selFg
-        , bgHLight = selBg
+        , bgHLight = mutedBg
         , borderColor = promptBorder
         , promptBorderWidth = myBorderWidth
         , promptKeymap = defaultXPKeymap
         , completionKey = (0, xK_Tab)
         , changeModeKey = xK_grave
         , position = CenteredAt 0.4 0.5
-        , height = 36
+        , height = 58
         , maxComplRows = Just 10
         , historySize = 256
         , historyFilter = id
@@ -269,9 +269,9 @@ main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
 bg = "#282c34"
-mutedBg = "#31363c"
+mutedBg = "#353b45"
 fg = "#abb2bf"
-border = "#c678dd"
+border = "#61afef"
 promptBorder = mutedBg 
 layoutFg = "#c678dd"
 layoutBg = bg

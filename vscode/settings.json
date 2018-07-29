@@ -1,6 +1,6 @@
 {
     "workbench.activityBar.visible": false,
-    "window.menuBarVisibility": "toggle",
+    "window.menuBarVisibility": "hidden",
     "workbench.colorTheme": "One Dark Pro",
     "editor.fontSize": 15,
     "editor.fontFamily": "'Source Code Pro Medium'",
