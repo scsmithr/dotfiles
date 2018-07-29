@@ -30,9 +30,6 @@ set hlsearch
 set incsearch
 set showmatch
 
-" Cursor
-set guicursor= " Always use block cursor
-
 " Buffers
 set hidden " switch between buffers without saving
 

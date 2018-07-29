@@ -283,6 +283,6 @@ visBg = bg
 urgentFg = "#e5c07b"
 
 -- config vars
-myTerminal = "urxvt"
+myTerminal = "kitty"
 myModMask = mod4Mask
 myBorderWidth = 2

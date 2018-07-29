@@ -53,3 +53,7 @@ ln -sv $DIR/dunst/dunstrc ~/.config/dunst
 mkdir -p ~/.config/gtk-3.0
 ln -sv $DIR/gtk/settings.ini ~/.config/gtk-3.0
 ln -sv $DIR/gtk/gtkrc-2.0 ~/.gtkrc-2.0
+
+# kitty
+mkdir -p ~/.config/kitty
+ln -sv $DIR/kitty/kitty.conf ~/.config/kitty
