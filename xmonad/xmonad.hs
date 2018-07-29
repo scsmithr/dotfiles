@@ -59,8 +59,7 @@ myKeys = [
     , ("M-b", spawn "chromium")
     -- workspace management
     , ("M-o", selectWorkspace xConf)
-    , ("M-S-o", renameWorkspace xConf)
-    , ("M-m", withWorkspace xConf (windows . W.shift))
+    , ("M-S-o", withWorkspace xConf (windows . W.shift))
     , ("M-<Backspace>", removeWsPin)
     , ("M-S-<Backspace>", removeEmptyWorkspace)
     , ("M-u", toggleWS)
