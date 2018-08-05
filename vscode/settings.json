@@ -1,6 +1,6 @@
 {
     "workbench.activityBar.visible": false,
-    "window.menuBarVisibility": "hidden",
+    "window.menuBarVisibility": "toggle",
     "workbench.colorTheme": "One Dark Pro",
     "editor.fontSize": 15,
     "editor.fontFamily": "'Source Code Pro Medium'",
@@ -20,5 +20,10 @@
     "go.useLanguageServer": true,
     "problems.decorations.enabled": false,
     "editor.lineNumbers": "on",
-    "update.channel": "none"
+    "update.channel": "none",
+    "window.titleBarStyle": "native",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.showTabs": true,
+    "explorer.openEditors.visible": 0,
+    "workbench.sideBar.location": "left"
 }
