@@ -19,6 +19,9 @@ set autoindent
 " Show line numbers
 set number
 
+" Yank to system keyboard
+set clipboard=unnamedplus
+
 " Always keep 3 lines visible
 set scrolloff=3
 
