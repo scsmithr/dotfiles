@@ -25,5 +25,10 @@
     "workbench.editor.enablePreview": false,
     "workbench.editor.showTabs": true,
     "explorer.openEditors.visible": 0,
-    "workbench.sideBar.location": "left"
+    "workbench.sideBar.location": "left",
+    "go.enableCodeLens": {
+        "references": false,
+        "runtest": false
+    },
+    "window.zoomLevel": 0
 }

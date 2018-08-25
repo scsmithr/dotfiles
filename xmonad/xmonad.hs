@@ -203,17 +203,17 @@ toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
 
 xConf =
     XPC
-        { font = "xft:Source Code Pro Medium-12"
-        , bgColor = mutedBg
+        { font = "xft:Source Code Pro Medium-11"
+        , bgColor = darkBg
         , fgColor = fg
         , fgHLight = selFg
-        , bgHLight = mutedBg
+        , bgHLight = darkBg
         , borderColor = promptBorder
         , promptBorderWidth = myBorderWidth
         , promptKeymap = defaultXPKeymap
         , completionKey = (0, xK_Tab)
         , changeModeKey = xK_grave
-        , position = CenteredAt 0.4 0.5
+        , position = Bottom
         , height = 44
         , maxComplRows = Just 10
         , historySize = 256
@@ -270,16 +270,19 @@ main = xmonad . myConfig =<< spawnPipe "xmobar"
 -- colors
 bg = "#282c34"
 mutedBg = "#353b45"
-fg = "#abb2bf"
-border = "#61afef"
-promptBorder = mutedBg 
-layoutFg = "#c678dd"
-layoutBg = bg
-selFg = "#61afef"
+darkBg = "#181c24"
 selBg = bg
-visFg = "#98c379"
 visBg = bg
+layoutBg = bg
+
+fg = "#abb2bf"
+selFg = "#61afef"
+visFg = "#98c379"
+layoutFg = "#c678dd"
 urgentFg = "#e5c07b"
+
+border = "#61afef"
+promptBorder = darkBg 
 
 -- config vars
 myTerminal = "kitty"
