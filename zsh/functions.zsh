@@ -78,6 +78,14 @@ if [[ "$os" = "$linux_str" ]]; then
             print "Invalid number of arguments"
         fi
     }
+
+    dpi() {
+        if [ "$#" -eq 1 ]; then
+            echo "Xft.dpi: $1" | xrdb -merge
+        else 
+            print "Invalid number of arguments"
+        fi
+    }
 fi
 
 # Start ssh daemon
