@@ -1,6 +1,6 @@
 Config {
     font = "xft:Source Code Pro Semibold:size=11:antialias=true",
-    bgColor = "#282c32",
+    bgColor = "#282c34",
     fgColor = "#abb2bf",
     position = Top,
     allDesktops = False,
