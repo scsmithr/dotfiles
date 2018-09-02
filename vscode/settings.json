@@ -22,7 +22,6 @@
     "editor.lineNumbers": "on",
     "update.channel": "none",
     "window.titleBarStyle": "native",
-    "workbench.editor.enablePreview": false,
     "workbench.editor.showTabs": true,
     "explorer.openEditors.visible": 0,
     "workbench.sideBar.location": "left",
