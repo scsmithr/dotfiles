@@ -7,6 +7,7 @@ import System.Exit ( exitWith, ExitCode ( ExitSuccess ) )
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.EwmhDesktops
 
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
@@ -250,7 +251,7 @@ myStartupHook = return ()
 
 myManageHook = composeAll []
 
-myConfig pipe = withUrgencyHook NoUrgencyHook $ docks $ def
+myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ def
     { logHook = myLogHook pipe
     , manageHook = myManageHook
     , layoutHook = avoidStruts $ myLayoutHook
