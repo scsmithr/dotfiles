@@ -194,7 +194,7 @@ myLogHook h = do
 myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
   where
     tiled = smartSpacing gs $ Tall nmaster delta ratio
-    threeCol = smartSpacing gs $ ThreeColMid nmaster delta ratio
+    threeCol = smartSpacing gs $ ThreeCol nmaster delta ratio
     nmaster = 1
     ratio = 1 / 2
     delta = 3 / 100
@@ -271,7 +271,7 @@ main = xmonad . myConfig =<< spawnPipe "xmobar"
 -- colors
 bg = "#282c34"
 mutedBg = "#353b45"
-darkBg = "#181c24"
+darkBg = "#21252E"
 selBg = bg
 visBg = bg
 layoutBg = bg

@@ -22,12 +22,22 @@
     "editor.lineNumbers": "on",
     "update.channel": "none",
     "window.titleBarStyle": "native",
-    "workbench.editor.showTabs": true,
+    "workbench.editor.showTabs": false,
     "explorer.openEditors.visible": 0,
     "workbench.sideBar.location": "left",
     "go.enableCodeLens": {
         "references": false,
         "runtest": false
+    },
+    "workbench.colorCustomizations": {
+        "sideBar.background": "#21252E",
+        "statusBar.background": "#21252E",
+        "editorCursor.foreground": "#61AFEF",
+        "widget.shadow": "#ffffff00",
+        "scrollbar.shadow": "#ffffff00",
+        "gitDecoration.modifiedResourceForeground": "#E5C07B",
+        "gitDecoration.deletedResourceForeground": "#E06C75",
+        "gitDecoration.untrackedResourceForeground": "#98C379",
     },
     "window.zoomLevel": 0
 }
