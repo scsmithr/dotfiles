@@ -1,0 +1,7 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    { "key": "ctrl+n",                "command": "workbench.action.quickOpenNavigateNextInFilePicker",
+                                     "when": "inFilesPicker && inQuickOpen" },
+    { "key": "ctrl+p",                "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
+                                     "when": "inFilesPicker && inQuickOpen" },
+]
