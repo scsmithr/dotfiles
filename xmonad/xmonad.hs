@@ -57,7 +57,7 @@ myKeys = [
     -- application shortcuts
     , ("M-<Return>", spawn myTerminal)
     , ("M-p", launcherPrompt xConf) -- replaces dmenu
-    , ("M-b", spawn "chromium")
+    , ("M-b", spawn "firefox")
     -- workspace management
     , ("M-o", selectWorkspace xConf)
     , ("M-S-o", withWorkspace xConf (windows . W.shift))
