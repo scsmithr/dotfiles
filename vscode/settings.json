@@ -51,6 +51,12 @@
                 "settings": {
                     "foreground": "#abb2bf",
                 }
+            },
+            {
+                "scope": "variable.other.object.property.ts",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
             }
         ]
     },
