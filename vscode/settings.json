@@ -1,7 +1,6 @@
 {
     "workbench.activityBar.visible": false,
     "window.menuBarVisibility": "toggle",
-    "workbench.colorTheme": "One Dark Pro",
     "editor.fontSize": 15,
     "editor.fontFamily": "'Source Code Pro Medium'",
     "editor.minimap.renderCharacters": false,
@@ -39,5 +38,25 @@
         "gitDecoration.deletedResourceForeground": "#E06C75",
         "gitDecoration.untrackedResourceForeground": "#98C379",
     },
-    "window.zoomLevel": 0
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "variable.other.property.ts",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
+                "scope": "variable.other.object.ts",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            }
+        ]
+    },
+    "window.zoomLevel": 0,
+    "go.formatTool": "goimports",
+    "editor.overviewRulerBorder": false,
+    "breadcrumbs.enabled": false,
+    "workbench.colorTheme": "One Dark Pro",
 }
