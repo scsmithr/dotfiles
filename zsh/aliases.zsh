@@ -22,6 +22,9 @@ elif [[ "$os" = "$osx_str" ]]; then
     alias usshfs='umount $HOME/Remote'
 fi
 
+alias ll='exa -lG'
+alias la='exa -alG'
+
 alias gcssh='TERM=xterm-256color gcloud compute ssh'
 
 # Some useful tmux alias
