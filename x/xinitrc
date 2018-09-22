@@ -1,5 +1,5 @@
 xsetroot -cursor_name left_ptr
-hsetroot -solid "#282c34"
+hsetroot -solid "#21252E"
 compton -CGb -o 0 --no-fading-openclose -d :0
 
 xrdb ~/.Xresources

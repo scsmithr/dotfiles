@@ -45,8 +45,8 @@ myWorkspaces = ["def", "conn", "email", "web"]
 
 myKeys = [
     -- Lock/sleep
-      ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\"")
-    , ( "M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend")
+      ("M-S-l", spawn $ "i3lock -c \"" ++ darkBg ++ "\"")
+    , ( "M-S-s", spawn $ "i3lock -c \"" ++ darkBg ++ "\"& sleep 2; systemctl suspend")
     -- general shortcuts
     , ("M-S-c", kill)
     , ("M-<Space>", sendMessage NextLayout)
@@ -274,7 +274,7 @@ mutedBg = "#353b45"
 darkBg = "#21252E"
 selBg = bg
 visBg = bg
-layoutBg = bg
+layoutBg = darkBg
 
 fg = "#abb2bf"
 selFg = "#61afef"
@@ -286,6 +286,6 @@ border = "#61afef"
 promptBorder = darkBg 
 
 -- config vars
-myTerminal = "kitty"
+myTerminal = "alacritty"
 myModMask = mod4Mask
 myBorderWidth = 2

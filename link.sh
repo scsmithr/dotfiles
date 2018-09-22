@@ -58,3 +58,7 @@ ln -sv $DIR/gtk/gtkrc-2.0 ~/.gtkrc-2.0
 # kitty
 mkdir -p ~/.config/kitty
 ln -sv $DIR/kitty/kitty.conf ~/.config/kitty
+
+# alacritty
+mkdir -p ~/.config/alacritty
+ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
