@@ -286,6 +286,6 @@ border = "#61afef"
 promptBorder = darkBg 
 
 -- config vars
-myTerminal = "alacritty"
+myTerminal = "kitty"
 myModMask = mod4Mask
 myBorderWidth = 2
