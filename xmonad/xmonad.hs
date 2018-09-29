@@ -45,8 +45,8 @@ myWorkspaces = ["def", "conn", "email", "web"]
 
 myKeys = [
     -- Lock/sleep
-      ("M-S-l", spawn $ "i3lock -c \"" ++ darkBg ++ "\"")
-    , ( "M-S-s", spawn $ "i3lock -c \"" ++ darkBg ++ "\"& sleep 2; systemctl suspend")
+      ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\"")
+    , ( "M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend")
     -- general shortcuts
     , ("M-S-c", kill)
     , ("M-<Space>", sendMessage NextLayout)
@@ -58,6 +58,7 @@ myKeys = [
     , ("M-<Return>", spawn myTerminal)
     , ("M-p", launcherPrompt xConf) -- replaces dmenu
     , ("M-b", spawn "chromium")
+    , ("M-S-p", spawn "screenshot.sh")
     -- workspace management
     , ("M-o", selectWorkspace xConf)
     , ("M-S-o", withWorkspace xConf (windows . W.shift))
@@ -175,12 +176,15 @@ showWorkspace idx ws = case idx of
     Just n -> indexPref n ws
     Nothing -> ws
 
+showCurrentWorkspace :: Maybe PinnedIndex -> String -> String
+showCurrentWorkspace idx ws = "[" ++ showWorkspace idx ws ++ "]"
+
 myLogHook h = do
     wmap <- XS.gets pinnedWorkspaceMap
     let getWorkspaceName fn color ws = xmobarColor color "" (fn (pinnedLookup (SM.toList wmap) ws) ws)
    
     dynamicLogWithPP xmobarPP
-        { ppCurrent = getWorkspaceName showWorkspace selFg
+        { ppCurrent = getWorkspaceName showCurrentWorkspace selFg
         , ppHidden = getWorkspaceName hideIfNotPinned fg
         , ppVisible = getWorkspaceName showWorkspace visFg
         , ppUrgent = getWorkspaceName showWorkspace urgentFg
@@ -214,7 +218,7 @@ xConf =
         , promptKeymap = defaultXPKeymap
         , completionKey = (0, xK_Tab)
         , changeModeKey = xK_grave
-        , position = CenteredAt 0.05 0.4
+        , position = Bottom
         , height = 44
         , maxComplRows = Just 10
         , historySize = 256
@@ -274,7 +278,7 @@ mutedBg = "#353b45"
 darkBg = "#21252E"
 selBg = bg
 visBg = bg
-layoutBg = darkBg
+layoutBg = bg
 
 fg = "#abb2bf"
 selFg = "#61afef"
@@ -283,7 +287,7 @@ layoutFg = "#c678dd"
 urgentFg = "#e5c07b"
 
 border = "#61afef"
-promptBorder = darkBg 
+promptBorder = mutedBg 
 
 -- config vars
 myTerminal = "kitty"

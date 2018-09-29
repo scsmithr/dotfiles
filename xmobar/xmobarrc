@@ -1,6 +1,6 @@
 Config {
     font = "xft:Source Code Pro Semibold:size=11:antialias=true",
-    bgColor = "#21252E",
+    bgColor = "#282c34",
     fgColor = "#abb2bf",
     position = Top,
     allDesktops = False,
@@ -31,5 +31,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %StdinReader% }{ %wifi% | %vol% | %battery% | %date% "
+    template = " %StdinReader% }{ %wifi% - %vol% - %battery% - %date% "
 }
