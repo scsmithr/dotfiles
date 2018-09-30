@@ -12,8 +12,15 @@ if [[ "$os" = "$linux_str" ]]; then
 
     # Notify after a process has completed
     notify() {
+        if [ $1 = "critical" ] || 
+           [ $1 = "normal" ] || 
+           [ $1 = "low" ]; then
+            opt="-u"
+            level=$1
+            shift
+        fi
         $@
-        notify-send $opt "Process Completed" "$*"
+        notify-send "Process Completed" "$*" $opt $level
         print -n '\a'
     }
 

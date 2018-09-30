@@ -65,4 +65,5 @@
     "editor.overviewRulerBorder": false,
     "breadcrumbs.enabled": false,
     "workbench.colorTheme": "One Dark Pro",
+    "vim.hlsearch": true,
 }
