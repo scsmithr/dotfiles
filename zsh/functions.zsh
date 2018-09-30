@@ -15,8 +15,8 @@ if [[ "$os" = "$linux_str" ]]; then
         if [ $1 = "critical" ] || 
            [ $1 = "normal" ] || 
            [ $1 = "low" ]; then
-            opt="-u"
-            level=$1
+            local opt="-u"
+            local level=$1
             shift
         fi
         $@
