@@ -21,7 +21,7 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell
 
 import XMonad.Util.EZConfig
-import XMonad.Util.Run ( spawnPipe, hPutStrLn )
+import XMonad.Util.Run ( spawnPipe, hPutStrLn, runProcessWithInput )
 import XMonad.Util.WorkspaceCompare
 
 import Data.Char
@@ -60,7 +60,7 @@ myKeys = [
     , ("M-b", spawn "chromium")
     , ("M-S-p", spawn "screenshot.sh")
     -- workspace management
-    , ("M-o", selectWorkspace xConf)
+    , ("M-o", rofiWSAction addWorkspace)
     , ("M-S-o", withWorkspace xConf (windows . W.shift))
     , ("M-<Backspace>", removeWsPin)
     , ("M-S-<Backspace>", removeEmptyWorkspace)
@@ -82,6 +82,16 @@ myKeys = [
     , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     ]
+
+rofiWSAction :: (String -> X()) -> X()
+rofiWSAction fn = do
+    ws <- gets (W.workspaces . windowset)
+    let tags = map W.tag ws
+    name <- runProcessWithInput "rofi" ["-dmenu"] (intercalate "\n" tags)
+    fn $ rstrip name
+
+rstrip :: String -> String
+rstrip = reverse . dropWhile isSpace . reverse
 
 type WorkspaceTag = String
 type PinnedIndex = Int
