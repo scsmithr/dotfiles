@@ -177,7 +177,7 @@ showWorkspace idx ws = case idx of
     Nothing -> ws
 
 showCurrentWorkspace :: Maybe PinnedIndex -> String -> String
-showCurrentWorkspace idx ws = "[" ++ showWorkspace idx ws ++ "]"
+showCurrentWorkspace idx ws = "(" ++ showWorkspace idx ws ++ ")"
 
 myLogHook h = do
     wmap <- XS.gets pinnedWorkspaceMap
