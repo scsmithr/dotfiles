@@ -31,6 +31,8 @@ import Data.Function
 import qualified Data.Map as M ( fromList )
 import qualified Data.Map.Strict as SM
 
+import qualified RofiPrompt
+
 layoutIcon :: String -> String
 layoutIcon l
     | t "Tall" l = fmt "|="
@@ -56,12 +58,12 @@ myKeys = [
     , ("M-n", sendMessage ToggleStruts)
     -- application shortcuts
     , ("M-<Return>", spawn myTerminal)
-    , ("M-p", launcherPrompt xConf) -- replaces dmenu
+    , ("M-p", spawn "rofi -show run")
     , ("M-b", spawn "chromium")
     , ("M-S-p", spawn "screenshot.sh")
     -- workspace management
-    , ("M-o", rofiWSAction addWorkspace)
-    , ("M-S-o", withWorkspace xConf (windows . W.shift))
+    , ("M-o", RofiPrompt.selectWorkspace)
+    , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
     , ("M-<Backspace>", removeWsPin)
     , ("M-S-<Backspace>", removeEmptyWorkspace)
     , ("M-u", toggleWS)
@@ -82,16 +84,6 @@ myKeys = [
     , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%")
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     ]
-
-rofiWSAction :: (String -> X()) -> X()
-rofiWSAction fn = do
-    ws <- gets (W.workspaces . windowset)
-    let tags = map W.tag ws
-    name <- runProcessWithInput "rofi" ["-dmenu"] (intercalate "\n" tags)
-    fn $ rstrip name
-
-rstrip :: String -> String
-rstrip = reverse . dropWhile isSpace . reverse
 
 type WorkspaceTag = String
 type PinnedIndex = Int
@@ -215,51 +207,6 @@ myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
     gs = 5
 
 toggleStruts XConfig {modMask = modMask} = (modMask, xK_n)
-
-xConf =
-    XPC
-        { font = "xft:Source Code Pro Medium-11"
-        , bgColor = darkBg
-        , fgColor = fg
-        , fgHLight = selFg
-        , bgHLight = darkBg
-        , borderColor = promptBorder
-        , promptBorderWidth = myBorderWidth
-        , promptKeymap = defaultXPKeymap
-        , completionKey = (0, xK_Tab)
-        , changeModeKey = xK_grave
-        , position = Bottom
-        , height = 44
-        , maxComplRows = Just 10
-        , historySize = 256
-        , historyFilter = id
-        , defaultText = []
-        , autoComplete = Nothing
-        , showCompletionOnTab = False
-        , searchPredicate = isInfixOf
-        , alwaysHighlight = False
-        }
-
-data Launcher =
-    Launcher
-
-instance XPrompt Launcher where
-    showXPrompt Launcher = "> "
-    completionToCommand _ = escape
-
-escape :: String -> String
-escape [] = ""
-escape (x:xs)
-    | isSpecialChar x = '\\' : x : escape xs
-    | otherwise = x : escape xs
-
-isSpecialChar :: Char -> Bool
-isSpecialChar = flip elem " &\\@\"'#?$*()[]{};"
-
-launcherPrompt :: XPConfig -> X ()
-launcherPrompt c = do
-    cmds <- io getCommands
-    mkXPrompt Launcher c (getShellCompl cmds $ searchPredicate c) spawn
 
 myStartupHook = return ()
 

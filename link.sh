@@ -27,8 +27,9 @@ ln -sv $DIR/zsh/* $ZSH_CONF_DIR
 ln -sv $DIR/zsh/zshrc ~/.zshrc
 
 # xmonad
-mkdir -p ~/.xmonad
-ln -sv $DIR/xmonad/xmonad.hs ~/.xmonad
+mkdir -p ~/.xmonad/lib
+ln -sv $DIR/xmonad/*.hs ~/.xmonad
+ln -sv $DIR/xmonad/lib/*.hs ~/.xmonad/lib
 
 # xmobar
 ln -sv $DIR/xmobar/xmobarrc ~/.xmobarrc
