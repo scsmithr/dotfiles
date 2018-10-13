@@ -16,13 +16,13 @@
         "--disable=gotype"
     ],
     "go.buildFlags": ["-tags=integration"],
-    "go.useLanguageServer": true,
+    "go.useLanguageServer": false,
     "problems.decorations.enabled": false,
     "editor.lineNumbers": "on",
     "update.channel": "none",
     "window.titleBarStyle": "native",
     "workbench.editor.showTabs": false,
-    "explorer.openEditors.visible": 10,
+    "explorer.openEditors.visible": 0,
     "workbench.sideBar.location": "left",
     "go.enableCodeLens": {
         "references": false,
