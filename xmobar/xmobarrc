@@ -31,5 +31,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %StdinReader% }{ %wifi% - %vol% - %battery% - %date% "
+    template = " %StdinReader% }  %date%  { %wifi% - %vol% - %battery% "
 }

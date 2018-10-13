@@ -31,16 +31,6 @@ import qualified Data.Map as M ( fromList )
 import qualified RofiPrompt
 import qualified PinnedWorkspaces
 
-layoutIcon :: String -> String
-layoutIcon l
-    | t "Tall" l = fmt "|="
-    | t "Full" l = fmt "[]"
-    | t "ThreeCol" l = fmt "|||"
-    | otherwise = l
-  where
-    t = isInfixOf
-    fmt = pad
-
 myWorkspaces = ["def", "conn", "email", "web"]
 
 myKeys = [
@@ -83,6 +73,15 @@ myKeys = [
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     ]
 
+layoutIcon :: String -> String
+layoutIcon l
+    | t "Tall" l = fmt "|="
+    | t "Full" l = fmt "[]"
+    | t "ThreeCol" l = fmt "|||"
+    | otherwise = l
+  where
+    t = isInfixOf
+    fmt = pad
 
 indexPref :: PinnedWorkspaces.PinnedIndex -> String -> String
 indexPref idx ws = (show idx) ++ ":" ++ ws
@@ -98,18 +97,18 @@ showWorkspace idx ws = case idx of
     Nothing -> ws
 
 showCurrentWorkspace :: Maybe PinnedWorkspaces.PinnedIndex -> String -> String
-showCurrentWorkspace idx ws = "(" ++ showWorkspace idx ws ++ ")"
+showCurrentWorkspace idx ws = showWorkspace idx ws
 
 myLogHook h = do
     getIndex <- PinnedWorkspaces.indexReader
     let format fn fg bg ws = xmobarColor fg bg (fn (getIndex ws) ws)
-    
+
     dynamicLogWithPP xmobarPP
         { ppCurrent = format showCurrentWorkspace selFg ""
         , ppHidden = format hideIfNotPinned fg ""
         , ppVisible = format showWorkspace visFg ""
         , ppUrgent = format showWorkspace urgentFg ""
-        , ppLayout = xmobarColor layoutFg layoutBg . layoutIcon
+        , ppLayout = xmobarColor layoutFg "" . layoutIcon
         , ppTitle = const ""
         , ppSep = ""
         , ppSort = PinnedWorkspaces.getSortByPinned
