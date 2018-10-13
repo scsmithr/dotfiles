@@ -1,0 +1,69 @@
+* {
+	accent: #61afef;
+	background-color: @background;
+	background: #21252E;
+	alt-background: #282c34;
+	separator: #353b45;
+	font: "Source Code Pro Medium 14";
+	foreground: #abb2bf;
+	select: #222222;
+	text-color: @foreground;
+}
+
+#window {
+	border: 2px;
+	border-color: @separator;
+	padding: 2px;
+	width: 40%;
+}
+
+#mainbox {
+	children: [message, inputbar, listview];
+}
+
+#textbox {
+	padding: 10px;
+}
+
+#listview {
+	fixed-height: false;
+	border: 2px dash 0px 0px;
+	border-color: @separator;
+	padding: 0 0 1px 0;
+	scrollbar: false;
+}
+
+#element {
+	padding: 3px 10px;
+	text-color: @foreground;
+}
+
+#element.alternate {
+	background-color: @alt-background;
+}
+
+#element.selected {
+	text-color: @background;
+	background-color: @accent;
+}
+
+#inputbar {
+	children: [prompt, textbox-prompt-colon, entry];
+	padding: 10px;
+	spacing: 0px;
+}
+
+#prompt {
+	text-color: @accent;
+}
+
+textbox-prompt-colon {
+	expand: false;
+	str: ":";
+	text-color: @foreground;
+}
+
+#entry {
+	padding: 0 10px;
+	text-color: @foreground;
+}

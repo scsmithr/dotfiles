@@ -63,3 +63,7 @@ ln -sv $DIR/kitty/kitty.conf ~/.config/kitty
 # alacritty
 mkdir -p ~/.config/alacritty
 ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
+
+# rofi
+mkdir -p ~/.config/rofi
+ln -sv $DIR/rofi/* ~/.config/rofi
