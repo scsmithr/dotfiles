@@ -1,6 +1,5 @@
 import XMonad
 import qualified XMonad.StackSet as W
-import qualified XMonad.Util.ExtensibleState as XS
 
 import System.Exit ( exitWith, ExitCode ( ExitSuccess ) )
 
@@ -22,16 +21,15 @@ import XMonad.Prompt.Shell
 
 import XMonad.Util.EZConfig
 import XMonad.Util.Run ( spawnPipe, hPutStrLn, runProcessWithInput )
-import XMonad.Util.WorkspaceCompare
 
 import Data.Char
 import Data.Maybe
 import Data.List
 import Data.Function
 import qualified Data.Map as M ( fromList )
-import qualified Data.Map.Strict as SM
 
 import qualified RofiPrompt
+import qualified PinnedWorkspaces
 
 layoutIcon :: String -> String
 layoutIcon l
@@ -64,7 +62,7 @@ myKeys = [
     -- workspace management
     , ("M-o", RofiPrompt.selectWorkspace)
     , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
-    , ("M-<Backspace>", removeWsPin)
+    , ("M-<Backspace>", PinnedWorkspaces.unpinCurrentWorkspace)
     , ("M-S-<Backspace>", removeEmptyWorkspace)
     , ("M-u", toggleWS)
     -- window management
@@ -85,48 +83,38 @@ myKeys = [
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     ]
 
-type WorkspaceTag = String
-type PinnedIndex = Int
 
-data PinnedWorkspaceState = PinnedWorkspaceState {
-        pinnedWorkspaceMap :: SM.Map PinnedIndex WorkspaceTag
-    }
-    deriving (Typeable, Read, Show)
+indexPref :: PinnedWorkspaces.PinnedIndex -> String -> String
+indexPref idx ws = (show idx) ++ ":" ++ ws
 
-instance ExtensionClass PinnedWorkspaceState where
-    initialValue = PinnedWorkspaceState SM.empty
-    extensionType = PersistentExtension
+hideIfNotPinned :: Maybe PinnedWorkspaces.PinnedIndex -> String -> String
+hideIfNotPinned idx ws = case idx of
+    Just n -> indexPref n ws
+    Nothing -> ""
 
-setPinnedIndex :: PinnedIndex -> X()
-setPinnedIndex idx = do
-    wtag <- gets (W.currentTag . windowset)
-    wmap <- XS.gets pinnedWorkspaceMap
-    let cleared = clearIfPinned wmap wtag
-    XS.modify $ \s -> s {pinnedWorkspaceMap = SM.insert idx wtag cleared}
-    -- TODO: Shifting to this workspace is just used to force xmonad to 
-    -- trigger an event so that our log hook is called. Figure out how to 
-    -- avoid needing to shift.
-    withPinnedIndex W.shift idx
+showWorkspace :: Maybe PinnedWorkspaces.PinnedIndex -> String -> String
+showWorkspace idx ws = case idx of
+    Just n -> indexPref n ws
+    Nothing -> ws
 
-removeWsPin :: X()
-removeWsPin = do
-    wtag <- gets (W.currentTag . windowset)
-    wmap <- XS.gets pinnedWorkspaceMap
-    XS.modify $ \s -> s {pinnedWorkspaceMap = clearIfPinned wmap wtag}
-    windows $ W.greedyView wtag -- Same "workaround" as above
+showCurrentWorkspace :: Maybe PinnedWorkspaces.PinnedIndex -> String -> String
+showCurrentWorkspace idx ws = "(" ++ showWorkspace idx ws ++ ")"
 
-clearIfPinned :: (SM.Map PinnedIndex WorkspaceTag) -> WorkspaceId -> (SM.Map PinnedIndex WorkspaceTag)
-clearIfPinned wmap w = case pinnedLookup (SM.toList wmap) w of
-    Just idx -> SM.delete idx wmap
-    Nothing -> wmap
-
-withPinnedIndex :: (String -> WindowSet -> WindowSet) -> PinnedIndex -> X()
-withPinnedIndex job pidx = do
-    wtag <- ilookup pidx
-    maybe (return ()) (windows . job) wtag
-        where
-            ilookup :: PinnedIndex -> X (Maybe WorkspaceTag)
-            ilookup idx = SM.lookup idx `fmap` XS.gets pinnedWorkspaceMap
+myLogHook h = do
+    getIndex <- PinnedWorkspaces.indexReader
+    let format fn fg bg ws = xmobarColor fg bg (fn (getIndex ws) ws)
+    
+    dynamicLogWithPP xmobarPP
+        { ppCurrent = format showCurrentWorkspace selFg ""
+        , ppHidden = format hideIfNotPinned fg ""
+        , ppVisible = format showWorkspace visFg ""
+        , ppUrgent = format showWorkspace urgentFg ""
+        , ppLayout = xmobarColor layoutFg layoutBg . layoutIcon
+        , ppTitle = const ""
+        , ppSep = ""
+        , ppSort = PinnedWorkspaces.getSortByPinned
+        , ppOutput = hPutStrLn h
+        }
 
 myWorkspaceKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
@@ -134,68 +122,11 @@ myWorkspaceKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
         (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
     ++
-    zip (zip (repeat (modm)) [xK_1..xK_9]) (map (withPinnedIndex W.greedyView) [1..])
+    zip (zip (repeat (modm)) [xK_1..xK_9]) (map (PinnedWorkspaces.withPinnedIndex W.greedyView) [1..])
     ++
-    zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (withPinnedIndex W.shift) [1..])
+    zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (PinnedWorkspaces.withPinnedIndex W.shift) [1..])
     ++
-    zip (zip (repeat (modm .|. controlMask)) [xK_1..xK_9]) (map (setPinnedIndex) [1..])
-
-pinnedCompare :: Maybe Int -> Maybe Int -> Ordering
-pinnedCompare Nothing Nothing = EQ
-pinnedCompare Nothing (Just _) = GT
-pinnedCompare (Just _) Nothing = LT
-pinnedCompare a b = compare a b
-
-pinnedLookup :: [(PinnedIndex, WorkspaceId)] -> WorkspaceId -> Maybe PinnedIndex
-pinnedLookup l w = 
-    case find (\(_,x) -> x == w) l of
-        Just p -> Just(fst p) 
-        Nothing -> Nothing
-
-getPinnedIdx :: X (WorkspaceId -> Maybe Int)
-getPinnedIdx = do
-    wmap <- XS.gets pinnedWorkspaceMap
-    return (pinnedLookup $ SM.toList wmap)
-
-getPinnedCompare :: X WorkspaceCompare
-getPinnedCompare = do
-    idx <- getPinnedIdx
-    return $ mconcat [pinnedCompare `on` idx, compare]
-
-getSortByPinned :: X WorkspaceSort
-getSortByPinned = mkWsSort getPinnedCompare
-
-indexPref :: PinnedIndex -> String -> String
-indexPref idx ws = (show idx) ++ ":" ++ ws
-
-hideIfNotPinned :: Maybe PinnedIndex -> String -> String
-hideIfNotPinned idx ws = case idx of
-    Just n -> indexPref n ws
-    Nothing -> ""
-
-showWorkspace :: Maybe PinnedIndex -> String -> String
-showWorkspace idx ws = case idx of
-    Just n -> indexPref n ws
-    Nothing -> ws
-
-showCurrentWorkspace :: Maybe PinnedIndex -> String -> String
-showCurrentWorkspace idx ws = "(" ++ showWorkspace idx ws ++ ")"
-
-myLogHook h = do
-    wmap <- XS.gets pinnedWorkspaceMap
-    let getWorkspaceName fn color ws = xmobarColor color "" (fn (pinnedLookup (SM.toList wmap) ws) ws)
-   
-    dynamicLogWithPP xmobarPP
-        { ppCurrent = getWorkspaceName showCurrentWorkspace selFg
-        , ppHidden = getWorkspaceName hideIfNotPinned fg
-        , ppVisible = getWorkspaceName showWorkspace visFg
-        , ppUrgent = getWorkspaceName showWorkspace urgentFg
-        , ppLayout = xmobarColor layoutFg layoutBg . layoutIcon
-        , ppTitle = const ""
-        , ppSep = ""
-        , ppSort = getSortByPinned
-        , ppOutput = hPutStrLn h
-        }
+    zip (zip (repeat (modm .|. controlMask)) [xK_1..xK_9]) (map (PinnedWorkspaces.pinCurrentWorkspace) [1..])
 
 myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
   where
