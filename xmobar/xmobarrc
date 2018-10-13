@@ -2,7 +2,7 @@ Config {
     font = "xft:Source Code Pro Semibold:size=11:antialias=true",
     bgColor = "#282c34",
     fgColor = "#abb2bf",
-    position = Top,
+    position = TopSize C 100 40,
     allDesktops = False,
     lowerOnStart = True,
     hideOnStart = False,
