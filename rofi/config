@@ -1,2 +1,3 @@
 rofi.theme:             theme
 rofi.m:                 -4
+rofi.modi:              combi,window,drun,run,ssh

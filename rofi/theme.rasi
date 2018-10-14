@@ -11,6 +11,7 @@
 }
 
 #window {
+	anchor: center;
 	border: 2px;
 	border-color: @separator;
 	padding: 2px;
@@ -31,6 +32,7 @@
 	border-color: @separator;
 	padding: 0 0 1px 0;
 	scrollbar: false;
+	dynamic: false;
 }
 
 #element {

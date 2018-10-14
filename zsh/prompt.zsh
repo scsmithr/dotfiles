@@ -17,7 +17,7 @@ VCS='${vcs_info_msg_0_}'
 TRUNC_WIDTH='${COLUMNS}'
 
 PROMPT="
-%(1j.$fg[yellow](%j) $reset_color.)%${TRUNC_WIDTH}>...>$MACHINE$CURR_DIR $VCS%>>
+%${TRUNC_WIDTH}>...>$MACHINE$CURR_DIR %(1j.$fg[yellow](%j) $reset_color.)$VCS%>>
 %{%(?.$fg[magenta].$fg[yellow])%}>%{$reset_color%} "
 
 RPROMPT=""
