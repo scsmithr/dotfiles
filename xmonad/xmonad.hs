@@ -15,6 +15,7 @@ import XMonad.Layout.Spacing
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
+import XMonad.Actions.PhysicalScreens
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -116,9 +117,9 @@ myLogHook h = do
         }
 
 myWorkspaceKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
-    ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    ((m .|. modm, key), f sc)
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..],
-        (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+        (f, m) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
     ]
     ++
     zip (zip (repeat (modm)) [xK_1..xK_9]) (map (PinnedWorkspaces.withPinnedIndex W.greedyView) [1..])
