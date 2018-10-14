@@ -66,4 +66,6 @@
     "breadcrumbs.enabled": false,
     "workbench.colorTheme": "One Dark Pro",
     "vim.hlsearch": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
 }
