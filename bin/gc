@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+OPTIND=1
+
+project=$GOOGLE_PROJECT_ID
+
+while getopts ":p:" opt; do
+    case $opt in
+        p)
+            project=$OPTARG
+            ;;
+        \?)
+            echo "Invalid argument -$OPTARG"
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            exit 1
+            ;;
+    esac
+done
+
+if [ -z $project ]; then
+    echo "Project must be provided"
+fi
+
+shift $((OPTIND-1))
+
+case $1 in
+    "ssh")
+        instances=$(gcloud compute --project $project instances list --format json | jq -r '.[] | select (.status = "RUNNING") | .name')
+        selected=$(echo -n $instances | rofi -p "instance ssh" -dmenu -sep " ")
+        gcloud compute --project $project ssh $selected
+        ;;
+esac
+
