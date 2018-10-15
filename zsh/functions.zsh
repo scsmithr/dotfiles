@@ -89,6 +89,7 @@ if [[ "$os" = "$linux_str" ]]; then
     dpi() {
         if [ "$#" -eq 1 ]; then
             echo "Xft.dpi: $1" | xrdb -merge
+            echo "*dpi: $1" | xrdb -merge
         else 
             print "Invalid number of arguments"
         fi
@@ -140,4 +141,3 @@ mkcd() {
         cd "$1"
     fi
 }
-

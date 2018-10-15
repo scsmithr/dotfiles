@@ -63,7 +63,7 @@
     "window.zoomLevel": 0,
     "go.formatTool": "goimports",
     "editor.overviewRulerBorder": false,
-    "breadcrumbs.enabled": false,
+    "breadcrumbs.enabled": true,
     "workbench.colorTheme": "One Dark Pro",
     "vim.hlsearch": true,
     "files.insertFinalNewline": true,

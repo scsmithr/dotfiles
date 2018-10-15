@@ -7,6 +7,7 @@ xrdb ~/.Xresources
 case $HOSTNAME in
     "system22")
         echo "Xft.dpi: 144" | xrdb -merge
+        echo "*dpi: 144" | xrdb -merge
         ;;
 esac
 

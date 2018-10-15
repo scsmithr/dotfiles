@@ -1,10 +1,10 @@
 * {
-	accent: #61afef;
+	selected: #61afef;
 	background-color: @background;
 	background: #21252E;
 	alt-background: #282c34;
 	separator: #353b45;
-	font: "Source Code Pro Medium 14";
+	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
 	select: #222222;
 	text-color: @foreground;
@@ -14,7 +14,6 @@
 	anchor: center;
 	border: 2px;
 	border-color: @separator;
-	padding: 2px;
 	width: 40%;
 }
 
@@ -36,7 +35,7 @@
 }
 
 #element {
-	padding: 3px 10px;
+	padding: 4px 10px;
 	text-color: @foreground;
 }
 
@@ -46,7 +45,7 @@
 
 #element.selected {
 	text-color: @background;
-	background-color: @accent;
+	background-color: @selected;
 }
 
 #inputbar {
@@ -56,7 +55,7 @@
 }
 
 #prompt {
-	text-color: @accent;
+	text-color: @foreground;
 }
 
 textbox-prompt-colon {
