@@ -69,9 +69,9 @@ myKeys = [
     -- function keys
     , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 2 -fps 60")
     , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 2 -fps 60")
-    , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ +5%")
-    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%")
-    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    , ("<XF86AudioRaiseVolume>", spawn "vol up")
+    , ("<XF86AudioLowerVolume>", spawn "vol down")
+    , ("<XF86AudioMute>", spawn "vol mute")
     ]
 
 layoutIcon :: String -> String

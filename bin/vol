@@ -1,0 +1,46 @@
+#!/bin/bash
+
+mute_template="<fc=#e5c07b>(mute)</fc>"
+sink=0
+
+get_default_sink_name() {
+    pacmd stat | awk -F": " '/^Default sink name: /{print $2}'
+}
+
+get_vol() {
+    local vol=$(pacmd list-sinks |
+        awk '/^\s+name: /{indefault = $2 == "<'$(get_default_sink_name)'>"}
+        /^\s+volume: / && indefault {print $5; exit}')
+    echo $vol
+}
+
+get_mute_status() {
+    local mute=$(pacmd list-sinks |
+        awk '/^\s+name: /{indefault = $2 == "<'$(get_default_sink_name)'>"}
+        /^\s+muted: / && indefault {print $2; exit}')
+}
+
+format_vol_status() {
+    local vol=$(get_vol)
+    local mute=$(get_mute_status)
+    if [ "$mute" == "no" ]; then
+        echo "vol: $vol"
+    else
+        echo "vol: $vol $mute_template"
+    fi
+}
+
+case $1 in
+    "up")
+        pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ +5%
+        ;;
+    "down")
+        pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%
+        ;;
+    "mute")
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
+        ;;
+    "get")
+        format_vol_status
+        ;;
+esac
