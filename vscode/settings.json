@@ -67,5 +67,10 @@
     "workbench.colorTheme": "One Dark Pro",
     "vim.hlsearch": true,
     "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true
+    "files.trimFinalNewlines": true,
+    "gitlens.keymap": "alternate",
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "editor.renderWhitespace": "all"
 }

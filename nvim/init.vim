@@ -17,6 +17,10 @@ set expandtab
 set smarttab
 set autoindent
 
+" Show whitespace
+set list
+set listchars=tab:>\ ,trail:·,nbsp:·,space:·
+
 " Show line numbers
 set number
 
