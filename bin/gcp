@@ -28,11 +28,34 @@ fi
 
 shift $((OPTIND-1))
 
+select_instance() {
+    local prompt=$1
+    local instances=$(gcloud compute --project $project instances list --format json | jq -r '.[] | select (.status == "RUNNING") | .name')
+    local selected=$(echo -n $instances | rofi -p "$prompt" -dmenu -sep " ")
+    echo $selected
+}
+
+instance_ssh() {
+    local selected=$(select_instance ssh)
+    gcloud compute --project $project ssh $selected
+}
+
+instance_scp() {
+    local file=$1
+    if [ -z $file ]; then
+        echo "file must be provided"
+        exit 1
+    fi
+    local selected=$(select_instance "scp ($file)") 
+    gcloud compute --project $project scp --recurse $file $selected:.
+}
+
 case $1 in
     "ssh")
-        instances=$(gcloud compute --project $project instances list --format json | jq -r '.[] | select (.status == "RUNNING") | .name')
-        selected=$(echo -n $instances | rofi -p "instance ssh" -dmenu -sep " ")
-        gcloud compute --project $project ssh $selected
+        instance_ssh
+        ;;
+    "scp")
+        file=$2
+        instance_scp $file
         ;;
 esac
-
