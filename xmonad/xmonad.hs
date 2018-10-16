@@ -47,7 +47,7 @@ myKeys = [
     , ("M-n", sendMessage ToggleStruts)
     -- application shortcuts
     , ("M-<Return>", spawn myTerminal)
-    , ("M-p", spawn "rofi -show drun")
+    , ("M-p", spawn "rofi -show run")
     , ("M-b", spawn "chromium")
     , ("M-S-p", spawn "screenshot.sh")
     -- workspace management
