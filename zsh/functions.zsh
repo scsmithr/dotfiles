@@ -94,6 +94,13 @@ if [[ "$os" = "$linux_str" ]]; then
             print "Invalid number of arguments"
         fi
     }
+
+    jump() {
+        local dir=$(find ${1:-~} -maxdepth 6 -type d 2> /dev/null | rofi -p jump -dmenu)
+        if [ ! -z $dir ]; then
+            cd $dir
+        fi
+    }
 fi
 
 # Start ssh daemon

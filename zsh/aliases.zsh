@@ -26,6 +26,8 @@ fi
 alias ll='exa -lG'
 alias la='exa -alG'
 
+alias jd='jump'
+
 alias gcssh='TERM=xterm-256color gcloud compute ssh'
 
 # Some useful tmux alias
