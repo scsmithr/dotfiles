@@ -72,5 +72,6 @@
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
     },
-    "editor.renderWhitespace": "all"
+    "editor.renderWhitespace": "all",
+    "editor.scrollbar.vertical": "visible"
 }
