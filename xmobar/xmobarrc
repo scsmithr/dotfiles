@@ -13,7 +13,7 @@ Config {
 
         Run Com "current_wifi.sh" [] "wifi" 100,
 
-        Run Com "current_vol.sh" ["<fc=#e5c07b>(mute)</fc>"] "vol" 100,
+        Run Com "vol" ["get"] "vol" 100,
      
         Run Battery [
             "--template" , "bat: <acstatus>",
