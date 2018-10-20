@@ -16,6 +16,7 @@ import XMonad.Layout.Spacing
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.PhysicalScreens
+import XMonad.Actions.Submap
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -49,13 +50,17 @@ myKeys = [
     , ("M-<Return>", spawn myTerminal)
     , ("M-p", spawn "rofi -show run")
     , ("M-b", spawn "chromium")
-    , ("M-S-p", spawn "screenshot.sh")
+    , ("M-i", submap . M.fromList $
+        [ ((0, xK_f), spawn "thunar")
+        , ((0, xK_p), spawn "screenshot.sh")
+        ])
     -- workspace management
     , ("M-o", RofiPrompt.selectWorkspace)
     , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
-    , ("M-<Backspace>", PinnedWorkspaces.unpinCurrentWorkspace)
-    , ("M-S-<Backspace>", removeEmptyWorkspace)
-    , ("M-u", toggleWS)
+    , ("M-u", submap . M.fromList $
+        [ ((0, xK_u), PinnedWorkspaces.unpinCurrentWorkspace)
+        , ((0, xK_d), removeEmptyWorkspace)
+        ] ++ zip (zip (repeat (0)) [xK_1..xK_9]) (map (PinnedWorkspaces.pinCurrentWorkspace) [1..]))
     -- window management
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
@@ -125,8 +130,6 @@ myWorkspaceKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $ [
     zip (zip (repeat (modm)) [xK_1..xK_9]) (map (PinnedWorkspaces.withPinnedIndex W.greedyView) [1..])
     ++
     zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (PinnedWorkspaces.withPinnedIndex W.shift) [1..])
-    ++
-    zip (zip (repeat (modm .|. controlMask)) [xK_1..xK_9]) (map (PinnedWorkspaces.pinCurrentWorkspace) [1..])
 
 myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
   where
