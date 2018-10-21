@@ -1,0 +1,14 @@
+#!/bin/bash
+# Sends a notification when input matches a string.
+
+if [ -z $1 ]; then
+    echo "Argument required"
+    exit 1
+fi
+
+tee >(
+    while read line
+    do
+        [[ "$line" == *"$1"* ]] && notify-send "Match" "$line" -u low
+    done
+)
