@@ -96,7 +96,7 @@ if [[ "$os" = "$linux_str" ]]; then
     }
 
     jump() {
-        local dir=$(find ${1:-~} -maxdepth 6 -type d 2> /dev/null | rofi -p jump -dmenu)
+        local dir=$(find ${1:-~} -maxdepth 6 -type d 2> /dev/null | fzf +m)
         if [ ! -z $dir ]; then
             cd $dir
         fi

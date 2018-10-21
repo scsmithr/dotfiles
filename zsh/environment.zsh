@@ -8,6 +8,14 @@ export PATH=$PATH:/usr/local/go/bin
 # Cargo bins
 export PATH=$PATH:$HOME/.cargo/bin
 
+# Default fzf options
+export FZF_DEFAULT_OPTS='
+    --color=16
+    --height=40%
+    --min-height=5
+    --layout=reverse
+'
+
 if [[ "$os" = "$linux_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/.cabal/bin

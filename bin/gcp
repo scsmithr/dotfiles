@@ -31,7 +31,7 @@ shift $((OPTIND-1))
 select_instance() {
     local prompt=$1
     local instances=$(gcloud compute --project $project instances list --format json | jq -r '.[] | select (.status == "RUNNING") | .name')
-    local selected=$(echo -n $instances | rofi -p "$prompt" -dmenu -sep " ")
+    local selected=$(echo -n $instances | rofi -p "$prompt" -dmenu -sep " " -no-custom)
     echo $selected
 }
 
