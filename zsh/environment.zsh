@@ -11,7 +11,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 # Default fzf options
 export FZF_DEFAULT_OPTS='
     --color=16
-    --height=40%
+    --height=10
     --min-height=5
     --layout=reverse
 '
