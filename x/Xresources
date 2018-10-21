@@ -1,8 +1,15 @@
 Xcursor.size: 32
 
 URxvt.font: xft:Source Code Pro Medium:size=12
+URxvt.letterSpace: -1
 URxvt.scrollBar: false
 URxvt.urgentOnBell: true
+URxvt*scrollTtyOutput: false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollWithBuffer: false
+! Remove iso popups when pressing ctrl-shift
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 #define base00 #282c34
 #define base01 #353b45

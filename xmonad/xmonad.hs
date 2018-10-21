@@ -181,6 +181,6 @@ border = "#61afef"
 promptBorder = mutedBg 
 
 -- config vars
-myTerminal = "kitty"
+myTerminal = "urxvt"
 myModMask = mod4Mask
 myBorderWidth = 2
