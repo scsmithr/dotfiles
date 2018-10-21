@@ -122,13 +122,15 @@ stopssh() {
 }
 
 run_man() {
-    env LESS_TERMCAP_mb=$'\E[01;31m' \
-    LESS_TERMCAP_md=$'\E[01;38;5;74m' \
-    LESS_TERMCAP_me=$'\E[0m' \
-    LESS_TERMCAP_se=$'\E[0m' \
-    LESS_TERMCAP_so=$'\E[38;5;246m' \
-    LESS_TERMCAP_ue=$'\E[0m' \
-    LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+    # https://unix.stackexchange.com/questions/119/colors-in-man-pages
+    # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
+    env LESS_TERMCAP_mb=$(tput bold; tput setaf 2) \
+    LESS_TERMCAP_md=$(tput bold; tput setaf 4) \
+    LESS_TERMCAP_me=$(tput sgr0) \
+    LESS_TERMCAP_so=$(tput bold; tput setaf 3) \
+    LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
+    LESS_TERMCAP_us=$(tput smul) \
+    LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
     /usr/bin/man "$@"
 }
 
