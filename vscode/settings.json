@@ -73,5 +73,6 @@
         "suppressShowKeyBindingsNotice": true
     },
     "editor.renderWhitespace": "all",
-    "editor.scrollbar.vertical": "visible"
+    "editor.scrollbar.vertical": "visible",
+    "shellcheck.run": "onSave"
 }

@@ -1,9 +1,11 @@
 Xcursor.size: 32
 
 URxvt.font: xft:Source Code Pro Medium:size=12
+URxvt.boldFont: xft:Source Code Pro:size=12:Bold
 URxvt.letterSpace: -1
 URxvt.scrollBar: false
 URxvt.urgentOnBell: true
+URxvt.cursorBlink: true
 URxvt*scrollTtyOutput: false
 URxvt*scrollTtyKeypress: true
 URxvt*scrollWithBuffer: false
