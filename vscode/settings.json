@@ -68,11 +68,20 @@
     "vim.hlsearch": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    "gitlens.keymap": "alternate",
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
     },
     "editor.renderWhitespace": "all",
     "editor.scrollbar.vertical": "visible",
-    "shellcheck.run": "onSave"
+    "shellcheck.run": "onSave",
+    "gitlens.keymap": "alternate",
+    "gitlens.codeLens.enabled": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.hovers.currentLine.enabled": false,
+    "gitlens.settings.mode": "advanced",
+    "gitlens.explorers.avatars": false,
+    "gitlens.historyExplorer.avatars": false,
+    "gitlens.blame.avatars": false,
+    "gitlens.statusBar.reduceFlicker": true
 }
