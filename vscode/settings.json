@@ -32,8 +32,10 @@
         "sideBar.background": "#21252E",
         "statusBar.background": "#21252E",
         "editorCursor.foreground": "#61AFEF",
-        "widget.shadow": "#ffffff00",
-        "scrollbar.shadow": "#ffffff00",
+        "widget.shadow": "#00000000",
+        "scrollbar.shadow": "#00000000",
+        "notifications.background": "#21252E",
+        "notificationCenterHeader.background": "#21252E",
         "gitDecoration.modifiedResourceForeground": "#E5C07B",
         "gitDecoration.deletedResourceForeground": "#E06C75",
         "gitDecoration.untrackedResourceForeground": "#98C379",
@@ -83,5 +85,6 @@
     "gitlens.explorers.avatars": false,
     "gitlens.historyExplorer.avatars": false,
     "gitlens.blame.avatars": false,
-    "gitlens.statusBar.reduceFlicker": true
+    "gitlens.statusBar.reduceFlicker": true,
+    "workbench.statusBar.feedback.visible": false
 }
