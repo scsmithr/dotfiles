@@ -15,7 +15,9 @@
         "--aggregate",
         "--disable=gotype"
     ],
-    "go.buildFlags": ["-tags=integration"],
+    "go.buildFlags": [
+        "-tags=integration"
+    ],
     "go.useLanguageServer": false,
     "problems.decorations.enabled": false,
     "editor.lineNumbers": "on",
@@ -86,5 +88,6 @@
     "gitlens.historyExplorer.avatars": false,
     "gitlens.blame.avatars": false,
     "gitlens.statusBar.reduceFlicker": true,
-    "workbench.statusBar.feedback.visible": false
+    "workbench.statusBar.feedback.visible": false,
+    "editor.formatOnSave": true
 }
