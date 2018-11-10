@@ -51,7 +51,7 @@ myKeys = [
     , ("M-p", spawn "rofi -show run")
     , ("M-b", spawn "chromium")
     , ("M-i", submap . M.fromList $
-        [ ((0, xK_f), spawn "thunar")
+        [ ((0, xK_f), spawn "nautilus")
         , ((0, xK_p), spawn "screenshot.sh")
         ])
     -- workspace management
