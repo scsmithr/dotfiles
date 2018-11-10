@@ -46,9 +46,6 @@ alias tm=trash-put
 
 alias mm='xmodmap ~/.xmodmap'
 
-# man aliases
-alias man=run_man
-
 # Compression aliases
 alias tarx='tar -xvf'
 alias targz='tar -zxvf'

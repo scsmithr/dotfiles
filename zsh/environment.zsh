@@ -16,6 +16,17 @@ export FZF_DEFAULT_OPTS='
     --layout=reverse
 '
 
+# man colors
+# https://unix.stackexchange.com/questions/119/colors-in-man-pages
+# https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
+export LESS_TERMCAP_md=$(tput bold; tput setaf 4)
+export LESS_TERMCAP_me=$(tput sgr0)
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3)
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+export LESS_TERMCAP_us=$(tput smul)
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+
 if [[ "$os" = "$linux_str" ]]; then
     #PATH
     export PATH=$PATH:$HOME/.cabal/bin

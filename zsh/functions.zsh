@@ -121,19 +121,6 @@ stopssh() {
     fi
 }
 
-run_man() {
-    # https://unix.stackexchange.com/questions/119/colors-in-man-pages
-    # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
-    env LESS_TERMCAP_mb=$(tput bold; tput setaf 2) \
-    LESS_TERMCAP_md=$(tput bold; tput setaf 4) \
-    LESS_TERMCAP_me=$(tput sgr0) \
-    LESS_TERMCAP_so=$(tput bold; tput setaf 3) \
-    LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
-    LESS_TERMCAP_us=$(tput smul) \
-    LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
-    /usr/bin/man "$@"
-}
-
 refresh() {
     source "$CONFIG_LOCATION/source-all.zsh"
 }
