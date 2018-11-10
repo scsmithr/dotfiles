@@ -15,9 +15,6 @@ precmd() {
     vcs_info
 }
 
-# Prompt
-source "$CONFIG_LOCATION/prompt.zsh"
-
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors 'reply=( "=(#b)(*$VAR)(?)*=00=$color[green]=$color[bg-green]" )'
 zstyle ':completion:*:*:*:*:hosts' list-colors '=*=30;41'
@@ -27,12 +24,6 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
-
-# Control key fix
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[Od" backward-word
-bindkey "^[Oc" forward-word
 
 # History
 HISTFILE=$HOME/.history
@@ -49,3 +40,9 @@ source "$CONFIG_LOCATION/environment.zsh"
 
 # Functions
 source "$CONFIG_LOCATION/functions.zsh"
+
+# Keybinds
+source "$CONFIG_LOCATION/keybinds.zsh"
+
+# Prompt
+source "$CONFIG_LOCATION/prompt.zsh"

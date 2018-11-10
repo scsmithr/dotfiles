@@ -8,6 +8,9 @@ case $HOSTNAME in
     "system22")
         echo "Xft.dpi: 144" | xrdb -merge
         echo "*dpi: 144" | xrdb -merge
+        if [ -f ~/.icm/Y2XND_LQ156D1.icm ]; then
+            xcalib ~/.icm/Y2XND_LQ156D1.icm
+        fi
         ;;
 esac
 
