@@ -13,6 +13,8 @@ bindkey -M viins '^p' history-beginning-search-backward
 
 bindkey -M viins '^r' history-incremental-search-backward
 
+bindkey "^?" backward-delete-char
+
 # Taken from https://github.com/robbyrussell/oh-my-zsh/blob/0f6e49b455e498bd051d1d18d62dec4e6872d3e8/plugins/vi-mode/vi-mode.plugin.zsh
 # Allow Copy/Paste with the system clipboard
 # behave as expected with vim commands ( y/p/d/c/s )
