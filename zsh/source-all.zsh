@@ -17,6 +17,8 @@ precmd() {
 
 eval $(dircolors)
 
+cdpath=($HOME $HOME/.go/src/go.coder.com $HOME/Code/github.com/scsmithr)
+
 zle_highlight=(region:bg=8 special:standout isearch:underline,fg=yellow)
 
 # Group matches and describe.
@@ -24,12 +26,11 @@ zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d'
-zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
-zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:warnings' format ''
+zstyle ':completion:*:corrections' format ' %F{green}%B-- %d (errors: %e) --%b%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}%B-- %d --%b%f'
+zstyle ':completion:*:messages' format ' %F{purple}%B-- %d --%b%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' format ' %F{yellow}%B-- %d --%b%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 
@@ -41,7 +42,7 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 # Directories
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:cd:*' tag-order local-directories named-directories directory-stack path-directories
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
 zstyle ':completion:*' squeeze-slashes true
