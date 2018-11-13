@@ -1,24 +1,27 @@
 * {
-	selected: #61afef;
+	accent: #61afef;
 	background-color: @background;
 	background: #21252E;
-	alt-background: #282c34;
-	separator: #353b45;
 	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
 	select: #222222;
-	text-color: @foreground;
+	separator: #353b45;
 }
 
 #window {
-	anchor: center;
-	border: 2px;
-	border-color: @separator;
-	width: 40%;
+	anchor: south;
+	location: south;
+	width: 100%;
 }
 
 #mainbox {
-	children: [message, inputbar, listview];
+	border: 2px 0 0 0;
+	border-color: @separator;
+	background-color: @background;
+	text-color: @foreground;
+	children: [inputbar, listview, message];
+	orientation: horizontal;
+	padding: 12px 0;
 }
 
 #textbox {
@@ -27,41 +30,35 @@
 
 #listview {
 	fixed-height: false;
-	border: 2px dash 0px 0px;
-	border-color: @separator;
-	padding: 0 0 1px 0;
 	scrollbar: false;
-	dynamic: false;
+	layout: horizontal;
+	lines: 25;
 }
 
 #element {
-	padding: 4px 10px;
+	padding: 0 10px;
 	text-color: @foreground;
 }
 
-#element.alternate {
-	background-color: @alt-background;
-}
-
 #element.selected {
-	text-color: @background;
-	background-color: @selected;
+	text-color: @accent;
 }
 
 #inputbar {
 	children: [prompt, textbox-prompt-colon, entry];
-	padding: 10px;
+	padding: 0 10px;
 	spacing: 0px;
+	width: 290px;
 }
 
 #prompt {
-	text-color: @foreground;
+	text-color: @accent;
 }
 
 textbox-prompt-colon {
 	expand: false;
 	str: ":";
-	text-color: @foreground;
+	text-color: @accent;
 }
 
 #entry {
