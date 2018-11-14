@@ -1,0 +1,6 @@
+#!/bin/bash
+
+dir=$(find ${1:-~} -maxdepth 7 -type d 2> /dev/null | fzf +m)
+if [ ! -z "$dir" ]; then
+    cd "$dir"
+fi
