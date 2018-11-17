@@ -14,6 +14,7 @@ set autoindent
 " Show whitespace
 set list
 set listchars=tab:>\ ,trail:·,nbsp:·,space:·
+autocmd FileType nerdtree setlocal nolist
 
 "Things
 set number
@@ -94,4 +95,3 @@ map <leader>bd :bd<CR>
 
 " Clear search hl with leader-c
 map <leader>c :nohlsearch<CR>
-

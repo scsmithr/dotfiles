@@ -20,7 +20,7 @@ URxvt.iso14755_52: false
 #define base04 #565c64
 #define base05 #abb2bf
 #define base06 #b6bdca
-#define base07 #c8ccd4
+#define base07 #7F848E
 #define base08 #e06c75
 #define base09 #d19a66
 #define base0A #e5c07b
@@ -54,4 +54,4 @@ URxvt.iso14755_52: false
 *.color12:      base0D
 *.color13:      base0E
 *.color14:      base0C
-*.color15: base07
+*.color15:      base07

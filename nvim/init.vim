@@ -20,15 +20,21 @@ set autoindent
 " Show whitespace
 set list
 set listchars=tab:>\ ,trail:·,nbsp:·,space:·
+autocmd FileType nerdtree setlocal nolist
 
 " Show line numbers
 set number
+set cursorline
+
+" Don't wrap
+set nowrap
 
 " Yank to system keyboard
 set clipboard=unnamedplus
 
-" Always keep 3 lines visible
+" Always keep some lines visible
 set scrolloff=3
+set sidescrolloff=5
 
 " Mouse
 set mouse=a
@@ -69,6 +75,8 @@ colorscheme base16-two
 let NERDTreeMouseMode = 3
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
 
 " vim-go settings
 let g:go_fmt_command = "goimports"
@@ -95,4 +103,3 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
