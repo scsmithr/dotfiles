@@ -17,6 +17,7 @@ if [[ "$os" = "$linux_str" ]]; then
 
     alias no="notify normal"
     alias noc="notify critical"
+    alias nol="notify low"
 elif [[ "$os" = "$osx_str" ]]; then
     alias ls='ls -G'
     # ssh aliases
