@@ -48,7 +48,7 @@
 	children: [prompt, textbox-prompt-colon, entry];
 	padding: 0 10px;
 	spacing: 0px;
-	width: 290px;
+	width: 390px;
 }
 
 #prompt {

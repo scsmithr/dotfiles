@@ -37,8 +37,8 @@ myWorkspaces = ["def", "conn", "email", "web"]
 
 myKeys = [
     -- Lock/sleep
-      ("M-S-l", spawn $ "i3lock -c \"" ++ bg ++ "\"")
-    , ( "M-S-s", spawn $ "i3lock -c \"" ++ bg ++ "\"& sleep 2; systemctl suspend")
+      ("M-S-l", spawn $ "i3lock -c \"" ++ darkBg ++ "\"")
+    , ( "M-S-s", spawn $ "i3lock -c \"" ++ darkBg ++ "\"& sleep 2; systemctl suspend")
     -- general shortcuts
     , ("M-S-c", kill)
     , ("M-<Space>", sendMessage NextLayout)
