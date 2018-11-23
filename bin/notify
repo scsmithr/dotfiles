@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Notify after a process has completed
+
+if [ "$1" = "critical" ] || 
+    [ "$1" = "normal" ] || 
+    [ "$1" = "low" ]; then
+    opt="-u $1"
+    shift
+fi
+"$@"
+notify-send "Process Completed" "$*" $opt
+echo -e "\a" # bell

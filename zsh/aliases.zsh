@@ -1,28 +1,21 @@
-# Linux specific aliases
-if [[ "$os" = "$linux_str" ]]; then
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
 
-    # Pacman aliases
-    alias pacman=run_pacman
+# Pacman aliases
+alias pacman=run_pacman
 
-    # ssh aliases
-    alias usshfs='fusermount -u $HOME/Remote'
-    
-    # set monitor brighness
-    alias sb=set_brightness
-    alias sbr=set_brightness_rel
-    # get current brightness
-    alias gb=get_brightness
+# ssh aliases
+alias usshfs='fusermount -u $HOME/Remote'
 
-    alias no="notify normal"
-    alias noc="notify critical"
-    alias nol="notify low"
-elif [[ "$os" = "$osx_str" ]]; then
-    alias ls='ls -G'
-    # ssh aliases
-    alias usshfs='umount $HOME/Remote'
-fi
+# set monitor brighness
+alias sb=set_brightness
+alias sbr=set_brightness_rel
+# get current brightness
+alias gb=get_brightness
+
+alias no="notify normal"
+alias noc="notify critical"
+alias nol="notify low"
 
 alias ll='exa -lG'
 alias la='exa -alG'
