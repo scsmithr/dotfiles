@@ -5,36 +5,33 @@ import           System.Exit                    ( exitWith
                                                 , ExitCode(ExitSuccess)
                                                 )
 
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.UrgencyHook
-import           XMonad.Hooks.EwmhDesktops
+import qualified XMonad.Hooks.DynamicLog       as D
+import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
+                                                , docks
+                                                , avoidStruts
+                                                )
+import           XMonad.Hooks.UrgencyHook       ( NoUrgencyHook(..)
+                                                , withUrgencyHook
+                                                )
+import           XMonad.Hooks.EwmhDesktops      ( ewmh )
 
-import           XMonad.Layout.LayoutModifier
-import           XMonad.Layout.NoBorders
-import           XMonad.Layout.ThreeColumns
-import           XMonad.Layout.Spacing
+import           XMonad.Layout.NoBorders        ( smartBorders )
+import           XMonad.Layout.ThreeColumns     ( ThreeCol(..) )
+import           XMonad.Layout.Spacing          ( smartSpacing )
 
-import           XMonad.Actions.CycleWS
 import           XMonad.Actions.DynamicWorkspaces
+                                                ( removeEmptyWorkspace )
 import           XMonad.Actions.PhysicalScreens
-import           XMonad.Actions.Submap
+import           XMonad.Actions.Submap          ( submap )
 
-import           XMonad.Prompt
-import           XMonad.Prompt.Shell
-
-import           XMonad.Util.EZConfig
+import           XMonad.Util.EZConfig           ( additionalKeysP )
 import           XMonad.Util.Run                ( spawnPipe
                                                 , hPutStrLn
                                                 , runProcessWithInput
                                                 )
 
-import           Data.Char
-import           Data.Maybe
-import           Data.List
-import           Data.Function
-import qualified Data.Map                      as M
-                                                ( fromList )
+import           Data.List                      ( isInfixOf )
+import           Data.Map                       ( fromList )
 
 import qualified RofiPrompt
 import qualified PinnedWorkspaces
@@ -57,14 +54,14 @@ myKeys =
   , ("M-b"       , spawn "chromium")
   , ( "M-i"
     , submap
-      . M.fromList
+      . fromList
       $ [((0, xK_f), spawn "nautilus"), ((0, xK_p), spawn "screenshot.sh")]
     )
   , ("M-o"  , RofiPrompt.selectWorkspace)
   , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
   , ( "M-u"
     , submap
-      .  M.fromList
+      .  fromList
       $  [ ((0, xK_u), PinnedWorkspaces.unpinCurrentWorkspace)
          , ((0, xK_d), removeEmptyWorkspace)
          ]
@@ -95,7 +92,7 @@ layoutIcon l | t "Tall" l     = fmt "|="
              | otherwise      = l
  where
   t   = isInfixOf
-  fmt = pad
+  fmt = D.pad
 
 indexPref :: PinnedWorkspaces.PinnedIndex -> String -> String
 indexPref idx ws = (show idx) ++ ":" ++ ws
@@ -115,20 +112,21 @@ showCurrentWorkspace idx ws = showWorkspace idx ws
 
 myLogHook h = do
   getIndex <- PinnedWorkspaces.indexReader
-  let format fn fg bg ws = xmobarColor fg bg (fn (getIndex ws) ws)
-  dynamicLogWithPP xmobarPP { ppCurrent = format showCurrentWorkspace selFg ""
-                            , ppHidden  = format hideIfNotPinned fg ""
-                            , ppVisible = format showWorkspace visFg ""
-                            , ppUrgent  = format showWorkspace urgentFg ""
-                            , ppLayout  = xmobarColor layoutFg "" . layoutIcon
-                            , ppTitle   = const ""
-                            , ppSep     = ""
-                            , ppSort    = PinnedWorkspaces.getSortByPinned
-                            , ppOutput  = hPutStrLn h
-                            }
+  let format fn fg bg ws = D.xmobarColor fg bg (fn (getIndex ws) ws)
+  D.dynamicLogWithPP D.xmobarPP
+    { D.ppCurrent = format showCurrentWorkspace selFg ""
+    , D.ppHidden  = format hideIfNotPinned fg ""
+    , D.ppVisible = format showWorkspace visFg ""
+    , D.ppUrgent  = format showWorkspace urgentFg ""
+    , D.ppLayout  = D.xmobarColor layoutFg "" . layoutIcon
+    , D.ppTitle   = const ""
+    , D.ppSep     = ""
+    , D.ppSort    = PinnedWorkspaces.getSortByPinned
+    , D.ppOutput  = hPutStrLn h
+    }
 
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
-  M.fromList
+  fromList
     $  [ ((m .|. modm, key), f sc)
        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..]
        , (f  , m ) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]

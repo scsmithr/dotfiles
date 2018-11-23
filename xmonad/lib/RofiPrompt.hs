@@ -8,12 +8,14 @@ where
 import           XMonad
 import qualified XMonad.StackSet               as W
 import           XMonad.Util.Run                ( runProcessWithInput )
-
 import qualified XMonad.Actions.DynamicWorkspaces
                                                as DynWs
 
-import           Data.Char
-import           Data.List
+import           Data.Char                      ( isSpace )
+import           Data.List                      ( reverse
+                                                , dropWhile
+                                                , intercalate
+                                                )
 
 -- Switch to a workspace, creating it if it doesn't exist.
 selectWorkspace :: X ()
