@@ -1,0 +1,23 @@
+#!/bin/bash
+
+case $1 in
+    "monitor")
+        # TODO
+        ;;
+    "laptop")
+        case $2 in
+            "up")
+            amount="${3:-2}"
+            xbacklight -inc "$amount" -fps 60
+            ;;
+            "down")
+            amount="${3:-2}"
+            xbacklight -dec "$amount" -fps 60
+            ;;
+            "set")
+            : "${3?"Usage: $0 laptop set PERCENT"}"
+            xbacklight -set $3 -fps 60
+            ;;
+        esac
+        ;;
+esac
