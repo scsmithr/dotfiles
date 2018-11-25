@@ -1,8 +1,31 @@
 #!/bin/bash
 
+mon_current() {
+    local outstr
+    outstr=$(ddcutil getvcp 10)
+    local nums
+    nums=$(echo -e $outstr | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ')
+    echo "$nums" | cut -d " " -f 3
+}
+
 case $1 in
     "monitor")
-        # TODO
+        case $2 in
+            "up")
+            amount="${3:-2}"
+            curr=$(mon_current)
+            ddcutil setvcp 10 $(( curr + amount ))
+            ;;
+            "down")
+            amount="${3:-2}"
+            curr=$(mon_current)
+            ddcutil setvcp 10 $(( curr - amount ))
+            ;;
+            "set")
+            : "${3?"Usage: $0 monitor set PERCENT"}"
+            ddcutil setvcp 10 $3
+            ;;
+        esac
         ;;
     "laptop")
         case $2 in
