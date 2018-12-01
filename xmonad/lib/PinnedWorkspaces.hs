@@ -3,8 +3,9 @@ module PinnedWorkspaces
   , pinCurrentWorkspace
   , unpinCurrentWorkspace
   , withPinnedIndex
-  , indexReader
   , getSortByPinned
+  , getIndex
+  , getMap
   )
 where
 
@@ -16,9 +17,9 @@ import           XMonad.Util.WorkspaceCompare   ( WorkspaceCompare
                                                 , mkWsSort
                                                 )
 
-import           Data.List                      ( find )
-import           Data.Function                  ( on )
+import qualified Data.List                     as List
 import qualified Data.Map.Strict               as M
+import           Data.Function                  ( on )
 
 type WorkspaceTag = String
 type PinnedIndex = Int
@@ -61,12 +62,11 @@ withPinnedIndex job pidx = do
   ilookup :: PinnedIndex -> X (Maybe WorkspaceTag)
   ilookup idx = M.lookup idx `fmap` XS.gets pinnedWorkspaceMap
 
--- Allows for retrieving the index of a workspace.
--- I don't think this is the best way to do this.
-indexReader :: X (WorkspaceId -> Maybe Int)
-indexReader = do
-  wmap <- XS.gets pinnedWorkspaceMap
-  return (pinnedLookup $ M.toList wmap)
+-- Get a workspace's pinned index.
+getIndex :: [(PinnedIndex, WorkspaceId)] -> WorkspaceId -> Maybe PinnedIndex
+getIndex wlist w = case List.find (\(_, x) -> x == w) wlist of
+  Just p  -> Just (fst p)
+  Nothing -> Nothing
 
 -- Delete the workspace from the pinned workspace map if it exists.
 deleteIfExists
@@ -84,14 +84,17 @@ pinnedCompare (Just _) Nothing  = LT
 pinnedCompare a        b        = compare a b
 
 pinnedLookup :: [(PinnedIndex, WorkspaceId)] -> WorkspaceId -> Maybe PinnedIndex
-pinnedLookup l w = case find (\(_, x) -> x == w) l of
+pinnedLookup l w = case List.find (\(_, x) -> x == w) l of
   Just p  -> Just (fst p)
   Nothing -> Nothing
 
 getPinnedCompare :: X WorkspaceCompare
 getPinnedCompare = do
-  idx <- indexReader
-  return $ mconcat [pinnedCompare `on` idx, compare]
+  wmap <- XS.gets pinnedWorkspaceMap
+  return $ mconcat [on pinnedCompare (getIndex (M.toList wmap)), compare]
 
 getSortByPinned :: X WorkspaceSort
 getSortByPinned = mkWsSort getPinnedCompare
+
+getMap :: X (M.Map PinnedIndex WorkspaceId)
+getMap = XS.gets pinnedWorkspaceMap

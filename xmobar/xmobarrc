@@ -5,7 +5,7 @@ Config {
     border = BottomB,
     borderColor = "#353b45",
     borderWidth = 2,
-    position = TopSize C 100 32,
+    position = Top,
     allDesktops = False,
     lowerOnStart = True,
     hideOnStart = False,

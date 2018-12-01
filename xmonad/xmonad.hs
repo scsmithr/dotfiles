@@ -13,15 +13,21 @@ import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
 import           XMonad.Hooks.UrgencyHook       ( NoUrgencyHook(..)
                                                 , withUrgencyHook
                                                 )
-import           XMonad.Hooks.EwmhDesktops      ( ewmh )
+import           XMonad.Hooks.EwmhDesktops      ( ewmh
+                                                , fullscreenEventHook
+                                                )
 
 import           XMonad.Layout.NoBorders        ( smartBorders )
 import           XMonad.Layout.ThreeColumns     ( ThreeCol(..) )
-import           XMonad.Layout.Spacing          ( smartSpacing )
+import           XMonad.Layout.Spacing          ( Border(..)
+                                                , spacingRaw
+                                                )
 
 import           XMonad.Actions.DynamicWorkspaces
                                                 ( removeEmptyWorkspace )
-import           XMonad.Actions.PhysicalScreens
+import           XMonad.Actions.PhysicalScreens ( viewScreen
+                                                , sendToScreen
+                                                )
 import           XMonad.Actions.Submap          ( submap )
 
 import           XMonad.Util.EZConfig           ( additionalKeysP )
@@ -30,8 +36,9 @@ import           XMonad.Util.Run                ( spawnPipe
                                                 , runProcessWithInput
                                                 )
 
-import           Data.List                      ( isInfixOf )
-import           Data.Map                       ( fromList )
+import qualified Data.List                     as List
+import qualified Data.Map                      as Map
+import qualified Data.Map.Strict               as StrictMap
 
 import qualified RofiPrompt
 import qualified PinnedWorkspaces
@@ -54,14 +61,14 @@ myKeys =
   , ("M-b"       , spawn "chromium")
   , ( "M-i"
     , submap
-      . fromList
+      . Map.fromList
       $ [((0, xK_f), spawn "nautilus"), ((0, xK_p), spawn "screenshot.sh")]
     )
   , ("M-o"  , RofiPrompt.selectWorkspace)
   , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
   , ( "M-u"
     , submap
-      .  fromList
+      .  Map.fromList
       $  [ ((0, xK_u), PinnedWorkspaces.unpinCurrentWorkspace)
          , ((0, xK_d), removeEmptyWorkspace)
          ]
@@ -91,7 +98,7 @@ layoutIcon l | t "Tall" l     = fmt "|="
              | t "ThreeCol" l = fmt "|||"
              | otherwise      = l
  where
-  t   = isInfixOf
+  t   = List.isInfixOf
   fmt = D.pad
 
 indexPref :: PinnedWorkspaces.PinnedIndex -> String -> String
@@ -111,8 +118,9 @@ showCurrentWorkspace :: Maybe PinnedWorkspaces.PinnedIndex -> String -> String
 showCurrentWorkspace idx ws = showWorkspace idx ws
 
 myLogHook h = do
-  getIndex <- PinnedWorkspaces.indexReader
-  let format fn fg bg ws = D.xmobarColor fg bg (fn (getIndex ws) ws)
+  wmap <- PinnedWorkspaces.getMap
+  let format fn fg bg ws = D.xmobarColor fg bg
+        $ fn (PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws) ws
   D.dynamicLogWithPP D.xmobarPP
     { D.ppCurrent = format showCurrentWorkspace selFg ""
     , D.ppHidden  = format hideIfNotPinned fg ""
@@ -126,7 +134,7 @@ myLogHook h = do
     }
 
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
-  fromList
+  Map.fromList
     $  [ ((m .|. modm, key), f sc)
        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..]
        , (f  , m ) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
@@ -139,12 +147,14 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
 
 myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
  where
-  tiled    = smartSpacing gs $ Tall nmaster delta ratio
-  threeCol = smartSpacing gs $ ThreeCol nmaster delta ratio
-  nmaster  = 1
-  ratio    = 1 / 2
-  delta    = 3 / 100
-  gs       = 5
+  tiled          = uniformSpacing $ Tall nmaster delta ratio
+  threeCol       = uniformSpacing $ ThreeCol nmaster delta ratio
+  nmaster        = 1
+  ratio          = 1 / 2
+  delta          = 3 / 100
+  gs             = 4
+  uniformSpacing = spacingRaw False (border) True (border) True
+  border         = Border gs gs gs gs
 
 toggleStruts XConfig { modMask = modMask } = (modMask, xK_n)
 
@@ -156,6 +166,7 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
   def { logHook            = myLogHook pipe
       , manageHook         = myManageHook
       , layoutHook         = avoidStruts $ myLayoutHook
+      , handleEventHook    = fullscreenEventHook
       , focusFollowsMouse  = False
       , workspaces         = myWorkspaces
       , keys               = myWorkspaceKeys
