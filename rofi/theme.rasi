@@ -4,24 +4,24 @@
 	background: #21252E;
 	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
-	select: #222222;
 	separator: #353b45;
 }
 
 #window {
-	anchor: south;
-	location: south;
-	width: 100%;
+	anchor: north;
+	location: north;
+	margin: 54px 0 0 0;
+	width: 530px;
 }
 
 #mainbox {
-	border: 2px 0 0 0;
+	border: 2px;
+	padding: 4px 4px 8px 4px;
 	border-color: @separator;
 	background-color: @background;
 	text-color: @foreground;
 	children: [inputbar, listview, message];
-	orientation: horizontal;
-	padding: 12px 0;
+	orientation: vertical;
 }
 
 #textbox {
@@ -31,8 +31,10 @@
 #listview {
 	fixed-height: false;
 	scrollbar: false;
-	layout: horizontal;
-	lines: 25;
+	layout: vertical;
+	lines: 10;
+	border: 2px dash 0px 0px;
+	border-color: @separator;
 }
 
 #element {
@@ -48,7 +50,6 @@
 	children: [prompt, textbox-prompt-colon, entry];
 	padding: 0 10px;
 	spacing: 0px;
-	width: 390px;
 }
 
 #prompt {
