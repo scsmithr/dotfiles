@@ -46,10 +46,8 @@ import qualified PinnedWorkspaces
 myWorkspaces = ["def", "conn", "email", "web"]
 
 myKeys =
-  [ ("M-S-l", spawn $ "i3lock -c \"" ++ darkBg ++ "\"")
-  , ( "M-S-s"
-    , spawn $ "i3lock -c \"" ++ darkBg ++ "\"& sleep 2; systemctl suspend"
-    )
+  [ ("M-S-l"     , spawn $ "lock")
+  , ("M-S-s"     , spawn $ "lock suspend")
   , ("M-S-c"     , kill)
   , ("M-q"       , spawn "xmonad --restart")
   , ("M-<Space>" , sendMessage NextLayout)
