@@ -50,6 +50,10 @@ colorscheme custom-base16-dark
 " Always show statusline
 set laststatus=2
 
+" Full height vertical separator
+set fillchars+=vert:│
+
+
 set statusline=
 set statusline +=%f\ %m\ %r\ %*     " file name, modified, readonly
 set statusline +=%=                 " left/ right separator
@@ -68,6 +72,7 @@ let g:rustfmt_autosave = 1
 let NERDTreeMouseMode = 3
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
+highlight NERDTreeCWD ctermfg=green
 
 " Shortcuts
 

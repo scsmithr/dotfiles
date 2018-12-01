@@ -77,6 +77,7 @@ let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
+highlight NERDTreeCWD ctermfg=green
 
 " vim-go settings
 let g:go_fmt_command = "goimports"

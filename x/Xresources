@@ -16,7 +16,7 @@ URxvt.iso14755_52: false
 #define base00 #282c34
 #define base01 #353b45
 #define base02 #3e4451
-#define base03 #545862
+#define base03 #495162
 #define base04 #565c64
 #define base05 #abb2bf
 #define base06 #b6bdca
