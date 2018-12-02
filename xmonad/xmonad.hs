@@ -29,6 +29,7 @@ import           XMonad.Actions.PhysicalScreens ( viewScreen
                                                 , sendToScreen
                                                 )
 import           XMonad.Actions.Submap          ( submap )
+import           XMonad.Actions.CycleWS         ( toggleWS )
 
 import           XMonad.Util.EZConfig           ( additionalKeysP )
 import           XMonad.Util.Run                ( spawnPipe
@@ -73,6 +74,7 @@ myKeys =
       ++ zip (zip (repeat (0)) [xK_1 .. xK_9])
              (map (PinnedWorkspaces.pinCurrentWorkspace) [1 ..])
     )
+  , ("M--"                    , toggleWS)
   , ("M-j"                    , windows W.focusDown)
   , ("M-k"                    , windows W.focusUp)
   , ("M-S-j"                  , windows W.swapDown)
