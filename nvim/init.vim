@@ -68,6 +68,7 @@ set statusline +=\ %l/%L%* " current line, total
 " set termguicolors
 colorscheme base16-two
 
+
 " Plugin settings
 
 " NERDTree settings

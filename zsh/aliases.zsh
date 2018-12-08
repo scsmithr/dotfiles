@@ -31,6 +31,9 @@ alias tk='tmux kill-session -t'
 
 alias nv=nvim
 
+alias rc="findedit -e 'code -g' -l"
+alias rv="findedit -e nvim"
+
 alias grep='grep --color=always'
 
 # trash-cli
