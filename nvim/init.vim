@@ -55,7 +55,7 @@ set laststatus=2
 
 set statusline=
 set statusline +=\[%n]  " buffer number
-set statusline +=\ %f     " file name
+set statusline +=\ %f   " file name
 set statusline +=\ %m   " modified
 set statusline +=\ %r   " readonly
 set statusline +=\ %*

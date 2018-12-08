@@ -89,5 +89,8 @@
     "gitlens.blame.avatars": false,
     "gitlens.statusBar.reduceFlicker": true,
     "workbench.statusBar.feedback.visible": false,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "gitlens.views.fileHistory.avatars": false,
+    "gitlens.views.lineHistory.avatars": false,
+    "gitlens.views.avatars": false
 }
