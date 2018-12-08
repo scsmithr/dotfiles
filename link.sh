@@ -19,6 +19,11 @@ mkdir -p ~/.config/nvim
 mkdir -p ~/.config/nvim/colors
 ln -sv $DIR/nvim/init.vim ~/.config/nvim
 ln -sv $DIR/nvim/base16-two.vim ~/.config/nvim/colors
+# Install vim-plug
+if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
 
 # zsh
 ZSH_CONF_DIR=~/.config/zsh-config
