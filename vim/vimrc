@@ -45,7 +45,7 @@ set directory^=$HOME/.vim/tmp//
 set hidden
 
 syntax on
-colorscheme custom-base16-dark
+colorscheme base16-two
 
 " Always show statusline
 set laststatus=2
