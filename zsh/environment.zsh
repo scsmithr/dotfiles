@@ -16,6 +16,7 @@ export XKB_DEFAULT_OPTIONS=ctrl:nocaps
 # Default fzf options
 export FZF_DEFAULT_OPTS='
     --color=16
+    --color hl:1,hl+:1,fg+:2,prompt:7,pointer:5,info:5
     --height=10
     --min-height=5
     --layout=reverse
