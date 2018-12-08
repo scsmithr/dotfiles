@@ -23,7 +23,7 @@ export SSH_AUTH_SOCK
 dunst&
 
 # Set up lockscreen
-xset s 120 5 # Lock after 2 minutes
+xset s 300 5 # Lock after 5 minutes
 export XSECURELOCK_FONT="Source Code Pro:style=Medium"
 export XSECURELOCK_WANT_FIRST_KEYPRESS=1 
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock&
