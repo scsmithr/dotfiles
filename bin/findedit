@@ -23,9 +23,12 @@ if [ "$line" == "" ]; then
 fi
 
 file=$(echo "$line" | awk -F"[:]" '{print $1}')
+
 if [ -n "$lineopt" ]; then
     lineno=$(echo "$line" | awk -F"[:]" '{print $2}')
-    $editor "$file:$lineno"
-else
-    $editor "$file"
 fi
+
+editor=$(echo "$editor" | sed -r "s|\{f\}|$file|g")
+editor=$(echo "$editor" | sed -r "s/\{l\}/$lineno/g")
+
+$editor
