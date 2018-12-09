@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 export PATH=$PATH:$HOME/.bin/
 
 # Set default go workspace

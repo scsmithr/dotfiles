@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 setopt prompt_subst
 
 PROMPT_TRUNC_WIDTH='${COLUMNS}'

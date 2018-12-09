@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 autoload -U compinit promptinit colors
 compinit
 promptinit

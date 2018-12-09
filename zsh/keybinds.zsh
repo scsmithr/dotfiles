@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 export KEYTIMEOUT=1
 
 # Control key fix

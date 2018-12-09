@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 

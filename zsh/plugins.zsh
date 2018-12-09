@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 # ZSH autosuggestions
 if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

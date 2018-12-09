@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 # Run pacman, prompting for password if needed
 run_pacman() {
     case $1 in

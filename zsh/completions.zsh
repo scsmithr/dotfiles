@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 eval $(dircolors)
 
 cdpath=($HOME $HOME/.go/src/go.coder.com $HOME/Code/github.com/scsmithr)
