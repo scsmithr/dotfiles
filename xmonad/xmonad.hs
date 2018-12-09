@@ -10,6 +10,9 @@ import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
                                                 , docks
                                                 , avoidStruts
                                                 )
+import           XMonad.Hooks.ManageHelpers     ( doCenterFloat
+                                                , isDialog
+                                                )
 import           XMonad.Hooks.UrgencyHook       ( NoUrgencyHook(..)
                                                 , withUrgencyHook
                                                 )
@@ -160,7 +163,8 @@ toggleStruts XConfig { modMask = modMask } = (modMask, xK_n)
 
 myStartupHook = return ()
 
-myManageHook = composeAll []
+myManageHook = composeAll
+  [className =? "mpv" --> doCenterFloat, isDialog =? True --> doCenterFloat]
 
 myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
   def { logHook            = myLogHook pipe
