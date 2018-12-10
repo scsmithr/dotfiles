@@ -160,7 +160,10 @@ myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
 myStartupHook = return ()
 
 myManageHook = composeAll
-  [className =? "mpv" --> doCenterFloat, isDialog =? True --> doCenterFloat]
+  [ className =? "mpv" --> doCenterFloat
+  , className =? "feh" --> doCenterFloat
+  , isDialog =? True --> doCenterFloat
+  ]
 
 myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
   def { logHook            = myLogHook pipe
