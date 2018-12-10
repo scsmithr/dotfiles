@@ -94,7 +94,6 @@ myKeys =
   , ("<XF86AudioMute>"        , spawn "vol mute")
   ]
 
-
 layoutIcon :: String -> String
 layoutIcon l | t "Tall" l     = fmt "|="
              | t "Full" l     = fmt "[]"
@@ -147,7 +146,6 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
     ++ zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
 
-
 myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
  where
   tiled          = uniformSpacing $ Tall nmaster delta ratio
@@ -158,8 +156,6 @@ myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
   gs             = 4
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
-
-toggleStruts XConfig { modMask = modMask } = (modMask, xK_n)
 
 myStartupHook = return ()
 
