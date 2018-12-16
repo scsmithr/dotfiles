@@ -10,11 +10,8 @@ bindkey "^[Oc" forward-word
 
 bindkey -v
 
-bindkey -M viins '^n' history-beginning-search-forward
-bindkey -M viins '^p' history-beginning-search-backward
-
 bindkey -M viins '^r' history-incremental-search-backward
-bindkey -M viins '^f' find_history
+bindkey -M viins '^p' find_history
 
 bindkey "^?" backward-delete-char
 
@@ -24,7 +21,7 @@ function find_history() {
     if [ -n "$sel" ]; then
         BUFFER="$sel"
     fi
-    zle .accept-line
+    zle .reset-prompt
 }
 zle -N find_history
 
