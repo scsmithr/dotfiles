@@ -55,3 +55,7 @@ URxvt.iso14755_52: false
 *.color13:      base0E
 *.color14:      base0C
 *.color15:      base07
+
+Xft.Hinting: 0
+Xft.Antialias: 1
+Xft.HintStyle: "none"

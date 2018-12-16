@@ -60,7 +60,7 @@ myKeys =
   , ("M-n"       , sendMessage ToggleStruts)
   , ("M-<Return>", spawn myTerminal)
   , ("M-p"       , spawn "rofi -show run")
-  , ("M-b"       , spawn "chromium")
+  , ("M-b"       , spawn "firefox")
   , ( "M-i"
     , submap
       . Map.fromList

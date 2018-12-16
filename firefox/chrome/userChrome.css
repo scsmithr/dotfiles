@@ -1,0 +1,50 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* #tabbrowser-tabs, #navigator-toolbox, menuitem, menu, ... */
+* {
+    font-size: 15px !important;
+}
+
+/* exception for badge on adblocker */
+.toolbarbutton-badge {
+    font-size: 8px !important;
+}
+
+:root {
+    --toolbar-bgcolor: #282c34 !important;
+    --toolbar-bgimage: none !important;
+    --toolbar-color: #abb2bf !important;
+    --toolbar-field-focus-border-color: #61afef !important;
+    --tab-line-color: #61afef !important;
+
+    --toolbarbutton-hover-background: hsla(150,5%,5%,.1) !important;
+    --toolbarbutton-active-background: hsla(150,5%,5%,.15) !important;
+
+    --toolbarbutton-border-radius: 1px !important;
+    --toolbarbutton-inner-padding: 4px !important;
+    --toolbarbutton-outer-padding: 4px !important;
+}
+
+browser[type="content-primary"], 
+browser[type="content"],
+#main-window {
+    background-color: #21252E !important;
+}
+
+#navigator-toolbox {
+    --tabs-border-color: rgba(0,0,0,.1) !important;
+    background-color: #21252E !important;
+}
+
+#urlbar {
+    background-color: #21252E !important;
+    border-radius: 1px !important;
+    border-color: none;
+    border-width: 1px !important;
+    padding: 2px;
+}
+
+.titlebar-placeholder{
+    border: 0 !important;
+}
+
