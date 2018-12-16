@@ -27,7 +27,8 @@
 
 browser[type="content-primary"], 
 browser[type="content"],
-#main-window {
+#main-window,
+#appcontent {
     background-color: #21252E !important;
 }
 
@@ -48,3 +49,6 @@ browser[type="content"],
     border: 0 !important;
 }
 
+tab {
+    color: #abb2bf !important;
+}
