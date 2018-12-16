@@ -8,7 +8,7 @@ setopt TRANSIENT_RPROMPT # Right prompt removed after enter
 
 zstyle ':vcs_info:*' check-for-changes false # set true to show unstaged
 zstyle ':vcs_info:git*' formats "%{$fg_bold[green]%}(%b%u)%{$reset_color%}"
-zstyle ':vcs_info:git*' actionformats "%{$fg_bold[green]%}(%b%u)$fg_bold[red][%a]%{$reset_color%}"
+zstyle ':vcs_info:git*' actionformats "%{$fg_bold[green]%}(%b%u) $fg_bold[red][%a]%{$reset_color%}"
 zstyle ':vcs_info:*' unstagedstr "*"
 
 # Display current vcs status. Single quotes to delay eval
