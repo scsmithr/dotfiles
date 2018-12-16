@@ -26,7 +26,7 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 # Directories
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors ${(@s.:.)LS_COLORS}:'ma=01;100'
 zstyle ':completion:*:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:*:cd:*' tag-order local-directories named-directories directory-stack path-directories
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select

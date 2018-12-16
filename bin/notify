@@ -10,4 +10,4 @@ if [ "$1" = "critical" ] ||
 fi
 "$@"
 notify-send "Process Completed" "$*" $opt
-echo -e "\a" # bell
+tput bel
