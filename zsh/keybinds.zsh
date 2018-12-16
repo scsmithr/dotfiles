@@ -14,8 +14,19 @@ bindkey -M viins '^n' history-beginning-search-forward
 bindkey -M viins '^p' history-beginning-search-backward
 
 bindkey -M viins '^r' history-incremental-search-backward
+bindkey -M viins '^f' find_history
 
 bindkey "^?" backward-delete-char
+
+function find_history() {
+    local sel
+    sel=$( (fc -l -n 1) | rg "$BUFFER" | uniq | fzf +s --tac)
+    if [ -n "$sel" ]; then
+        BUFFER="$sel"
+    fi
+    zle .accept-line
+}
+zle -N find_history
 
 # Taken from https://github.com/robbyrussell/oh-my-zsh/blob/0f6e49b455e498bd051d1d18d62dec4e6872d3e8/plugins/vi-mode/vi-mode.plugin.zsh
 # Allow Copy/Paste with the system clipboard
