@@ -20,8 +20,11 @@ function find_history() {
     sel=$( (fc -l -n 1) | rg "$BUFFER" | uniq | fzf +s --tac)
     if [ -n "$sel" ]; then
         BUFFER="$sel"
+        zle .reset-prompt
+        zle .accept-line
+    else
+        zle .reset-prompt
     fi
-    zle .reset-prompt
 }
 zle -N find_history
 
