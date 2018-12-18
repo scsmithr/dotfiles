@@ -18,6 +18,14 @@ dpi() {
     fi
 }
 
+gcip() {
+    if [ "$#" -ge 1 ]; then
+        gcloud compute instances describe $@ | grep "natIP" | awk '{print $2}' | xargs echo -n
+    else
+        print "Invalid number of arguments" 
+    fi  
+}
+
 jd() {
     local dir
     dir=$(find ${1:-~} -maxdepth 7 -type d 2> /dev/null | fzf +m)
