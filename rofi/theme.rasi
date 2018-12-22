@@ -1,10 +1,11 @@
 * {
-	accent: #61afef;
+	selected: #98c379;
 	background-color: @background;
 	background: #21252E;
 	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
 	separator: #353b45;
+	highlight: none bold #e06c75;
 }
 
 #window {
@@ -33,18 +34,18 @@
 	scrollbar: false;
 	layout: vertical;
 	lines: 8;
-	padding: 8px 0 8px 0;
+	padding: 8px 0 10px 0;
 	border: 2px dash 0px 0px;
 	border-color: @separator;
 }
 
 #element {
-	padding: 2px 10px;
+	padding: 0px 10px;
 	text-color: @foreground;
 }
 
 #element.selected {
-	text-color: @accent;
+	text-color: @selected;
 }
 
 #inputbar {
@@ -54,13 +55,14 @@
 }
 
 #prompt {
-	text-color: @accent;
+	text-color: @foreground;
+	style: bold;
 }
 
 textbox-prompt-colon {
 	expand: false;
 	str: ":";
-	text-color: @accent;
+	text-color: @foreground;
 }
 
 #entry {
