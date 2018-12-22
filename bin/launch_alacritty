@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+dpi=$(xrdb -query | grep "Xft.dpi" | awk '{print $2}')
+if [ -n "$dpi" ]; then
+    export WINIT_HIDPI_FACTOR=$(( dpi / 96.0 ))
+fi
+
+alacritty

@@ -202,6 +202,6 @@ border = "#61afef"
 promptBorder = mutedBg
 
 -- config vars
-myTerminal = "urxvt"
+myTerminal = "launch_alacritty"
 myModMask = mod4Mask
 myBorderWidth = 2
