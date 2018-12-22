@@ -125,7 +125,7 @@ myLogHook h = do
         $ fn (PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws) ws
   D.dynamicLogWithPP D.xmobarPP
     { D.ppCurrent = format showCurrentWorkspace selFg ""
-    , D.ppHidden  = format hideIfNotPinned fg ""
+    , D.ppHidden  = format hideIfNotPinned hiddenFg ""
     , D.ppVisible = format showWorkspace visFg ""
     , D.ppUrgent  = format showWorkspace urgentFg ""
     , D.ppLayout  = D.xmobarColor layoutFg "" . layoutIcon
@@ -195,6 +195,7 @@ layoutBg = bg
 fg = "#abb2bf"
 selFg = "#61afef"
 visFg = "#98c379"
+hiddenFg = "#495162"
 layoutFg = "#c678dd"
 urgentFg = "#e5c07b"
 
