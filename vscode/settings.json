@@ -92,5 +92,8 @@
     "editor.formatOnSave": true,
     "gitlens.views.fileHistory.avatars": false,
     "gitlens.views.lineHistory.avatars": false,
-    "gitlens.views.avatars": false
+    "gitlens.views.avatars": false,
+    "gitlens.views.compare.avatars": false,
+    "gitlens.views.repositories.avatars": false,
+    "gitlens.views.search.avatars": false
 }
