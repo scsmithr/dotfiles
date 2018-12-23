@@ -74,7 +74,11 @@ myKeys =
       .  Map.fromList
       $  [ ((0, xK_u), PinnedWorkspaces.unpinCurrentWorkspace)
          , ((0, xK_d), removeEmptyWorkspace)
-         , ((0, xK_s), writeStateToFile)
+         , ( (0, xK_s)
+           , do
+             writeStateToFile
+             notify "xmonad" "wrote state file"
+           )
          ]
       ++ zip (zip (repeat (0)) [xK_1 .. xK_9])
              (map (PinnedWorkspaces.pinCurrentWorkspace) [1 ..])
@@ -95,6 +99,11 @@ myKeys =
   , ("<XF86AudioLowerVolume>" , spawn "vol down")
   , ("<XF86AudioMute>"        , spawn "vol mute")
   ]
+
+notify :: String -> String -> X ()
+notify title msg = do
+  spawn $ "notify-send '" ++ title ++ "' '" ++ msg ++ "'"
+
 
 layoutIcon :: String -> String
 layoutIcon l | t "Tall" l     = fmt "|="
