@@ -13,12 +13,13 @@
 	location: north;
 	margin: 54px 0 0 0;
 	width: 530px;
+	padding: 14px;
+	border: 2px;
+	border-color: @separator;
 }
 
 #mainbox {
-	border: 2px;
 	padding: 0px 4px 0px 4px;
-	border-color: @separator;
 	background-color: @background;
 	text-color: @foreground;
 	children: [inputbar, listview, message];
