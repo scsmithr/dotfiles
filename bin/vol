@@ -28,9 +28,9 @@ format_vol_status() {
     local mute
     mute=$(get_mute_status)
     if [ "$mute" == "no" ]; then
-        echo "vol: $vol"
+        echo "$vol"
     else
-        echo "vol: $vol $mute_template"
+        echo "$vol $mute_template"
     fi
 }
 
