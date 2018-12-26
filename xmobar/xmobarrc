@@ -3,7 +3,7 @@ Config {
     bgColor = "#21252E",
     fgColor = "#abb2bf",
     border = BottomB,
-    borderColor = "#353b45",
+    borderColor = "#495162",
     borderWidth = 2,
     position = Top,
     allDesktops = False,
