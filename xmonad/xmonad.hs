@@ -104,15 +104,18 @@ notify :: String -> String -> X ()
 notify title msg = do
   spawn $ "notify-send '" ++ title ++ "' '" ++ msg ++ "'"
 
-
-layoutIcon :: String -> String
-layoutIcon l | t "Tall" l     = fmt "|="
-             | t "Full" l     = fmt "[]"
-             | t "ThreeCol" l = fmt "|||"
-             | otherwise      = l
+formatIcon
+  :: String -- icon bg
+  -> String -- icon fg
+  -> String -- layout name
+  -> String
+formatIcon bg fg l | t "Tall" l     = fmt "|="
+                   | t "Full" l     = fmt "[]"
+                   | t "ThreeCol" l = fmt "|||"
+                   | otherwise      = l
  where
   t   = List.isInfixOf
-  fmt = D.pad
+  fmt = D.pad . (D.xmobarColor fg bg)
 
 formatWorkspace
   :: (WorkspaceId -> Maybe PinnedWorkspaces.PinnedIndex)
@@ -136,17 +139,16 @@ myLogHook h = do
   wmap <- PinnedWorkspaces.getMap
   let wsIdx ws = PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws
   let fmt = formatWorkspace wsIdx
-  D.dynamicLogWithPP D.xmobarPP
-    { D.ppCurrent = fmt "" muted "" selFg True
-    , D.ppHidden  = fmt "" muted "" hiddenFg False
-    , D.ppVisible = fmt "" muted "" visFg True
-    , D.ppUrgent  = fmt "" muted "" urgentFg True
-    , D.ppLayout  = D.xmobarColor layoutFg "" . layoutIcon
-    , D.ppTitle   = const ""
-    , D.ppSep     = ""
-    , D.ppSort    = PinnedWorkspaces.getSortByPinned
-    , D.ppOutput  = hPutStrLn h
-    }
+  D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" selFg True
+                                , D.ppHidden  = fmt "" muted "" hiddenFg False
+                                , D.ppVisible = fmt "" muted "" visFg True
+                                , D.ppUrgent  = fmt "" muted "" urgentFg True
+                                , D.ppLayout  = formatIcon "" layoutFg
+                                , D.ppTitle   = const ""
+                                , D.ppSep     = ""
+                                , D.ppSort    = PinnedWorkspaces.getSortByPinned
+                                , D.ppOutput  = hPutStrLn h
+                                }
 
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
   Map.fromList
@@ -197,7 +199,7 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
 
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
--- colors
+-- foreground/ background colors
 bg = "#282c34"
 muted = "#495162"
 fg = "#abb2bf"
@@ -207,10 +209,10 @@ hiddenFg = fg
 layoutFg = "#c678dd"
 urgentFg = "#e5c07b"
 
+-- borders
 focused = "#61afef"
 unfocused = muted
+myBorderWidth = 2
 
--- config vars
 myTerminal = "launch_alacritty"
 myModMask = mod4Mask
-myBorderWidth = 2
