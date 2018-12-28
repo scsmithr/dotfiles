@@ -2,23 +2,15 @@
 
 mute_template="<fc=#e5c07b>(mute)</fc>"
 
-get_default_sink_name() {
-    pacmd stat | awk -F": " '/^Default sink name: /{print $2}'
-}
-
 get_vol() {
     local vol
-    vol=$(pacmd list-sinks |
-        awk '/^\s+name: /{indefault = $2 == "<'$(get_default_sink_name)'>"}
-        /^\s+volume: / && indefault {print $5; exit}')
-    echo "$vol"
+    vol=$(pamixer --get-volume)
+    echo "$vol%"
 }
 
 get_mute_status() {
     local mute
-    mute=$(pacmd list-sinks |
-        awk '/^\s+name: /{indefault = $2 == "<'$(get_default_sink_name)'>"}
-        /^\s+muted: / && indefault {print $2; exit}')
+    mute=$(pamixer --get-mute)
     echo "$mute"
 }
 
@@ -27,7 +19,7 @@ format_vol_status() {
     vol=$(get_vol)
     local mute
     mute=$(get_mute_status)
-    if [ "$mute" == "no" ]; then
+    if [ "$mute" == "false" ]; then
         echo "$vol"
     else
         echo "$vol $mute_template"
@@ -36,13 +28,13 @@ format_vol_status() {
 
 case $1 in
     "up")
-        pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ +5%
+        pamixer -u; pamixer -i 5
         ;;
     "down")
-        pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%
+        pamixer -u; pamixer -d 5
         ;;
     "mute")
-        pactl set-sink-mute @DEFAULT_SINK@ toggle
+        pamixer -t
         ;;
     "get")
         format_vol_status

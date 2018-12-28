@@ -14,10 +14,10 @@ Config {
     commands = [
         Run Date "%a, %b %d %I:%M%P" "date" 10,
 
-        Run Com "current_wifi.sh" [] "wifi" 100,
+        Run Com "essid" [] "wifi" 100,
 
         Run Com "vol" ["get"] "vol" 100,
-     
+
         Run Battery [
             "--template" , "<fc=#495162>bat:</fc><acstatus>",
             "--Low",    "20",        -- units: %
