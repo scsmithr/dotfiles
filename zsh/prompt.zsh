@@ -3,7 +3,6 @@
 setopt prompt_subst
 
 PROMPT_TRUNC_WIDTH='${COLUMNS}'
-ZLE_RPROMPT_INDENT=0 # No extra space after right prompt
 setopt TRANSIENT_RPROMPT # Right prompt removed after enter
 
 zstyle ':vcs_info:*' check-for-changes false # set true to show unstaged
