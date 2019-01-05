@@ -47,6 +47,7 @@ import qualified Data.Map.Strict               as StrictMap
 
 import qualified RofiPrompt
 import qualified PinnedWorkspaces
+import qualified Hideable
 
 myWorkspaces = ["def", "conn", "email", "web"]
 
@@ -89,6 +90,8 @@ myKeys =
   , ("M-S-j"                  , windows W.swapDown)
   , ("M-S-k"                  , windows W.swapUp)
   , ("M-S-<Return>"           , windows W.swapMaster)
+  , ("M-f"                    , withFocused Hideable.pushHidden)
+  , ("M-g"                    , Hideable.popHidden)
   , ("M-h"                    , sendMessage Shrink)
   , ("M-l"                    , sendMessage Expand)
   , ("M-,"                    , sendMessage (IncMasterN 1))
@@ -119,6 +122,7 @@ formatIcon bg fg l | t "Tall" l     = fmt "|="
 
 formatWorkspace
   :: (WorkspaceId -> Maybe PinnedWorkspaces.PinnedIndex)
+  -> (WorkspaceId -> Maybe Int)
   -> String -- index bg
   -> String -- index fg
   -> String -- workspace bg
@@ -126,19 +130,27 @@ formatWorkspace
   -> Bool -- show workspace
   -> WorkspaceId -- workspace name
   -> String
-formatWorkspace wsIdx idxBg idxFg wsBg wsFg mustShow ws = case idx of
-  Just n  -> (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
-  Nothing -> case mustShow of
-    True  -> wsStr
-    False -> ""
+formatWorkspace getIndex getNumHidden idxBg idxFg wsBg wsFg mustShow ws =
+  case idx of
+    Just n  -> (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
+    Nothing -> case mustShow of
+      True  -> wsStr
+      False -> ""
  where
-  idx   = wsIdx ws
-  wsStr = D.xmobarColor wsFg wsBg ws
+  idx       = getIndex ws
+  hiddenStr = case getNumHidden ws of
+    Just n  -> D.xmobarColor idxFg idxBg $ "[" ++ show n ++ "]"
+    Nothing -> ""
+  wsStr = (D.xmobarColor wsFg wsBg ws) ++ hiddenStr
 
 myLogHook h = do
   wmap <- PinnedWorkspaces.getMap
-  let wsIdx ws = PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws
-  let fmt = formatWorkspace wsIdx
+  let getIndex ws = PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws
+
+  hmap <- Hideable.getMap
+  let getNumHidden ws = StrictMap.lookup ws hmap
+
+  let fmt = formatWorkspace getIndex getNumHidden
   D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" selFg True
                                 , D.ppHidden  = fmt "" muted "" hiddenFg False
                                 , D.ppVisible = fmt "" muted "" visFg True
@@ -161,7 +173,8 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
     ++ zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
 
-myLayoutHook = smartBorders (tiled ||| Full ||| threeCol)
+myLayoutHook = Hideable.hiddenWindows
+  $ smartBorders (tiled ||| Full ||| threeCol)
  where
   tiled          = uniformSpacing $ Tall nmaster delta ratio
   threeCol       = uniformSpacing $ ThreeCol nmaster delta ratio
