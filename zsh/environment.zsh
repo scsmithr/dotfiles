@@ -24,6 +24,11 @@ export FZF_DEFAULT_OPTS='
     --layout=reverse
 '
 
+# Make prompt toolkit programs (mycli) use ansi colors only.
+export PROMPT_TOOLKIT_COLOR_DEPTH='DEPTH_4_BIT'
+
+export LOCAL_LOGS_DIR="$HOME/.logs"
+
 # man colors
 # https://unix.stackexchange.com/questions/119/colors-in-man-pages
 # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables

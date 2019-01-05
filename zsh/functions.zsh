@@ -50,3 +50,17 @@ mkcd() {
         cd "$1"
     fi
 }
+
+ensure_log() {
+    if [[ "$#" -eq 0 ]]; then
+        print "No arguments"
+    else
+        local dir
+        dir="$LOCAL_LOGS_DIR/$1"
+        mkdir -p "$dir"
+        local name
+        name="$dir/$(date +%F).log"
+        touch "$name"
+        echo "$name"
+    fi
+}

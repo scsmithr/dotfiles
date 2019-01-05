@@ -72,3 +72,6 @@ ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
 # rofi
 mkdir -p ~/.config/rofi
 ln -sv $DIR/rofi/* ~/.config/rofi
+
+# mycli
+ln -sv $DIR/mycli/myclirc ~/.myclirc
