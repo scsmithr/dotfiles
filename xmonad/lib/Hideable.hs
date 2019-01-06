@@ -25,7 +25,6 @@ instance ExtensionClass HiddenCounts where
     initialValue = HiddenCounts M.empty
     extensionType = PersistentExtension
 
-
 pushHidden :: Window -> X ()
 pushHidden win = do
   alterCounts 1
@@ -45,6 +44,6 @@ alterCounts diff = do
   counts <- XS.gets hiddenCountsMap
   let f a = case a of
         Just n | (n + diff) > 0 -> Just (n + diff)
-        Nothing | diff > 0      -> Just (1)
+        Nothing | diff > 0      -> Just (diff)
         _                       -> Nothing
   XS.modify (\s -> s { hiddenCountsMap = M.alter f wtag counts })
