@@ -75,3 +75,6 @@ ln -sv $DIR/rofi/* ~/.config/rofi
 
 # mycli
 ln -sv $DIR/mycli/myclirc ~/.myclirc
+
+# zathura
+ln -sv $DIR/zathura/zathurarc ~/.config/zathura
