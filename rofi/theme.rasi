@@ -1,11 +1,11 @@
 * {
-	selected: #98c379;
+	selected: #61afef;
 	background-color: @background;
 	background: #21252E;
 	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
 	separator: #353b45;
-	highlight: none bold #e06c75;
+	highlight: none bold #c678dd;
 }
 
 #window {
