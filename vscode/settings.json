@@ -79,21 +79,32 @@
     "editor.scrollbar.vertical": "visible",
     "shellcheck.run": "onSave",
     "gitlens.keymap": "alternate",
-    "gitlens.codeLens.enabled": false,
-    "gitlens.currentLine.enabled": false,
     "gitlens.hovers.currentLine.over": "line",
-    "gitlens.hovers.currentLine.enabled": false,
     "gitlens.settings.mode": "advanced",
     "gitlens.explorers.avatars": false,
     "gitlens.historyExplorer.avatars": false,
-    "gitlens.blame.avatars": false,
-    "gitlens.statusBar.reduceFlicker": true,
     "workbench.statusBar.feedback.visible": false,
     "editor.formatOnSave": true,
     "gitlens.views.fileHistory.avatars": false,
     "gitlens.views.lineHistory.avatars": false,
     "gitlens.views.avatars": false,
-    "gitlens.views.compare.avatars": false,
     "gitlens.views.repositories.avatars": false,
-    "gitlens.views.search.avatars": false
+    "gitlens.views.search.avatars": false,
+    "gitlens.blame.format": "${author|15} ${message|40?} ${agoOrDate|14-}",
+    "gitlens.currentLine.enabled": false,
+    "gitlens.blame.highlight.locations": [
+        "overview",
+        "line"
+    ],
+    "gitlens.hovers.currentLine.enabled": false,
+    "gitlens.hovers.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.recentChanges.highlight.locations": [
+        "line",
+        "overview"
+    ],
+    "gitlens.statusBar.reduceFlicker": true,
+    "gitlens.blame.avatars": false,
+    "gitlens.views.compare.avatars": false,
+    "gitlens.statusBar.format": "${message} - ${authorAgoOrDate}"
 }
