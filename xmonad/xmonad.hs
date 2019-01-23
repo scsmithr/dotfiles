@@ -173,16 +173,17 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
     ++ zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
 
-myLayoutHook = Hideable.hiddenWindows $ smartBorders (tiled ||| Full ||| threeCol)
+myLayoutHook = Hideable.hiddenWindows
+  $ smartBorders (tiled ||| Full ||| threeCol)
  where
   tiled          = uniformSpacing $ Tall nmaster delta ratio
   threeCol       = uniformSpacing $ ThreeCol nmaster delta ratio
   nmaster        = 1
   ratio          = 1 / 2
   delta          = 3 / 100
-  gs             = 4
+  gs             = 2
   uniformSpacing = spacingRaw False (border) True (border) True
-  border         = Border (div gs 2) gs gs gs
+  border         = Border gs gs gs gs
 
 myStartupHook = return ()
 
