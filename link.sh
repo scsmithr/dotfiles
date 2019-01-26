@@ -78,3 +78,6 @@ ln -sv $DIR/mycli/myclirc ~/.myclirc
 
 # zathura
 ln -sv $DIR/zathura/zathurarc ~/.config/zathura
+
+# readline
+ln -sv $DIR/readline/inputrc ~/.inputrc
