@@ -9,5 +9,7 @@ if [ "$1" = "critical" ] ||
     shift
 fi
 "$@"
-notify-send "Process Completed" "$*" $opt
+if [ -n "$DISPLAY" ]; then
+    notify-send "Process Completed" "$*" $opt
+fi
 tput bel
