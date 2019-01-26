@@ -55,7 +55,6 @@ myKeys =
   [ ("M-S-l"     , spawn $ "lock")
   , ("M-S-s"     , spawn $ "lock suspend")
   , ("M-S-c"     , kill)
-  , ("M-q"       , spawn "xmonad --restart")
   , ("M-<Space>" , sendMessage NextLayout)
   , ("M-S-q"     , io (exitWith ExitSuccess))
   , ("M-t"       , withFocused $ windows . W.sink)
