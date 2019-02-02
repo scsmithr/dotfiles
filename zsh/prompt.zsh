@@ -5,22 +5,31 @@ setopt prompt_subst
 PROMPT_TRUNC_WIDTH='${COLUMNS}'
 setopt TRANSIENT_RPROMPT # Right prompt removed after enter
 
+# Version control
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+precmd() {
+    PROMPT_LAST_GIT_MSG=$(git log --pretty=format:"%s" -1 2> /dev/null)
+    PROMPT_LAST_GIT_MSG=${PROMPT_LAST_GIT_MSG:gs/ fixup\!/\!}
+    vcs_info
+}
+
 zstyle ':vcs_info:*' check-for-changes false # set true to show unstaged
-zstyle ':vcs_info:git*' formats "%{$fg[green]%}(%b%u)%{$reset_color%}"
-zstyle ':vcs_info:git*' actionformats "%{$fg[green]%}(%b%u) $fg[red][%a]%{$reset_color%}"
+zstyle ':vcs_info:git*' formats "%{$fg_bold[green]%}(%b%u)%{$reset_color%}"
+zstyle ':vcs_info:git*' actionformats "%{$fg_bold[green]%}(%b%u) $fg_bold[red][%a]%{$reset_color%}"
 zstyle ':vcs_info:*' unstagedstr "*"
 
 # Display current vcs status. Single quotes to delay eval
-PROMPT_VCS='${vcs_info_msg_0_}'
+PROMPT_VCS='${vcs_info_msg_0_} %{$fg_bold[black]%}$PROMPT_LAST_GIT_MSG %{$reset_color%}'
 
 # Display username@host during ssh sessions.
 PROMPT_HOST=""
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    PROMPT_HOST="%{$fg[cyan]%}%n@%m%{$reset_color%} "
+    PROMPT_HOST="%{$fg_bold[cyan]%}%n@%m%{$reset_color%} "
 fi
 
 # Display current dir, center truncating if path is long.
-PROMPT_DIR="%{$fg[blue]%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%}"
+PROMPT_DIR="%{$fg_bold[blue]%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%}"
 
 # Display vim mode on keymap change.
 function zle-line-init zle-keymap-select {
@@ -38,7 +47,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 PROMPT="
-%${PROMPT_TRUNC_WIDTH}>...>$PROMPT_HOST$PROMPT_DIR %(1j.$fg[yellow](%j) $reset_color.)$PROMPT_VCS%>>
-%{%(?.$fg[magenta].$fg[yellow])%}>%{$reset_color%} "
+%${PROMPT_TRUNC_WIDTH}>...>$PROMPT_HOST$PROMPT_DIR %(1j.$fg_bold[yellow](%j) $reset_color.)$PROMPT_VCS%>>
+%{%(?.$fg_bold[magenta].$fg_bold[yellow])%}>%{$reset_color%} "
 
 RPROMPT=""
