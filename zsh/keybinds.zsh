@@ -21,7 +21,7 @@ function find_history() {
     if [ -n "$sel" ]; then
         BUFFER="$sel"
         zle .reset-prompt
-        zle .accept-line
+        zle .end-of-line
     else
         zle .reset-prompt
     fi
