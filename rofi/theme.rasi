@@ -1,5 +1,7 @@
 * {
 	selected: #61afef;
+	prompt: #c678dd; 
+	hint: #495162;
 	background-color: @background;
 	background: #21252E;
 	font: "Source Code Pro Medium 10";
@@ -11,10 +13,10 @@
 #window {
 	anchor: north;
 	location: north;
-	margin: 54px 0 0 0;
+	margin: 0 0 0 0;
 	width: 530px;
-	padding: 14px;
-	border: 2px;
+	padding: 2px 14px 0 14px;
+	border: 0 2px 2px 2px;
 	border-color: @separator;
 }
 
@@ -31,7 +33,7 @@
 }
 
 #listview {
-	fixed-height: false;
+	fixed-height: true;
 	scrollbar: false;
 	layout: vertical;
 	lines: 8;
@@ -50,23 +52,23 @@
 }
 
 #inputbar {
-	children: [prompt, textbox-prompt-colon, entry];
-	padding: 6px 10px;
+	children: [textbox-prompt-colon, entry, prompt];
+	padding: 12px 10px;
 	spacing: 0px;
 }
 
 #prompt {
-	text-color: @foreground;
+	text-color: @hint;
 	style: bold;
 }
 
 textbox-prompt-colon {
 	expand: false;
-	str: ":";
-	text-color: @foreground;
+	str: "> ";
+	text-color: @prompt;
 }
 
 #entry {
-	padding: 0 10px;
+	padding: 0;
 	text-color: @foreground;
 }

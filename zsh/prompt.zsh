@@ -46,6 +46,6 @@ zle -N zle-keymap-select
 
 PROMPT="
 %${PROMPT_TRUNC_WIDTH}>...>$PROMPT_HOST$PROMPT_DIR %(1j.$fg_bold[yellow](%j) $reset_color.)$PROMPT_VCS%>>
-%{%(?.$fg_bold[magenta].$fg_bold[yellow])%}>%{$reset_color%} "
+%{%(?.$fg[magenta].$fg[yellow])%}>%{$reset_color%} "
 
 RPROMPT=""
