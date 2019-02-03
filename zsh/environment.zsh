@@ -18,10 +18,12 @@ export XKB_DEFAULT_OPTIONS=ctrl:nocaps
 # Default fzf options
 export FZF_DEFAULT_OPTS='
     --color=16
-    --color hl:5,hl+:5,fg+:4,prompt:7,pointer:5,info:5
+    --color hl:5,hl+:5,fg+:4,prompt:8,pointer:5,info:8,spinner:8,border:8
     --height=10
     --min-height=5
     --layout=reverse
+    --inline-info
+    --no-bold
 '
 
 # Make prompt toolkit programs (mycli) use ansi colors only.
