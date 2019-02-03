@@ -9,8 +9,6 @@ setopt TRANSIENT_RPROMPT # Right prompt removed after enter
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 precmd() {
-    PROMPT_LAST_GIT_MSG=$(git log --pretty=format:"%s" -1 2> /dev/null)
-    PROMPT_LAST_GIT_MSG=${PROMPT_LAST_GIT_MSG:gs/ fixup\!/\!}
     vcs_info
 }
 
@@ -20,7 +18,7 @@ zstyle ':vcs_info:git*' actionformats "%{$fg_bold[green]%}(%b%u) $fg_bold[red][%
 zstyle ':vcs_info:*' unstagedstr "*"
 
 # Display current vcs status. Single quotes to delay eval
-PROMPT_VCS='${vcs_info_msg_0_} %{$fg_bold[black]%}$PROMPT_LAST_GIT_MSG %{$reset_color%}'
+PROMPT_VCS='${vcs_info_msg_0_}'
 
 # Display username@host during ssh sessions.
 PROMPT_HOST=""
