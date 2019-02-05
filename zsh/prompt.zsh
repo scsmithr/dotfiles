@@ -33,10 +33,8 @@ PROMPT_DIR="%{$fg[blue]%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%}"
 function zle-line-init zle-keymap-select {
     PROMPT_VIM_MODE="%{$fg[yellow]%} -- N --%{$reset_color%}"
     if [ "$KEYMAP" = vicmd ]; then
-        echo -ne "\e[1 q"
         RPS1=$PROMPT_VIM_MODE
     else
-        echo -ne "\e[5 q"
         RPS1=""
     fi
     zle reset-prompt
