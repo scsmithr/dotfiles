@@ -223,7 +223,7 @@ urgentFg = "#e5c07b"
 
 -- borders
 focused = "#61afef"
-unfocused = "#394152"
+unfocused = "#31394a"
 myBorderWidth = 2
 
 myTerminal = "launch_alacritty"
