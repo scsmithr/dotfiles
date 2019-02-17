@@ -1,5 +1,6 @@
 module RofiPrompt
-  ( execRofiPrompt
+  ( exec
+  , execZip
   , selectWorkspace
   , withWorkspace
   )
@@ -15,6 +16,7 @@ import           Data.Char                      ( isSpace )
 import           Data.List                      ( reverse
                                                 , dropWhile
                                                 , intercalate
+                                                , map
                                                 )
 
 -- Switch to a workspace, creating it if it doesn't exist.
@@ -25,18 +27,33 @@ selectWorkspace = withWorkspace DynWs.addWorkspace
 withWorkspace :: (String -> X ()) -> X ()
 withWorkspace fn = do
   tags <- getTags
-  execRofiPrompt "workspace" tags fn
+  execZip "workspace" tags fn
+
+exec :: String -> [(String, X ())] -> X ()
+exec prompt opts = do
+  let ss  = fsts opts
+  let out = intercalate "\n" ss
+  chosen <- runProcessWithInput "rofi" ["-p", prompt, "-dmenu"] out
+  case find (rstrip chosen) opts of
+    Just pair -> snd pair
+    Nothing   -> return ()
 
 -- Execute rofi with a list of strings, executing the provided function with the
 -- selected option. If the input from rofi is an empty string, nothing will be 
 -- done.
-execRofiPrompt :: String -> [String] -> (String -> X ()) -> X ()
-execRofiPrompt prompt opts fn = do
-  let out = intercalate "\n" opts
-  chosen <- runProcessWithInput "rofi" ["-p", prompt, "-dmenu"] out
-  case chosen of
-    "" -> return ()
-    _  -> fn $ rstrip chosen
+execZip :: String -> [String] -> (String -> X ()) -> X ()
+execZip prompt opts fn = do
+  let ts = map (\x -> (x, fn x)) opts
+  exec prompt ts
+
+fsts :: [(String, X ())] -> [String]
+fsts []       = []
+fsts (x : xs) = [fst x] ++ fsts xs
+
+find :: String -> [(String, X ())] -> Maybe (String, X ())
+find _ [] = Nothing
+find s (x : xs) | fst x == s = Just x
+                | otherwise  = find s xs
 
 getTags :: X [WorkspaceId]
 getTags = do

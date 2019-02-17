@@ -4,7 +4,7 @@ Config {
     fgColor = "#abb2bf",
     border = BottomB,
     borderColor = "#31394a",
-    borderWidth = 0,
+    borderWidth = 2,
     position = Top,
     allDesktops = False,
     lowerOnStart = True,

@@ -49,17 +49,10 @@ import qualified RofiPrompt
 import qualified PinnedWorkspaces
 import qualified Hideable
 
-myWorkspaces = ["def", "conn", "email", "web"]
 
-myKeys =
-  [ ("M-S-l"     , spawn $ "lock")
-  , ("M-S-s"     , spawn $ "lock suspend")
-  , ("M-S-c"     , kill)
-  , ("M-<Space>" , sendMessage NextLayout)
-  , ("M-S-q"     , io (exitWith ExitSuccess))
-  , ("M-t"       , withFocused $ windows . W.sink)
-  , ("M-n"       , sendMessage ToggleStruts)
-  , ("M-<Return>", spawn myTerminal)
+applicationKeys :: [(String, X ())]
+applicationKeys =
+  [ ("M-<Return>", spawn myTerminal)
   , ("M-p"       , spawn "rofi -show run")
   , ("M-b"       , spawn "firefox")
   , ( "M-i"
@@ -67,7 +60,15 @@ myKeys =
       . Map.fromList
       $ [((0, xK_f), spawn "nautilus"), ((0, xK_p), spawn "screenshot.sh")]
     )
-  , ("M-o"  , RofiPrompt.selectWorkspace)
+  ]
+
+windowManagementKeys :: [(String, X ())]
+windowManagementKeys =
+  [ ("M-S-c"    , kill)
+  , ("M-<Space>", sendMessage NextLayout)
+  , ("M-t"      , withFocused $ windows . W.sink)
+  , ("M-n"      , sendMessage ToggleStruts)
+  , ("M-o"      , RofiPrompt.selectWorkspace)
   , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
   , ( "M-u"
     , submap
@@ -83,24 +84,39 @@ myKeys =
       ++ zip (zip (repeat (0)) [xK_1 .. xK_9])
              (map (PinnedWorkspaces.pinCurrentWorkspace) [1 ..])
     )
-  , ("M--"                    , toggleWS)
-  , ("M-j"                    , windows W.focusDown)
-  , ("M-k"                    , windows W.focusUp)
-  , ("M-S-j"                  , windows W.swapDown)
-  , ("M-S-k"                  , windows W.swapUp)
-  , ("M-S-<Return>"           , windows W.swapMaster)
-  , ("M-f"                    , withFocused Hideable.pushHidden)
-  , ("M-g"                    , Hideable.popHidden)
-  , ("M-h"                    , sendMessage Shrink)
-  , ("M-l"                    , sendMessage Expand)
-  , ("M-,"                    , sendMessage (IncMasterN 1))
-  , ("M-."                    , sendMessage (IncMasterN (-1)))
-  , ("<XF86MonBrightnessUp>"  , spawn "bri laptop up")
+  , ( "M-x"
+    , RofiPrompt.exec
+      "xmonad"
+      [ ("state"    , writeStateToFile)
+      , ("restart"  , spawn "xmonad --restart")
+      , ("recompile", spawn "xmonad --recompile && xmonad --restart")
+      , ("quit"     , io (exitWith ExitSuccess))
+      ]
+    )
+  , ("M--"         , toggleWS)
+  , ("M-j"         , windows W.focusDown)
+  , ("M-k"         , windows W.focusUp)
+  , ("M-S-j"       , windows W.swapDown)
+  , ("M-S-k"       , windows W.swapUp)
+  , ("M-S-<Return>", windows W.swapMaster)
+  , ("M-f"         , withFocused Hideable.pushHidden)
+  , ("M-g"         , Hideable.popHidden)
+  , ("M-h"         , sendMessage Shrink)
+  , ("M-l"         , sendMessage Expand)
+  , ("M-,"         , sendMessage (IncMasterN 1))
+  , ("M-."         , sendMessage (IncMasterN (-1)))
+  ]
+
+mediaKeys :: [(String, X ())]
+mediaKeys =
+  [ ("<XF86MonBrightnessUp>"  , spawn "bri laptop up")
   , ("<XF86MonBrightnessDown>", spawn "bri laptop down")
   , ("<XF86AudioRaiseVolume>" , spawn "vol up")
   , ("<XF86AudioLowerVolume>" , spawn "vol down")
   , ("<XF86AudioMute>"        , spawn "vol mute")
   ]
+
+myKeys = applicationKeys ++ windowManagementKeys ++ mediaKeys
 
 notify :: String -> String -> X ()
 notify title msg = do
@@ -150,11 +166,11 @@ myLogHook h = do
   let getNumHidden ws = StrictMap.lookup ws hmap
 
   let fmt = formatWorkspace getIndex getNumHidden
-  D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" selFg True
-                                , D.ppHidden  = fmt "" muted "" hiddenFg False
-                                , D.ppVisible = fmt "" muted "" visFg True
-                                , D.ppUrgent  = fmt "" muted "" urgentFg True
-                                , D.ppLayout  = formatIcon "" layoutFg
+  D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" primary True
+                                , D.ppHidden  = fmt "" muted "" foreground False
+                                , D.ppVisible = fmt "" muted "" secondary True
+                                , D.ppUrgent  = fmt "" muted "" urgent True
+                                , D.ppLayout  = formatIcon "" tertiary
                                 , D.ppTitle   = const ""
                                 , D.ppSep     = ""
                                 , D.ppSort    = PinnedWorkspaces.getSortByPinned
@@ -203,28 +219,27 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
       , terminal           = myTerminal
       , modMask            = myModMask
       , borderWidth        = myBorderWidth
-      , normalBorderColor  = unfocused
-      , focusedBorderColor = focused
+      , normalBorderColor  = myUnfocusedBorderColor
+      , focusedBorderColor = myFocusedBorderColor
       , startupHook        = myStartupHook
       }
   myKeys
 
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
--- foreground/ background colors
-bg = "#282c34"
+-- colors
+background = "#282c34"
 muted = "#495162"
-fg = "#abb2bf"
-selFg = "#61afef"
-visFg = "#98c379"
-hiddenFg = fg
-layoutFg = "#c678dd"
-urgentFg = "#e5c07b"
+foreground = "#abb2bf"
+primary = "#61afef"
+secondary = "#98c379"
+tertiary = "#c678dd"
+urgent = "#e5c07b"
 
--- borders
-focused = "#61afef"
-unfocused = "#31394a"
+-- config vars
+myFocusedBorderColor = primary
+myUnfocusedBorderColor = "#31394a"
 myBorderWidth = 2
-
 myTerminal = "launch_alacritty"
 myModMask = mod4Mask
+myWorkspaces = ["def", "conn", "email", "web"]
