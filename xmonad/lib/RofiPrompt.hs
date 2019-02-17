@@ -29,14 +29,15 @@ withWorkspace fn = do
   tags <- getTags
   execZip "workspace" tags fn
 
-exec :: String -> [(String, X ())] -> X ()
-exec prompt opts = do
+exec :: String -> [(String, X ())] -> (String -> X ()) -> X ()
+exec prompt opts def = do
   let ss  = fsts opts
   let out = intercalate "\n" ss
   chosen <- runProcessWithInput "rofi" ["-p", prompt, "-dmenu"] out
-  case find (rstrip chosen) opts of
+  let s = rstrip chosen
+  case find s opts of
     Just pair -> snd pair
-    Nothing   -> return ()
+    Nothing   -> def s
 
 -- Execute rofi with a list of strings, executing the provided function with the
 -- selected option. If the input from rofi is an empty string, nothing will be 
@@ -44,7 +45,7 @@ exec prompt opts = do
 execZip :: String -> [String] -> (String -> X ()) -> X ()
 execZip prompt opts fn = do
   let ts = map (\x -> (x, fn x)) opts
-  exec prompt ts
+  exec prompt ts fn
 
 fsts :: [(String, X ())] -> [String]
 fsts []       = []

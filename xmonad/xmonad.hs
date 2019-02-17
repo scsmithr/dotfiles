@@ -89,6 +89,7 @@ windowManagementKeys =
       , ("recompile", spawn "xmonad --recompile && xmonad --restart")
       , ("quit"     , io (exitWith ExitSuccess))
       ]
+      (\s -> notify "xmonad" $ "unknown option: " ++ s)
     )
   , ("M--"         , toggleWS)
   , ("M-j"         , windows W.focusDown)
