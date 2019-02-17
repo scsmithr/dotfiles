@@ -64,7 +64,9 @@ applicationKeys =
 
 windowManagementKeys :: [(String, X ())]
 windowManagementKeys =
-  [ ("M-S-c"    , kill)
+  [ ("M-S-l"    , spawn "lock")
+  , ("M-S-s"    , spawn "lock suspend")
+  , ("M-S-c"    , kill)
   , ("M-<Space>", sendMessage NextLayout)
   , ("M-t"      , withFocused $ windows . W.sink)
   , ("M-n"      , sendMessage ToggleStruts)
