@@ -36,8 +36,9 @@ exec prompt opts def = do
   chosen <- runProcessWithInput "rofi" ["-p", prompt, "-dmenu"] out
   let s = rstrip chosen
   case find s opts of
-    Just pair -> snd pair
-    Nothing   -> def s
+    Just pair         -> snd pair
+    Nothing | s /= "" -> def s
+    _                 -> return ()
 
 -- Execute rofi with a list of strings, executing the provided function with the
 -- selected option. If the input from rofi is an empty string, nothing will be 
