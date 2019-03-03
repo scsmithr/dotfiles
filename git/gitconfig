@@ -1,0 +1,17 @@
+[user]
+	email = scsmithr@gmail.com
+	name = Sean Smith
+[core]
+    editor = nvim
+	excludesfile = /home/sean/.gitignore
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+[url "git@gh.coder-internal.com:"]
+    insteadOf = https://git.coder-internal.com/
+[url "git@gh.coder-internal.com:"]
+    insteadOf = https://gh.coder-internal.com/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
