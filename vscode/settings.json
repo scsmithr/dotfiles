@@ -106,5 +106,11 @@
     "gitlens.statusBar.reduceFlicker": true,
     "gitlens.blame.avatars": false,
     "gitlens.views.compare.avatars": false,
-    "gitlens.statusBar.format": "${message} - ${authorAgoOrDate}"
+    "gitlens.statusBar.format": "${message} - ${authorAgoOrDate}",
+    "rust.clippy_preference": "on",
+    "rust.all_targets": false,
+    "rust.cfg_test": true,
+    "extensions.autoUpdate": false,
+    "editor.codeLens": false,
+    "rust.rustflags": "-A dead_code"
 }

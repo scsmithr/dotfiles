@@ -1,6 +1,8 @@
 [user]
 	email = scsmithr@gmail.com
 	name = Sean Smith
+[commit]
+    gpgsign = true
 [core]
     editor = nvim
 	excludesfile = /home/sean/.gitignore
@@ -15,3 +17,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[http]
+    cookiefile = /home/sean/.gitcookies
