@@ -8,11 +8,11 @@
     {
         "key": "ctrl+n",
         "command": "workbench.action.quickOpenNavigateNextInFilePicker",
-        "when": "inFilesPicker && inQuickOpen"
+        "when": "inQuickOpen"
     },
     {
         "key": "ctrl+p",
         "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
-        "when": "inFilesPicker && inQuickOpen"
+        "when": "inQuickOpen"
     },
 ]

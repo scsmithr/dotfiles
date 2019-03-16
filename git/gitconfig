@@ -19,3 +19,7 @@
 	required = true
 [http]
     cookiefile = /home/sean/.gitcookies
+[alias]
+	wta = "!f() { git worktree add worktree/$1; }; f"
+	wtr = "!f() { git worktree remove worktree/$1; }; f"
+	wtl = worktree list
