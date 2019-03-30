@@ -2,7 +2,11 @@
 
 eval $(dircolors)
 
-cdpath=($HOME $HOME/.go/src/go.coder.com $HOME/Code/github.com/scsmithr)
+cdpath=(
+    $HOME 
+    $HOME/.go/src/go.coder.com/m/
+    $HOME/Code/github.com/
+)
 
 zle_highlight=(region:bg=8 special:standout isearch:underline,fg=yellow)
 
