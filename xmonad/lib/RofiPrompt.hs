@@ -2,6 +2,7 @@ module RofiPrompt
   ( exec
   , execZip
   , selectWorkspace
+  , renameWorkspace
   , withWorkspace
   )
 where
@@ -22,6 +23,11 @@ import           Data.List                      ( reverse
 -- Switch to a workspace, creating it if it doesn't exist.
 selectWorkspace :: X ()
 selectWorkspace = withWorkspace DynWs.addWorkspace
+
+-- Rename current workspace. If a workspace with that name already exists, all
+-- windows in the current workspaces will be moved to the existing workspace.
+renameWorkspace :: X ()
+renameWorkspace = withWorkspace DynWs.renameWorkspaceByName
 
 -- Executes a given function once a workspace is selected.
 withWorkspace :: (String -> X ()) -> X ()

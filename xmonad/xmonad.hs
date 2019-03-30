@@ -72,6 +72,7 @@ windowManagementKeys =
   , ("M-n"      , sendMessage ToggleStruts)
   , ("M-o"      , RofiPrompt.selectWorkspace)
   , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
+  , ("M-S-r"    , RofiPrompt.renameWorkspace)
   , ( "M-u"
     , submap
       .  Map.fromList
