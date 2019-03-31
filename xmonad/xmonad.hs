@@ -22,7 +22,9 @@ import           XMonad.Hooks.EwmhDesktops      ( ewmh
                                                 )
 
 import           XMonad.Layout.NoBorders        ( smartBorders )
-import           XMonad.Layout.ThreeColumns     ( ThreeCol(..) )
+import           XMonad.Layout.ResizableTile    ( ResizableTall(..)
+                                                , MirrorResize(..)
+                                                )
 import           XMonad.Layout.Spacing          ( Border(..)
                                                 , spacingRaw
                                                 )
@@ -64,7 +66,7 @@ applicationKeys =
 
 windowManagementKeys :: [(String, X ())]
 windowManagementKeys =
-  [ ("M-S-l"    , spawn "lock")
+  [ ("M-q"      , spawn "lock")
   , ("M-S-s"    , spawn "lock suspend")
   , ("M-S-c"    , kill)
   , ("M-<Space>", sendMessage NextLayout)
@@ -102,6 +104,8 @@ windowManagementKeys =
   , ("M-g"         , Hideable.popHidden)
   , ("M-h"         , sendMessage Shrink)
   , ("M-l"         , sendMessage Expand)
+  , ("M-S-h"       , sendMessage MirrorExpand)
+  , ("M-S-l"       , sendMessage MirrorShrink)
   , ("M-,"         , sendMessage (IncMasterN 1))
   , ("M-."         , sendMessage (IncMasterN (-1)))
   ]
@@ -126,10 +130,10 @@ formatIcon
   -> String -- icon fg
   -> String -- layout name
   -> String
-formatIcon bg fg l | t "Tall" l     = fmt "|="
-                   | t "Full" l     = fmt "[]"
-                   | t "ThreeCol" l = fmt "|||"
-                   | otherwise      = l
+formatIcon bg fg l | t "Tall" l && t "Mirror" l = fmt "=="
+                   | t "Tall" l                 = fmt "|="
+                   | t "Full" l                 = fmt "[]"
+                   | otherwise                  = fmt l
  where
   t   = List.isInfixOf
   fmt = D.pad . (D.xmobarColor fg bg)
@@ -186,12 +190,13 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
            (map (PinnedWorkspaces.withPinnedIndex W.greedyView) [1 ..])
     ++ zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
+    ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
 myLayoutHook = Hideable.hiddenWindows
-  $ smartBorders (tiled ||| Full ||| threeCol)
+  $ smartBorders (tiled ||| tiledMirror ||| Full)
  where
-  tiled          = uniformSpacing $ Tall nmaster delta ratio
-  threeCol       = uniformSpacing $ ThreeCol nmaster delta ratio
+  tiled          = uniformSpacing $ ResizableTall nmaster delta ratio []
+  tiledMirror    = Mirror tiled
   nmaster        = 1
   ratio          = 1 / 2
   delta          = 3 / 100
