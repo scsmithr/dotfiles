@@ -112,5 +112,10 @@
     "rust.cfg_test": true,
     "extensions.autoUpdate": false,
     "editor.codeLens": false,
-    "rust.rustflags": "-A dead_code"
+    "rust.rustflags": "-A dead_code",
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": {
+        "node_modules/": true,
+        "vendor/": true
+    }
 }
