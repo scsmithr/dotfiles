@@ -4,7 +4,7 @@ Config {
     fgColor = "#abb2bf",
     border = BottomB,
     borderColor = "#31394a",
-    borderWidth = 0,
+    borderWidth = 2,
     position = Top,
     allDesktops = False,
     lowerOnStart = True,
@@ -23,7 +23,7 @@ Config {
             "--Low",    "20",        -- units: %
             "--High",   "80",        -- units: %
             "--low",    "#e06c75",
-            
+
             "--", -- Battery-specific options.
             "-o", "<left>% (<timeleft>)", -- Discharging status.
             "-O", "<left>% <fc=#98c379>(charging)</fc>", -- AC "on" status.
