@@ -1,9 +1,9 @@
 * {
 	selected: #61afef;
-	prompt: #c678dd; 
+	prompt: #c678dd;
 	hint: #495162;
 	background-color: @background;
-	background: #21252E;
+	background: #1c212a;
 	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
 	separator: #31394a;
@@ -14,7 +14,7 @@
 	anchor: north;
 	location: north;
 	margin: 0 0 0 0;
-	width: 530px;
+	width: 560px;
 	padding: 2px 14px 0 14px;
 	border: 0 2px 2px 2px;
 	border-color: @separator;

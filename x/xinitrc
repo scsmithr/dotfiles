@@ -1,6 +1,5 @@
 xsetroot -cursor_name left_ptr
 hsetroot -solid "#282c34"
-compton -CGb -o 0 --backend glx --vsync opengl-swc --no-fading-openclose -d :0
 
 xrdb ~/.Xresources
 
@@ -25,7 +24,7 @@ dunst&
 # Set up lockscreen
 xset s 300 5 # Lock after 5 minutes
 export XSECURELOCK_FONT="Source Code Pro:style=Medium"
-export XSECURELOCK_WANT_FIRST_KEYPRESS=1 
+export XSECURELOCK_WANT_FIRST_KEYPRESS=1
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock&
 
 exec xmonad
