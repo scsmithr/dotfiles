@@ -23,7 +23,6 @@
     "editor.lineNumbers": "on",
     "update.channel": "none",
     "window.titleBarStyle": "native",
-    "workbench.editor.showTabs": false,
     "explorer.openEditors.visible": 0,
     "workbench.sideBar.location": "left",
     "go.enableCodeLens": {
@@ -34,8 +33,8 @@
         "sideBar.background": "#21252E",
         "statusBar.background": "#21252E",
         "editorCursor.foreground": "#61AFEF",
-        "widget.shadow": "#00000000",
-        "scrollbar.shadow": "#00000000",
+        "widget.shadow": "#00000044",
+        "scrollbar.shadow": "#00000044",
         "notifications.background": "#21252E",
         "notificationCenterHeader.background": "#21252E",
         "gitDecoration.modifiedResourceForeground": "#E5C07B",
@@ -117,5 +116,8 @@
     "files.exclude": {
         "node_modules/": true,
         "vendor/": true
-    }
+    },
+    "javascript.preferences.quoteStyle": "double",
+    "typescript.preferences.quoteStyle": "double",
+    "workbench.editor.showTabs": false
 }
