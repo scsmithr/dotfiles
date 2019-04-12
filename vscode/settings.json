@@ -50,13 +50,49 @@
                 }
             },
             {
+                "scope": "variable.other.property.tsx",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
                 "scope": "variable.other.object.ts",
                 "settings": {
                     "foreground": "#abb2bf",
                 }
             },
             {
+                "scope": "variable.other.object.tsx",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
+                "scope": "variable.object.property.ts",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
+                "scope": "variable.object.property.tsx",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
                 "scope": "variable.other.object.property.ts",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
+                "scope": "variable.other.object.property.tsx",
+                "settings": {
+                    "foreground": "#abb2bf",
+                }
+            },
+            {
+                "scope": "meta.object-literal.key",
                 "settings": {
                     "foreground": "#abb2bf",
                 }
