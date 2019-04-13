@@ -89,3 +89,7 @@ ln -sv $DIR/fontconfig/fonts.conf ~/.config/fontconfig
 # git
 ln -sv $DIR/git/gitconfig ~/.gitconfig
 ln -sv $DIR/git/gitignore ~/.gitignore
+
+# emacs
+mkdir -p ~/.emacs.d
+ln -sv $DIR/emacs/* ~/.emacs.d
