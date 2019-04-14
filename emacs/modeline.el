@@ -1,7 +1,9 @@
 ;; Mode line setup
 (setq-default
  mode-line-format
- '(; Position, including warning for 80 columns
+ '(
+   (:eval evil-mode-line-tag)
+; Position, including warning for 80 columns
    (:propertize "%4l:" face mode-line-position-face)
    (:eval (propertize "%3c" 'face
                       (if (>= (current-column) 80)
@@ -17,14 +19,15 @@
           (t "   ")))
    "  "
    ; directory and buffer/file name
-   (:propertize (:eval (shorten-directory default-directory 30))
+   (:propertize (:eval (shorten-directory default-directory 15))
                 face mode-line-folder-face)
    (:propertize "%b"
                 face mode-line-filename-face)
    ; mode indicators: vc, recursive edit, major mode, minor modes, process,
    ; global
-   (vc-mode vc-mode)
-   "  %["
+   (:propertize (vc-mode vc-mode) face mode-line-vc-face)
+
+   " %["
    (:propertize mode-name
                 face mode-line-mode-face)
    "%] "
@@ -55,6 +58,7 @@
 (make-face 'mode-line-modified-face)
 (make-face 'mode-line-folder-face)
 (make-face 'mode-line-filename-face)
+(make-face 'mode-line-vc-face)
 (make-face 'mode-line-position-face)
 (make-face 'mode-line-mode-face)
 (make-face 'mode-line-minor-mode-face)
@@ -82,6 +86,9 @@
     :inherit 'mode-line-face
     :foreground (doom-color 'blue)
     :weight 'bold)
+(set-face-attribute 'mode-line-vc-face nil
+    :inherit 'mode-line-face
+    :foreground (doom-color 'green))
 (set-face-attribute 'mode-line-position-face nil
     :inherit 'mode-line-face)
 (set-face-attribute 'mode-line-mode-face nil

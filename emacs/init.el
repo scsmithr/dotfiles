@@ -18,9 +18,12 @@
   "Load a file in current user's configuration directory"
   (load-file (expand-file-name file user-init-dir)))
 
+;; Fringe widths, git/flycheck
+(fringe-mode '(4 . 4))
 
 ;; Line numbers
-(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(setq display-line-numbers-width-start t)
 
 ;; Highlight current line
 (global-hl-line-mode +1)
@@ -64,8 +67,6 @@
 ;; #Don't #create #lock #files
 (setq create-lockfiles nil)
 
-
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -79,7 +80,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 110)
 
@@ -112,9 +113,9 @@
   (defvar leader-map (make-sparse-keymap) "Keymap for leader key")
   (define-key evil-normal-state-map "," leader-map)
   (define-key leader-map "w" 'evil-window-vsplit)
+  (define-key leader-map "h" 'evil-window-split)
   ;; Rebind ctrl-p
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
-
 
 (use-package evil-commentary
   :ensure t
@@ -135,7 +136,8 @@
   (setq doom-themes-enable-italic nil)
   :config
   (load-theme 'doom-one t)
-  (load-user-file "modeline.el"))
+  (load-user-file "modeline.el")
+  (set-face-attribute 'whitespace-tab nil :background "inherit"))
 
 ;; Vertical ido
 (use-package ido-vertical-mode
@@ -169,7 +171,7 @@
   :after doom-themes
   :ensure t
   :init
-  (setq treemacs-width 20)
+  (setq treemacs-width 25)
   (setq treemacs-no-png-images t)
   :config
     (treemacs-follow-mode t)
@@ -182,9 +184,9 @@
       (`(t . _)
        (treemacs-git-mode 'simple)))
   (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
-  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue))
+  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'fg-alt))
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
-  (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
+  (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'magenta))
   (set-face-attribute 'treemacs-root-face nil :foreground (doom-color 'blue))
 
   (define-key leader-map "n" 'treemacs)
@@ -222,6 +224,10 @@
   :config
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
+  (define-key leader-map "l" 'flycheck-list-errors)
+  (set-face-attribute 'flycheck-fringe-info nil :foreground (doom-color 'bg) :background (doom-color 'bg))
+  (set-face-attribute 'flycheck-fringe-warning nil :foreground (doom-color 'orange) :background (doom-color 'orange))
+  (set-face-attribute 'flycheck-fringe-error nil :foreground (doom-color 'red) :background (doom-color 'red))
   :init (global-flycheck-mode))
 
 (use-package company
@@ -230,6 +236,7 @@
   (setq company-frontends '(company-preview-frontend company-echo-frontend))
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 1)
+  (define-key company-active-map (kbd "<return>") #'company-complete-selection)
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
@@ -280,4 +287,13 @@
   :ensure t
   :init
   (setq rust-format-on-save t))
+
+(use-package git-gutter-fringe
+  :ensure t
+  :init
+  :config
+  (global-git-gutter-mode)
+  (set-face-attribute 'git-gutter-fr:modified nil :foreground (doom-color 'blue) :background (doom-color 'blue))
+  (set-face-attribute 'git-gutter-fr:added nil :foreground (doom-color 'green) :background (doom-color 'green))
+  (set-face-attribute 'git-gutter-fr:deleted nil :foreground (doom-color 'magenta) :background (doom-color 'magenta)))
 
