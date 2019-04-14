@@ -12,7 +12,6 @@
          user-init-directory)
         (t "~/.emacs.d/")))
 
-
 (defun load-user-file (file)
   (interactive "f")
   "Load a file in current user's configuration directory"
@@ -80,7 +79,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 110)
 
@@ -296,4 +295,7 @@
   (set-face-attribute 'git-gutter-fr:modified nil :foreground (doom-color 'blue) :background (doom-color 'blue))
   (set-face-attribute 'git-gutter-fr:added nil :foreground (doom-color 'green) :background (doom-color 'green))
   (set-face-attribute 'git-gutter-fr:deleted nil :foreground (doom-color 'magenta) :background (doom-color 'magenta)))
+
+(use-package magit
+  :ensure t)
 
