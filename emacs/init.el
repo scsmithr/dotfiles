@@ -39,21 +39,21 @@
 (require 'whitespace)
 (setq whitespace-line-column 80)
 (setq whitespace-style '(
-			 face
-			 space-mark
-			 tab-mark lines-tail
-			 trailing
-			 tabs
-			 spaces))
+    face
+    space-mark
+    tab-mark lines-tail
+    trailing
+    tabs
+    spaces))
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;; Don't wrap lines
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
-(setq scroll-step 1)
-(setq scroll-margin 4)
+(setq-default scroll-step 1)
+(setq-default scroll-margin 4)
 
-(setq require-final-newline t)
+(setq-default require-final-newline t)
 
 ;; Configure file backups
 (setq backup-directory-alist '(("." . "~/.emacs.d/.backups")))
@@ -79,7 +79,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 110)
 
@@ -94,6 +94,9 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;; Load languages
+(load-user-file "langs.el")
+
 ;; evil
 (use-package evil
   :ensure t
@@ -107,7 +110,6 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode)
-  ;; (bind-key* "C p" 'projectile-find-file)
   ;; Set up leader key (defvar leader-map
   (defvar leader-map (make-sparse-keymap) "Keymap for leader key")
   (define-key evil-normal-state-map "," leader-map)
@@ -118,6 +120,7 @@
 
 (use-package evil-commentary
   :ensure t
+  :after evil
   :init
   (evil-commentary-mode))
 
@@ -168,26 +171,22 @@
   (define-key leader-map "p" 'projectile-command-map))
 
 (use-package treemacs
-  :after doom-themes
   :ensure t
+  :after doom-themes
   :init
   (setq treemacs-width 25)
   (setq treemacs-no-png-images t)
   :config
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null (executable-find "python3"))))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode t)
+  (treemacs-git-mode 'deferred)
   (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
   (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'fg-alt))
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'magenta))
   (set-face-attribute 'treemacs-root-face nil :foreground (doom-color 'blue))
+  (define-key leader-map "t" treemacs-mode-map)
   (define-key leader-map "n" 'treemacs)
   (define-key leader-map "a" 'treemacs-add-and-display-current-project))
 
@@ -199,35 +198,19 @@
   :after treemacs projectile
   :ensure t)
 
-;; lsp
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :init
-  )
-
-(use-package lsp-ui :commands lsp-ui-mode)
-
-;; Go
-(use-package go-mode
-  :ensure t
-  :mode "\\.go\\'"
-  :config
-  (setq gofmt-command "goimports")
-  :init
-  (add-hook 'before-save-hook #'gofmt-before-save)
-  )
-
 (use-package flycheck
   :ensure t
+  :after doom-themes
   :config
+  (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
-  (define-key leader-map "l" 'flycheck-list-errors)
+  (define-key leader-map "f" flycheck-command-map)
+  (global-set-key (kbd "<f8>") 'flycheck-next-error)
+  (global-set-key (kbd "S-<f8>") 'flycheck-previous-error)
   (set-face-attribute 'flycheck-fringe-info nil :foreground (doom-color 'bg) :background (doom-color 'bg))
   (set-face-attribute 'flycheck-fringe-warning nil :foreground (doom-color 'orange) :background (doom-color 'orange))
-  (set-face-attribute 'flycheck-fringe-error nil :foreground (doom-color 'red) :background (doom-color 'red))
-  :init (global-flycheck-mode))
+  (set-face-attribute 'flycheck-fringe-error nil :foreground (doom-color 'red) :background (doom-color 'red)))
 
 (use-package company
   :ensure t
@@ -236,60 +219,24 @@
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 1)
   (define-key company-active-map (kbd "<return>") #'company-complete-selection)
+  (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package haskell-mode
-  :ensure t)
-
-(use-package web-mode
+(use-package company-lsp
   :ensure t
-  :init)
-
-(use-package typescript-mode
-  :ensure t)
-
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-(use-package tide
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save))
-  :init
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
-  (add-hook 'typescript-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-  ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'typescript-mode))
-
+  :after company
+  :config
+  (push 'company-lsp company-backends))
 
 (use-package which-key
   :ensure t
   :init
   (which-key-mode 1))
 
-(use-package rust-mode
-  :ensure t
-  :init
-  (setq rust-format-on-save t))
-
 (use-package git-gutter-fringe
   :ensure t
-  :init
+  :after doom-themes
   :config
   (global-git-gutter-mode)
   (set-face-attribute 'git-gutter-fr:modified nil :foreground (doom-color 'blue) :background (doom-color 'blue))
@@ -298,4 +245,15 @@
 
 (use-package magit
   :ensure t)
+
+;; lsp
+(use-package lsp-mode
+  :ensure t
+  :commands lsp)
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  :config
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
