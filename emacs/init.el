@@ -52,6 +52,7 @@
 
 (setq-default scroll-step 1)
 (setq-default scroll-margin 4)
+(setq-default scroll-conservatively 101)
 
 (setq-default require-final-newline t)
 
