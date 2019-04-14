@@ -5,6 +5,20 @@
 (setq inhibit-startup-message t
       inihibit-startup-echo-area-message t)
 
+(defconst user-init-dir
+  (cond ((boundp 'user-emacs-directory)
+         user-emacs-directory)
+        ((boundp 'user-init-directory)
+         user-init-directory)
+        (t "~/.emacs.d/")))
+
+
+(defun load-user-file (file)
+  (interactive "f")
+  "Load a file in current user's configuration directory"
+  (load-file (expand-file-name file user-init-dir)))
+
+
 ;; Line numbers
 (add-hook 'prog-mode-hook 'linum-mode)
 
@@ -12,10 +26,12 @@
 (global-hl-line-mode +1)
 
 ;; Tab stuff
-(setq tab-width 4)
+(setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
+
+(setq-default fill-column 80)
 
 ;; Whitespace stuff
 (require 'whitespace)
@@ -37,6 +53,19 @@
 
 (setq require-final-newline t)
 
+;; Configure file backups
+(setq backup-directory-alist '(("." . "~/.emacs.d/.backups")))
+(setq backup-by-copying t)
+(setq delete-old-versions t)
+(setq kept-new-versions 6)
+(setq kept-old-versions 2)
+(setq version-control t)
+
+;; #Don't #create #lock #files
+(setq create-lockfiles nil)
+
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -50,7 +79,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 110)
 
@@ -65,8 +94,6 @@
   (package-install 'use-package))
 (require 'use-package)
 
-
-
 ;; evil
 (use-package evil
   :ensure t
@@ -80,10 +107,14 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode)
+  ;; (bind-key* "C p" 'projectile-find-file)
   ;; Set up leader key (defvar leader-map
   (defvar leader-map (make-sparse-keymap) "Keymap for leader key")
   (define-key evil-normal-state-map "," leader-map)
-  (define-key leader-map "w" 'evil-window-vsplit))
+  (define-key leader-map "w" 'evil-window-vsplit)
+  ;; Rebind ctrl-p
+  (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
+
 
 (use-package evil-commentary
   :ensure t
@@ -103,7 +134,8 @@
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-one t))
+  (load-theme 'doom-one t)
+  (load-user-file "modeline.el"))
 
 ;; Vertical ido
 (use-package ido-vertical-mode
@@ -114,6 +146,15 @@
   :config
   (ido-mode 1)
   (ido-vertical-mode 1))
+
+(use-package flx-ido
+  :ensure t
+  :after ido-vertical-mode
+  :config
+  (setq ido-use-faces nil)
+  :init
+  (ido-everywhere 1)
+  (flx-ido-mode 1))
 
 ;; Projectile
 (use-package projectile
@@ -180,7 +221,7 @@
   :ensure t
   :config
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
-  (setq flycheck-indication-mode nil)
+  (setq flycheck-indication-mode 'right-fringe)
   :init (global-flycheck-mode))
 
 (use-package company
@@ -192,35 +233,51 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package haskell-mode
+  :ensure t)
+
 (use-package web-mode
   :ensure t
   :init)
 
+(use-package typescript-mode
+  :ensure t)
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
 (use-package tide
   :ensure t
-  :after web-mode
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save))
   :init
-  (defun setup-tide-mode ()
-      (interactive)
-       (tide-setup)
-       (flycheck-add-next-checker 'typescript-tide '(t . typescript-tslint) 'append)
-       (eldoc-mode +1)
-       (company-mode +1)
-       (tide-hl-identifier-mode +1))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+  (add-hook 'typescript-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+  ;; enable typescript-tslint checker
+  (flycheck-add-mode 'typescript-tslint 'typescript-mode))
 
-    ;; aligns annotation to the right hand side
-    (setq company-tooltip-align-annotations t)
 
-    ;; formats the buffer before saving
-    (add-hook 'before-save-hook 'tide-format-before-save)
-    (add-hook 'typescript-mode-hook #'setup-tide-mode)
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode 1))
 
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-    (add-hook 'typescript-mode-hook
-	      (lambda ()
-		(when (string-equal "tsx" (file-name-extension buffer-file-name))
-		    (setup-tide-mode))))
-    ;; funky typescript linting in web-mode
-    (flycheck-add-mode 'typescript-tslint 'web-mode))
-
+(use-package rust-mode
+  :ensure t
+  :init
+  (setq rust-format-on-save t))
 
