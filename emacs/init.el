@@ -22,7 +22,7 @@
 
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(setq display-line-numbers-width-start t)
+(setq-default display-line-numbers-width-start t)
 
 ;; Highlight current line
 (global-hl-line-mode +1)
@@ -136,7 +136,8 @@
   :config
   (load-theme 'doom-one t)
   (load-user-file "modeline.el")
-  (set-face-attribute 'whitespace-tab nil :background "inherit"))
+  (set-face-attribute 'whitespace-tab nil :background "inherit")
+  (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
 
 ;; Vertical ido
 (use-package ido-vertical-mode
@@ -187,7 +188,6 @@
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'magenta))
   (set-face-attribute 'treemacs-root-face nil :foreground (doom-color 'blue))
-
   (define-key leader-map "n" 'treemacs)
   (define-key leader-map "a" 'treemacs-add-and-display-current-project))
 
