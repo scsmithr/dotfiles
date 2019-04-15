@@ -25,13 +25,10 @@
 
 ;; General html, javascript, etc.
 (use-package web-mode
-  :ensure t)
-
-;; Typescript
-(use-package typescript-mode
   :ensure t
+  :mode "\\.tsx?\\'"
   :init
-  (add-hook 'typescript-mode-hook #'lsp))
+  (add-hook 'web-mode-hook #'lsp))
 
 (defun setup-tide-mode ()
   (interactive)
@@ -49,11 +46,11 @@
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save))
   :init
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (add-hook 'typescript-mode-hook
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
   ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'typescript-mode))
+  (flycheck-add-mode 'typescript-tslint 'web-mode))
 
