@@ -41,13 +41,13 @@
 
 (use-package tide
   :ensure t
-  :after (typescript-mode company flycheck)
+  :after (web-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save))
   :init
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-  (add-hook 'typescript-mode-hook
+  (add-hook 'web-mode-hook
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))

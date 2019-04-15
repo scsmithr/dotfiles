@@ -80,9 +80,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
-(set-face-attribute 'default nil :font "Source Code Pro" :height 110)
+(set-face-attribute 'default nil :weight 'normal :font "Source Code Pro Medium" :height 110)
 
 ;; Package management
 (require 'package)
