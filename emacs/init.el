@@ -256,5 +256,7 @@
   :ensure t
   :commands lsp-ui-mode
   :config
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-doc-enable nil)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
