@@ -18,6 +18,23 @@
            (propertize " * " 'face 'mode-line-modified-face))
           (t "   ")))
    "  "
+   ; Flycheck errors
+   (:eval
+       (when (and (bound-and-true-p flycheck-mode)
+                  (or flycheck-current-errors
+                      (eq 'running flycheck-last-status-change)))
+         (concat
+          ; TODO: Use doom-color
+          (cl-loop for state in '((error . "#ff6c6b")
+                                  (warning . "#da8548")
+                                  (info . "#98be65"))
+                   as lighter = (d/flycheck-lighter (car state))
+                   when lighter
+                   concat (propertize
+                           lighter
+                           'face `(:foreground ,(cdr state))))
+          " ")))
+   "  "
    ; directory and buffer/file name
    (:propertize (:eval (shorten-directory default-directory 15))
                 face mode-line-folder-face)
@@ -38,6 +55,14 @@
    (global-mode-string global-mode-string)
    "    "
    ))
+
+(defun d/flycheck-lighter (state)
+  "Return flycheck information for the given error type STATE."
+  (let* ((counts (flycheck-count-errors flycheck-current-errors))
+         (errorp (flycheck-has-current-errors-p state))
+         (err (or (cdr (assq state counts)) " "))
+         (running (eq 'running flycheck-last-status-change)))
+    (if (or errorp running) (format "%s" err))))
 
 ;; Helper function
 (defun shorten-directory (dir max-length)
