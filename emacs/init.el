@@ -24,9 +24,6 @@
   (load-user-file
    (concat user-init-dir (concat "langs/" (concat lang "/packages.el")))))
 
-;; Fringe widths, git/flycheck
-(fringe-mode '(4 . 4))
-
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq-default display-line-numbers-width-start t)
@@ -292,6 +289,7 @@
   :ensure t
   :config
   (setq lsp-enable-completion-at-point t)
+  (setq lsp-prefer-flymake nil)
   (setq lsp-auto-guess-root t)
   :commands lsp)
 
