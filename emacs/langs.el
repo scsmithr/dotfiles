@@ -21,7 +21,10 @@
 
 ;; Haskell
 (use-package haskell-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq haskell-stylish-on-save t)
+  (setq haskell-mode-stylish-haskell-path "brittany"))
 
 ;; General html, javascript, etc.
 (use-package web-mode
