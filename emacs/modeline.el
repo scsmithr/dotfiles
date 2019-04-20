@@ -62,7 +62,7 @@
          (errorp (flycheck-has-current-errors-p state))
          (err (or (cdr (assq state counts)) " "))
          (running (eq 'running flycheck-last-status-change)))
-    (if (or errorp running) (format "%s" err))))
+    (if (or errorp running) (format " %s" err))))
 
 ;; Helper function
 (defun shorten-directory (dir max-length)

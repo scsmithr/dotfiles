@@ -2,6 +2,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(setq use-dialog-box nil)
 (setq inhibit-startup-message t
       inihibit-startup-echo-area-message t)
 
@@ -13,9 +14,15 @@
         (t "~/.emacs.d/")))
 
 (defun load-user-file (file)
+  "Load FILE in current user's configuration directory."
   (interactive "f")
-  "Load a file in current user's configuration directory"
   (load-file (expand-file-name file user-init-dir)))
+
+(defun load-language (lang)
+  "Load language specific packages for LANG."
+  (interactive "f")
+  (load-user-file
+   (concat user-init-dir (concat "langs/" (concat lang "/packages.el")))))
 
 ;; Fringe widths, git/flycheck
 (fringe-mode '(4 . 4))
@@ -80,9 +87,12 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
-(set-face-attribute 'default nil :weight 'normal :font "Source Code Pro Medium" :height 110)
+(set-face-attribute 'default nil
+                    :weight 'normal
+                    :font "Source Code Pro Medium"
+                    :height 110)
 
 ;; Package management
 (require 'package)
@@ -94,9 +104,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
-
-;; Load languages
-(load-user-file "langs.el")
 
 ;; evil
 (use-package evil
@@ -162,6 +169,10 @@
   (ido-everywhere 1)
   (flx-ido-mode 1))
 
+(use-package idomenu
+  :ensure t
+  :bind ("C-S-o" . idomenu))
+
 ;; Projectile
 (use-package projectile
   :ensure t
@@ -182,11 +193,11 @@
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred)
-  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
+  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'blue))
   (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'fg-alt))
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
-  (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'magenta))
-  (set-face-attribute 'treemacs-root-face nil :foreground (doom-color 'blue))
+  (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
+  (set-face-attribute 'treemacs-root-face nil :height 110 :foreground (doom-color 'blue))
   (define-key leader-map "t" treemacs-mode-map)
   (define-key leader-map "n" 'treemacs)
   (define-key leader-map "a" 'treemacs-add-and-display-current-project))
@@ -203,15 +214,24 @@
   :ensure t
   :after doom-themes
   :config
+  (add-hook 'typescript-mode-hook 'flycheck-mode)
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
+
   (define-key leader-map "f" flycheck-command-map)
   (global-set-key (kbd "<f8>") 'flycheck-next-error)
   (global-set-key (kbd "S-<f8>") 'flycheck-previous-error)
-  (set-face-attribute 'flycheck-fringe-info nil :foreground (doom-color 'bg) :background (doom-color 'bg))
-  (set-face-attribute 'flycheck-fringe-warning nil :foreground (doom-color 'orange) :background (doom-color 'orange))
-  (set-face-attribute 'flycheck-fringe-error nil :foreground (doom-color 'red) :background (doom-color 'red)))
+
+  (set-face-attribute 'flycheck-fringe-info nil
+                      :foreground (doom-color 'bg)
+                      :background (doom-color 'bg))
+  (set-face-attribute 'flycheck-fringe-warning nil
+                      :foreground (doom-color 'orange)
+                      :background (doom-color 'orange))
+  (set-face-attribute 'flycheck-fringe-error nil
+                      :foreground (doom-color 'red)
+                      :background (doom-color 'red)))
 
 (use-package company
   :ensure t
@@ -240,16 +260,39 @@
   :after doom-themes
   :config
   (global-git-gutter-mode)
-  (set-face-attribute 'git-gutter-fr:modified nil :foreground (doom-color 'blue) :background (doom-color 'blue))
-  (set-face-attribute 'git-gutter-fr:added nil :foreground (doom-color 'green) :background (doom-color 'green))
-  (set-face-attribute 'git-gutter-fr:deleted nil :foreground (doom-color 'magenta) :background (doom-color 'magenta)))
+    (fringe-helper-define 'git-gutter-fr:deleted nil
+      "........."
+      "........."
+      "........."
+      "........."
+      "........."
+      "XXXXXXXXX"
+      "XXXXXXXXX"
+      "XXXXXXXXX"
+      "XXXXXXXXX"
+      "XXXXXXXXX"
+      ".........")
+
+    (set-face-attribute 'git-gutter-fr:modified nil
+                        :foreground (doom-color 'blue)
+                        :background (doom-color 'blue))
+    (set-face-attribute 'git-gutter-fr:added nil
+                        :foreground (doom-color 'green)
+                        :background (doom-color 'green))
+    (set-face-attribute 'git-gutter-fr:deleted nil
+                        :foreground (doom-color 'red)))
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (define-key leader-map "g" 'magit-status))
 
 ;; lsp
 (use-package lsp-mode
   :ensure t
+  :config
+  (setq lsp-enable-completion-at-point t)
+  (setq lsp-auto-guess-root t)
   :commands lsp)
 
 (use-package lsp-ui
@@ -259,4 +302,17 @@
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+(load-language "go")
+(go/init-go-mode)
+
+(load-language "rust")
+(rust/init-rust-mode)
+
+(load-language "haskell")
+(haskell/init-haskell-mode)
+
+(load-language "typescript")
+(typescript/init-web-mode)
+(typescript/init-tide-mode)
 

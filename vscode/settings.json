@@ -21,7 +21,6 @@
     "go.useLanguageServer": false,
     "problems.decorations.enabled": false,
     "editor.lineNumbers": "on",
-    "update.channel": "none",
     "window.titleBarStyle": "native",
     "explorer.openEditors.visible": 0,
     "workbench.sideBar.location": "left",
