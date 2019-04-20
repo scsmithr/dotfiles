@@ -200,7 +200,7 @@ myLayoutHook = Hideable.hiddenWindows
   nmaster        = 1
   ratio          = 1 / 2
   delta          = 3 / 100
-  gs             = 2
+  gs             = 0
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
@@ -241,8 +241,8 @@ tertiary = "#c678dd"
 urgent = "#e5c07b"
 
 -- config vars
-myFocusedBorderColor = "#61afef"
-myUnfocusedBorderColor = "#31394a"
+myFocusedBorderColor = "#5b6281"
+myUnfocusedBorderColor = "#1c212a"
 myBorderWidth = 2
 myTerminal = "launch_alacritty"
 myModMask = mod4Mask

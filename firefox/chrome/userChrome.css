@@ -1,83 +1,11 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-:root {
-	--toolbar-bgcolor: #282c34 !important;
-	--toolbar-bgimage: none !important;
-	--toolbar-color: #abb2bf !important;
-	--lwt-toolbar-field-border-color: transparent !important;
-	--toolbar-field-focus-border-color: #51afef !important;
-	--toolbarbutton-border-radius: 2px !important;
-	--tabs-border-color: transparent !important;
-}
-
-.sidebar-panel {
-	--lwt-sidebar-background-color: #21252E !important;
-	--lwt-sidebar-text-color: #abb2bf !important;
-}
-
-#sidebar-box {
-	--sidebar-background-color: #21252E !important;
-	--sidebar-text-color: #abb2bf !important;
-}
-
-toolbar {
-	--toolbarbutton-hover-background: #21252E !important;
-    --toolbarbutton-active-background: #21252E !important;
-}
-
-#back-button > .toolbarbutton-icon {
-	--backbutton-background: transparent !important;
-	--backbutton-hover-background: #21252E !important;
-    --backbutton-active-background: #21252E !important;
-	border-color: transparent !important;
-}
-
-#urlbar {
-	background-color: #353b45 !important;
-    color: #abb2bf !important;
-}
-
 /* Seems to be the background used briefly when opening a new tab. */
 browser[type="content-primary"], browser[type="content"],
 #main-window, #appcontent {
-	background-color: #21252E !important;
+	background-color: #282c34 !important;
 }
 
 #tabbrowser-tabs {
 	--tab-line-color: #51afef !important;
-}
-
-/* Not sure, seems to be a border just below the omnibox but maybe there is an
-   empty section there. */
-#navigator-toolbox {
-	background-color: transparent !important;
-}
-
-tab {
-	color: #abb2bf !important;
-}
-
-#TabsToolbar {
-	-moz-appearance: initial !important;
-	background-color: #21252E !important;
-}
-
-#tabbrowser-tabpanels {
-	background-color: #21252E !important;
-}
-
-.autocomplete-richlistbox {
-	background: #21252E !important;
-}
-
-.autocomplete-richlistitem[selected="true"] {
-	background: #282c34 !important;
-}
-
-.ac-title {
-	color: #abb2bf !important;
-}
-
-.ac-url {
-	color: #51afef !important;
 }
