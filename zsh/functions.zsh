@@ -1,5 +1,9 @@
 # shellcheck disable=SC2148
 
+ec() {
+    emacs $@ &!
+}
+
 # Run pacman, prompting for password if needed
 run_pacman() {
     case $1 in
@@ -13,7 +17,7 @@ dpi() {
     if [ "$#" -eq 1 ]; then
         echo "Xft.dpi: $1" | xrdb -merge
         echo "*dpi: $1" | xrdb -merge
-    else 
+    else
         print "Invalid number of arguments"
     fi
 }
@@ -22,8 +26,8 @@ gcip() {
     if [ "$#" -ge 1 ]; then
         gcloud compute instances describe $@ | grep "natIP" | awk '{print $2}' | xargs echo -n
     else
-        print "Invalid number of arguments" 
-    fi  
+        print "Invalid number of arguments"
+    fi
 }
 
 jd() {

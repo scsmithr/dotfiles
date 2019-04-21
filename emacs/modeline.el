@@ -2,13 +2,8 @@
 (setq-default
  mode-line-format
  '(
-   (:eval evil-mode-line-tag)
-; Position, including warning for 80 columns
-   (:propertize "%4l:" face mode-line-position-face)
-   (:eval (propertize "%3c" 'face
-                      (if (>= (current-column) 80)
-                          'mode-line-80col-face
-                        'mode-line-position-face)))
+   ; Position, including warning for 80 columns
+   (:propertize "%4l" face mode-line-position-face)
    "  "
    ; read-only or modified status
    (:eval
@@ -32,7 +27,7 @@
                    when lighter
                    concat (propertize
                            lighter
-                           'face `(:foreground ,(cdr state))))
+                           'face `(:weight bold :foreground ,(cdr state))))
           " ")))
    "  "
    ; directory and buffer/file name
@@ -44,16 +39,18 @@
    ; global
    (:propertize (vc-mode vc-mode) face mode-line-vc-face)
 
-   " %["
-   (:propertize mode-name
-                face mode-line-mode-face)
-   "%] "
-   (:eval (propertize (format-mode-line minor-mode-alist)
-                      'face 'mode-line-minor-mode-face))
+   "   "
    (:propertize mode-line-process
                 face mode-line-process-face)
    (global-mode-string global-mode-string)
-   "    "
+   "   "
+
+   (:eval (propertize
+         " " 'display
+         `((space :align-to (- (+ right right-fringe right-margin)
+                               ,(+ 2 (string-width mode-name)))))))
+   (:propertize mode-name
+                face mode-line-mode-face)
    ))
 
 (defun d/flycheck-lighter (state)
@@ -93,23 +90,23 @@
 (set-face-attribute 'mode-line nil
     :foreground (doom-color 'fg) :background (doom-color 'base0)
     :inverse-video nil
-    :box '(:line-width 6 :color "#1B2229" :style nil))
+    :box '(:line-width 8 :color "#1B2229" :style nil))
 (set-face-attribute 'mode-line-inactive nil
     :foreground (doom-color 'fg-alt) :background (doom-color 'base0)
     :inverse-video nil
-    :box '(:line-width 6 :color "#1B2229" :style nil))
+    :box '(:line-width 8 :color "#1B2229" :style nil))
 (set-face-attribute 'mode-line-read-only-face nil
     :inherit 'mode-line-face
-    :foreground (doom-color 'orange))
+    :foreground (doom-color 'blue))
 (set-face-attribute 'mode-line-modified-face nil
     :inherit 'mode-line-face
+    :weight 'bold
     :foreground (doom-color 'cyan))
 (set-face-attribute 'mode-line-folder-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'fg-alt))
 (set-face-attribute 'mode-line-filename-face nil
     :inherit 'mode-line-face
-    :foreground (doom-color 'blue)
     :weight 'bold)
 (set-face-attribute 'mode-line-vc-face nil
     :inherit 'mode-line-face
@@ -118,14 +115,12 @@
     :inherit 'mode-line-face)
 (set-face-attribute 'mode-line-mode-face nil
     :inherit 'mode-line-face
-    :foreground (doom-color 'fg))
+    :weight 'bold
+    :foreground (doom-color 'blue))
 (set-face-attribute 'mode-line-minor-mode-face nil
     :inherit 'mode-line-mode-face
     :foreground (doom-color 'fg-alt))
 (set-face-attribute 'mode-line-process-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'fg-alt))
-(set-face-attribute 'mode-line-80col-face nil
-    :inherit 'mode-line-position-face
-    :foreground (doom-color 'orange))
 

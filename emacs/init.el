@@ -24,6 +24,8 @@
   (load-user-file
    (concat user-init-dir (concat "langs/" (concat lang "/packages.el")))))
 
+(show-paren-mode 1)
+
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq-default display-line-numbers-width-start t)
@@ -84,7 +86,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
                     :weight 'normal
@@ -120,6 +122,7 @@
   (define-key evil-normal-state-map "," leader-map)
   (define-key leader-map "w" 'evil-window-vsplit)
   (define-key leader-map "h" 'evil-window-split)
+  (define-key leader-map "b" 'ibuffer)
   ;; Rebind ctrl-p
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
 
@@ -179,22 +182,49 @@
   (projectile-mode +1)
   (define-key leader-map "p" 'projectile-command-map))
 
+(use-package ripgrep
+  :ensure t)
+
+(use-package swoop
+  :ensure t
+  :config
+  (define-key leader-map "s" 'swoop)
+  (set-face-attribute 'swoop-face-target-line nil
+                      :foreground (doom-color 'fg)
+                      :background (doom-color 'bg-alt))
+  (set-face-attribute 'swoop-face-target-words nil
+                      :weight 'bold
+                      :foreground (doom-color 'bg)
+                      :background (doom-color 'violet))
+  (set-face-attribute 'swoop-face-header-format-line nil
+                      :height 110
+                      :foreground (doom-color 'fg))
+  (set-face-attribute 'swoop-face-line-buffer-name nil
+                      :height 110
+                      :foreground (doom-color 'blue)
+                      :background (doom-color 'bg-alt))
+  (set-face-attribute 'swoop-face-line-number nil
+                      :foreground (doom-color 'orange)))
+
 (use-package treemacs
   :ensure t
   :after doom-themes
   :init
-  (setq treemacs-width 25)
+  (setq treemacs-width 20)
   (setq treemacs-no-png-images t)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred)
-  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'blue))
-  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'fg-alt))
+  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
+  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
-  (set-face-attribute 'treemacs-root-face nil :height 110 :foreground (doom-color 'blue))
+  (set-face-attribute 'treemacs-root-face nil
+                      :height 110
+                      :weight 'normal
+                      :foreground (doom-color 'cyan))
   (define-key leader-map "t" treemacs-mode-map)
   (define-key leader-map "n" 'treemacs)
   (define-key leader-map "a" 'treemacs-add-and-display-current-project))
@@ -280,9 +310,7 @@
                         :foreground (doom-color 'red)))
 
 (use-package magit
-  :ensure t
-  :config
-  (define-key leader-map "g" 'magit-status))
+  :ensure t)
 
 ;; lsp
 (use-package lsp-mode

@@ -3,8 +3,7 @@
 eval $(dircolors)
 
 cdpath=(
-    $HOME 
-    $HOME/.go/src/go.coder.com/m/
+    $HOME/.go/src/go.coder.com/
     $HOME/Code/github.com/
 )
 

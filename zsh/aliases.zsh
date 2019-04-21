@@ -18,7 +18,6 @@ alias tl='tmux ls'
 alias tk='tmux kill-session -t'
 
 alias nv=nvim
-alias ec="emacsclient -nc"
 
 alias rc="findedit -e 'code -g {f}:{l}' -l"
 alias rv="findedit -e 'nvim +{l} {f}' -l"
