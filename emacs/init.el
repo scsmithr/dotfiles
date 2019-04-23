@@ -148,7 +148,7 @@
   (load-theme 'doom-one t)
   (load-user-file "modeline.el")
   (set-face-attribute 'whitespace-tab nil :background "inherit")
-  (set-face-attribute 'show-paren-match nil :weight 'bold)
+  (set-face-attribute 'show-paren-match nil :weight 'bold :foreground (doom-color 'cyan))
   (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
 
 ;; Vertical ido
@@ -328,6 +328,9 @@
   :config
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)
+  ; Doesn't work, idk
+  (setq lsp-ui-imenu-colors '((doom-color 'blue) (doom-color 'green)))
+  (define-key leader-map "l" 'lsp-ui-imenu)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (load-language "go")
