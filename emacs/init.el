@@ -270,7 +270,7 @@
   :config
   (setq company-frontends '(company-preview-frontend company-echo-frontend))
   (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 1)
+  (setq company-idle-delay 0.2)
   (define-key company-active-map (kbd "<return>") #'company-complete-selection)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   :init
