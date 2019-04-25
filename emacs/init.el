@@ -24,7 +24,11 @@
   (load-user-file
    (concat user-init-dir (concat "langs/" (concat lang "/packages.el")))))
 
+;; Highlight parenthesis
 (show-paren-mode 1)
+
+;; Auto insert closing parenthesis, braces, etc
+(electric-pair-mode 1)
 
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -329,7 +333,7 @@
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)
   ; Doesn't work, idk
-  (setq lsp-ui-imenu-colors '((doom-color 'blue) (doom-color 'green)))
+  (setq lsp-ui-imenu-colors '(repeat (doom-color 'blue) (doom-color 'green)))
   (define-key leader-map "l" 'lsp-ui-imenu)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
