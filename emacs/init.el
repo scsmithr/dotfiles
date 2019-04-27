@@ -75,7 +75,7 @@
 (setq version-control t)
 
 ;; #Don't #create #lock #files
-(setq create-lockfiles nil)
+(setq-default create-lockfiles nil)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -93,6 +93,7 @@
     (ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
+                    :background "#282c34"
                     :weight 'normal
                     :font "Source Code Pro Medium"
                     :height 110)
@@ -222,7 +223,7 @@
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred)
-  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
+  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'blue))
   (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))

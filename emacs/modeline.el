@@ -2,8 +2,9 @@
 (setq-default
  mode-line-format
  '(
+   "  "
    ; Position, including warning for 80 columns
-   (:propertize "%4l" face mode-line-position-face)
+   (:propertize (:eval (format "%s" (line-number-at-pos (point-max)))) face mode-line-position-face)
    "  "
    ; read-only or modified status
    (:eval
