@@ -200,7 +200,7 @@ myLayoutHook = Hideable.hiddenWindows
   nmaster        = 1
   ratio          = 1 / 2
   delta          = 3 / 100
-  gs             = 0
+  gs             = 2
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
