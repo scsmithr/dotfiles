@@ -18,11 +18,13 @@
   (interactive "f")
   (load-file (expand-file-name file user-init-dir)))
 
+(defun lang-folder (lang)
+  (concat user-init-dir (concat "langs/" (concat lang "/packages.el"))))
+
 (defun load-language (lang)
   "Load language specific packages for LANG."
   (interactive "f")
-  (load-user-file
-   (concat user-init-dir (concat "langs/" (concat lang "/packages.el")))))
+  (load-user-file (lang-folder lang)))
 
 ;; Highlight parenthesis
 (show-paren-mode 1)
@@ -128,7 +130,7 @@
   (define-key leader-map "w" 'evil-window-vsplit)
   (define-key leader-map "h" 'evil-window-split)
   (define-key leader-map "b" 'ibuffer)
-  ;; Rebind ctrl-p
+  ;; rebind ctrl-p
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
 
 (use-package evil-commentary
@@ -223,8 +225,8 @@
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred)
-  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'blue))
-  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue) :weight 'bold)
+  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
+  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'magenta) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
   (set-face-attribute 'treemacs-root-face nil
@@ -248,6 +250,7 @@
   :after doom-themes
   :config
   (add-hook 'typescript-mode-hook 'flycheck-mode)
+  (add-hook 'sh-mode-hook 'flycheck-mode)
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
@@ -272,6 +275,13 @@
   (setq company-frontends '(company-preview-frontend company-echo-frontend))
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.2)
+  (set-face-attribute 'company-echo nil
+                      :background "inherit"
+                      :foreground (doom-color 'blue))
+  (set-face-attribute 'company-echo-common nil
+                      :background "inherit"
+                      :weight 'bold
+                      :foreground (doom-color 'orange))
   (define-key company-active-map (kbd "<return>") #'company-complete-selection)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   :init
@@ -317,6 +327,10 @@
 
 (use-package magit
   :ensure t)
+
+(use-package yasnippet
+  :ensure t
+  :config (yas-global-mode 1))
 
 ;; lsp
 (use-package lsp-mode

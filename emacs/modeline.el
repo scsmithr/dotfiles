@@ -2,7 +2,7 @@
 (setq-default
  mode-line-format
  '(
-   "  "
+   " "
    ; Position, including warning for 80 columns
    (:propertize (:eval (format "%s" (line-number-at-pos (point-max)))) face mode-line-position-face)
    "  "
@@ -108,7 +108,8 @@
     :foreground (doom-color 'fg-alt))
 (set-face-attribute 'mode-line-filename-face nil
     :inherit 'mode-line-face
-    :weight 'bold)
+    :weight 'bold
+    :foreground (doom-color 'blue))
 (set-face-attribute 'mode-line-vc-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'green))
@@ -116,8 +117,7 @@
     :inherit 'mode-line-face)
 (set-face-attribute 'mode-line-mode-face nil
     :inherit 'mode-line-face
-    :weight 'bold
-    :foreground (doom-color 'blue))
+    :weight 'bold)
 (set-face-attribute 'mode-line-minor-mode-face nil
     :inherit 'mode-line-mode-face
     :foreground (doom-color 'fg-alt))
