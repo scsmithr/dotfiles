@@ -51,7 +51,6 @@ import qualified RofiPrompt
 import qualified PinnedWorkspaces
 import qualified Hideable
 
-
 applicationKeys :: [(String, X ())]
 applicationKeys =
   [ ("M-<Return>", spawn myTerminal)
@@ -244,6 +243,6 @@ urgent = "#e5c07b"
 myFocusedBorderColor = "#4b5271"
 myUnfocusedBorderColor = "#1c212a"
 myBorderWidth = 2
-myTerminal = "launch_alacritty"
+myTerminal = "terminal"
 myModMask = mod4Mask
 myWorkspaces = ["def", "conn", "email", "web"]

@@ -207,6 +207,9 @@
   (load-theme 'doom-one t)
   (load-user-file "modeline.el")
   (set-face-attribute 'whitespace-tab nil :background "inherit")
+  (set-face-attribute 'whitespace-line nil
+                      :weight 'normal
+                      :foreground 'unspecified)
   (set-face-attribute 'show-paren-match nil :weight 'bold :foreground (doom-color 'cyan))
   (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
 
@@ -216,6 +219,7 @@
   :init
   (setq ido-enable-flex-matching t)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+  (setq ido-vertical-indicator " >")
   :config
   (ido-mode 1)
   (ido-vertical-mode 1))
@@ -351,18 +355,30 @@
   :after doom-themes
   :config
   (global-git-gutter-mode)
+  ;; beautiful
     (fringe-helper-define 'git-gutter-fr:deleted nil
       "........."
       "........."
       "........."
       "........."
       "........."
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      ".........")
+      "........."
+      "........."
+      "........."
+      "........."
+      "........."
+      "........."
+      "........."
+      "........."
+      "X........"
+      "XX......."
+      "XXX......"
+      "XXXX....."
+      "XXXXX...."
+      "XXXXXX..."
+      "XXXXXXX.."
+      "XXXXXXXX."
+      "XXXXXXXXX")
 
     (set-face-attribute 'git-gutter-fr:modified nil
                         :foreground (doom-color 'blue)
@@ -397,7 +413,6 @@
   (setq lsp-ui-doc-enable nil)
   ; Doesn't work, idk
   (setq lsp-ui-imenu-colors '(repeat (doom-color 'blue) (doom-color 'green)))
-  (define-key leader-map "l" 'lsp-ui-imenu)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (load-language "go")

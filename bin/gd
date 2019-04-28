@@ -1,9 +1,0 @@
-#!/bin/bash
-# This script opens up a godoc menu.
-
-pkg=$(curl -s https://godoc.org/-/go | grep -Poe "(?<=href=\"\/)(.*)(?=\".*Package)" | rofi -p godoc -dmenu )
-if [ -z $pkg ]; then
-    exit 0
-fi
-
-xdg-open https://godoc.org/$pkg 2>/dev/null

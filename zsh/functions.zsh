@@ -4,15 +4,6 @@ ec() {
     emacs $@ &!
 }
 
-# Run pacman, prompting for password if needed
-run_pacman() {
-    case $1 in
-        -S | -D | -S[^sih]* | -R* | -U*)
-            /usr/bin/sudo /usr/bin/pacman "$@" ;;
-    *)      /usr/bin/pacman "$@" ;;
-    esac
-}
-
 dpi() {
     if [ "$#" -eq 1 ]; then
         echo "Xft.dpi: $1" | xrdb -merge
@@ -27,14 +18,6 @@ gcip() {
         gcloud compute instances describe $@ | grep "natIP" | awk '{print $2}' | xargs echo -n
     else
         print "Invalid number of arguments"
-    fi
-}
-
-jd() {
-    local dir
-    dir=$(find ${1:-~} -maxdepth 7 -type d 2> /dev/null | fzf +m)
-    if [ ! -z "$dir" ]; then
-        cd "$dir"
     fi
 }
 
