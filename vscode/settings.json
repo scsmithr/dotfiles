@@ -18,7 +18,13 @@
     "go.buildFlags": [
         "-tags=integration"
     ],
-    "go.useLanguageServer": false,
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "go.useLanguageServer": true,
     "problems.decorations.enabled": false,
     "editor.lineNumbers": "on",
     "window.titleBarStyle": "native",
@@ -145,7 +151,6 @@
     "rust.all_targets": false,
     "rust.cfg_test": true,
     "extensions.autoUpdate": false,
-    "editor.codeLens": false,
     "rust.rustflags": "-A dead_code",
     "files.trimTrailingWhitespace": true,
     "files.exclude": {

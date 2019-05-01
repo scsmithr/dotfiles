@@ -29,6 +29,8 @@
 ;; Highlight parenthesis
 (show-paren-mode 1)
 
+(fringe-mode '(4 . 4))
+
 ;; Auto insert closing parenthesis, braces, etc
 (electric-pair-mode 1)
 
@@ -131,7 +133,7 @@
 
 (global-set-key (kbd "C-S-o") 'ido-goto-symbol) ; or any key you see fit
 
-(custom-set-faces
+(
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
@@ -144,12 +146,12 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
                     :background "#282c34"
                     :weight 'normal
-                    :font "Source Code Pro Medium"
+                    :font "Source Code Pro"
                     :height 110)
 
 ;; Package management
@@ -272,6 +274,7 @@
   :init
   (setq treemacs-width 20)
   (setq treemacs-no-png-images t)
+  (setq treemacs-indentation 1)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -303,6 +306,7 @@
   :config
   (add-hook 'typescript-mode-hook 'flycheck-mode)
   (add-hook 'sh-mode-hook 'flycheck-mode)
+  (add-hook 'go-mode 'flycheck-mode)
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
@@ -312,8 +316,8 @@
   (global-set-key (kbd "S-<f8>") 'flycheck-previous-error)
 
   (set-face-attribute 'flycheck-fringe-info nil
-                      :foreground (doom-color 'bg)
-                      :background (doom-color 'bg))
+                      :foreground (doom-color 'green)
+                      :background (doom-color 'green))
   (set-face-attribute 'flycheck-fringe-warning nil
                       :foreground (doom-color 'orange)
                       :background (doom-color 'orange))
@@ -341,8 +345,9 @@
 
 (use-package company-lsp
   :ensure t
-  :after company
+  :after (company lsp)
   :config
+  (add-to-list 'company-lsp-filter-candidates '(gopls . nil))
   (push 'company-lsp company-backends))
 
 (use-package which-key
@@ -370,14 +375,14 @@
       "........."
       "........."
       "........."
-      "X........"
-      "XX......."
-      "XXX......"
-      "XXXX....."
-      "XXXXX...."
-      "XXXXXX..."
-      "XXXXXXX.."
-      "XXXXXXXX."
+      "........."
+      "........."
+      "........."
+      "........."
+      "XXXXXXXXX"
+      "XXXXXXXXX"
+      "XXXXXXXXX"
+      "XXXXXXXXX"
       "XXXXXXXXX")
 
     (set-face-attribute 'git-gutter-fr:modified nil
