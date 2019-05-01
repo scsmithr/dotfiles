@@ -3,9 +3,6 @@
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 
-# Pacman aliases
-alias pacman=run_pacman
-
 alias no="notify normal"
 alias noc="notify critical"
 alias nol="notify low"
