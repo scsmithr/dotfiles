@@ -146,7 +146,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
                     :background "#282c34"
@@ -214,6 +214,11 @@
                       :foreground 'unspecified)
   (set-face-attribute 'show-paren-match nil :weight 'bold :foreground (doom-color 'cyan))
   (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
+
+;; Auto detect indentation type/level
+(use-package dtrt-indent
+  :ensure t
+  :config (dtrt-indent-global-mode 1))
 
 ;; Vertical ido
 (use-package ido-vertical-mode
@@ -395,7 +400,10 @@
                         :foreground (doom-color 'red)))
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (define-key leader-map "g" 'magit-status)
+  )
 
 (use-package yasnippet
   :ensure t
