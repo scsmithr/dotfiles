@@ -376,8 +376,11 @@
 (use-package magit
   :ensure t
   :config
-  (define-key leader-map "g" 'magit-status)
-  )
+  (set-face-attribute 'magit-header-line nil
+                      :background (doom-color 'base0)
+                      :box nil
+                      :foreground (doom-color 'fg))
+  (define-key leader-map "g" 'magit-status))
 
 (use-package yasnippet
   :ensure t
