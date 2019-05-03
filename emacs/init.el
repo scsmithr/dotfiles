@@ -360,44 +360,18 @@
   :init
   (which-key-mode 1))
 
-(use-package git-gutter-fringe
+(use-package diff-hl
   :ensure t
-  :after doom-themes
-  :config
-  (global-git-gutter-mode)
-  ;; beautiful
-    (fringe-helper-define 'git-gutter-fr:deleted nil
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "........."
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      "XXXXXXXXX"
-      "XXXXXXXXX")
-
-    (set-face-attribute 'git-gutter-fr:modified nil
-                        :foreground (doom-color 'blue)
-                        :background (doom-color 'blue))
-    (set-face-attribute 'git-gutter-fr:added nil
-                        :foreground (doom-color 'green)
-                        :background (doom-color 'green))
-    (set-face-attribute 'git-gutter-fr:deleted nil
-                        :foreground (doom-color 'red)))
+  :config (global-diff-hl-mode)
+  (set-face-attribute 'diff-hl-insert nil
+                      :foreground (doom-color 'green)
+                      :background (doom-darken 'green 0.5))
+  (set-face-attribute 'diff-hl-delete nil
+                      :foreground (doom-color 'red)
+                      :background (doom-darken 'red 0.5))
+  (set-face-attribute 'diff-hl-change nil
+                      :foreground (doom-color 'blue)
+                      :background (doom-darken 'blue 0.5)))
 
 (use-package magit
   :ensure t
