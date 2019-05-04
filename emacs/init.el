@@ -367,6 +367,7 @@
                       :background (doom-color 'base0)
                       :box nil
                       :foreground (doom-color 'fg))
+  (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch)
   (define-key leader-map "g" 'magit-status))
 
 (use-package yasnippet
