@@ -29,8 +29,6 @@
 ;; Highlight parenthesis
 (show-paren-mode 1)
 
-(fringe-mode '(4 . 4))
-
 ;; Auto insert closing parenthesis, braces, etc
 (electric-pair-mode 1)
 
@@ -149,7 +147,6 @@
     (dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
-                    :background "#282c34"
                     :weight 'normal
                     :font "Source Code Pro"
                     :height 110)
@@ -207,12 +204,16 @@
   (setq doom-themes-enable-italic nil)
   :config
   (load-theme 'doom-one t)
-  (load-user-file "modeline.el")
   (set-face-attribute 'whitespace-tab nil :background "inherit")
+  (set-face-attribute 'font-lock-comment-face nil :foreground (doom-color 'base6))
+  (set-face-attribute 'font-lock-doc-face nil :foreground (doom-color 'base6))
   (set-face-attribute 'whitespace-line nil
                       :weight 'normal
                       :foreground 'unspecified)
-  (set-face-attribute 'show-paren-match nil :weight 'bold :foreground (doom-color 'cyan))
+  (set-face-attribute 'show-paren-match nil
+                      :weight 'bold
+                      :background (doom-darken 'cyan 0.6)
+                      :foreground (doom-color 'cyan))
   (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
 
 ;; Auto detect indentation type/level
@@ -322,13 +323,13 @@
 
   (set-face-attribute 'flycheck-fringe-info nil
                       :foreground (doom-color 'green)
-                      :background (doom-color 'green))
+                      :background (doom-darken 'green 0.6))
   (set-face-attribute 'flycheck-fringe-warning nil
                       :foreground (doom-color 'orange)
-                      :background (doom-color 'orange))
+                      :background (doom-darken 'orange 0.6))
   (set-face-attribute 'flycheck-fringe-error nil
                       :foreground (doom-color 'red)
-                      :background (doom-color 'red)))
+                      :background (doom-darken 'red 0.6)))
 
 (use-package company
   :ensure t
@@ -365,13 +366,13 @@
   :config (global-diff-hl-mode)
   (set-face-attribute 'diff-hl-insert nil
                       :foreground (doom-color 'green)
-                      :background (doom-darken 'green 0.5))
+                      :background (doom-darken 'green 0.6))
   (set-face-attribute 'diff-hl-delete nil
                       :foreground (doom-color 'red)
-                      :background (doom-darken 'red 0.5))
+                      :background (doom-darken 'red 0.6))
   (set-face-attribute 'diff-hl-change nil
                       :foreground (doom-color 'blue)
-                      :background (doom-darken 'blue 0.5)))
+                      :background (doom-darken 'blue 0.6)))
 
 (use-package magit
   :ensure t
@@ -401,9 +402,14 @@
   :config
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)
-  ; Doesn't work, idk
-  (setq lsp-ui-imenu-colors '(repeat (doom-color 'blue) (doom-color 'green)))
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+;; Local configuration
+
+(use-package modeline
+  :load-path "lisp")
+
+;; Language stuff
 
 (load-language "go")
 (go/init-go-mode)

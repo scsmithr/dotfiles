@@ -48,3 +48,6 @@
       ;; enable typescript-tslint checker
       (add-hook 'web-mode-hook #'lsp)
       (flycheck-add-mode 'typescript-tslint 'web-mode)))
+
+(provide 'typescript)
+;;; packages.el ends here

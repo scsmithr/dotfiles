@@ -20,15 +20,14 @@
                   (or flycheck-current-errors
                       (eq 'running flycheck-last-status-change)))
          (concat
-          ; TODO: Use doom-color
-          (cl-loop for state in '((error . "#ff6c6b")
-                                  (warning . "#da8548")
-                                  (info . "#98be65"))
+          (cl-loop for state in '((error . mode-line-flycheck-error-face)
+                                  (warning . mode-line-flycheck-warning-face)
+                                  (info . mode-line-flycheck-info-face))
                    as lighter = (d/flycheck-lighter (car state))
                    when lighter
                    concat (propertize
                            lighter
-                           'face `(:weight bold :foreground ,(cdr state))))
+                           'face (cdr state)))
           " ")))
    "  "
    ; directory and buffer/file name
@@ -77,6 +76,25 @@
     output))
 
 ;; Extra mode line faces
+(make-face 'mode-line-flycheck-error-face)
+(make-face 'mode-line-flycheck-warning-face)
+(make-face 'mode-line-flycheck-info-face)
+
+(set-face-attribute 'mode-line-flycheck-error-face nil
+    :inherit 'mode-line-face
+    :weight 'bold
+    :foreground (doom-color 'red))
+
+(set-face-attribute 'mode-line-flycheck-warning-face nil
+    :inherit 'mode-line-face
+    :weight 'bold
+    :foreground (doom-color 'orange))
+
+(set-face-attribute 'mode-line-flycheck-info-face nil
+    :inherit 'mode-line-face
+    :weight 'bold
+    :foreground (doom-color 'green))
+
 (make-face 'mode-line-read-only-face)
 (make-face 'mode-line-modified-face)
 (make-face 'mode-line-folder-face)
@@ -88,40 +106,54 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
+(defvar mode-line-bg (doom-color 'base0))
+(defvar mode-line-box `(:line-width 8 :color ,mode-line-bg :style nil))
+
 (set-face-attribute 'mode-line nil
-    :foreground (doom-color 'fg) :background (doom-color 'base0)
+    :foreground (doom-color 'fg) :background mode-line-bg
     :inverse-video nil
-    :box '(:line-width 8 :color "#1B2229" :style nil))
+    :box mode-line-box)
+
 (set-face-attribute 'mode-line-inactive nil
-    :foreground (doom-color 'fg-alt) :background (doom-color 'base0)
+    :foreground (doom-color 'fg-alt) :background mode-line-bg
     :inverse-video nil
-    :box '(:line-width 8 :color "#1B2229" :style nil))
+    :box mode-line-box)
+
 (set-face-attribute 'mode-line-read-only-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'blue))
+
 (set-face-attribute 'mode-line-modified-face nil
     :inherit 'mode-line-face
     :weight 'bold
     :foreground (doom-color 'cyan))
+
 (set-face-attribute 'mode-line-folder-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'fg-alt))
+
 (set-face-attribute 'mode-line-filename-face nil
     :inherit 'mode-line-face
     :weight 'bold
     :foreground (doom-color 'blue))
+
 (set-face-attribute 'mode-line-vc-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'green))
+
 (set-face-attribute 'mode-line-position-face nil
     :inherit 'mode-line-face)
+
 (set-face-attribute 'mode-line-mode-face nil
     :inherit 'mode-line-face
     :weight 'bold)
+
 (set-face-attribute 'mode-line-minor-mode-face nil
     :inherit 'mode-line-mode-face
     :foreground (doom-color 'fg-alt))
+
 (set-face-attribute 'mode-line-process-face nil
     :inherit 'mode-line-face
     :foreground (doom-color 'fg-alt))
 
+(provide 'modeline)

@@ -1,6 +1,8 @@
 ;;; packages.el --- Packages for go
+;;; Code:
 
 (defun go/init-go-mode ()
+  "Initialize go related features."
   (use-package go-mode
     :ensure t
     :defer t
@@ -11,3 +13,6 @@
     :init
     (add-hook 'before-save-hook #'gofmt-before-save)
     (add-hook 'go-mode-hook #'lsp)))
+
+(provide 'go)
+;;; packages.el ends here
