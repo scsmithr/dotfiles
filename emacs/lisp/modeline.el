@@ -3,18 +3,23 @@
  mode-line-format
  '(
    " "
-   ; Position, including warning for 80 columns
    (:propertize (:eval (format "%s" (line-number-at-pos (point-max)))) face mode-line-position-face)
-   "  "
+   " "
+   ; directory and buffer/file name
+   (:propertize (:eval (shorten-directory default-directory 15))
+                face mode-line-folder-face)
+   (:propertize "%b"
+                face mode-line-filename-face)
+   " "
    ; read-only or modified status
    (:eval
     (cond (buffer-read-only
-           (propertize " R " 'face 'mode-line-read-only-face))
+           (propertize "R" 'face 'mode-line-read-only-face))
           ((buffer-modified-p)
-           (propertize " * " 'face 'mode-line-modified-face))
-          (t "   ")))
-   "  "
-   ; Flycheck errors
+           (propertize "*" 'face 'mode-line-modified-face))
+          (t " ")))
+   " "
+   ;; Flycheck errors
    (:eval
        (when (and (bound-and-true-p flycheck-mode)
                   (or flycheck-current-errors
@@ -29,29 +34,20 @@
                            lighter
                            'face (cdr state)))
           " ")))
-   "  "
-   ; directory and buffer/file name
-   (:propertize (:eval (shorten-directory default-directory 15))
-                face mode-line-folder-face)
-   (:propertize "%b"
-                face mode-line-filename-face)
-   ; mode indicators: vc, recursive edit, major mode, minor modes, process,
-   ; global
-   (:propertize (vc-mode vc-mode) face mode-line-vc-face)
-
-   "   "
+   " "
    (:propertize mode-line-process
                 face mode-line-process-face)
    (global-mode-string global-mode-string)
-   "   "
-
+   " "
    (:eval (propertize
          " " 'display
          `((space :align-to (- (+ right right-fringe right-margin)
-                               ,(+ 2 (string-width mode-name)))))))
+                               ,(+ 2 (string-width (concat vc-mode mode-name))))))))
+   (:propertize (vc-mode vc-mode) face mode-line-vc-face)
+   " "
    (:propertize mode-name
                 face mode-line-mode-face)
-   ))
+))
 
 (defun d/flycheck-lighter (state)
   "Return flycheck information for the given error type STATE."
@@ -134,19 +130,19 @@
 
 (set-face-attribute 'mode-line-filename-face nil
     :inherit 'mode-line-face
-    :weight 'bold
-    :foreground (doom-color 'blue))
+    :weight 'bold)
 
 (set-face-attribute 'mode-line-vc-face nil
     :inherit 'mode-line-face
+    :weight 'bold
     :foreground (doom-color 'green))
 
 (set-face-attribute 'mode-line-position-face nil
-    :inherit 'mode-line-face)
+                    :inherit 'mode-line-face
+                    :foreground (doom-color 'fg-alt))
 
 (set-face-attribute 'mode-line-mode-face nil
-    :inherit 'mode-line-face
-    :weight 'bold)
+    :inherit 'mode-line-face)
 
 (set-face-attribute 'mode-line-minor-mode-face nil
     :inherit 'mode-line-mode-face

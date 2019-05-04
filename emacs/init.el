@@ -29,6 +29,8 @@
 ;; Highlight parenthesis
 (show-paren-mode 1)
 
+(fringe-mode '(4 . 4))
+
 ;; Auto insert closing parenthesis, braces, etc
 (electric-pair-mode 1)
 
@@ -204,6 +206,7 @@
   (setq doom-themes-enable-italic nil)
   :config
   (load-theme 'doom-one t)
+  (set-face-attribute 'fringe nil :background (doom-color 'bg))
   (set-face-attribute 'whitespace-tab nil :background "inherit")
   (set-face-attribute 'font-lock-comment-face nil :foreground (doom-color 'base6))
   (set-face-attribute 'font-lock-doc-face nil :foreground (doom-color 'base6))
@@ -275,7 +278,11 @@
                       :foreground (doom-color 'cyan))
   (define-key leader-map "t" treemacs-mode-map)
   (define-key leader-map "n" 'treemacs)
-  (define-key leader-map "a" 'treemacs-add-and-display-current-project))
+  (define-key leader-map "a" 'treemacs-add-and-display-current-project)
+  (defun treemacs-mode-handler()
+  (set (make-local-variable 'face-remapping-alist)
+       `((default :background ,(doom-color 'base0)))))
+  (add-hook 'treemacs-mode-hook 'treemacs-mode-handler))
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -302,13 +309,13 @@
 
   (set-face-attribute 'flycheck-fringe-info nil
                       :foreground (doom-color 'green)
-                      :background (doom-darken 'green 0.6))
+                      :background (doom-darken 'green 0.5))
   (set-face-attribute 'flycheck-fringe-warning nil
                       :foreground (doom-color 'orange)
-                      :background (doom-darken 'orange 0.6))
+                      :background (doom-darken 'orange 0.5))
   (set-face-attribute 'flycheck-fringe-error nil
                       :foreground (doom-color 'red)
-                      :background (doom-darken 'red 0.6)))
+                      :background (doom-darken 'red 0.5)))
 
 (use-package company
   :ensure t
@@ -345,13 +352,13 @@
   :config (global-diff-hl-mode)
   (set-face-attribute 'diff-hl-insert nil
                       :foreground (doom-color 'green)
-                      :background (doom-darken 'green 0.6))
+                      :background (doom-darken 'green 0.5))
   (set-face-attribute 'diff-hl-delete nil
                       :foreground (doom-color 'red)
-                      :background (doom-darken 'red 0.6))
+                      :background (doom-darken 'red 0.5))
   (set-face-attribute 'diff-hl-change nil
                       :foreground (doom-color 'blue)
-                      :background (doom-darken 'blue 0.6)))
+                      :background (doom-darken 'blue 0.5)))
 
 (use-package magit
   :ensure t

@@ -3,7 +3,7 @@
 	prompt: #c678dd;
 	hint: #495162;
 	background-color: @background;
-	background: #1c212a;
+	background: #1b2229;
 	font: "Source Code Pro Medium 10";
 	foreground: #abb2bf;
 	separator: #31394a;

@@ -240,8 +240,8 @@ tertiary = "#c678dd"
 urgent = "#e5c07b"
 
 -- config vars
-myFocusedBorderColor = "#4b5271"
-myUnfocusedBorderColor = "#1c212a"
+myFocusedBorderColor = "#484c61"
+myUnfocusedBorderColor = "#1b2229"
 myBorderWidth = 2
 myTerminal = "terminal"
 myModMask = mod4Mask
