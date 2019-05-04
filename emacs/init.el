@@ -253,27 +253,6 @@
 (use-package ripgrep
   :ensure t)
 
-(use-package swoop
-  :ensure t
-  :config
-  (define-key leader-map "s" 'swoop)
-  (set-face-attribute 'swoop-face-target-line nil
-                      :foreground (doom-color 'fg)
-                      :background (doom-color 'bg-alt))
-  (set-face-attribute 'swoop-face-target-words nil
-                      :weight 'bold
-                      :foreground (doom-color 'bg)
-                      :background (doom-color 'violet))
-  (set-face-attribute 'swoop-face-header-format-line nil
-                      :height 110
-                      :foreground (doom-color 'fg))
-  (set-face-attribute 'swoop-face-line-buffer-name nil
-                      :height 110
-                      :foreground (doom-color 'blue)
-                      :background (doom-color 'bg-alt))
-  (set-face-attribute 'swoop-face-line-number nil
-                      :foreground (doom-color 'orange)))
-
 (use-package treemacs
   :ensure t
   :after doom-themes
