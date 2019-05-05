@@ -216,6 +216,15 @@
   (setq treemacs-width 20)
   (setq treemacs-no-png-images t)
   (setq treemacs-indentation 1)
+  (defun treemacs-remove-fringe ()
+    (set-window-fringes nil 0 0))
+  (defun treemacs-mode-handler()
+    (set-window-fringes nil 0 0)
+    (add-hook 'window-configuration-change-hook 'treemacs-remove-fringe nil :local)
+    (set (make-local-variable 'face-remapping-alist)
+         `((default :background ,(doom-color 'base0))
+           (hl-line :background ,(doom-color 'bg)))))
+  (add-hook 'treemacs-mode-hook 'treemacs-mode-handler)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -228,14 +237,11 @@
   (set-face-attribute 'treemacs-root-face nil
                       :height 110
                       :weight 'normal
-                      :foreground (doom-color 'cyan))
+                      :foreground (doom-color 'cyan)
+                      :box `(:line-width 8 :color ,(doom-color 'base0) :style nil))
   (define-key leader-map "t" treemacs-mode-map)
   (define-key leader-map "n" 'treemacs)
-  (define-key leader-map "a" 'treemacs-add-and-display-current-project)
-  (defun treemacs-mode-handler()
-    (set (make-local-variable 'face-remapping-alist)
-         `((default :background ,(doom-color 'base0)))))
-  (add-hook 'treemacs-mode-hook 'treemacs-mode-handler))
+  (define-key leader-map "a" 'treemacs-add-and-display-current-project))
 
 (use-package treemacs-evil
   :after treemacs evil

@@ -24,7 +24,8 @@ dunst&
 # Set up lockscreen
 xset s 300 5 # Lock after 5 minutes
 export XSECURELOCK_FONT="Source Code Pro:style=Medium"
-export XSECURELOCK_WANT_FIRST_KEYPRESS=1
+export XSECURELOCK_AUTH_BACKGROUND_COLOR="#1b2229"
+export XSECURELOCK_AUTH_FOREGROUND_COLOR="#abb2bf"
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock&
 
 exec xmonad
