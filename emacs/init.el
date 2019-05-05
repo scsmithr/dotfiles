@@ -85,6 +85,7 @@
 ;; Where org-captures go.
 (setq org-default-notes-file "~/notes/refile.org")
 (global-set-key (kbd "C-c c") 'org-capture)
+(setq org-startup-folded nil)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -213,7 +214,7 @@
   :ensure t
   :after doom-themes
   :init
-  (setq treemacs-width 20)
+  (setq treemacs-width 22)
   (setq treemacs-no-png-images t)
   (setq treemacs-indentation 1)
   (defun treemacs-remove-fringe ()
@@ -308,7 +309,8 @@
 
 (use-package diff-hl
   :ensure t
-  :config (global-diff-hl-mode)
+  :config
+  (global-diff-hl-mode)
   (set-face-attribute 'diff-hl-insert nil
                       :foreground (doom-color 'green)
                       :background (doom-darken 'green 0.5))
