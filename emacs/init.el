@@ -79,7 +79,12 @@
 (setq version-control t)
 
 ;; #Don't #create #lock #files
+;; TODO: Doesn't work
 (setq create-lockfiles nil)
+
+;; Where org-captures go.
+(setq org-default-notes-file "~/notes/refile.org")
+(global-set-key (kbd "C-c c") 'org-capture)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
