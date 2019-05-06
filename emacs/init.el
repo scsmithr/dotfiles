@@ -238,8 +238,7 @@
   (set-face-attribute 'treemacs-root-face nil
                       :height 110
                       :weight 'normal
-                      :foreground (doom-color 'cyan)
-                      :box `(:line-width 8 :color ,(doom-color 'base0) :style nil))
+                      :foreground (doom-color 'cyan))
   (define-key leader-map "t" treemacs-mode-map)
   (define-key leader-map "n" 'treemacs)
   (define-key leader-map "a" 'treemacs-add-and-display-current-project))
