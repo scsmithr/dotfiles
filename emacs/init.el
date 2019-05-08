@@ -230,7 +230,7 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
-  (treemacs-git-mode 'deferred)
+  (treemacs-git-mode 'simple)
   (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
   (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'magenta) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
