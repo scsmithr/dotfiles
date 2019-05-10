@@ -23,7 +23,6 @@ dunst&
 
 # Set up lockscreen
 xset s 300 5 # Lock after 5 minutes
-export XSECURELOCK_FONT="Source Code Pro:style=Medium"
-xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock&
+xss-lock -l -- i3lock -c 282c34&
 
 exec xmonad
