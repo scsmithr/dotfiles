@@ -100,7 +100,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
                     :weight 'normal
@@ -230,7 +230,7 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
-  (treemacs-git-mode 'simple)
+  (treemacs-git-mode 'deferred)
   (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
   (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'magenta) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
