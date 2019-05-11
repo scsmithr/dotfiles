@@ -14,25 +14,15 @@ Config {
     commands = [
         Run Date "%a, %b %d %I:%M%P" "date" 10,
 
-        Run Com "essid" [] "wifi" 100,
+        Run Com "xm-wifi" [] "wifi" 100,
 
-        Run Com "vol" ["get"] "vol" 100,
+        Run Com "xm-vol" [] "vol" 100,
 
-        Run Battery [
-            "--template" , "<fc=#495162>bat:</fc><acstatus>",
-            "--Low",    "20",        -- units: %
-            "--High",   "80",        -- units: %
-            "--low",    "#e06c75",
-
-            "--", -- Battery-specific options.
-            "-o", "<left>% (<timeleft>)", -- Discharging status.
-            "-O", "<left>% <fc=#98c379>(charging)</fc>", -- AC "on" status.
-            "-i", "<left>% <fc=#61afef>(full)</fc>" -- Charged status.
-        ] 100,
+        Run Com "xm-battery" [] "bat" 100,
 
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %StdinReader% }  %date%  { <fc=#495162>wifi:</fc>%wifi% <fc=#495162>vol:</fc>%vol% %battery% "
+    template = " %StdinReader% }  %date%  { %wifi%%vol%%bat% "
 }

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mute_template="<fc=#e5c07b>(mute)</fc>"
+
+format_vol_status() {
+    local curr
+    curr=$(vol get)
+    local mute
+    mute=$(pamixer --get-mute)
+    if [ "$mute" == "false" ]; then
+        echo "$curr%"
+    else
+        echo "$curr% $mute_template"
+    fi
+}
+
+echo " <fc=#495162>vol:</fc> $(format_vol_status)"
+

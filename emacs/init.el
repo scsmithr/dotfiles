@@ -309,13 +309,13 @@
   (global-diff-hl-mode)
   (set-face-attribute 'diff-hl-insert nil
                       :foreground (doom-color 'green)
-                      :background (doom-darken 'green 0.5))
+                      :background (doom-color 'green))
   (set-face-attribute 'diff-hl-delete nil
                       :foreground (doom-color 'red)
-                      :background (doom-darken 'red 0.5))
+                      :background (doom-color 'red))
   (set-face-attribute 'diff-hl-change nil
                       :foreground (doom-color 'blue)
-                      :background (doom-darken 'blue 0.5)))
+                      :background (doom-color 'blue)))
 
 (use-package magit
   :ensure t

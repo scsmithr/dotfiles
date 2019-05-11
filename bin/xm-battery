@@ -1,0 +1,20 @@
+#!/bin/bash
+
+[ ! -d /sys/class/power_supply/BAT0 ] && exit 0
+
+max=$(cat /sys/class/power_supply/BAT0/charge_full)
+curr=$(cat /sys/class/power_supply/BAT0/charge_now)
+
+percent=$(( $curr * 100 / $max ))
+
+status=$(cat /sys/class/power_supply/BAT0/status | awk '{print tolower($0)}')
+status_col="#495162"
+if [ "$status" == "charging" ]; then
+    status_col="#98c379"
+fi
+if [ "$status" == "full" ]; then
+    status_col="#61afef"
+fi
+
+echo " <fc=#495162>bat:</fc>$percent% <fc=${status_col}>($status)</fc>"
+

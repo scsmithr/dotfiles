@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo " <fc=#495162>wifi:</fc>$(essid)"

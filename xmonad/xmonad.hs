@@ -1,4 +1,5 @@
 import           XMonad
+
 import qualified XMonad.StackSet               as W
 import           XMonad.Operations              ( writeStateToFile )
 
@@ -241,7 +242,7 @@ urgent = "#e5c07b"
 
 -- config vars
 myFocusedBorderColor = "#484c61"
-myUnfocusedBorderColor = "#1b2229"
+myUnfocusedBorderColor = "#2b3239"
 myBorderWidth = 2
 myTerminal = "terminal"
 myModMask = mod4Mask

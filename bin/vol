@@ -1,31 +1,5 @@
 #!/bin/bash
 
-mute_template="<fc=#e5c07b>(mute)</fc>"
-
-get_vol() {
-    local vol
-    vol=$(pamixer --get-volume)
-    echo "$vol%"
-}
-
-get_mute_status() {
-    local mute
-    mute=$(pamixer --get-mute)
-    echo "$mute"
-}
-
-format_vol_status() {
-    local vol
-    vol=$(get_vol)
-    local mute
-    mute=$(get_mute_status)
-    if [ "$mute" == "false" ]; then
-        echo "$vol"
-    else
-        echo "$vol $mute_template"
-    fi
-}
-
 case $1 in
     "up")
         pamixer -u; pamixer -i 5
@@ -37,6 +11,6 @@ case $1 in
         pamixer -t
         ;;
     "get")
-        format_vol_status
+        pamixer --get-volume
         ;;
 esac
