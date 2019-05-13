@@ -17,6 +17,7 @@
 	width: 560px;
 	padding: 2px 14px 0 14px;
 	border-color: @separator;
+    border: 0px 2px 2px 2px;
 }
 
 #mainbox {

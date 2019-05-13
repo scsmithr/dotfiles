@@ -242,7 +242,7 @@ urgent = "#e5c07b"
 
 -- config vars
 myFocusedBorderColor = "#484c61"
-myUnfocusedBorderColor = "#2b3239"
+myUnfocusedBorderColor = "#31394a"
 myBorderWidth = 2
 myTerminal = "terminal"
 myModMask = mod4Mask
