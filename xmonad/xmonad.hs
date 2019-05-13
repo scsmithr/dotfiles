@@ -241,7 +241,7 @@ tertiary = "#c678dd"
 urgent = "#e5c07b"
 
 -- config vars
-myFocusedBorderColor = "#484c61"
+myFocusedBorderColor = "#686c81"
 myUnfocusedBorderColor = "#31394a"
 myBorderWidth = 2
 myTerminal = "terminal"
