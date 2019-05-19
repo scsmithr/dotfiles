@@ -97,7 +97,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
                     :weight 'normal
@@ -323,6 +323,9 @@
                       :foreground (doom-color 'fg))
   (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch)
   (define-key leader-map "g" 'magit-status))
+
+(use-package evil-magit
+  :ensure t)
 
 (use-package yasnippet
   :ensure t
