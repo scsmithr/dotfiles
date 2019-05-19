@@ -18,13 +18,10 @@
   (interactive "f")
   (load-file (expand-file-name file user-init-dir)))
 
-(defun lang-folder (lang)
-  (concat user-init-dir (concat "langs/" lang)))
-
 (defun load-language (lang)
   "Load language specific packages for LANG."
   (interactive "f")
-  (load-user-file (concat (lang-folder lang) "/packages.el")))
+  (load-user-file (concat (concat "langs/" lang) ".el")))
 
 ;; Highlight parenthesis
 (show-paren-mode 1)
@@ -359,16 +356,21 @@
 
 ;; Language stuff
 
-(load-language "go")
-(go/init-go-mode)
+(use-package go
+  :load-path "langs"
+  :config (go/init-go-mode))
 
-(load-language "rust")
-(rust/init-rust-mode)
+(use-package rust
+  :load-path "langs"
+  :config (rust/init-rust-mode))
 
-(load-language "haskell")
-(haskell/init-haskell-mode)
+(use-package haskell
+  :load-path "langs"
+  :config (haskell/init-haskell-mode))
 
-(load-language "typescript")
-(typescript/init-web-mode)
-(typescript/init-tide-mode)
+(use-package typescript
+  :load-path "langs"
+  :config
+  (typescript/init-web-mode)
+  (typescript/init-tide-mode))
 
