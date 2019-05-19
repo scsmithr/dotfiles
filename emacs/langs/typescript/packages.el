@@ -16,9 +16,7 @@
     (use-package tide
       :init
       :ensure t
-      :after (web-mode company flycheck)
-      :hook ((web-mode . tide-setup)
-             (web-mode . tide-hl-identifier-mode))))
+      :after (web-mode company flycheck)))
 
 
 (defun typescript/init-web-mode ()
