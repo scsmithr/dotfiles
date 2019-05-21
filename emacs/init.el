@@ -1,5 +1,6 @@
 ;; Hide some things
 (menu-bar-mode -1)
+
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (setq use-dialog-box nil)
@@ -64,7 +65,7 @@
 (setq-default scroll-step 1)
 (setq-default scroll-margin 4)
 (setq-default scroll-conservatively 101)
-(setq-default hscroll-margin 4)
+(setq-default hscroll-margin 0)
 (setq-default hscroll-step 1)
 
 (setq-default require-final-newline t)
