@@ -100,7 +100,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-face-attribute 'default nil
                     :weight 'normal
@@ -358,6 +358,9 @@
 (use-package protobuf-mode
   :ensure t)
 
+(use-package docker-tramp
+  :ensure t)
+
 ;; Local configuration
 
 (use-package modeline
@@ -366,6 +369,9 @@
 (use-package ido-symbol
   :load-path "lisp"
   :config (global-set-key (kbd "C-S-o") 'ido-goto-symbol))
+
+(use-package "sail-tramp"
+  :load-path "/home/sean/Code/github.com/cdr/sail-tramp.el")
 
 ;; Language stuff
 
