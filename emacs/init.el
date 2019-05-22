@@ -87,6 +87,11 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-startup-folded nil)
 
+;; ediff settings
+(setq ediff-diff-options "-w") ; turn off whitespace checking
+(setq ediff-split-window-function #'split-window-horizontally)
+(setq ediff-window-setup-function #'ediff-setup-windows-plain)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
