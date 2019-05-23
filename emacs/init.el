@@ -375,9 +375,6 @@
   :load-path "lisp"
   :config (global-set-key (kbd "C-S-o") 'ido-goto-symbol))
 
-(use-package "sail-tramp"
-  :load-path "/home/sean/Code/github.com/cdr/sail-tramp.el")
-
 ;; Language stuff
 
 (use-package go
