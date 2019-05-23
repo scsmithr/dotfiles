@@ -88,9 +88,11 @@
 (setq org-startup-folded nil)
 
 ;; ediff settings
-(setq ediff-diff-options "-w") ; turn off whitespace checking
-(setq ediff-split-window-function #'split-window-horizontally)
-(setq ediff-window-setup-function #'ediff-setup-windows-plain)
+(winner-mode t)
+(add-hook 'ediff-quit-hook 'winner-undo)
+(setq-default ediff-diff-options "-w") ; turn off whitespace checking
+(setq-default ediff-split-window-function #'split-window-horizontally)
+(setq-default ediff-window-setup-function #'ediff-setup-windows-plain)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -213,7 +215,9 @@
   (define-key leader-map "p" 'projectile-command-map))
 
 (use-package ripgrep
-  :ensure t)
+  :ensure t
+  :config
+  (set-face-attribute 'ripgrep-hit-face nil :foreground (doom-color 'fg-alt)))
 
 (use-package treemacs
   :ensure t
