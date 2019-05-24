@@ -9,7 +9,10 @@
     :config
     (setq gofmt-command "goimports")
     :init
-    (define-key leader-map "t" 'go/go-tests-all)
+    (defvar mode-map (make-sparse-keymap) "Keymap for mode")
+    (define-key leader-map "m" mode-map)
+    (define-key mode-map "t" 'go/go-tests-all)
+    (define-key mode-map "v" 'go/go-vendor)
     (add-hook 'before-save-hook #'gofmt-before-save)
     (add-hook 'go-mode-hook #'lsp)))
 
@@ -17,6 +20,9 @@
   "Test verbosity.")
 
 (defvar go-test-buffer-name "*go test*"
+  "Name of buffer for go test output.")
+
+(defvar go-vendor-buffer-name "*go vendor*"
   "Name of buffer for go test output.")
 
 (defun go/go-tests (args)
@@ -28,6 +34,12 @@
 (defun go/go-tests-all ()
   (interactive)
   (go/go-tests "./..."))
+
+(defun go/go-vendor ()
+  (interactive)
+  (compilation-start (concat "cd " (projectile-project-root)
+                             " && GO111MODULE=on go mod vendor")
+                             nil (lambda (n) go-vendor-buffer-name) nil))
 
 (provide 'go)
 ;;; packages.el ends here
