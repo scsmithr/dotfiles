@@ -8,11 +8,26 @@
     :defer t
     :config
     (setq gofmt-command "goimports")
-    (evil-collection-define-key 'normal 'go-mode-map
-      "K" 'godoc-at-point)
     :init
+    (define-key leader-map "t" 'go/go-tests-all)
     (add-hook 'before-save-hook #'gofmt-before-save)
     (add-hook 'go-mode-hook #'lsp)))
+
+(defvar go-test-verbose nil
+  "Test verbosity.")
+
+(defvar go-test-buffer-name "*go test*"
+  "Name of buffer for go test output.")
+
+(defun go/go-tests (args)
+  (interactive)
+  (compilation-start (concat "cd " (projectile-project-root)
+                             " && " "go test " (when go-test-verbose "-v ") args)
+                     nil (lambda (n) go-test-buffer-name) nil))
+
+(defun go/go-tests-all ()
+  (interactive)
+  (go/go-tests "./..."))
 
 (provide 'go)
 ;;; packages.el ends here
