@@ -195,10 +195,10 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
 myLayoutHook = Hideable.hiddenWindows
   $ smartBorders (tiled ||| tiledMirror ||| Full)
  where
-  tiled          = uniformSpacing $ ResizableTall nmaster delta ratio []
-  tiledMirror    = Mirror tiled
+  tiled = uniformSpacing $ ResizableTall nmaster delta (1 / 2) []
+  tiledMirror =
+    Mirror $ uniformSpacing $ ResizableTall nmaster delta (3 / 4) []
   nmaster        = 1
-  ratio          = 1 / 2
   delta          = 3 / 100
   gs             = 2
   uniformSpacing = spacingRaw False (border) True (border) True
@@ -241,7 +241,7 @@ tertiary = "#c678dd"
 urgent = "#e5c07b"
 
 -- config vars
-myFocusedBorderColor = "#686c81"
+myFocusedBorderColor = "#686e8a"
 myUnfocusedBorderColor = "#31394a"
 myBorderWidth = 2
 myTerminal = "terminal"
