@@ -3,7 +3,6 @@
 setopt prompt_subst
 
 PROMPT_TRUNC_WIDTH='${COLUMNS}'
-setopt TRANSIENT_RPROMPT # Right prompt removed after enter
 
 # Version control
 autoload -Uz vcs_info
@@ -31,19 +30,18 @@ PROMPT_DIR="%{$fg[blue]%}%(5~|%-1~/.../%3~|%4~)%{$reset_color%}"
 
 # Display vim mode on keymap change.
 function zle-line-init zle-keymap-select {
-    PROMPT_VIM_MODE="%{$fg[yellow]%} -- N --%{$reset_color%}"
     if [ "$KEYMAP" = vicmd ]; then
-        RPS1=$PROMPT_VIM_MODE
+        PROMPT_VIM_MODE="%{$fg[yellow]%}N %{$reset_color%}"
     else
-        RPS1=""
+        PROMPT_VIM_MODE="%{$fg[green]%}I %{$reset_color%}"
     fi
     zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-PROMPT="
+PROMPT="%(?..%F{8}%?)%{$reset_color%}
 %${PROMPT_TRUNC_WIDTH}>...>$PROMPT_HOST$PROMPT_DIR %(1j.$fg[yellow](%j) $reset_color.)$PROMPT_VCS%>>
-%{%(?.$fg[magenta].$fg[yellow])%}>%{$reset_color%} "
+\$PROMPT_VIM_MODE%{%(?.$fg[magenta].$fg[yellow])%}>%{$reset_color%} "
 
 RPROMPT=""

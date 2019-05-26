@@ -273,13 +273,13 @@
   (global-set-key (kbd "S-<f8>") 'flycheck-previous-error)
 
   (set-face-attribute 'flycheck-fringe-info nil
-                      :foreground (doom-color 'green)
+                      :foreground (doom-darken 'green 0.5)
                       :background (doom-darken 'green 0.5))
   (set-face-attribute 'flycheck-fringe-warning nil
-                      :foreground (doom-color 'orange)
+                      :foreground (doom-darken 'orange 0.5)
                       :background (doom-darken 'orange 0.5))
   (set-face-attribute 'flycheck-fringe-error nil
-                      :foreground (doom-color 'red)
+                      :foreground (doom-darken 'red 0.5)
                       :background (doom-darken 'red 0.5)))
 
 (use-package company

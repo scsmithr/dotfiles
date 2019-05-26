@@ -134,7 +134,6 @@
 
 (set-face-attribute 'mode-line-vc-face nil
     :inherit 'mode-line-face
-    :weight 'bold
     :foreground (doom-color 'green))
 
 (set-face-attribute 'mode-line-position-face nil
