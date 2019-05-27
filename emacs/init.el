@@ -169,14 +169,14 @@
   (load-theme 'doom-one t)
   (set-face-attribute 'fringe nil :background (doom-color 'bg))
   (set-face-attribute 'whitespace-tab nil :background "inherit")
-  (set-face-attribute 'font-lock-comment-face nil :foreground (doom-color 'base6))
-  (set-face-attribute 'font-lock-doc-face nil :foreground (doom-color 'base6))
+  (set-face-attribute 'font-lock-comment-face nil :foreground (doom-color 'dark-cyan))
+  (set-face-attribute 'font-lock-doc-face nil :foreground (doom-color 'dark-cyan))
   (set-face-attribute 'whitespace-line nil
                       :weight 'normal
                       :foreground 'unspecified)
   (set-face-attribute 'show-paren-match nil
                       :weight 'bold
-                      :background (doom-darken 'cyan 0.6)
+                      :background (doom-darken 'cyan 0.5)
                       :foreground (doom-color 'cyan))
   (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
 
@@ -217,7 +217,8 @@
 (use-package ripgrep
   :ensure t
   :config
-  (set-face-attribute 'ripgrep-hit-face nil :foreground (doom-color 'fg-alt)))
+  (set-face-attribute 'ripgrep-match-face nil :foreground (doom-color 'orange))
+  (set-face-attribute 'ripgrep-hit-face nil :foreground (doom-color 'dark-cyan)))
 
 (use-package treemacs
   :ensure t
@@ -241,6 +242,7 @@
   (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'magenta) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
+  (set-face-attribute 'treemacs-git-ignored-face nil :foreground (doom-color 'fg-alt))
   (set-face-attribute 'treemacs-root-face nil
                       :height 110
                       :weight 'normal
