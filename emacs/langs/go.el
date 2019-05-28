@@ -14,12 +14,10 @@
               (defvar mode-map (make-sparse-keymap))
               (define-key leader-map "m" mode-map)
               (define-key mode-map "t" 'go/go-tests-all)
+              (define-key mode-map "T" 'go/go-tests-all-verbose)
               (define-key mode-map "v" 'go/go-vendor)))
     (add-hook 'before-save-hook #'gofmt-before-save)
     (add-hook 'go-mode-hook #'lsp)))
-
-(defvar go-test-verbose nil
-  "Test verbosity.")
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")
@@ -30,12 +28,17 @@
 (defun go/go-tests (args)
   (interactive)
   (compilation-start (concat "cd " (projectile-project-root)
-                             " && " "go test " (when go-test-verbose "-v ") args)
+                             " && " "go test " args)
                      nil (lambda (n) go-test-buffer-name) nil))
 
 (defun go/go-tests-all ()
   (interactive)
   (go/go-tests "./..."))
+
+(defun go/go-tests-all-verbose ()
+  (interactive)
+  (go/go-tests "./... -v"))
+
 
 (defun go/go-vendor ()
   (interactive)
