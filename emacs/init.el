@@ -32,6 +32,9 @@
 ;; Auto insert closing parenthesis, braces, etc
 (electric-pair-mode 1)
 
+;; Folding
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq-default display-line-numbers-width-start t)
