@@ -46,5 +46,5 @@
                              " && GO111MODULE=on go mod vendor")
                              nil (lambda (n) go-vendor-buffer-name) nil))
 
-(provide 'go)
+(provide '+go)
 ;;; packages.el ends here

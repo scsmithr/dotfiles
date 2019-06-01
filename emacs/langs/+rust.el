@@ -12,5 +12,5 @@
                            (delete 'company-capf company-backends))))
       (add-hook 'rust-mode-hook #'lsp)))
 
-(provide 'rust)
+(provide '+rust)
 ;;; packages.el ends here

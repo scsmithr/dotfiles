@@ -8,5 +8,5 @@
       (setq haskell-stylish-on-save t)
       (setq haskell-mode-stylish-haskell-path "brittany")))
 
-(provide 'haskell)
+(provide '+haskell)
 ;;; packages.el ends here

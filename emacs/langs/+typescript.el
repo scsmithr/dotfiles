@@ -47,5 +47,5 @@
       (add-hook 'web-mode-hook #'lsp)
       (flycheck-add-mode 'typescript-tslint 'web-mode)))
 
-(provide 'typescript)
+(provide '+typescript)
 ;;; packages.el ends here

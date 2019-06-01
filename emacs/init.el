@@ -386,19 +386,23 @@
 
 ;; Language stuff
 
-(use-package go
+(use-package +go
   :load-path "langs"
   :config (go/init-go-mode))
 
-(use-package rust
+(use-package +rust
   :load-path "langs"
   :config (rust/init-rust-mode))
 
-(use-package haskell
+(use-package +octave
+  :load-path "langs"
+  :config (octave/init-octave-mode))
+
+(use-package +haskell
   :load-path "langs"
   :config (haskell/init-haskell-mode))
 
-(use-package typescript
+(use-package +typescript
   :load-path "langs"
   :config
   (typescript/init-web-mode)
