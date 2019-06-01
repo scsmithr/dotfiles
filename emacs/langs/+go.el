@@ -9,13 +9,10 @@
     :config
     (setq gofmt-command "goimports")
     :init
-    (add-hook 'go-mode-hook
-              (lambda ()
-              (defvar mode-map (make-sparse-keymap))
-              (define-key leader-map "m" mode-map)
-              (define-key mode-map "t" 'go/go-tests-all)
-              (define-key mode-map "T" 'go/go-tests-all-verbose)
-              (define-key mode-map "v" 'go/go-vendor)))
+    (core/local 'go-mode
+     "ta" 'go/go-tests-all
+     "tv" 'go/go-tests-all-verbose
+     "v" 'go/go-vendor)
     (add-hook 'before-save-hook #'gofmt-before-save)
     (add-hook 'go-mode-hook #'lsp)))
 

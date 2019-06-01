@@ -128,6 +128,9 @@
   (package-install 'use-package))
 (require 'use-package)
 
+(use-package keybinds
+  :load-path "core")
+
 ;; evil
 (use-package evil
   :ensure t
@@ -141,12 +144,11 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode)
-  ;; Set up leader key (defvar leader-map
-  (defvar leader-map (make-sparse-keymap) "Keymap for leader key")
-  (define-key evil-normal-state-map "," leader-map)
-  (define-key leader-map "w" 'evil-window-vsplit)
-  (define-key leader-map "h" 'evil-window-split)
-  (define-key leader-map "b" 'ibuffer)
+  (define-key evil-normal-state-map (kbd ",") core-leader-map)
+  (core/leader
+   "w" 'evil-window-vsplit
+   "h" 'evil-window-split
+   "b" 'ibuffer)
   ;; rebind ctrl-p
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
 
@@ -215,7 +217,8 @@
   (setq projectile-require-project-root nil)
   :config
   (projectile-mode +1)
-  (define-key leader-map "p" 'projectile-command-map))
+  (core/leader
+   "p" 'projectile-command-map))
 
 (use-package ripgrep
   :ensure t
@@ -250,9 +253,10 @@
                       :height 110
                       :weight 'normal
                       :foreground (doom-color 'cyan))
-  (define-key leader-map "t" treemacs-mode-map)
-  (define-key leader-map "n" 'treemacs)
-  (define-key leader-map "a" 'treemacs-add-and-display-current-project))
+  (core/leader
+   "t" treemacs-mode-map
+   "n" 'treemacs
+   "a" 'treemacs-add-and-display-current-project))
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -273,7 +277,8 @@
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
 
-  (define-key leader-map "f" flycheck-command-map)
+  (core/leader
+   "f" flycheck-command-map)
   (global-set-key (kbd "<f8>") 'flycheck-next-error)
   (global-set-key (kbd "S-<f8>") 'flycheck-previous-error)
 
@@ -339,7 +344,8 @@
                       :box nil
                       :foreground (doom-color 'fg))
   (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch)
-  (define-key leader-map "g" 'magit-status))
+  (core/leader
+   "g" 'magit-status))
 
 (use-package forge
   :ensure t
