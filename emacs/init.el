@@ -74,7 +74,8 @@
 (setq-default require-final-newline t)
 
 ;; Configure file backups
-(setq backup-directory-alist '(("." . "~/.emacs.d/.backups")))
+(setq backup-directory-alist '((".*" . "~/.emacs.d/.backups")))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/.backups" t)))
 (setq backup-by-copying t)
 (setq delete-old-versions t)
 (setq kept-new-versions 6)
