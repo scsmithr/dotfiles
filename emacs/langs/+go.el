@@ -3,18 +3,21 @@
 
 (defun go/init-go-mode ()
   "Initialize go related features."
-  (use-package go-mode
-    :ensure t
-    :defer t
-    :config
-    (setq gofmt-command "goimports")
-    :init
+  (progn
+    (use-package go-mode
+      :ensure t
+      :defer t
+      :config
+      (add-hook 'go-mode-hook #'lsp)
+      (add-hook 'before-save-hook #'gofmt-before-save)
+      (setq gofmt-command "goimports"))
+    (use-package go-rename
+      :ensure t)
     (core/local 'go-mode
-     "ta" 'go/go-tests-all
-     "tv" 'go/go-tests-all-verbose
-     "v" 'go/go-vendor)
-    (add-hook 'before-save-hook #'gofmt-before-save)
-    (add-hook 'go-mode-hook #'lsp)))
+                "rn" 'go-rename
+                "ta" 'go/go-tests-all
+                "tv" 'go/go-tests-all-verbose
+                "v" 'go/go-vendor)))
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")

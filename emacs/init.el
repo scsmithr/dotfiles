@@ -98,6 +98,9 @@
 (setq-default ediff-split-window-function #'split-window-horizontally)
 (setq-default ediff-window-setup-function #'ediff-setup-windows-plain)
 
+;; Always use "y or n"
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -129,8 +132,15 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;; Core configuration
+
 (use-package keybinds
-  :load-path "core")
+  :load-path "core"
+  :after evil
+  :config
+  (core/init-leader))
+
+;; External packages
 
 ;; evil
 (use-package evil
@@ -145,7 +155,6 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode)
-  (define-key evil-normal-state-map (kbd ",") core-leader-map)
   (core/leader
    "w" 'evil-window-vsplit
    "h" 'evil-window-split
@@ -280,8 +289,6 @@
 
   (core/leader
    "f" flycheck-command-map)
-  (global-set-key (kbd "<f8>") 'flycheck-next-error)
-  (global-set-key (kbd "S-<f8>") 'flycheck-previous-error)
 
   (set-face-attribute 'flycheck-fringe-info nil
                       :foreground (doom-darken 'green 0.5)
