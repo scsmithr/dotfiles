@@ -200,7 +200,7 @@ myLayoutHook = Hideable.hiddenWindows
     Mirror $ uniformSpacing $ ResizableTall nmaster delta (3 / 4) []
   nmaster        = 1
   delta          = 3 / 100
-  gs             = 2
+  gs             = 4
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 

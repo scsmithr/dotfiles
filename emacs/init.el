@@ -262,7 +262,7 @@
   (set-face-attribute 'treemacs-root-face nil
                       :height 110
                       :weight 'normal
-                      :foreground (doom-color 'cyan))
+                      :foreground (doom-color 'blue))
   (core/leader
    "t" treemacs-mode-map
    "n" 'treemacs
@@ -319,7 +319,9 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-posframe
-  :ensure t)
+  :ensure t
+  :init
+  (setq posframe-mouse-banish nil))
 
 (use-package company-lsp
   :ensure t
