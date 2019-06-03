@@ -28,11 +28,11 @@
   (let* ((hook (intern (format "%s-hook" mode))))
     (add-hook hook
               (lambda ()
-                (let ((mode-map (make-sparse-keymap)))
-                  (core/set-leader-keys core-local-leader-key mode-map)
-                  (while key
-                    (define-key mode-map (kbd key) def)
-                    (setq key (pop bindings) def (pop bindings))))))))
+                (defvar mode-map (make-sparse-keymap))
+                (core/set-leader-keys core-local-leader-key mode-map)
+                (while key
+                  (define-key mode-map (kbd key) def)
+                  (setq key (pop bindings) def (pop bindings)))))))
 
 (defalias 'core/local 'core/set-leader-major-mode-keys)
 
