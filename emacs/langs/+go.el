@@ -13,11 +13,14 @@
       (setq gofmt-command "goimports"))
     (use-package go-rename
       :ensure t)
-    (core/local 'go-mode
-                "rn" 'go-rename
-                "ta" 'go/go-tests-all
-                "tv" 'go/go-tests-all-verbose
-                "v" 'go/go-vendor)))
+    (defvar core-go-mode-map (make-sparse-keymap))
+    (define-key core-go-mode-map "rn" 'go-rename)
+    (define-key core-go-mode-map "ta" 'go/go-tests-all)
+    (define-key core-go-mode-map "tv" 'go/go-tests-all-verbose)
+    (define-key core-go-mode-map "v" 'go/go-vendor)
+    (add-hook 'go-mode-hook
+              (lambda ()
+                (core/leader core-local-leader-key core-go-mode-map)))))
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")

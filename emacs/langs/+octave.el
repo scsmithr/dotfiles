@@ -5,11 +5,14 @@
     (use-package octave
       :defer t
       :mode ("\\.m\\'" . octave-mode))
-    (core/local 'octave-mode
-                "r" 'run-octave
-                "sr" 'octave-send-region
-                "sb" 'octave-send-buffer
-                "sl" 'octave-send-line)))
+    (defvar core-octave-mode-map (make-sparse-keymap))
+    (define-key core-octave-mode-map "o" 'run-octave)
+    (define-key core-octave-mode-map "sr" 'octave-send-region)
+    (define-key core-octave-mode-map "sb" 'octave-send-buffer)
+    (define-key core-octave-mode-map "sl" 'octave-send-line)
+    (add-hook 'octave-mode-hook
+              (lambda()
+                (core/leader core-local-leader-key core-octave-mode-map)))))
 
 (provide '+octave)
 ;;; packages.el ends here

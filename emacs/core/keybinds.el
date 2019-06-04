@@ -23,18 +23,5 @@
 
 (defalias 'core/leader 'core/set-leader-keys)
 
-(defun core/set-leader-major-mode-keys (mode key def &rest bindings)
-  "Set mode local keybinds on the local leader map."
-  (let* ((hook (intern (format "%s-hook" mode))))
-    (add-hook hook
-              (lambda ()
-                (defvar mode-map (make-sparse-keymap))
-                (core/set-leader-keys core-local-leader-key mode-map)
-                (while key
-                  (define-key mode-map (kbd key) def)
-                  (setq key (pop bindings) def (pop bindings)))))))
-
-(defalias 'core/local 'core/set-leader-major-mode-keys)
-
 (provide 'keybinds)
 ;;; keybinds.el ends here
