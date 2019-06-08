@@ -103,7 +103,7 @@
 (make-face 'mode-line-80col-face)
 
 (defvar mode-line-bg (doom-color 'base0))
-(defvar mode-line-box `(:line-width 8 :color ,mode-line-bg :style nil))
+(defvar mode-line-box `(:line-width 6 :color ,mode-line-bg :style nil))
 
 (set-face-attribute 'mode-line nil
     :foreground (doom-color 'fg) :background mode-line-bg

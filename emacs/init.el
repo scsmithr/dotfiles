@@ -303,7 +303,7 @@
 (use-package company
   :ensure t
   :config
-  (setq company-frontends '(company-posframe-frontend))
+  (setq company-frontends '(company-preview-frontend company-echo-strip-common-frontend))
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.2)
   (set-face-attribute 'company-echo nil
@@ -317,9 +317,6 @@
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   :init
   (add-hook 'after-init-hook 'global-company-mode))
-
-(use-package company-posframe
-  :ensure t)
 
 (use-package company-lsp
   :ensure t
