@@ -334,6 +334,7 @@
   :ensure t
   :config
   (global-diff-hl-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   (set-face-attribute 'diff-hl-insert nil
                       :foreground (doom-color 'green)
                       :background (doom-color 'green))
@@ -341,11 +342,12 @@
                       :foreground (doom-color 'red)
                       :background (doom-color 'red))
   (set-face-attribute 'diff-hl-change nil
-                      :foreground (doom-color 'blue)
-                      :background (doom-color 'blue)))
+                      :foreground (doom-color 'yellow)
+                      :background (doom-color 'yellow)))
 
 (use-package magit
   :ensure t
+  :defer t
   :config
   (set-face-attribute 'magit-header-line nil
                       :background (doom-color 'base0)
@@ -384,10 +386,12 @@
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (use-package protobuf-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package docker-tramp
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; Local configuration
 
