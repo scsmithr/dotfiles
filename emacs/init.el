@@ -185,6 +185,11 @@ Treemacs buffers."
   :config
   (evil-collection-init))
 
+(defun doom-transparentize (color alpha)
+  "Transparentize a COLOR (a hexidecimal string) by a coefficient
+ALPHA (a float between 0 and 1)."
+  (doom-blend (doom-color color) (doom-color 'bg) (- 1 alpha)))
+
 ;; Doom themes
 (use-package doom-themes
   :ensure t
@@ -254,6 +259,9 @@ Treemacs buffers."
   (setq treemacs-width 22)
   (setq treemacs-no-png-images t)
   (setq treemacs-indentation 1)
+  (setq treemacs-icon-tag-node-open-text (propertize "− " 'face 'font-lock-keyword-face)
+        treemacs-icon-tag-node-closed-text (propertize "+ " 'face 'font-lock-keyword-face)
+        treemacs-icon-tag-leaf-text (propertize "  " 'face 'font-lock-keyword-face))
   (defun treemacs-mode-handler()
     (set (make-local-variable 'face-remapping-alist)
          `((default :background ,(doom-color 'base0))
@@ -297,19 +305,16 @@ Treemacs buffers."
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
-
-  (core/leader
-   "f" flycheck-command-map)
-
+  (core/leader "f" flycheck-command-map)
   (set-face-attribute 'flycheck-fringe-info nil
-                      :foreground (doom-darken 'green 0.5)
-                      :background (doom-darken 'green 0.5))
+                      :foreground (doom-transparentize 'green 0.5)
+                      :background (doom-transparentize 'green 0.5))
   (set-face-attribute 'flycheck-fringe-warning nil
-                      :foreground (doom-darken 'orange 0.5)
-                      :background (doom-darken 'orange 0.5))
+                      :foreground (doom-transparentize 'orange 0.5)
+                      :background (doom-transparentize 'orange 0.5))
   (set-face-attribute 'flycheck-fringe-error nil
-                      :foreground (doom-darken 'red 0.5)
-                      :background (doom-darken 'red 0.5)))
+                      :foreground (doom-transparentize 'red 0.5)
+                      :background (doom-transparentize 'red 0.5)))
 
 (use-package company
   :ensure t
@@ -411,7 +416,8 @@ Treemacs buffers."
 
 (use-package ido-symbol
   :load-path "lisp"
-  :config (global-set-key (kbd "C-S-o") 'ido-goto-symbol))
+  :config
+  (core/leader "o" 'ido-goto-symbol))
 
 ;; Language stuff
 
