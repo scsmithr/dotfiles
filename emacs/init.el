@@ -142,11 +142,19 @@
 
 ;; External packages
 
+(defun evil-window-next-skip-treemacs ()
+  "Move the cursor to next window in cyclic order, skipping
+Treemacs buffers."
+  (interactive)
+  (select-window (next-window))
+  (when (string-match-p (regexp-quote "Treemacs") (buffer-name))
+    (select-window (next-window))))
+
 ;; evil
 (use-package evil
   :ensure t
   :init
-  (setq evil-search-module'evil-search)
+  (setq evil-search-module 'evil-search)
   (setq evil-ex-complete-emacs-commands nil)
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
@@ -156,9 +164,12 @@
   :config
   (evil-mode)
   (core/leader
-   "w" 'evil-window-vsplit
-   "h" 'evil-window-split
-   "b" 'ibuffer)
+   "ww" 'evil-window-vsplit
+   "wh" 'evil-window-split)
+  (define-key evil-window-map "C-w" #'evil-window-next-skip-treemacs)
+  (define-key evil-window-map "w" #'evil-window-next-skip-treemacs)
+  (define-key evil-motion-state-map (kbd "C-w w") #'evil-window-next-skip-treemacs)
+  (define-key evil-motion-state-map (kbd "C-w C-w") #'evil-window-next-skip-treemacs)
   ;; rebind ctrl-p
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
 
