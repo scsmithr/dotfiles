@@ -29,10 +29,14 @@ case $1 in
             ;;
             "set")
             : "${3?"Usage: $0 monitor set PERCENT"}"
-            ddcutil setvcp 10 $3 --display 1&
-            ddcutil setvcp 10 $3 --display 2&
-            ddcutil setvcp 10 $3 --display 3&
-            wait
+            if [ -n "$4" ]; then
+                ddcutil setvcp 10 $3 --display $4
+            else
+                ddcutil setvcp 10 $3 --display 1&
+                ddcutil setvcp 10 $3 --display 2&
+                ddcutil setvcp 10 $3 --display 3&
+                wait
+            fi
             ;;
         esac
         ;;
