@@ -14,16 +14,25 @@ case $1 in
             "up")
             amount="${3:-2}"
             curr=$(mon_current)
-            ddcutil setvcp 10 $(( curr + amount ))
+            ddcutil setvcp 10 $(( curr + amount )) --display 1&
+            ddcutil setvcp 10 $(( curr + amount )) --display 2&
+            ddcutil setvcp 10 $(( curr + amount )) --display 3&
+            wait
             ;;
             "down")
             amount="${3:-2}"
             curr=$(mon_current)
-            ddcutil setvcp 10 $(( curr - amount ))
+            ddcutil setvcp 10 $(( curr - amount )) --display 1&
+            ddcutil setvcp 10 $(( curr - amount )) --display 2&
+            ddcutil setvcp 10 $(( curr - amount )) --display 3&
+            wait
             ;;
             "set")
             : "${3?"Usage: $0 monitor set PERCENT"}"
-            ddcutil setvcp 10 $3
+            ddcutil setvcp 10 $3 --display 1&
+            ddcutil setvcp 10 $3 --display 2&
+            ddcutil setvcp 10 $3 --display 3&
+            wait
             ;;
         esac
         ;;
