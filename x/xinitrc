@@ -13,7 +13,11 @@ case $HOSTNAME in
         ;;
 esac
 
+# Change caplock to left control
 xmodmap ~/.xmodmap
+# Make left control send escape if pressed on its own
+xcape -e 'Control_L=Escape'
+
 
 dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
