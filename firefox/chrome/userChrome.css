@@ -3,9 +3,5 @@
 /* Seems to be the background used briefly when opening a new tab. */
 browser[type="content-primary"], browser[type="content"],
 #main-window, #appcontent {
-	background-color: #282c34 !important;
-}
-
-#tabbrowser-tabs {
-	--tab-line-color: #51afef !important;
+	background-color: #FDF6E3 !important;
 }

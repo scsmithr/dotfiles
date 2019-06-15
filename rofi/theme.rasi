@@ -1,13 +1,13 @@
 * {
-	selected: #61afef;
+	selected: #268bd2;
 	prompt: #c678dd;
-	hint: #495162;
+	hint: #D6D6D6;
 	background-color: @background;
-	background: #1b2229;
+	background: #FDF6E3;
 	font: "Source Code Pro Medium 10";
-	foreground: #abb2bf;
-	separator: #31394a;
-	highlight: none bold #c678dd;
+	foreground: #556b72;
+	separator: #93A1A1;
+	highlight: none bold #d33682;
 }
 
 #window {

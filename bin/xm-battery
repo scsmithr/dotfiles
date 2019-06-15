@@ -8,13 +8,7 @@ curr=$(cat /sys/class/power_supply/BAT0/charge_now)
 percent=$(( $curr * 100 / $max ))
 
 status=$(cat /sys/class/power_supply/BAT0/status | awk '{print tolower($0)}')
-status_col="#495162"
-if [ "$status" == "charging" ]; then
-    status_col="#98c379"
-fi
-if [ "$status" == "full" ]; then
-    status_col="#61afef"
-fi
+status_col="#D6D6D6"
 
-echo " <fc=#495162>bat:</fc>$percent% <fc=${status_col}>($status)</fc>"
+echo " <fc=#D6D6D6>bat:</fc>$percent% <fc=${status_col}>($status)</fc>"
 

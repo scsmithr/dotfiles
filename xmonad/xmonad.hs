@@ -170,10 +170,10 @@ myLogHook h = do
 
   let fmt = formatWorkspace getIndex getNumHidden
   D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" primary True
-                                , D.ppHidden  = fmt "" muted "" foreground False
-                                , D.ppVisible = fmt "" muted "" secondary True
+                                , D.ppHidden  = fmt "" muted "" muted False
+                                , D.ppVisible = fmt "" muted "" foreground True
                                 , D.ppUrgent  = fmt "" muted "" urgent True
-                                , D.ppLayout  = formatIcon "" tertiary
+                                , D.ppLayout  = formatIcon "" muted
                                 , D.ppTitle   = const ""
                                 , D.ppSep     = ""
                                 , D.ppSort    = PinnedWorkspaces.getSortByPinned
@@ -232,18 +232,15 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
-background = "#282c34"
-muted = "#495162"
-foreground = "#abb2bf"
-primary = "#61afef"
-secondary = "#98c379"
-tertiary = "#c678dd"
-urgent = "#e5c07b"
+muted = "#D6D6D6"
+foreground = "#FDF6E3"
+primary = "#586E75"
+urgent = "#cb4b16"
 
 -- config vars
-myFocusedBorderColor = "#686e8a"
-myUnfocusedBorderColor = "#31394a"
-myBorderWidth = 2
+myFocusedBorderColor = "#586E75"
+myUnfocusedBorderColor = "#93A1A1"
+myBorderWidth = 3
 myTerminal = "terminal"
 myModMask = mod4Mask
 myWorkspaces = ["def", "conn", "email", "web"]

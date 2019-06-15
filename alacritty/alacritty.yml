@@ -126,49 +126,35 @@ font:
 # Should display the render timer
 render_timer: false
 
-# Colors (Tomorrow Night Bright)
+# Colors (Solarized Light)
 colors:
   # Default colors
   primary:
-    background: '0x282c34'
-    foreground: '0xabb2bf'
-
-    # (Optional) Bright and Dim foreground colors
-    #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    #
-    # dim_foreground: '0x9a9a9a'
-    # bright_foreground: '0xffffff'
-
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  # cursor:
-    # text: '0xabb2bf'
-    # cursor: '0x61AFEF'
+    background: '0xfdf6e3'
+    foreground: '0x586e75'
 
   # Normal colors
   normal:
-    black:    '0x282c34'
-    red:      '0xe06c75'
-    green:    '0x98c379'
-    yellow:   '0xe5c07b'
-    blue:     '0x61afef'
-    magenta:  '0xc678dd'
-    cyan:     '0x56b6c2'
-    white:    '0xabb2bf'
+    black:   '0xeee8d5'
+    red:     '0xdc322f'
+    green:   '0x859900'
+    yellow:  '0xb58900'
+    blue:    '0x268bd2'
+    magenta: '0xd33682'
+    cyan:    '0x2aa198'
+    white:   '0x073642'
 
   # Bright colors
   bright:
-    black:    '0x495162'
-    red:      '0xe06c75'
-    green:    '0x98c379'
-    yellow:   '0xe5c07b'
-    blue:     '0x61afef'
-    magenta:  '0xc678dd'
-    cyan:     '0x56b6c2'
-    white:    '0x7F848E'
-  
+    black:   '0xeee8d5'
+    red:     '0xdc322f'
+    green:   '0x859900'
+    yellow:  '0xb58900'
+    blue:    '0x268bd2'
+    magenta: '0xd33682'
+    cyan:    '0x2aa198'
+    white:   '0x002b36'
+
 # Visual Bell
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once

@@ -40,8 +40,8 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-PROMPT="%(?..%F{8}%?%f)%{$reset_color%}
+PROMPT="%(?..%F{3}%?%f)%{$reset_color%}
 %${PROMPT_TRUNC_WIDTH}>...>$PROMPT_HOST$PROMPT_DIR %(1j.$fg[yellow](%j) $reset_color.)$PROMPT_VCS%>>
-\$PROMPT_VIM_MODE%{%(?.$fg[magenta].$fg[yellow])%}>%{$reset_color%} "
+\$PROMPT_VIM_MODE%{%(?.$fg[blue].$fg[red])%}>%{$reset_color%} "
 
 RPROMPT=""

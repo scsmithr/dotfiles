@@ -7,7 +7,7 @@ cdpath=(
     $HOME/Code/github.com/
 )
 
-zle_highlight=(region:bg=8 special:standout isearch:underline,fg=yellow)
+zle_highlight=(region:bg=0 special:standout isearch:underline,fg=yellow)
 
 # Group matches and describe.
 zstyle ':completion:*:*:*:*:*' menu select
@@ -29,7 +29,7 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 # Directories
-zstyle ':completion:*:default' list-colors ${(@s.:.)LS_COLORS}:'ma=01;100'
+zstyle ':completion:*:default' list-colors ${(@s.:.)LS_COLORS}:'ma=01;40'
 zstyle ':completion:*:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:*:cd:*' tag-order local-directories named-directories directory-stack path-directories
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select

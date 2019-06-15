@@ -195,17 +195,15 @@ ALPHA (a float between 0 and 1)."
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic nil)
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-solarized-light t)
   (set-face-attribute 'fringe nil :background (doom-color 'bg))
   (set-face-attribute 'whitespace-tab nil :background "inherit")
-  (set-face-attribute 'font-lock-comment-face nil :foreground (doom-color 'dark-cyan))
-  (set-face-attribute 'font-lock-doc-face nil :foreground (doom-color 'dark-cyan))
   (set-face-attribute 'whitespace-line nil
                       :weight 'normal
                       :foreground 'unspecified)
   (set-face-attribute 'show-paren-match nil
                       :weight 'bold
-                      :background (doom-darken 'cyan 0.5)
+                      :background (doom-transparentize 'cyan 0.5)
                       :foreground (doom-color 'cyan))
   (set-face-attribute 'line-number nil :foreground (doom-color 'fg-alt)))
 
@@ -247,8 +245,7 @@ ALPHA (a float between 0 and 1)."
 (use-package ripgrep
   :ensure t
   :config
-  (set-face-attribute 'ripgrep-match-face nil :foreground (doom-color 'orange))
-  (set-face-attribute 'ripgrep-hit-face nil :foreground (doom-color 'dark-cyan)))
+  (set-face-attribute 'ripgrep-match-face nil :foreground (doom-color 'yellow)))
 
 (use-package treemacs
   :ensure t
@@ -260,11 +257,6 @@ ALPHA (a float between 0 and 1)."
   (setq treemacs-icon-tag-node-open-text (propertize "− " 'face 'font-lock-keyword-face)
         treemacs-icon-tag-node-closed-text (propertize "+ " 'face 'font-lock-keyword-face)
         treemacs-icon-tag-leaf-text (propertize "  " 'face 'font-lock-keyword-face))
-  (defun treemacs-mode-handler()
-    (set (make-local-variable 'face-remapping-alist)
-         `((default :background ,(doom-color 'base0))
-           (hl-line :background ,(doom-color 'bg)))))
-  (add-hook 'treemacs-mode-hook 'treemacs-mode-handler)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -363,10 +355,6 @@ ALPHA (a float between 0 and 1)."
   :ensure t
   :defer t
   :config
-  (set-face-attribute 'magit-header-line nil
-                      :background (doom-color 'base0)
-                      :box nil
-                      :foreground (doom-color 'fg))
   (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch)
   (core/leader
    "g" 'magit-status))

@@ -84,7 +84,7 @@
 (set-face-attribute 'mode-line-flycheck-warning-face nil
     :inherit 'mode-line-face
     :weight 'bold
-    :foreground (doom-color 'orange))
+    :foreground (doom-color 'yellow))
 
 (set-face-attribute 'mode-line-flycheck-info-face nil
     :inherit 'mode-line-face
@@ -102,7 +102,7 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
-(defvar mode-line-bg (doom-color 'base0))
+(defvar mode-line-bg (doom-lighten 'base3 0.3))
 (defvar mode-line-box `(:line-width 6 :color ,mode-line-bg :style nil))
 
 (set-face-attribute 'mode-line nil
