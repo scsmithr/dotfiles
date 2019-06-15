@@ -50,7 +50,6 @@ import qualified Data.Map.Strict               as StrictMap
 
 import qualified RofiPrompt
 import qualified PinnedWorkspaces
-import qualified Hideable
 
 applicationKeys :: [(String, X ())]
 applicationKeys =
@@ -100,8 +99,6 @@ windowManagementKeys =
   , ("M-S-j"       , windows W.swapDown)
   , ("M-S-k"       , windows W.swapUp)
   , ("M-S-<Return>", windows W.swapMaster)
-  , ("M-f"         , withFocused Hideable.pushHidden)
-  , ("M-g"         , Hideable.popHidden)
   , ("M-h"         , sendMessage Shrink)
   , ("M-l"         , sendMessage Expand)
   , ("M-S-h"       , sendMessage MirrorExpand)
@@ -140,7 +137,6 @@ formatIcon bg fg l | t "Tall" l && t "Mirror" l = fmt "=="
 
 formatWorkspace
   :: (WorkspaceId -> Maybe PinnedWorkspaces.PinnedIndex)
-  -> (WorkspaceId -> Maybe Int)
   -> String -- index bg
   -> String -- index fg
   -> String -- workspace bg
@@ -148,27 +144,20 @@ formatWorkspace
   -> Bool -- show workspace
   -> WorkspaceId -- workspace name
   -> String
-formatWorkspace getIndex getNumHidden idxBg idxFg wsBg wsFg mustShow ws =
-  case idx of
-    Just n  -> (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
-    Nothing -> case mustShow of
-      True  -> wsStr
-      False -> ""
+formatWorkspace getIndex idxBg idxFg wsBg wsFg mustShow ws = case idx of
+  Just n  -> (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
+  Nothing -> case mustShow of
+    True  -> wsStr
+    False -> ""
  where
-  idx       = getIndex ws
-  hiddenStr = case getNumHidden ws of
-    Just n  -> D.xmobarColor idxFg idxBg $ "[" ++ show n ++ "]"
-    Nothing -> ""
-  wsStr = (D.xmobarColor wsFg wsBg ws) ++ hiddenStr
+  idx   = getIndex ws
+  wsStr = (D.xmobarColor wsFg wsBg ws)
 
 myLogHook h = do
   wmap <- PinnedWorkspaces.getMap
   let getIndex ws = PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws
 
-  hmap <- Hideable.getMap
-  let getNumHidden ws = StrictMap.lookup ws hmap
-
-  let fmt = formatWorkspace getIndex getNumHidden
+  let fmt = formatWorkspace getIndex
   D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" primary True
                                 , D.ppHidden  = fmt "" muted "" muted False
                                 , D.ppVisible = fmt "" muted "" foreground True
@@ -192,8 +181,7 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
     ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
-myLayoutHook = Hideable.hiddenWindows
-  $ smartBorders (tiled ||| tiledMirror ||| Full)
+myLayoutHook = smartBorders (tiled ||| tiledMirror ||| Full)
  where
   tiled = uniformSpacing $ ResizableTall nmaster delta (1 / 2) []
   tiledMirror =
