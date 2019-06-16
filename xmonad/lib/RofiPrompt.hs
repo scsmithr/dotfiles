@@ -47,7 +47,7 @@ exec prompt opts def = do
     _                 -> return ()
 
 -- Execute rofi with a list of strings, executing the provided function with the
--- selected option. If the input from rofi is an empty string, nothing will be 
+-- selected option. If the input from rofi is an empty string, nothing will be
 -- done.
 execZip :: String -> [String] -> (String -> X ()) -> X ()
 execZip prompt opts fn = do

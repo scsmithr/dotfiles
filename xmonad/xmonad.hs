@@ -56,11 +56,6 @@ applicationKeys =
   [ ("M-<Return>", spawn myTerminal)
   , ("M-p"       , spawn "rofi -show run")
   , ("M-b"       , spawn "firefox")
-  , ( "M-i"
-    , submap
-      . Map.fromList
-      $ [((0, xK_f), spawn "nautilus"), ((0, xK_p), spawn "screenshot.sh")]
-    )
   ]
 
 windowManagementKeys :: [(String, X ())]
