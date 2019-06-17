@@ -13,6 +13,11 @@ dpi() {
     fi
 }
 
+bribribri() {
+    set_bri=$1
+    bri monitor set $set_bri; bri monitor set $set_bri; bri monitor set $set_bri
+}
+
 gcip() {
     if [ "$#" -ge 1 ]; then
         gcloud compute instances describe $@ | grep "natIP" | awk '{print $2}' | xargs echo -n

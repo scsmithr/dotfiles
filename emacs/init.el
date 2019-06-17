@@ -91,6 +91,13 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-startup-folded nil)
 
+(add-hook 'org-mode-hook (lambda ()
+                           (org-babel-do-load-languages 'org-babel-load-languages
+                                                        (append org-babel-load-languages
+                                                                '((shell . t)
+                                                                  (restclient . t)
+                                                                  (http . t))))))
+
 ;; ediff settings
 (winner-mode t)
 (add-hook 'ediff-quit-hook 'winner-undo)
@@ -114,7 +121,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-frame-font (font-spec :family "Source Code Pro Medium"))
 (set-face-attribute 'default nil :height 110)
@@ -396,6 +403,12 @@ ALPHA (a float between 0 and 1)."
   :defer t)
 
 (use-package restclient
+  :ensure t)
+
+(use-package ob-restclient
+  :ensure t)
+
+(use-package ob-http
   :ensure t)
 
 ;; Local configuration
