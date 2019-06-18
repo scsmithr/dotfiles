@@ -1,7 +1,7 @@
 * {
 	selected: #268bd2;
 	prompt: #c678dd;
-	hint: #D6D6D6;
+	hint: #b6b6b6;
 	background-color: @background;
 	background: #FDF6E3;
 	font: "Source Code Pro Medium 10";
