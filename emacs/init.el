@@ -205,6 +205,8 @@ ALPHA (a float between 0 and 1)."
   (load-theme 'doom-solarized-light t)
   (set-face-attribute 'fringe nil :background (doom-color 'bg))
   (set-face-attribute 'whitespace-tab nil :background "inherit")
+  (set-face-attribute 'font-lock-comment-face nil :foreground (doom-lighten 'fg 0.15))
+  (set-face-attribute 'font-lock-doc-face nil :foreground (doom-lighten 'fg 0.15))
   (set-face-attribute 'whitespace-line nil
                       :weight 'normal
                       :foreground 'unspecified)

@@ -28,3 +28,5 @@ alias mm='xmodmap ~/.xmodmap'
 
 # Always keep a log when using mycli.
 alias mycli="mycli -l \$(ensure_log mycli)"
+
+alias red="redshift -x && redshift -O"

@@ -13,6 +13,7 @@
       (setq gofmt-command "goimports"))
     (use-package go-rename
       :ensure t)
+    (evil-collection-define-key 'normal 'go-mode-map (kbd "C-o") 'pop-tag-mark)
     (defvar core-go-mode-map (make-sparse-keymap))
     (define-key core-go-mode-map "rn" 'go-rename)
     (define-key core-go-mode-map "ta" 'go/go-tests-all)
