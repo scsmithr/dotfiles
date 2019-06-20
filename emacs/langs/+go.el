@@ -21,6 +21,7 @@
     (define-key core-go-mode-map "v" 'go/go-vendor)
     (add-hook 'go-mode-hook
               (lambda ()
+                (setq company-backends (delete 'company-capf company-backends))
                 (core/leader core-local-leader-key core-go-mode-map)))))
 
 (defvar go-test-buffer-name "*go test*"
