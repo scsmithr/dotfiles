@@ -383,9 +383,9 @@ ALPHA (a float between 0 and 1)."
 (use-package lsp-mode
   :ensure t
   :config
-  (setq lsp-enable-completion-at-point t)
   (setq lsp-prefer-flymake nil)
   (setq lsp-auto-guess-root t)
+  (setq lsp-response-timeout 2)
   :commands lsp)
 
 (use-package lsp-ui
