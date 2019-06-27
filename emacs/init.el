@@ -219,6 +219,9 @@ ALPHA (a float between 0 and 1)."
 ;; Auto detect indentation type/level
 (use-package dtrt-indent
   :ensure t
+  :init
+  (setq dtrt-indent-min-quality 65.0)
+  (setq dtrt-indent-min-hard-tab-superiority 180.0)
   :config (dtrt-indent-global-mode 1))
 
 ;; Vertical ido
@@ -318,7 +321,7 @@ ALPHA (a float between 0 and 1)."
 (use-package company
   :ensure t
   :config
-  (setq company-frontends '(company-preview-frontend company-echo-strip-common-frontend))
+  (setq company-frontends '(company-posframe-frontend))
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.2)
   (set-face-attribute 'company-echo nil
@@ -332,6 +335,9 @@ ALPHA (a float between 0 and 1)."
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   :init
   (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package company-posframe
+  :ensure t)
 
 (use-package company-lsp
   :ensure t
