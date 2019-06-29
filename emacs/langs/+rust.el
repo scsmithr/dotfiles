@@ -6,6 +6,7 @@
       :defer t
       :config
       (setq rust-format-on-save t)
+      (setq lsp-rust-clippy-preference "on")
       ;; See https://github.com/tigersoldier/company-lsp/issues/61
       (add-hook 'rust-mode-hook
           (lambda () (setq company-backends

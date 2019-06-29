@@ -63,7 +63,7 @@
      left
      " "
      (propertize " "
-                 'display `((space :align-to (- (+ right right-fringe right-margin) ,(+ reserve 0)))))
+                 'display `((space :align-to (- (+ right right-margin) ,(+ reserve 0)))))
      right)))
 
 ;; Define a helper function to determine whether or not the current window is
@@ -167,7 +167,7 @@ indicator in the modeline."
 
 (defun modeline-segment-major-mode ()
   "Displays the current major mode in the modeline."
-  (propertize "%m  "
+  (propertize "%m "
               'face (if (modeline-is-active)
                         'bold
                       'modeline-status-grayed-out)))
