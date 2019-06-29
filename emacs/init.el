@@ -422,7 +422,9 @@ ALPHA (a float between 0 and 1)."
 ;; Local configuration
 
 (use-package modeline
-  :load-path "lisp")
+  :load-path "lisp"
+  :config
+  (modeline-mode))
 
 (use-package ido-symbol
   :load-path "lisp"
@@ -430,6 +432,7 @@ ALPHA (a float between 0 and 1)."
   (core/leader "o" 'ido-goto-symbol))
 
 ;; Language stuff
+
 
 (use-package +go
   :load-path "langs"
