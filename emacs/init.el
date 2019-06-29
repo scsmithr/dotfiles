@@ -398,8 +398,11 @@ ALPHA (a float between 0 and 1)."
   :ensure t
   :commands lsp-ui-mode
   :config
-  (setq lsp-ui-sideline-enable nil)
-  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-enable nil
+        lsp-ui-peek-enable nil
+        lsp-ui-sideline-enable nil
+        lsp-ui-imenu-enable nil
+        lsp-ui-flycheck-enable t)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
 (use-package protobuf-mode

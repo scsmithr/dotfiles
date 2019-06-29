@@ -38,18 +38,11 @@
             web-mode-enable-comment-keywords t
             web-mode-enable-current-element-highlight t
             web-mode-enable-auto-indentation nil)
-      (add-hook 'web-mode-hook
-                (lambda ()
-                  (when (string-equal "tsx" (file-name-extension buffer-file-name))
-            (setup-tide-mode))))
       (set-face-attribute 'web-mode-current-element-highlight-face nil
                       :weight 'bold
                       :background (doom-transparentize 'cyan 0.5))
       (flycheck-add-mode 'typescript-tslint 'web-mode)
-      (add-hook 'web-mode-hook #'lsp)
-      (add-hook 'lsp-ui-mode-hook
-                (lambda ()
-                  (flycheck-add-next-checker 'lsp-ui 'typescript-tslint 'append)))))
+      (add-hook 'web-mode-hook #'lsp)))
 
 (provide '+typescript)
 ;;; packages.el ends here
