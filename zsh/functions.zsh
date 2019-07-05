@@ -4,6 +4,10 @@ ec() {
     emacs $@ &!
 }
 
+hex() {
+    echo $(([##16]$1))
+}
+
 dpi() {
     if [ "$#" -eq 1 ]; then
         echo "Xft.dpi: $1" | xrdb -merge
