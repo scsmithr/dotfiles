@@ -3,6 +3,7 @@ module RofiPrompt
   , execZip
   , selectWorkspace
   , renameWorkspace
+  , moveToWorkspace
   , withWorkspace
   )
 where
@@ -22,18 +23,21 @@ import           Data.List                      ( reverse
 
 -- Switch to a workspace, creating it if it doesn't exist.
 selectWorkspace :: X ()
-selectWorkspace = withWorkspace DynWs.addWorkspace
+selectWorkspace = withWorkspace "select workspace" DynWs.addWorkspace
 
 -- Rename current workspace. If a workspace with that name already exists, all
 -- windows in the current workspaces will be moved to the existing workspace.
 renameWorkspace :: X ()
-renameWorkspace = withWorkspace DynWs.renameWorkspaceByName
+renameWorkspace = withWorkspace "rename workspace" DynWs.renameWorkspaceByName
+
+moveToWorkspace :: X ()
+moveToWorkspace = withWorkspace "move to workspace" (windows . W.shift)
 
 -- Executes a given function once a workspace is selected.
-withWorkspace :: (String -> X ()) -> X ()
-withWorkspace fn = do
+withWorkspace :: String -> (String -> X ()) -> X ()
+withWorkspace hint fn = do
   tags <- getTags
-  execZip "workspace" tags fn
+  execZip hint tags fn
 
 exec :: String -> [(String, X ())] -> (String -> X ()) -> X ()
 exec prompt opts def = do

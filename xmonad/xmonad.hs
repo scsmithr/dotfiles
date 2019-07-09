@@ -67,7 +67,7 @@ windowManagementKeys =
   , ("M-t"      , withFocused $ windows . W.sink)
   , ("M-n"      , sendMessage ToggleStruts)
   , ("M-o"      , RofiPrompt.selectWorkspace)
-  , ("M-S-o", RofiPrompt.withWorkspace (windows . W.shift))
+  , ("M-S-o"    , RofiPrompt.moveToWorkspace)
   , ("M-S-y"    , RofiPrompt.renameWorkspace)
   , ( "M-u"
     , submap
@@ -183,7 +183,7 @@ myLayoutHook = smartBorders (tiled ||| tiledMirror ||| Full)
     Mirror $ uniformSpacing $ ResizableTall nmaster delta (3 / 4) []
   nmaster        = 1
   delta          = 3 / 100
-  gs             = 4
+  gs             = 0
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
