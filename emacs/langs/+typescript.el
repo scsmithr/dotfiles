@@ -18,6 +18,10 @@
       :ensure t
       :after (web-mode company flycheck)))
 
+(defun typescript/init-prettier ()
+  (use-package prettier-js
+    :ensure t
+    :after (web-mode)))
 
 (defun typescript/init-web-mode ()
     (use-package web-mode
@@ -41,8 +45,13 @@
       (set-face-attribute 'web-mode-current-element-highlight-face nil
                       :weight 'bold
                       :background (doom-transparentize 'cyan 0.5))
-      (flycheck-add-mode 'typescript-tslint 'web-mode)
-      (add-hook 'web-mode-hook #'lsp)))
+      (add-hook 'web-mode-hook
+              (lambda ()
+                (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
+                  (setup-tide-mode)
+                  (evil-add-command-properties #'tide-jump-to-definition :jump t)
+                  (prettier-js-mode)
+                  (flycheck-add-mode 'javascript-eslint 'web-mode))))))
 
 (provide '+typescript)
 ;;; packages.el ends here
