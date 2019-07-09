@@ -224,6 +224,7 @@ ALPHA (a float between 0 and 1)."
   (setq dtrt-indent-min-hard-tab-superiority 180.0)
   :config
   (add-to-list 'dtrt-indent-hook-mapping-list '(web-mode javascript web-mode-code-indent-offset))
+  (add-to-list 'dtrt-indent-hook-mapping-list '(web-mode javascript web-mode-markup-indent-offset))
   (dtrt-indent-global-mode 1))
 
 ;; Vertical ido
