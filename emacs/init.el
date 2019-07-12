@@ -439,25 +439,13 @@ ALPHA (a float between 0 and 1)."
 
 ;; Language stuff
 
-(use-package +go
-  :load-path "langs"
-  :config (go/init-go-mode))
-
-(use-package +rust
-  :load-path "langs"
-  :config (rust/init-rust-mode))
-
-(use-package +octave
-  :load-path "langs"
-  :config (octave/init-octave-mode))
-
-(use-package +haskell
-  :load-path "langs"
-  :config (haskell/init-haskell-mode))
-
-(use-package +typescript
-  :load-path "langs"
+(use-package langs
+  :load-path "lisp"
   :config
+  (go/init-go-mode)
+  (rust/init-rust-mode)
+  (octave/init-octave-mode)
+  (haskell/init-haskell-mode)
   (typescript/init-prettier)
   (typescript/init-web-mode)
   (typescript/init-tide-mode))
