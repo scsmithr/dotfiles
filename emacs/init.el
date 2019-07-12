@@ -278,15 +278,15 @@ ALPHA (a float between 0 and 1)."
   (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred)
   (set-face-attribute 'treemacs-fringe-indicator-face nil :background (doom-color 'blue))
-  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'fg))
-  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'magenta) :weight 'bold)
+  (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'blue))
+  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue) :weight 'bold)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
   (set-face-attribute 'treemacs-git-ignored-face nil :foreground (doom-color 'fg-alt))
   (set-face-attribute 'treemacs-root-face nil
                       :height 110
                       :weight 'normal
-                      :foreground (doom-color 'blue))
+                      :foreground (doom-color 'green))
   (core/leader
    "t" treemacs-mode-map
    "n" 'treemacs
@@ -438,7 +438,6 @@ ALPHA (a float between 0 and 1)."
   (core/leader "o" 'ido-goto-symbol))
 
 ;; Language stuff
-
 
 (use-package +go
   :load-path "langs"
