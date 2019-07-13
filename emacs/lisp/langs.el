@@ -149,5 +149,23 @@
                   (prettier-js-mode)
                   (flycheck-add-mode 'javascript-eslint 'web-mode))))))
 
+;; Elixir
+
+(defun elixir/init-elixir-mode ()
+  (progn
+    (use-package elixir-mode
+      :ensure t
+      :defer t
+      :config
+      (set-face-attribute 'elixir-atom-face nil :foreground (doom-color 'blue))
+      (add-hook 'elixir-mode-hook 'alchemist-mode)
+      (add-hook 'elixir-mode-hook
+                (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+      (evil-collection-define-key 'normal 'elixir-mode-map "gd" 'alchemist-goto-definition-at-point)
+      (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
+    (use-package alchemist
+      :ensure t
+      :defer t)))
+
 (provide 'langs)
 ;;; langs.el ends here

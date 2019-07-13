@@ -121,7 +121,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (prettier-js ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (alchemist elixir-mode prettier-js ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-frame-font (font-spec :family "Source Code Pro Medium"))
 (set-face-attribute 'default nil :height 110)
@@ -448,5 +448,7 @@ ALPHA (a float between 0 and 1)."
   (haskell/init-haskell-mode)
   (typescript/init-prettier)
   (typescript/init-web-mode)
-  (typescript/init-tide-mode))
+  (typescript/init-tide-mode)
+  (elixir/init-elixir-mode))
+
 
