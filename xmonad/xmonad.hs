@@ -215,15 +215,15 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
-muted = "#D6D6D6"
-foreground = "#FDF6E3"
-primary = "#586E75"
+muted = "#96A7A9"
+foreground = "#556b72"
+primary = "#268bd2"
 urgent = "#cb4b16"
 
 -- config vars
-myFocusedBorderColor = "#586E75"
-myUnfocusedBorderColor = "#93A1A1"
-myBorderWidth = 3
+myFocusedBorderColor = "#96A7A9"
+myUnfocusedBorderColor = "#F2E6CE"
+myBorderWidth = 1
 myTerminal = "terminal"
 myModMask = mod4Mask
 myWorkspaces = ["def", "conn", "email", "web"]

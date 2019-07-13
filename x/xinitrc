@@ -1,5 +1,5 @@
 xsetroot -cursor_name left_ptr
-hsetroot -solid "#839496"
+hsetroot -solid "#FDF6E3"
 
 xrdb ~/.Xresources
 
@@ -25,6 +25,6 @@ dunst&
 
 # Set up lockscreen
 xset s 300 5 # Lock after 5 minutes
-xss-lock -l -- i3lock -c 93A1A1&
+xss-lock -l -- i3lock -c FDF6E3&
 
 exec xmonad

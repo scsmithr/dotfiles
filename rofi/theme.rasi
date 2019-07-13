@@ -3,21 +3,21 @@
 	prompt: #c678dd;
 	hint: #b6b6b6;
 	background-color: @background;
-	background: #FDF6E3;
-	font: "Source Code Pro Medium 10";
+	background: #FFFBEA;
+	font: "Source Code Pro 10";
 	foreground: #556b72;
-	separator: #93A1A1;
+	separator: #96A7A9;
 	highlight: none bold #d33682;
 }
 
 #window {
-	anchor: north;
-	location: north;
+	anchor: center;
+	location: center;
 	margin: 0 0 0 0;
 	width: 560px;
 	padding: 2px 14px 0 14px;
 	border-color: @separator;
-    border: 0px 2px 2px 2px;
+    border: 1px 1px 1px 1px;
 }
 
 #mainbox {
@@ -35,10 +35,10 @@
 #listview {
 	fixed-height: true;
 	scrollbar: false;
-	layout: vertical;
-	lines: 8;
-	padding: 8px 0 10px 0;
-	border: 2px dash 0px 0px;
+	layout: horizontal;
+	lines: 16;
+	padding: 14px 0 14px 0;
+	border: 1px solid 0px 0px;
 	border-color: @separator;
 }
 
