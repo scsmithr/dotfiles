@@ -23,5 +23,14 @@
 
 (defalias 'core/leader 'core/set-leader-keys)
 
+(defun core/set-local-leader-keys (map key def &rest bindings)
+  "Set mode specific keybinds."
+  (while key
+    (evil-collection-define-key 'normal map
+      (kbd (format "%s %s%s" core-leader-key core-local-leader-key key)) def)
+    (setq key (pop bindings) def (pop bindings))))
+
+(defalias 'core/local 'core/set-local-leader-keys)
+
 (provide 'keybinds)
 ;;; keybinds.el ends here

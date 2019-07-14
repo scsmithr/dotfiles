@@ -217,8 +217,6 @@ indicator in the modeline."
                            '((:eval (modeline-segment-modified-or-readonly))
                              (:eval (modeline-segment-dir))
                              (:eval (modeline-segment-buffer-name))
-                             (:eval (modeline-segment-anzu))
-                             (:eval (modeline-segment-multiple-cursors))
                              (:eval (modeline-segment-position))))
 
                           ;; Right
@@ -226,7 +224,6 @@ indicator in the modeline."
                            '((:eval (modeline-segment-flycheck))
                              (:eval (modeline-segment-vc))
                              (:eval (modeline-segment-major-mode))
-                             (:eval (modeline-segment-global-mode-string))
                              (:eval (modeline-segment-process))
                              " ")))))))
     (progn

@@ -16,15 +16,14 @@
     (use-package go-rename
       :ensure t)
     (evil-add-command-properties #'godef-jump :jump t)
-    (defvar core-go-mode-map (make-sparse-keymap))
-    (define-key core-go-mode-map "rn" 'go-rename)
-    (define-key core-go-mode-map "ta" 'go/go-tests-all)
-    (define-key core-go-mode-map "tv" 'go/go-tests-all-verbose)
-    (define-key core-go-mode-map "v" 'go/go-vendor)
+    (core/local 'go-mode-map
+                "rn" 'go-rename
+                "ta" 'go/go-tests-all
+                "tv" 'go/go-tests-all-verbose
+                "v" 'go/go-vendor)
     (add-hook 'go-mode-hook
               (lambda ()
-                (setq company-backends (delete 'company-capf company-backends))
-                (core/leader core-local-leader-key core-go-mode-map)))))
+                (setq company-backends (delete 'company-capf company-backends))))))
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")
@@ -70,14 +69,11 @@
     (use-package octave
       :defer t
       :mode ("\\.m\\'" . octave-mode))
-    (defvar core-octave-mode-map (make-sparse-keymap))
-    (define-key core-octave-mode-map "o" 'run-octave)
-    (define-key core-octave-mode-map "sr" 'octave-send-region)
-    (define-key core-octave-mode-map "sb" 'octave-send-buffer)
-    (define-key core-octave-mode-map "sl" 'octave-send-line)
-    (add-hook 'octave-mode-hook
-              (lambda()
-                (core/leader core-local-leader-key core-octave-mode-map)))))
+    (core/local 'octave-mode-map
+                "o" 'run-octave
+                "sr" 'octave-send-region
+                "sb" 'octave-send-buffer
+                "sl" 'octave-send-line)))
 
 ;; Rust
 
