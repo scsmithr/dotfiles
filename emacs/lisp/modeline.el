@@ -4,8 +4,8 @@
   "A minimal modeline configuration inspired by doom-modeline."
   :group 'modeline)
 
-(defvar mode-line-bg (doom-lighten 'base3 0.2))
-(defvar mode-line-box `(:line-width 6 :color ,mode-line-bg :style nil))
+(defvar mode-line-bg (doom-color 'bg-alt))
+(defvar mode-line-box `(:line-width 1 :color ,(doom-color 'base3) :style nil))
 
 (set-face-attribute 'mode-line nil
     :foreground (doom-color 'fg) :background mode-line-bg

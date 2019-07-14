@@ -103,9 +103,6 @@
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
   (company-mode +1))
 
 (defun typescript/init-tide-mode ()
@@ -157,11 +154,12 @@
       :ensure t
       :defer t
       :config
+      ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
+      ;; to have it set to some default color, isn't easy to read.
       (set-face-attribute 'elixir-atom-face nil :foreground (doom-color 'blue))
       (add-hook 'elixir-mode-hook 'alchemist-mode)
       (add-hook 'elixir-mode-hook
                 (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
-      (evil-collection-define-key 'normal 'elixir-mode-map "gd" 'alchemist-goto-definition-at-point)
       (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
     (use-package alchemist
       :ensure t

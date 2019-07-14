@@ -16,9 +16,6 @@ alias tk='tmux kill-session -t'
 
 alias nv=nvim
 
-alias rc="findedit -e 'code -g {f}:{l}' -l"
-alias rv="findedit -e 'nvim +{l} {f}' -l"
-
 alias grep='grep --color=always'
 
 # trash-cli
@@ -30,3 +27,4 @@ alias mm='xmodmap ~/.xmodmap'
 alias mycli="mycli -l \$(ensure_log mycli)"
 
 alias red="redshift -x && redshift -O"
+alias redx="redshift -x"

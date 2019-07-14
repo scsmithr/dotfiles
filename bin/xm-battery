@@ -5,10 +5,10 @@
 max=$(cat /sys/class/power_supply/BAT0/charge_full)
 curr=$(cat /sys/class/power_supply/BAT0/charge_now)
 
-percent=$(( $curr * 100 / $max ))
+percent=$(( curr * 100 / max ))
 
 status=$(cat /sys/class/power_supply/BAT0/status | awk '{print tolower($0)}')
 status_col="#96A7A9"
 
-echo " <fc=#96A7A9>bat:</fc>$percent% <fc=${status_col}>($status)</fc>"
+echo " <fc=${status_col}>bat:</fc>$percent% <fc=${status_col}>($status)</fc>"
 

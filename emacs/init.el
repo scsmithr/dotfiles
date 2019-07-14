@@ -7,23 +7,6 @@
 (setq inhibit-startup-message t
       inihibit-startup-echo-area-message t)
 
-(defconst user-init-dir
-  (cond ((boundp 'user-emacs-directory)
-         user-emacs-directory)
-        ((boundp 'user-init-directory)
-         user-init-directory)
-        (t "~/.emacs.d/")))
-
-(defun load-user-file (file)
-  "Load FILE in current user's configuration directory."
-  (interactive "f")
-  (load-file (expand-file-name file user-init-dir)))
-
-(defun load-language (lang)
-  "Load language specific packages for LANG."
-  (interactive "f")
-  (load-user-file (concat (concat "langs/" lang) ".el")))
-
 ;; Highlight parenthesis
 (show-paren-mode 1)
 
@@ -171,6 +154,7 @@ Treemacs buffers."
   (core/leader
    "ww" 'evil-window-vsplit
    "wh" 'evil-window-split)
+  ;; Overwrite the default next window commands with one that skips treemacs.
   (define-key evil-window-map "C-w" #'evil-window-next-skip-treemacs)
   (define-key evil-window-map "w" #'evil-window-next-skip-treemacs)
   (define-key evil-motion-state-map (kbd "C-w w") #'evil-window-next-skip-treemacs)
@@ -279,7 +263,7 @@ ALPHA (a float between 0 and 1)."
   (treemacs-git-mode 'deferred)
   (set-face-attribute 'treemacs-fringe-indicator-face nil :background (doom-color 'blue))
   (set-face-attribute 'treemacs-directory-face nil :foreground (doom-color 'blue))
-  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue) :weight 'bold)
+  (set-face-attribute 'treemacs-term-node-face nil :foreground (doom-color 'blue) :weight 'normal)
   (set-face-attribute 'treemacs-git-modified-face nil :foreground (doom-color 'yellow))
   (set-face-attribute 'treemacs-git-untracked-face nil :foreground (doom-color 'green))
   (set-face-attribute 'treemacs-git-ignored-face nil :foreground (doom-color 'fg-alt))
@@ -451,4 +435,10 @@ ALPHA (a float between 0 and 1)."
   (typescript/init-tide-mode)
   (elixir/init-elixir-mode))
 
+;; Useful functions
 
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(core/leader "ci" 'indent-buffer)
