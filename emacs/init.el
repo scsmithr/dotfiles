@@ -11,7 +11,6 @@
 (show-paren-mode 1)
 
 (fringe-mode '(4 . 4))
-
 ;; Auto insert closing parenthesis, braces, etc
 (electric-pair-mode 1)
 
@@ -227,6 +226,7 @@ ALPHA (a float between 0 and 1)."
   :after ido-vertical-mode
   :config
   (setq ido-use-faces nil)
+  (set-face-attribute 'flx-highlight-face nil :foreground (doom-color 'magenta))
   :init
   (ido-everywhere 1)
   (flx-ido-mode 1))
