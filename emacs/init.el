@@ -19,6 +19,7 @@
 
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
 (setq-default display-line-numbers-width-start t)
 
 ;; Highlight current line
