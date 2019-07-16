@@ -183,7 +183,7 @@ myLayoutHook = smartBorders (tiled ||| tiledMirror ||| Full)
     Mirror $ uniformSpacing $ ResizableTall nmaster delta (3 / 4) []
   nmaster        = 1
   delta          = 3 / 100
-  gs             = 0
+  gs             = 2
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
