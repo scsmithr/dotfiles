@@ -101,6 +101,17 @@
   (tide-hl-identifier-mode +1)
   (company-mode +1))
 
+(defun use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint
+          (and root
+               (expand-file-name "node_modules/.bin/eslint"
+                                 root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
 (defun typescript/init-tide-mode ()
     (use-package tide
       :init
@@ -134,13 +145,15 @@
       (set-face-attribute 'web-mode-current-element-highlight-face nil
                       :weight 'bold
                       :background (doom-transparentize 'cyan 0.5))
+      (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
       (add-hook 'web-mode-hook
               (lambda ()
                 (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
                   (setup-tide-mode)
                   (evil-add-command-properties #'tide-jump-to-definition :jump t)
                   (prettier-js-mode)
-                  (flycheck-add-mode 'javascript-eslint 'web-mode))))))
+                  (flycheck-add-mode 'javascript-eslint 'web-mode)
+                  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))))))
 
 ;; Elixir
 
