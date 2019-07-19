@@ -50,17 +50,17 @@
   (interactive)
   (compilation-start (concat "cd " (projectile-project-root)
                              " && GO111MODULE=on go mod vendor")
-                             nil (lambda (n) go-vendor-buffer-name) nil))
+                     nil (lambda (n) go-vendor-buffer-name) nil))
 
 ;; Haskell
 
 (defun haskell/init-haskell-mode ()
-    (use-package haskell-mode
-      :ensure t
-      :defer t
-      :config
-      (setq haskell-stylish-on-save t)
-      (setq haskell-mode-stylish-haskell-path "brittany")))
+  (use-package haskell-mode
+    :ensure t
+    :defer t
+    :config
+    (setq haskell-stylish-on-save t)
+    (setq haskell-mode-stylish-haskell-path "brittany")))
 
 ;; Octave
 
@@ -78,17 +78,17 @@
 ;; Rust
 
 (defun rust/init-rust-mode ()
-    (use-package rust-mode
-      :ensure t
-      :defer t
-      :config
-      (setq rust-format-on-save t)
-      (setq lsp-rust-clippy-preference "on")
-      ;; See https://github.com/tigersoldier/company-lsp/issues/61
-      (add-hook 'rust-mode-hook
-          (lambda () (setq company-backends
-                           (delete 'company-capf company-backends))))
-      (add-hook 'rust-mode-hook #'lsp)))
+  (use-package rust-mode
+    :ensure t
+    :defer t
+    :config
+    (setq rust-format-on-save t)
+    (setq lsp-rust-clippy-preference "on")
+    ;; See https://github.com/tigersoldier/company-lsp/issues/61
+    (add-hook 'rust-mode-hook
+              (lambda () (setq company-backends
+                               (delete 'company-capf company-backends))))
+    (add-hook 'rust-mode-hook #'lsp)))
 
 ;; Typescript
 
@@ -113,10 +113,10 @@
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
 (defun typescript/init-tide-mode ()
-    (use-package tide
-      :init
-      :ensure t
-      :after (web-mode company flycheck)))
+  (use-package tide
+    :init
+    :ensure t
+    :after (web-mode company flycheck)))
 
 (defun typescript/init-prettier ()
   (use-package prettier-js
@@ -124,36 +124,38 @@
     :after (web-mode)))
 
 (defun typescript/init-web-mode ()
-    (use-package web-mode
-      :ensure t
-      :defer t
-      :mode (("\\.html?\\'" . web-mode)
-             ("\\.tsx?\\'" . web-mode)
-             ("\\.jsx\\'" . web-mode))
-      :config
-      (setq web-mode-markup-indent-offset 4
-            web-mode-css-indent-offset 4
-            web-mode-code-indent-offset 4
-            web-mode-block-padding 4
-            web-mode-comment-style 4
+  (use-package web-mode
+    :ensure t
+    :defer t
+    :mode (("\\.html?\\'" . web-mode)
+           ("\\.tsx?\\'" . web-mode)
+           ("\\.jsx\\'" . web-mode))
+    :config
+    (setq web-mode-markup-indent-offset 4
+          web-mode-css-indent-offset 4
+          web-mode-code-indent-offset 4
+          web-mode-block-padding 4
+          web-mode-comment-style 4
 
-            web-mode-enable-css-colorization t
-            web-mode-enable-auto-pairing t
-            web-mode-enable-comment-keywords t
-            web-mode-enable-current-element-highlight t
-            web-mode-enable-auto-indentation nil)
-      (set-face-attribute 'web-mode-current-element-highlight-face nil
-                      :weight 'bold
-                      :background (doom-transparentize 'cyan 0.5))
-      (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
-      (add-hook 'web-mode-hook
+          web-mode-enable-css-colorization t
+          web-mode-enable-auto-pairing t
+          web-mode-enable-comment-keywords t
+          web-mode-enable-current-element-highlight t
+          web-mode-enable-auto-indentation nil)
+    (set-face-attribute 'web-mode-current-element-highlight-face nil
+                        :weight 'bold
+                        :background (doom-transparentize 'cyan 0.5))
+    (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
+    (add-hook 'web-mode-hook
               (lambda ()
                 (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
                   (setup-tide-mode)
                   (evil-add-command-properties #'tide-jump-to-definition :jump t)
                   (prettier-js-mode)
                   (flycheck-add-mode 'javascript-eslint 'web-mode)
-                  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))))))
+                  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))))
+    (core/local 'web-mode-map
+                "rn" 'tide-rename-symbol)))
 
 ;; Elixir
 
