@@ -83,10 +83,11 @@
 
 ;; ediff settings
 (winner-mode t)
-(add-hook 'ediff-quit-hook 'winner-undo)
-(setq-default ediff-diff-options "-w") ; turn off whitespace checking
-(setq-default ediff-split-window-function #'split-window-horizontally)
-(setq-default ediff-window-setup-function #'ediff-setup-windows-plain)
+(add-hook 'ediff-quit-hook #'winner-undo)
+(add-hook 'ediff-prepare-buffer-hook #'show-all)
+(setq-default ediff-split-window-function 'split-window-horizontally)
+(setq-default ediff-merge-split-window-function 'split-window-horizontally)
+(setq-default ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; Always use "y or n"
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -427,14 +428,14 @@ ALPHA (a float between 0 and 1)."
 (use-package langs
   :load-path "lisp"
   :config
-  (go/init-go-mode)
-  (rust/init-rust-mode)
-  (octave/init-octave-mode)
-  (haskell/init-haskell-mode)
+  (go/init)
+  (rust/init)
+  (octave/init)
+  (haskell/init)
   (typescript/init-prettier)
-  (typescript/init-web-mode)
-  (typescript/init-tide-mode)
-  (elixir/init-elixir-mode))
+  (typescript/init-web)
+  (typescript/init-tide)
+  (elixir/init))
 
 ;; Useful functions
 

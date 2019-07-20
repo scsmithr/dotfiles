@@ -3,7 +3,7 @@
 
 ;; Go
 
-(defun go/init-go-mode ()
+(defun go/init ()
   "Initialize go related features."
   (progn
     (use-package go-mode
@@ -54,7 +54,7 @@
 
 ;; Haskell
 
-(defun haskell/init-haskell-mode ()
+(defun haskell/init ()
   (use-package haskell-mode
     :ensure t
     :defer t
@@ -64,7 +64,7 @@
 
 ;; Octave
 
-(defun octave/init-octave-mode ()
+(defun octave/init ()
   (progn
     (use-package octave
       :defer t
@@ -77,7 +77,7 @@
 
 ;; Rust
 
-(defun rust/init-rust-mode ()
+(defun rust/init ()
   (use-package rust-mode
     :ensure t
     :defer t
@@ -112,7 +112,7 @@
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
-(defun typescript/init-tide-mode ()
+(defun typescript/init-tide ()
   (use-package tide
     :init
     :ensure t
@@ -123,7 +123,7 @@
     :ensure t
     :after (web-mode)))
 
-(defun typescript/init-web-mode ()
+(defun typescript/init-web ()
   (use-package web-mode
     :ensure t
     :defer t
@@ -135,12 +135,13 @@
           web-mode-css-indent-offset 4
           web-mode-code-indent-offset 4
           web-mode-block-padding 4
-          web-mode-comment-style 4
+          web-mode-comment-style 1
 
           web-mode-enable-css-colorization t
           web-mode-enable-auto-pairing t
           web-mode-enable-comment-keywords t
           web-mode-enable-current-element-highlight t
+          web-mode-enable-auto-quoting nil
           web-mode-enable-auto-indentation nil)
     (set-face-attribute 'web-mode-current-element-highlight-face nil
                         :weight 'bold
@@ -159,7 +160,7 @@
 
 ;; Elixir
 
-(defun elixir/init-elixir-mode ()
+(defun elixir/init ()
   (progn
     (use-package elixir-mode
       :ensure t
