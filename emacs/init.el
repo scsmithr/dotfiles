@@ -255,7 +255,8 @@ ALPHA (a float between 0 and 1)."
   (setq treemacs-width 22)
   (setq treemacs-no-png-images t)
   (setq treemacs-indentation 1)
-  ;; Allows ediff to take over the rest of the emacs frame.
+  ;; Allows ediff to take over the rest of the emacs frame. Uforturnately also
+  ;; means I can't use evil-move-left to get to it anymore.
   (setq treemacs-is-never-other-window t)
   (setq treemacs-icon-tag-node-open-text (propertize "− " 'face 'font-lock-keyword-face)
         treemacs-icon-tag-node-closed-text (propertize "+ " 'face 'font-lock-keyword-face)
@@ -276,9 +277,11 @@ ALPHA (a float between 0 and 1)."
                       :weight 'normal
                       :foreground (doom-color 'green))
   (core/leader
-   "t" treemacs-mode-map
-   "n" 'treemacs
-   "a" 'treemacs-add-and-display-current-project))
+   "tt" 'treemacs-select-window
+   "te" 'treemacs-edit-workspaces
+   "tf" 'treemacs-finish-edit
+   "tn" 'treemacs
+   "ta" 'treemacs-add-and-display-current-project))
 
 (use-package treemacs-evil
   :after treemacs evil
