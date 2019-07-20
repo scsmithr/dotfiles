@@ -255,6 +255,8 @@ ALPHA (a float between 0 and 1)."
   (setq treemacs-width 22)
   (setq treemacs-no-png-images t)
   (setq treemacs-indentation 1)
+  ;; Allows ediff to take over the rest of the emacs frame.
+  (setq treemacs-is-never-other-window t)
   (setq treemacs-icon-tag-node-open-text (propertize "− " 'face 'font-lock-keyword-face)
         treemacs-icon-tag-node-closed-text (propertize "+ " 'face 'font-lock-keyword-face)
         treemacs-icon-tag-leaf-text (propertize "  " 'face 'font-lock-keyword-face))
