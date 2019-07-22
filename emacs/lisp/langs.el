@@ -175,7 +175,10 @@
       (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
     (use-package alchemist
       :ensure t
-      :defer t)))
+      :defer t))
+  (core/local 'elixir-mode-map
+              "mc" 'alchemist-mix-compile
+              "mr" 'alchemist-mix-run))
 
 (provide 'langs)
 ;;; langs.el ends here
