@@ -180,5 +180,10 @@
               "mc" 'alchemist-mix-compile
               "mr" 'alchemist-mix-run))
 
+;; Markdown
+
+(defun markdown/init()
+  (add-hook 'markdown-mode-hook (lambda () (flyspell-mode 1))))
+
 (provide 'langs)
 ;;; langs.el ends here

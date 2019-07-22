@@ -440,7 +440,8 @@ ALPHA (a float between 0 and 1)."
   (typescript/init-prettier)
   (typescript/init-web)
   (typescript/init-tide)
-  (elixir/init))
+  (elixir/init)
+  (markdown/init))
 
 ;; Useful functions
 
