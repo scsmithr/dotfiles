@@ -431,17 +431,7 @@ ALPHA (a float between 0 and 1)."
 ;; Language stuff
 
 (use-package langs
-  :load-path "lisp"
-  :config
-  (go/init)
-  (rust/init)
-  (octave/init)
-  (haskell/init)
-  (typescript/init-prettier)
-  (typescript/init-web)
-  (typescript/init-tide)
-  (elixir/init)
-  (markdown/init))
+  :load-path "lisp")
 
 ;; Useful functions
 

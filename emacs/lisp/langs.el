@@ -3,27 +3,26 @@
 
 ;; Go
 
-(defun go/init ()
-  "Initialize go related features."
-  (progn
-    (use-package go-mode
-      :ensure t
-      :defer t
-      :config
-      (add-hook 'go-mode-hook #'lsp)
-      (add-hook 'before-save-hook #'gofmt-before-save)
-      (setq gofmt-command "goimports"))
-    (use-package go-rename
-      :ensure t)
-    (evil-add-command-properties #'godef-jump :jump t)
-    (core/local 'go-mode-map
-                "rn" 'go-rename
-                "ta" 'go/go-tests-all
-                "tv" 'go/go-tests-all-verbose
-                "v" 'go/go-vendor)
-    (add-hook 'go-mode-hook
-              (lambda ()
-                (setq company-backends (delete 'company-capf company-backends))))))
+(use-package go-mode
+  :ensure t
+  :defer t
+  :config
+  (add-hook 'go-mode-hook #'lsp)
+  (add-hook 'before-save-hook #'gofmt-before-save)
+  (evil-add-command-properties #'godef-jump :jump t)
+  (setq gofmt-command "goimports"))
+(use-package go-rename
+  :ensure t)
+
+(core/local 'go-mode-map
+            "rn" 'go-rename
+            "ta" 'go/go-tests-all
+            "tv" 'go/go-tests-all-verbose
+            "v" 'go/go-vendor)
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq company-backends (delete 'company-capf company-backends))))
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")
@@ -54,41 +53,38 @@
 
 ;; Haskell
 
-(defun haskell/init ()
-  (use-package haskell-mode
-    :ensure t
-    :defer t
-    :config
-    (setq haskell-stylish-on-save t)
-    (setq haskell-mode-stylish-haskell-path "brittany")))
+(use-package haskell-mode
+  :ensure t
+  :defer t
+  :config
+  (setq haskell-stylish-on-save t)
+  (setq haskell-mode-stylish-haskell-path "brittany"))
 
 ;; Octave
 
-(defun octave/init ()
-  (progn
-    (use-package octave
-      :defer t
-      :mode ("\\.m\\'" . octave-mode))
-    (core/local 'octave-mode-map
-                "o" 'run-octave
-                "sr" 'octave-send-region
-                "sb" 'octave-send-buffer
-                "sl" 'octave-send-line)))
+(use-package octave
+  :defer t
+  :mode ("\\.m\\'" . octave-mode))
+
+(core/local 'octave-mode-map
+            "o" 'run-octave
+            "sr" 'octave-send-region
+            "sb" 'octave-send-buffer
+            "sl" 'octave-send-line)
 
 ;; Rust
 
-(defun rust/init ()
-  (use-package rust-mode
-    :ensure t
-    :defer t
-    :config
-    (setq rust-format-on-save t)
-    (setq lsp-rust-clippy-preference "on")
-    ;; See https://github.com/tigersoldier/company-lsp/issues/61
-    (add-hook 'rust-mode-hook
-              (lambda () (setq company-backends
-                               (delete 'company-capf company-backends))))
-    (add-hook 'rust-mode-hook #'lsp)))
+(use-package rust-mode
+  :ensure t
+  :defer t
+  :config
+  (setq rust-format-on-save t)
+  (setq lsp-rust-clippy-preference "on")
+  ;; See https://github.com/tigersoldier/company-lsp/issues/61
+  (add-hook 'rust-mode-hook
+            (lambda () (setq company-backends
+                             (delete 'company-capf company-backends))))
+  (add-hook 'rust-mode-hook #'lsp))
 
 ;; Typescript
 
@@ -112,78 +108,75 @@
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
-(defun typescript/init-tide ()
-  (use-package tide
-    :init
-    :ensure t
-    :after (web-mode company flycheck)))
+(use-package tide
+  :init
+  :ensure t
+  :after (web-mode company flycheck))
 
-(defun typescript/init-prettier ()
-  (use-package prettier-js
-    :ensure t
-    :after (web-mode)))
+(use-package prettier-js
+  :ensure t
+  :after (web-mode))
 
-(defun typescript/init-web ()
-  (use-package web-mode
-    :ensure t
-    :defer t
-    :mode (("\\.html?\\'" . web-mode)
-           ("\\.tsx?\\'" . web-mode)
-           ("\\.jsx\\'" . web-mode))
-    :config
-    (setq web-mode-markup-indent-offset 4
-          web-mode-css-indent-offset 4
-          web-mode-code-indent-offset 4
-          web-mode-block-padding 4
-          web-mode-comment-style 1
+(use-package web-mode
+  :ensure t
+  :defer t
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.tsx?\\'" . web-mode)
+         ("\\.jsx\\'" . web-mode))
+  :config
+  (setq web-mode-markup-indent-offset 4
+        web-mode-css-indent-offset 4
+        web-mode-code-indent-offset 4
+        web-mode-block-padding 4
+        web-mode-comment-style 1
 
-          web-mode-enable-css-colorization t
-          web-mode-enable-auto-pairing t
-          web-mode-enable-comment-keywords t
-          web-mode-enable-current-element-highlight t
-          web-mode-enable-auto-quoting nil
-          web-mode-enable-auto-indentation nil)
-    (set-face-attribute 'web-mode-current-element-highlight-face nil
-                        :weight 'bold
-                        :background (doom-transparentize 'cyan 0.5))
-    (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
-                  (setup-tide-mode)
-                  (evil-add-command-properties #'tide-jump-to-definition :jump t)
-                  (prettier-js-mode)
-                  (flycheck-add-mode 'javascript-eslint 'web-mode)
-                  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))))
-    (core/local 'web-mode-map
-                "rn" 'tide-rename-symbol)))
+        web-mode-enable-css-colorization t
+        web-mode-enable-auto-pairing t
+        web-mode-enable-comment-keywords t
+        web-mode-enable-current-element-highlight t
+        web-mode-enable-auto-quoting nil
+        web-mode-enable-auto-indentation nil)
+  (set-face-attribute 'web-mode-current-element-highlight-face nil
+                      :weight 'bold
+                      :background (doom-transparentize 'cyan 0.5))
+  (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
+                (setup-tide-mode)
+                (evil-add-command-properties #'tide-jump-to-definition :jump t)
+                (prettier-js-mode)
+                (flycheck-add-mode 'javascript-eslint 'web-mode)
+                (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))))
+
+(core/local 'web-mode-map
+              "rn" 'tide-rename-symbol)
 
 ;; Elixir
 
-(defun elixir/init ()
-  (progn
-    (use-package elixir-mode
-      :ensure t
-      :defer t
-      :config
-      ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
-      ;; to have it set to some default color, isn't easy to read.
-      (set-face-attribute 'elixir-atom-face nil :foreground (doom-color 'blue))
-      (add-hook 'elixir-mode-hook 'alchemist-mode)
-      (add-hook 'elixir-mode-hook
-                (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
-      (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
-    (use-package alchemist
-      :ensure t
-      :defer t))
-  (core/local 'elixir-mode-map
-              "mc" 'alchemist-mix-compile
-              "mr" 'alchemist-mix-run))
+(use-package elixir-mode
+  :ensure t
+  :defer t
+  :config
+  ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
+  ;; to have it set to some default color, isn't easy to read.
+  (set-face-attribute 'elixir-atom-face nil :foreground (doom-color 'blue))
+  (add-hook 'elixir-mode-hook 'alchemist-mode)
+  (add-hook 'elixir-mode-hook
+            (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+  (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
+
+(use-package alchemist
+  :ensure t
+  :defer t)
+
+(core/local 'elixir-mode-map
+            "mc" 'alchemist-mix-compile
+            "mr" 'alchemist-mix-run)
 
 ;; Markdown
 
-(defun markdown/init()
-  (add-hook 'markdown-mode-hook (lambda () (flyspell-mode 1))))
+(add-hook 'markdown-mode-hook (lambda () (flyspell-mode 1)))
 
 (provide 'langs)
 ;;; langs.el ends here
