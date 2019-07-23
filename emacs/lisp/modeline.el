@@ -89,7 +89,7 @@
         (when (and vc-mode buffer-file-name)
           (let ((backend (vc-backend buffer-file-name))
                 (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-            (let ((face 'modeline-inactive)
+            (let ((face 'mode-line-inactive)
                   (active (modeline-is-active)))
               (concat (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
                                   'face 'modeline-status-info)
@@ -154,11 +154,11 @@ indicator in the modeline."
             (concat ":"
                     (propertize (format "%d" (point)) 'face (if (modeline-is-active)
                                                                 'modeline-unimportant
-                                                              'modeline-inactive))))
+                                                              'mode-line-inactive))))
           " "
           (propertize "%p%%" 'face (if (modeline-is-active)
                                        'modeline-unimportant
-                                     'modeline-inactive))
+                                     'mode-line-inactive))
           "  "))
 
 (defun modeline-segment-vc ()
