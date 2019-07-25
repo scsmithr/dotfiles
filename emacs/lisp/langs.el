@@ -150,7 +150,8 @@
                 (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))))
 
 (core/local 'web-mode-map
-              "rn" 'tide-rename-symbol)
+              "rn" 'tide-rename-symbol
+              "rf" 'tide-rename-file)
 
 ;; Elixir
 

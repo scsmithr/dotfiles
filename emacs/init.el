@@ -73,6 +73,7 @@
 (setq org-default-notes-file "~/notes/refile.org")
 (global-set-key (kbd "C-c c") 'org-capture)
 (setq org-startup-folded nil)
+(setq org-hide-leading-stars t)
 
 (add-hook 'org-mode-hook (lambda ()
                            (org-babel-do-load-languages 'org-babel-load-languages
@@ -105,7 +106,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (alchemist elixir-mode prettier-js ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (company-box alchemist elixir-mode prettier-js ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
 
 (set-frame-font (font-spec :family "Source Code Pro Medium"))
 (set-face-attribute 'default nil :height 110)
@@ -254,7 +255,6 @@ ALPHA (a float between 0 and 1)."
   :init
   (setq treemacs-width 22)
   (setq treemacs-no-png-images t)
-  (setq treemacs-indentation 1)
   ;; Allows ediff to take over the rest of the emacs frame. Uforturnately also
   ;; means I can't use evil-move-left to get to it anymore.
   (setq treemacs-is-never-other-window t)
@@ -276,6 +276,7 @@ ALPHA (a float between 0 and 1)."
                       :height 110
                       :weight 'normal
                       :foreground (doom-color 'green))
+  (add-hook 'treemacs-mode-hook (lambda () (setq mode-line-format "Seanmacs")))
   (core/leader
    "tt" 'treemacs-select-window
    "te" 'treemacs-edit-workspaces
