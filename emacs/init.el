@@ -276,7 +276,7 @@ ALPHA (a float between 0 and 1)."
                       :height 110
                       :weight 'normal
                       :foreground (doom-color 'green))
-  (add-hook 'treemacs-mode-hook (lambda () (setq mode-line-format "Seanmacs")))
+  (add-hook 'treemacs-mode-hook (lambda () (setq mode-line-format " Seanmacs")))
   (core/leader
    "tt" 'treemacs-select-window
    "te" 'treemacs-edit-workspaces
