@@ -176,11 +176,10 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
     ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
-myLayoutHook = smartBorders (tiled ||| tiledMirror ||| Full)
+myLayoutHook = smartBorders $ uniformSpacing (tiled ||| tiledMirror ||| Full)
  where
-  tiled = uniformSpacing $ ResizableTall nmaster delta (1 / 2) []
-  tiledMirror =
-    Mirror $ uniformSpacing $ ResizableTall nmaster delta (3 / 4) []
+  tiled          = ResizableTall nmaster delta (1 / 2) []
+  tiledMirror    = Mirror $ ResizableTall nmaster delta (3 / 4) []
   nmaster        = 1
   delta          = 3 / 100
   gs             = 2
