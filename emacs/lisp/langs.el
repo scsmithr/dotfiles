@@ -150,8 +150,8 @@
                 (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))))
 
 (core/local 'web-mode-map
-              "rn" 'tide-rename-symbol
-              "rf" 'tide-rename-file)
+            "rn" 'tide-rename-symbol
+            "rf" 'tide-rename-file)
 
 ;; Elixir
 
@@ -177,7 +177,23 @@
 
 ;; Markdown
 
-(add-hook 'markdown-mode-hook (lambda () (flyspell-mode 1)))
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (set-face-attribute markdown-header-delimiter-face nil
+                                :foreground (doom-color 'fg-alt))
+            (set-face-attribute markdown-header-face-1 nil
+                                :inherit 'outline-1)
+            (set-face-attribute markdown-header-face-2 nil
+                                :inherit 'outline-2)
+            (set-face-attribute markdown-header-face-3 nil
+                                :inherit 'outline-3)
+            (set-face-attribute markdown-header-face-4 nil
+                                :inherit 'outline-4)
+            (set-face-attribute markdown-header-face-5 nil
+                                :inherit 'outline-5)
+            (set-face-attribute markdown-header-face-6 nil
+                                :inherit 'outline-6)
+            (flyspell-mode 1)))
 
 (provide 'langs)
 ;;; langs.el ends here
