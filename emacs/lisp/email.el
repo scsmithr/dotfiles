@@ -26,6 +26,14 @@
               mu4e-compose-format-flowed t
               fill-flowed-display-column 72)
 
+        (setq mu4e-use-fancy-chars nil
+              mu4e-headers-thread-child-prefix '("|>" . " ")
+              mu4e-headers-thread-last-child-prefix '("|>" . " ")
+              mu4e-headers-thread-connection-prefix '("| " . " ")
+              mu4e-headers-thread-orphan-prefix '("| " . " ")
+              mu4e-headers-thread-single-orphan-prefix '("|>" . " ")
+              mu4e-headers-thread-duplicate-prefix '("=" . " "))
+
         (setq smtpmail-stream-type 'starttls
               message-send-mail-function #'smtpmail-send-it)
 
