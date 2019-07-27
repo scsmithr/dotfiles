@@ -10,19 +10,20 @@
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'before-save-hook #'gofmt-before-save)
   (evil-add-command-properties #'godef-jump :jump t)
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq company-backends (delete 'company-capf company-backends))))
   (setq gofmt-command "goimports"))
+
 (use-package go-rename
-  :ensure t)
+  :ensure t
+  :commands go-rename)
 
 (core/local 'go-mode-map
             "rn" 'go-rename
             "ta" 'go/go-tests-all
             "tv" 'go/go-tests-all-verbose
             "v" 'go/go-vendor)
-
-(add-hook 'go-mode-hook
-          (lambda ()
-            (setq company-backends (delete 'company-capf company-backends))))
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")
@@ -136,9 +137,9 @@
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
         web-mode-enable-auto-indentation nil)
-  (set-face-attribute 'web-mode-current-element-highlight-face nil
-                      :weight 'bold
-                      :background (doom-transparentize 'cyan 0.5))
+  (face-attr 'web-mode-current-element-highlight-face
+             :weight 'bold
+             :background (doom-transparentize 'cyan 0.5))
   (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
   (add-hook 'web-mode-hook
             (lambda ()
@@ -161,7 +162,7 @@
   :config
   ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
   ;; to have it set to some default color, isn't easy to read.
-  (set-face-attribute 'elixir-atom-face nil :foreground (doom-color 'blue))
+  (face-attr 'elixir-atom-face nil :foreground (doom-color 'blue))
   (add-hook 'elixir-mode-hook 'alchemist-mode)
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
@@ -177,23 +178,21 @@
 
 ;; Markdown
 
-(add-hook 'markdown-mode-hook
-          (lambda ()
-            (set-face-attribute markdown-header-delimiter-face nil
-                                :foreground (doom-color 'fg-alt))
-            (set-face-attribute markdown-header-face-1 nil
-                                :inherit 'outline-1)
-            (set-face-attribute markdown-header-face-2 nil
-                                :inherit 'outline-2)
-            (set-face-attribute markdown-header-face-3 nil
-                                :inherit 'outline-3)
-            (set-face-attribute markdown-header-face-4 nil
-                                :inherit 'outline-4)
-            (set-face-attribute markdown-header-face-5 nil
-                                :inherit 'outline-5)
-            (set-face-attribute markdown-header-face-6 nil
-                                :inherit 'outline-6)
-            (flyspell-mode 1)))
+(after! markdown-mode
+        (face-attr markdown-header-delimiter-face :foreground (doom-color 'fg-alt))
+        (face-attr markdown-header-face-1 :inherit 'outline-1)
+        (face-attr markdown-header-face-2 :inherit 'outline-2)
+        (face-attr markdown-header-face-3 :inherit 'outline-3)
+        (face-attr markdown-header-face-4 :inherit 'outline-4)
+        (face-attr markdown-header-face-5 :inherit 'outline-5)
+        (face-attr markdown-header-face-6 :inherit 'outline-6)
+        (flyspell-mode 1))
+
+;; Protobuf
+
+(use-package protobuf-mode
+  :ensure t
+  :defer t)
 
 (provide 'langs)
 ;;; langs.el ends here
