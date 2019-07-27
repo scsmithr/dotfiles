@@ -34,13 +34,9 @@
         (setq mu4e-maildir-shortcuts '(("/personal/INBOX" . ?p)
                                        ("/work/INBOX" . ?w)))
 
-        (set-evil-initial-state
-         '(mu4e-main-mode
-           mu4e-view-mode
-           mu4e-headers-mode
-           mu4e-compose-mode
-           mu4e~update-mail-mode)
-         'normal)
+        (core/local 'mu4e-headers-mode-map
+                    "r" 'mu4e-update-index
+                    "u" 'mu4e-update-main-and-index)
 
         (defun gmail-fix-flags (mark msg)
           (pcase mark
