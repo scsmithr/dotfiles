@@ -42,13 +42,13 @@ machine smtp.gmail.com login scsmithr@gmail.com port 25
 machine smtp.gmail.com login scsmithr@gmail.com password <password>
 #+END_SRC
 
-All configuration assumes the mail directory is at ~~/.mail~. Syncing emails is
+All configuration assumes the mail directory is at =~/.mail=. Syncing emails is
 done with ~mbsync -a~, and an intial index can be done by running ~mu index
 --maildir=~/.mail~.
 
 Automatic sinking can be done with a systemd unit.
 
-~~/.config/systemd/user/mbsync.service~:
+=~/.config/systemd/user/mbsync.service=:
 #+BEGIN_SRC 
 [Unit]
 Description=Mailbox synchronization service
@@ -59,7 +59,7 @@ ExecStart=/usr/bin/mbsync -Va
 #+END_SRC
 
 
-~~/.config/systemd/user/mbsync.timer~:
+=~/.config/systemd/user/mbsync.timer=:
 #+BEGIN_SRC 
 [Unit]
 Description=Mailbox synchronization timer

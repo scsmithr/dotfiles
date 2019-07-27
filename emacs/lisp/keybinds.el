@@ -73,6 +73,9 @@ Treemacs buffers."
 (use-package evil-collection
   :ensure t
   :after evil
+  :init
+  (setq evil-collection-key-blacklist
+      (list core-leader-key core-local-leader-key))
   :config
   (evil-collection-init))
 
