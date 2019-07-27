@@ -1,9 +1,9 @@
 ;;; orgmode.el --- Org related stuff
 
+(core/leader "x x" 'org-capture)
+
 ;; Where org-captures go.
 (setq org-default-notes-file "~/notes/refile.org")
-
-(global-set-key (kbd "C-c c") 'org-capture)
 
 (setq org-startup-folded nil)
 (setq org-hide-leading-stars t)

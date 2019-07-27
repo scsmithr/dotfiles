@@ -17,7 +17,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-box alchemist elixir-mode prettier-js ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package))))
+    (mu4e company-box alchemist elixir-mode prettier-js ob-http ob-restclient restclient company-posframe esup go-rename docker-tramp forge protobuf-mode evil-magit diff-hl dtrt-indent yasnippet ripgrep idomenu swoop lsp-ui company company-lsp magit git-gutter-fring doom-modeline rust-mode haskell-mode git-gutter-fringe which-key flx-ido web-mode tide flycheck lsp-mode go-mode treemacs-projectile treemacs-evil treemacs projectile ido-vertical-mode evil use-package)))
+ )
 
 ;; Package management
 (require 'package)
@@ -36,6 +37,15 @@
 
 (defun face-attr (face &rest args)
   (apply #'set-face-attribute face nil args))
+
+(defun set-evil-initial-state (modes state)
+  "Set the initialize STATE of MODES using `evil-set-initial-state'."
+  (declare (indent defun))
+  (after! evil
+    (if (listp modes)
+        (dolist (mode modes)
+          (evil-set-initial-state mode state))
+      (evil-set-initial-state modes state))))
 
 ;; Core configuration
 
@@ -63,6 +73,12 @@
 
 (use-package langs
   :load-path "lisp")
+
+(use-package email
+  :load-path "lisp"
+  :init
+  (core/leader
+   "a e" 'mu4e))
 
 ;; Useful functions
 

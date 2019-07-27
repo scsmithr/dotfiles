@@ -78,5 +78,10 @@
 
 (core/leader "ci" 'indent-buffer)
 
+;; Doc view
+
+(after! doc-view-mode
+        (setq-default doc-view-resolution 200))
+
 (provide 'utils)
 ;;; utils.el ends here
