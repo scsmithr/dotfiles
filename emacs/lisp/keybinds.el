@@ -51,6 +51,7 @@ Treemacs buffers."
   (setq evil-shift-round nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-keybinding nil)
+  (setq evil-want-minibuffer t)
   :config
   (evil-mode)
   (core/leader
@@ -67,7 +68,7 @@ Treemacs buffers."
 (use-package evil-commentary
   :ensure t
   :after evil
-  :init
+  :config
   (evil-commentary-mode))
 
 (use-package evil-collection

@@ -162,7 +162,7 @@
   :config
   ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
   ;; to have it set to some default color, isn't easy to read.
-  (face-attr 'elixir-atom-face nil :foreground (doom-color 'blue))
+  (face-attr 'elixir-atom-face :foreground (doom-color 'blue))
   (add-hook 'elixir-mode-hook 'alchemist-mode)
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
