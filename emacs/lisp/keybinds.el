@@ -51,7 +51,6 @@ Treemacs buffers."
   (setq evil-shift-round nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-keybinding nil)
-  (setq evil-want-minibuffer t)
   :config
   (evil-mode)
   (core/leader
