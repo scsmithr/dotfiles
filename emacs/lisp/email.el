@@ -44,7 +44,7 @@
 
         (core/local 'mu4e-headers-mode-map
                     "r" 'mu4e-update-index
-                    "u" 'mu4e-update-main-and-index)
+                    "u" 'mu4e-update-mail-and-index)
 
         (defun gmail-fix-flags (mark msg)
           (pcase mark
