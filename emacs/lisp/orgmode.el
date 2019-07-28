@@ -8,6 +8,15 @@
 (setq org-agenda-files (list "~/notes/"))
 (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 
+;; Make refile use ido.
+(setq org-outline-path-complete-in-steps nil)
+(defun completion-use-ido ()
+  "Set the current buffer's completing read engine to IDO."
+  (setq-local completing-read-function #'ido-completing-read))
+(add-hook 'org-mode-hook 'completion-use-ido)
+
+(setq org-completion-use-ido t)
+
 (setq org-template-directory "~/.emacs.d/org-templates")
 
 (setq org-capture-templates
