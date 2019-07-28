@@ -1,6 +1,8 @@
 ;;; orgmode.el --- Org related stuff
 
-(core/leader "x x" 'org-capture)
+(core/leader
+ "x x" 'org-capture
+ "x a" 'org-agenda)
 
 ;; Where org-captures go.
 (setq org-default-notes-file "~/notes/refile.org")
