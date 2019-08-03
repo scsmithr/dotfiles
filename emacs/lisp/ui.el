@@ -244,7 +244,10 @@ ALPHA (a float between 0 and 1)."
               (add-to-list 'symbol-names name)
               (add-to-list 'name-and-pos (cons name position))))))))
 
-(core/leader "o" 'ido-goto-symbol)
+(core/leader
+ "os" 'ido-goto-symbol
+ "ob" 'ibuffer
+ "oo" 'switch-to-buffer)
 
 (provide 'ui)
 ;;; ui.el ends here
