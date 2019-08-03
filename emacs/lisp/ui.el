@@ -115,7 +115,7 @@ ALPHA (a float between 0 and 1)."
   :straight t
   :after doom-themes
   :init
-  (setq treemacs-width 22)
+  (setq treemacs-width 24)
   (setq treemacs-no-png-images t)
   ;; Allows ediff to take over the rest of the emacs frame. Uforturnately also
   ;; means I can't use evil-move-left to get to it anymore.

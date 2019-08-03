@@ -75,13 +75,15 @@ Treemacs buffers."
   :after evil
   :init
   (setq evil-collection-key-blacklist
-      (list core-leader-key core-local-leader-key))
+        (list core-leader-key core-local-leader-key))
   :config
   (evil-collection-init))
 
 (use-package evil-surround
   :straight t
   :config (global-evil-surround-mode 1))
+
+(evil-ex-define-cmd "sh" #'async-shell-command)
 
 (provide 'keybinds)
 ;;; keybinds.el ends here
