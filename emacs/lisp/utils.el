@@ -56,7 +56,9 @@
 
 (use-package forge
   :straight t
-  :after magit)
+  :after magit
+  :init
+  (setq forge-pull-notifications nil))
 
 (use-package evil-magit
   :straight t)
