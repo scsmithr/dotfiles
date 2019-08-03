@@ -1,7 +1,7 @@
 ;;; completions.el --- Completions
 
 (use-package company
-  :ensure t
+  :straight t
   :config
   (setq company-frontends '(company-posframe-frontend))
   (setq company-minimum-prefix-length 1)
@@ -12,17 +12,17 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-posframe
-  :ensure t)
+  :straight t)
 
 (use-package company-lsp
-  :ensure t
+  :straight t
   :after (company lsp)
   :config
   (add-to-list 'company-lsp-filter-candidates '(gopls . nil))
   (push 'company-lsp company-backends))
 
 (use-package lsp-mode
-  :ensure t
+  :straight t
   :config
   (setq lsp-prefer-flymake nil)
   (setq lsp-auto-guess-root t)
@@ -30,7 +30,7 @@
   :commands lsp)
 
 (use-package lsp-ui
-  :ensure t
+  :straight t
   :commands lsp-ui-mode
   :config
   (setq lsp-ui-doc-enable nil

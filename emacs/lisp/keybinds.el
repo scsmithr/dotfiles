@@ -42,7 +42,7 @@ Treemacs buffers."
 
 ;; evil
 (use-package evil
-  :ensure t
+  :straight t
   :init
   (setq evil-search-module 'evil-search)
   (setq evil-ex-complete-emacs-commands nil)
@@ -65,13 +65,13 @@ Treemacs buffers."
   (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
 
 (use-package evil-commentary
-  :ensure t
+  :straight t
   :after evil
   :config
   (evil-commentary-mode))
 
 (use-package evil-collection
-  :ensure t
+  :straight t
   :after evil
   :init
   (setq evil-collection-key-blacklist

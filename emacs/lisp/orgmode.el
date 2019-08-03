@@ -45,10 +45,10 @@
         (face-attr 'org-todo :foreground (doom-color 'yellow)))
 
 (use-package ob-restclient
-  :ensure t)
+  :straight t)
 
 (use-package ob-http
-  :ensure t)
+  :straight t)
 
 (provide 'orgmode)
 ;;; orgmode.el ends here

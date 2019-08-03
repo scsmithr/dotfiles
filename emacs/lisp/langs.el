@@ -4,7 +4,7 @@
 ;; Go
 
 (use-package go-mode
-  :ensure t
+  :straight t
   :defer t
   :config
   (add-hook 'go-mode-hook #'lsp)
@@ -16,7 +16,7 @@
   (setq gofmt-command "goimports"))
 
 (use-package go-rename
-  :ensure t
+  :straight t
   :commands go-rename)
 
 (core/local 'go-mode-map
@@ -55,7 +55,7 @@
 ;; Haskell
 
 (use-package haskell-mode
-  :ensure t
+  :straight t
   :defer t
   :config
   (setq haskell-stylish-on-save t)
@@ -76,7 +76,7 @@
 ;; Rust
 
 (use-package rust-mode
-  :ensure t
+  :straight t
   :defer t
   :config
   (setq rust-format-on-save t)
@@ -111,15 +111,15 @@
 
 (use-package tide
   :init
-  :ensure t
+  :straight t
   :after (web-mode company flycheck))
 
 (use-package prettier-js
-  :ensure t
+  :straight t
   :after (web-mode))
 
 (use-package web-mode
-  :ensure t
+  :straight t
   :defer t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.tsx?\\'" . web-mode)
@@ -157,7 +157,7 @@
 ;; Elixir
 
 (use-package elixir-mode
-  :ensure t
+  :straight t
   :defer t
   :config
   ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
@@ -169,7 +169,7 @@
   (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
 
 (use-package alchemist
-  :ensure t
+  :straight t
   :defer t)
 
 (core/local 'elixir-mode-map
@@ -193,7 +193,7 @@
 ;; Protobuf
 
 (use-package protobuf-mode
-  :ensure t
+  :straight t
   :defer t)
 
 (provide 'langs)

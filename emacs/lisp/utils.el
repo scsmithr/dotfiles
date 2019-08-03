@@ -2,7 +2,7 @@
 
 ;; Auto detect indentation type/level
 (use-package dtrt-indent
-  :ensure t
+  :straight t
   :init
   (setq dtrt-indent-min-quality 65.0)
   (setq dtrt-indent-min-hard-tab-superiority 180.0)
@@ -13,7 +13,7 @@
 
 ;; Projectile
 (use-package projectile
-  :ensure t
+  :straight t
   :init
   (setq projectile-require-project-root nil)
   :config
@@ -22,12 +22,12 @@
    "p" 'projectile-command-map))
 
 (use-package ripgrep
-  :ensure t
+  :straight t
   :config
   (face-attr 'ripgrep-match-face :foreground (doom-color 'yellow)))
 
 (use-package flycheck
-  :ensure t
+  :straight t
   :config
   (add-hook 'typescript-mode-hook 'flycheck-mode)
   (add-hook 'sh-mode-hook 'flycheck-mode)
@@ -47,7 +47,7 @@
              :background (doom-transparentize 'red 0.5)))
 
 (use-package magit
-  :ensure t
+  :straight t
   :defer t
   :config
   (core/leader
@@ -55,22 +55,22 @@
    "gf" 'magit-file-dispatch))
 
 (use-package forge
-  :ensure t
+  :straight t
   :after magit)
 
 (use-package evil-magit
-  :ensure t)
+  :straight t)
 
 (use-package yasnippet
-  :ensure t
+  :straight t
   :config (yas-global-mode 1))
 
 (use-package docker-tramp
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package restclient
-  :ensure t)
+  :straight t)
 
 (defun indent-buffer ()
   (interactive)

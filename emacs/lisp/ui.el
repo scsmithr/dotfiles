@@ -92,7 +92,7 @@ ALPHA (a float between 0 and 1)."
 
 ;; Doom themes
 (use-package doom-themes
-  :ensure t
+  :straight t
   :init
   (setq doom-themes-enable-bold t)
   (setq doom-themes-enable-italic nil)
@@ -112,7 +112,7 @@ ALPHA (a float between 0 and 1)."
   (face-attr 'line-number :foreground (doom-color 'fg-alt)))
 
 (use-package treemacs
-  :ensure t
+  :straight t
   :after doom-themes
   :init
   (setq treemacs-width 22)
@@ -148,19 +148,19 @@ ALPHA (a float between 0 and 1)."
 
 (use-package treemacs-evil
   :after treemacs evil
-  :ensure t)
+  :straight t)
 
 (use-package treemacs-projectile
   :after treemacs projectile
-  :ensure t)
+  :straight t)
 
 (use-package which-key
-  :ensure t
+  :straight t
   :init
   (which-key-mode 1))
 
 (use-package diff-hl
-  :ensure t
+  :straight t
   :config
   (global-diff-hl-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
@@ -175,7 +175,7 @@ ALPHA (a float between 0 and 1)."
              :background (doom-color 'yellow)))
 
 (use-package ido-vertical-mode
-  :ensure t
+  :straight t
   :init
   (setq ido-enable-flex-matching t)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
@@ -185,7 +185,7 @@ ALPHA (a float between 0 and 1)."
   (ido-vertical-mode 1))
 
 (use-package flx-ido
-  :ensure t
+  :straight t
   :after ido-vertical-mode
   :config
   (setq ido-use-faces nil)
