@@ -21,6 +21,7 @@
  ("evil-collection" . "f8cf811d658da2618359391436e194bb41b95ae5")
  ("evil-commentary" . "395f91014b69844b81660c155f42eb9b1b3d199d")
  ("evil-magit" . "6a32e4359cbd2803bafb7134cb6df312644ac986")
+ ("evil-surround" . "5ad01dfa86424c4b22cd1dfa375f13bd8c656f43")
  ("f.el" . "8191672377816a1975414cc1f116fd3b94b30bd0")
  ("flx" . "46040d0b096a0340d91235561f27a959a61d0fef")
  ("flycheck" . "db24266be8dfc300fc40f4e760a504c4544df924")
