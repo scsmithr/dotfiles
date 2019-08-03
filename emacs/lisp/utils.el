@@ -50,9 +50,9 @@
   :ensure t
   :defer t
   :config
-  (define-key magit-file-mode-map (kbd "C-c g") 'magit-file-dispatch)
   (core/leader
-   "g" 'magit-status))
+   "gg" 'magit-status
+   "gf" 'magit-file-dispatch))
 
 (use-package forge
   :ensure t
