@@ -83,7 +83,21 @@ Treemacs buffers."
   :straight t
   :config (global-evil-surround-mode 1))
 
-(evil-ex-define-cmd "sh" #'async-shell-command)
+(evil-define-command evil:shell (args)
+  (interactive "<sh>")
+  (let ((output-buffer (concat "*" args "*")))
+    (async-shell-command args output-buffer)))
+
+(evil-define-command evil:project-shell (args)
+  (interactive "<sh>")
+  (let ((command (concat "cd " (projectile-project-root) "&&" args))
+        (output-buffer (concat "*" args "*")))
+    (async-shell-command args output-buffer)))
+
+(evil-ex-define-cmd "sh[ell]" #'evil:shell)
+(evil-ex-define-cmd "psh[ell]" #'evil:project-shell)
+
+(evil-ex-define-cmd "psql" #'sql-postgres)
 
 (provide 'keybinds)
 ;;; keybinds.el ends here
