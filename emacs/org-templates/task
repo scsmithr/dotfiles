@@ -1,7 +1,7 @@
 * TODO %?
-:PROPERTIES:
-:CREATED: %U
-:SCHEDULED: %^{Scheduled to begin}t
-:DEADLINE: %^{Deadline}T
-:END:
+  :PROPERTIES:
+  :CREATED: %U
+  :SCHEDULED: %^{Scheduled to begin}t
+  :DEADLINE: %^{Deadline}T
+  :END:
 
