@@ -120,9 +120,6 @@ ALPHA (a float between 0 and 1)."
   ;; Allows ediff to take over the rest of the emacs frame. Uforturnately also
   ;; means I can't use evil-move-left to get to it anymore.
   (setq treemacs-is-never-other-window t)
-  (setq treemacs-icon-tag-node-open-text (propertize "− " 'face 'font-lock-keyword-face)
-        treemacs-icon-tag-node-closed-text (propertize "+ " 'face 'font-lock-keyword-face)
-        treemacs-icon-tag-leaf-text (propertize "  " 'face 'font-lock-keyword-face))
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -145,6 +142,23 @@ ALPHA (a float between 0 and 1)."
    "tf" 'treemacs-finish-edit
    "tn" 'treemacs
    "ta" 'treemacs-add-and-display-current-project))
+
+(after! treemacs
+  (treemacs-create-theme "minimal"
+    :icon-directory (f-join treemacs-dir "icons/default")
+    :config
+    (progn
+      (treemacs-create-icon :file "root.png"        :extensions (root)       :fallback "")
+      (treemacs-create-icon :file "dir-closed.png"  :extensions (dir-closed) :fallback (propertize "+ " 'face 'treemacs-term-node-face))
+      (treemacs-create-icon :file "dir-open.png"    :extensions (dir-open)   :fallback (propertize "- " 'face 'treemacs-term-node-face))
+      (treemacs-create-icon :file "tags-leaf.png"   :extensions (tag-leaf)   :fallback (propertize "* " 'face 'font-lock-constant-face))
+      (treemacs-create-icon :file "tags-open.png"   :extensions (tag-open)   :fallback (propertize "* " 'face 'font-lock-string-face))
+      (treemacs-create-icon :file "tags-closed.png" :extensions (tag-closed) :fallback (propertize "* " 'face 'font-lock-string-face))
+      (treemacs-create-icon :file "error.png"       :extensions (error)      :fallback (propertize "* " 'face 'font-lock-string-face))
+      (treemacs-create-icon :file "warning.png"     :extensions (warning)    :fallback (propertize "* " 'face 'font-lock-string-face))
+      (treemacs-create-icon :file "info.png"        :extensions (info)       :fallback (propertize "* " 'face 'font-lock-string-face))
+      (treemacs-create-icon :file "txt.png"         :extensions (fallback)   :fallback "")))
+  (treemacs-load-theme "minimal"))
 
 (use-package treemacs-evil
   :after treemacs evil
