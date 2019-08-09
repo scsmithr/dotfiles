@@ -40,6 +40,10 @@ Treemacs buffers."
   (when (string-match-p (regexp-quote "Treemacs") (buffer-name))
     (select-window (next-window))))
 
+(defun evilify-window-switch (map)
+  (define-key map (kbd "C-w C-w") 'evil-window-next-skip-treemacs)
+  (define-key map (kbd "C-w w") 'evil-window-next-skip-treemacs))
+
 ;; evil
 (use-package evil
   :straight t
