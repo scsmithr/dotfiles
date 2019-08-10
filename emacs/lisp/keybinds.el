@@ -44,6 +44,35 @@ Treemacs buffers."
   (define-key map (kbd "C-w C-w") 'evil-window-next-skip-treemacs)
   (define-key map (kbd "C-w w") 'evil-window-next-skip-treemacs))
 
+(defun evilify-maps (maps)
+  "Naively add evil like keybinds to MAPS.  Does not handle shadowed keybinds."
+  (let ((map (car maps))
+        (rest (cdr maps)))
+
+    (define-key map "/" 'evil-search-forward)
+    (define-key map ":" 'evil-ex)
+    (define-key map "h" 'evil-backward-char)
+    (define-key map "j" 'evil-next-visual-line)
+    (define-key map "k" 'evil-previous-visual-line)
+    (define-key map "l" 'evil-forward-char)
+    (define-key map "n" 'evil-search-next)
+    (define-key map "N" 'evil-search-previous)
+    (define-key map "v" 'evil-visual-char)
+    (define-key map "V" 'evil-visual-line)
+    (define-key map "gg" 'evil-goto-first-line)
+    (define-key map "G" 'evil-goto-line)
+    (define-key map (kbd "C-f") 'evil-scroll-page-down)
+    (define-key map (kbd "C-b") 'evil-scroll-page-up)
+    (define-key map (kbd "C-e") 'evil-scroll-line-down)
+    (define-key map (kbd "C-y") 'evil-scroll-line-up)
+    (define-key map (kbd "C-d") 'evil-scroll-down)
+    (define-key map (kbd "C-u") 'evil-scroll-up)
+    (define-key map (kbd "C-z") 'evil-emacs-state)
+
+    (evilify-window-switch map)
+
+    (when rest (evilify-maps rest))))
+
 ;; evil
 (use-package evil
   :straight t

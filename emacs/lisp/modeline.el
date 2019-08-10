@@ -8,12 +8,12 @@
 (defvar mode-line-box `(:line-width 1 :color ,(doom-color 'base3) :style nil))
 
 (set-face-attribute 'mode-line nil
-    :foreground (doom-color 'fg) :background mode-line-bg
-    :box mode-line-box)
+                    :foreground (doom-color 'fg) :background mode-line-bg
+                    :box mode-line-box)
 
 (set-face-attribute 'mode-line-inactive nil
-    :foreground (doom-color 'fg-alt) :background mode-line-bg
-    :box mode-line-box)
+                    :foreground (doom-color 'fg-alt) :background mode-line-bg
+                    :box mode-line-box)
 
 (defcustom modeline-show-point nil
   "If t, the value of `point' will be displayed next to the cursor position in the modeline."
@@ -25,13 +25,18 @@
   "Face used for neutral or inactive status indicators in the modeline."
   :group 'modeline)
 
-(defface modeline-status-info
-  '((t (:inherit (font-lock-keyword-face))))
-  "Face used for generic status indicators in the modeline."
+(defface modeline-status-mode
+  `((t (:inherit (font-lock-keyword-face) :foreground ,(doom-color 'blue))))
+  "Face used for mode indicators in the modeline."
+  :group 'modeline)
+
+(defface modeline-status-vc
+  `((t (:inherit (font-lock-keyword-face) :foreground ,(doom-color 'green))))
+  "Face used for vc indicators in the modeline."
   :group 'modeline)
 
 (defface modeline-status-success
-  `((t (:inherit (success) :foreground ,(doom-color 'blue))))
+  `((t (:inherit (success) :foreground ,(doom-color 'green))))
   "Face used for success status indicators in the modeline."
   :group 'modeline)
 
@@ -89,11 +94,9 @@
         (when (and vc-mode buffer-file-name)
           (let ((backend (vc-backend buffer-file-name))
                 (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-            (let ((face 'mode-line-inactive)
-                  (active (modeline-is-active)))
-              (concat (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
-                                  'face 'modeline-status-info)
-                      "  "))))))
+            (concat (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
+                                'face 'modeline-status-vc)
+                    "  ")))))
 
 ;; Flycheck update function
 (defvar-local modeline--flycheck-text nil)
@@ -101,23 +104,31 @@
   "Update `modeline--flycheck-text' against the reported flycheck STATUS."
   (setq modeline--flycheck-text
         (pcase status
-          ('finished (if flycheck-current-errors
-                         (let-alist (flycheck-count-errors flycheck-current-errors)
-                           (let ((sum (+ (or .error 0) (or .warning 0))))
-                             (propertize (concat "Issues: "
-                                                 (number-to-string sum)
-                                                 "  ")
-                                         'face (if .error
-                                                   'modeline-status-error
-                                                 'modeline-status-warning))))
-                       (propertize "Good  " 'face 'modeline-status-success)))
-          ('running (propertize "Checking  " 'face 'modeline-status-info))
+          (`finished (let-alist (flycheck-count-errors flycheck-current-errors)
+                       (let ((error (or .error 0))
+                             (warning (or .warning 0))
+                             (info (or .info 0)))
+                         (format "%s/%s/%s  "
+                                 (propertize (number-to-string error)
+                                             'face (if (> error 0)
+                                                       'modeline-status-error
+                                                     'modeline-status-grayed-out))
+                                 (propertize (number-to-string warning)
+                                             'face (if (> warning 0)
+                                                       'modeline-status-warning
+                                                     'modeline-status-grayed-out))
+                                 (propertize (number-to-string info)
+                                             'face  (if (> info 0)
+                                                        'modeline-status-info
+                                                      'modeline-status-grayed-out))
+                                 ))))
+          ('running "-/-/-  ")
           ('no-checker "")
-          ('errored (propertize "Error  " 'face 'modeline-status-error))
-          ('interrupted (propertize "Paused  " 'face 'modeline-status-grayed-out)))))
+          ('errored (propertize "!!!  " 'face 'modeline-status-error))
+          ('interrupted (propertize "---  " 'face 'modeline-status-grayed-out)))))
 
 (defun shorten-directory (dir max-length)
-  "Show up to `max-length' characters of a directory name `dir'."
+  "Show up to MAX-LENGTH characters of a directory name DIR."
   (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
         (output ""))
     (when (and path (equal "" (car path)))
@@ -133,10 +144,10 @@
   "Displays a color-coded buffer modification or readonly
 indicator in the modeline."
   (cond (buffer-read-only
-           (propertize " R " 'face 'modeline-modified))
-          ((buffer-modified-p)
-           (propertize " * " 'face 'modeline-modified))
-          (t "   ")))
+         (propertize " R " 'face 'modeline-modified))
+        ((buffer-modified-p)
+         (propertize " ! " 'face 'modeline-modified))
+        (t "   ")))
 
 (defun modeline-segment-buffer-name ()
   "Displays the name of the current buffer in the modeline."
@@ -169,7 +180,7 @@ indicator in the modeline."
   "Displays the current major mode in the modeline."
   (propertize "%m "
               'face (if (modeline-is-active)
-                        'bold
+                        'modeline-status-mode
                       'modeline-status-grayed-out)))
 
 (defun modeline-segment-flycheck ()

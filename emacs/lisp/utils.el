@@ -78,40 +78,13 @@
 (after! docker
         ;; Unbind conflicting keybinds
         (define-key tablist-minor-mode-map (kbd "k") nil)
+        (define-key tablist-minor-mode-map (kbd "/") nil)
 
-        (defun add-evil-like-bindings (maps)
-          (let ((map (car maps))
-                (rest (cdr maps)))
-
-            (define-key map "/" 'evil-search-forward)
-            (define-key map ":" 'evil-ex)
-            (define-key map "h" 'evil-backward-char)
-            (define-key map "j" 'evil-next-visual-line)
-            (define-key map "k" 'evil-previous-visual-line)
-            (define-key map "l" 'evil-forward-char)
-            (define-key map "n" 'evil-search-next)
-            (define-key map "N" 'evil-search-previous)
-            (define-key map "v" 'evil-visual-char)
-            (define-key map "V" 'evil-visual-line)
-            (define-key map "gg" 'evil-goto-first-line)
-            (define-key map "G" 'evil-goto-line)
-            (define-key map (kbd "C-f") 'evil-scroll-page-down)
-            (define-key map (kbd "C-b") 'evil-scroll-page-up)
-            (define-key map (kbd "C-e") 'evil-scroll-line-down)
-            (define-key map (kbd "C-y") 'evil-scroll-line-up)
-            (define-key map (kbd "C-d") 'evil-scroll-down)
-            (define-key map (kbd "C-u") 'evil-scroll-up)
-            (define-key map (kbd "C-z") 'evil-emacs-state)
-
-            (evilify-window-switch map)
-
-            (when rest (add-evil-like-bindings rest))))
         ;; Set some evil-like keybinds
-
-        (add-evil-like-bindings (list docker-container-mode-map
-                                      docker-image-mode-map
-                                      docker-network-mode-map
-                                      docker-volume-mode-map))
+        (evilify-maps (list docker-container-mode-map
+                            docker-image-mode-map
+                            docker-network-mode-map
+                            docker-volume-mode-map))
 
         (evil-set-initial-state 'docker-container-mode 'emacs)
         (evil-set-initial-state 'docker-image-mode 'emacs)
