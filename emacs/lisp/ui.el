@@ -134,7 +134,7 @@ ALPHA (a float between 0 and 1)."
   (face-attr 'treemacs-root-face
              :height 110
              :weight 'normal
-             :foreground (doom-color 'green))
+             :foreground (doom-color 'blue))
   (add-hook 'treemacs-mode-hook (lambda () (setq mode-line-format " Seanmacs")))
   (core/leader
    "tt" 'treemacs-select-window

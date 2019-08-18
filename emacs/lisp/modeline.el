@@ -156,7 +156,7 @@ indicator in the modeline."
 
 (defun modeline-segment-dir ()
   "Display shortened working directory."
-  (propertize (shorten-directory default-directory 15)))
+  (propertize (shorten-directory default-directory 20)))
 
 (defun modeline-segment-position ()
   "Displays the current cursor position in the modeline."
