@@ -3,3 +3,20 @@
         background: #FDF6E3 !important;
     }
 }
+
+@-moz-document url-prefix(https://app.slack.com) {
+    body, .p-client, .p-message_pane, .c-scrollbar__hider, .c-message--hover, .c-message, .c-message--light, .p-workspace__input, .p-workspace_input {
+        background-color: #FDF6E3 !important;
+        color: #556b72 !important;
+    }
+
+    .c-scrollbar__hider::before, .c-message_list__day_divider__label__pill, .p-message_input_field, div[role="presentation"], .c-search__input_box, footer {
+        background-color: #FDF6E3 !important;
+        color: #556b72 !important;
+    }
+
+    * {
+        color: #556b72 !important;
+    }
+
+}
