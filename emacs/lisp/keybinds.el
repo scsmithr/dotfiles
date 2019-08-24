@@ -88,7 +88,13 @@ Treemacs buffers."
   (evil-mode)
   (core/leader
    "ww" 'evil-window-vsplit
-   "wh" 'evil-window-split)
+   "wh" 'evil-window-split
+   "w[" 'shrink-window-horizontally
+   "w]" 'enlarge-window-horizontally
+   "w{" 'shrink-window
+   "w}" 'enlarge-window
+   "w=" 'balance-windows
+   "." 'repeat)
   ;; Overwrite the default next window commands with one that skips treemacs.
   (define-key evil-window-map "C-w" #'evil-window-next-skip-treemacs)
   (define-key evil-window-map "w" #'evil-window-next-skip-treemacs)

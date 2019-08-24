@@ -6,7 +6,7 @@
 	background: #FFFBEA;
 	font: "Source Code Pro 10";
 	foreground: #556b72;
-	separator: #96A7A9;
+	separator: #F2E6CE;
 	highlight: none bold #d33682;
 }
 

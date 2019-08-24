@@ -31,7 +31,7 @@
   :group 'modeline)
 
 (defface modeline-status-vc
-  `((t (:inherit (font-lock-keyword-face) :foreground ,(doom-color 'green))))
+  `((t (:inherit (font-lock-builtin-face))))
   "Face used for vc indicators in the modeline."
   :group 'modeline)
 
@@ -94,7 +94,7 @@
         (when (and vc-mode buffer-file-name)
           (let ((backend (vc-backend buffer-file-name))
                 (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-            (concat (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
+            (concat (propertize (concat "(" (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2)) ")")
                                 'face 'modeline-status-vc)
                     "  ")))))
 
