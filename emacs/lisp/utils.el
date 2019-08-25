@@ -149,6 +149,9 @@
   (eshell "new"))
 
 (after! eshell
+        (defalias 'eshell/d 'dired)
+        (defalias 'eshell/ff 'find-file)
+
         (setq eshell-prompt-function #'eshell-default-prompt)
         (setq eshell-prompt-regexp "^.* > "))
 

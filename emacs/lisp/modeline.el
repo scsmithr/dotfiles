@@ -119,7 +119,7 @@
                                                      'modeline-status-grayed-out))
                                  (propertize (number-to-string info)
                                              'face  (if (> info 0)
-                                                        'modeline-status-info
+                                                        'modeline-status-success
                                                       'modeline-status-grayed-out))
                                  ))))
           ('running "-/-/-  ")

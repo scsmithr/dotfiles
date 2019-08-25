@@ -1,0 +1,22 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export PATH=$PATH:$HOME/.bin/:$HOME/.local/bin/
+
+export GOPATH=$HOME/.go
+export PATH=$PATH:$HOME/.go/bin
+export PATH=$PATH:/usr/local/go/bin
+
+export PATH=$PATH:$HOME/.cargo/bin
+
+alias mm='xmodmap ~/.xmodmap'
+
+alias red="redshift -x && redshift -O"
+alias redx="redshift -x"
+
+alias ls='ls --color=auto'
+PS1='[\u@\h \W]\$ '

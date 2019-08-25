@@ -31,6 +31,9 @@ mkdir -p $ZSH_CONF_DIR
 ln -sv $DIR/zsh/* $ZSH_CONF_DIR
 ln -sv $DIR/zsh/zshrc ~/.zshrc
 
+# bash
+ln -sv $DIR/bash/bashrc ~/.bashrc
+
 # xmonad
 mkdir -p ~/.xmonad/lib
 ln -sv $DIR/xmonad/*.hs ~/.xmonad
