@@ -151,6 +151,7 @@
 (after! eshell
         (defalias 'eshell/d 'dired)
         (defalias 'eshell/ff 'find-file)
+        (defalias 'eshell/async 'async-shell-buffer)
 
         (setq eshell-prompt-function #'eshell-default-prompt)
         (setq eshell-prompt-regexp "^.* > "))
