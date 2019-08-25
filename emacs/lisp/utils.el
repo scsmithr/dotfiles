@@ -149,6 +149,9 @@
   (eshell "new"))
 
 (after! eshell
+        (add-hook 'eshell-mode-hook (lambda ()
+                                      (setq-local scroll-margin 0)))
+
         (defalias 'eshell/d 'dired)
         (defalias 'eshell/ff 'find-file)
         (defalias 'eshell/async 'async-shell-buffer)
