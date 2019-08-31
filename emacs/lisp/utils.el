@@ -165,10 +165,15 @@
                     ;; buffer local.
                     ;;
                     ;; See https://github.com/noctuid/general.el/issues/80
-                    (local-set-key (kbd "C-c h") 'eshell-mode-map)))
+                    (local-set-key (kbd "C-c h") 'eshell/read-history)))
 
         (setq eshell-prompt-function #'eshell-default-prompt)
         (setq eshell-prompt-regexp "^.* > "))
+
+;; gcloud
+
+(use-package gcloud
+  :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
 
 (provide 'utils)
 ;;; utils.el ends here

@@ -7,6 +7,7 @@
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0.2)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
+  (setq company-backends (delete 'company-dabbrev company-backends))
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
