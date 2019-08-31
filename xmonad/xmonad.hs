@@ -185,7 +185,10 @@ myLayoutHook = smartBorders $ uniformSpacing (tiled ||| Full)
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
-myStartupHook = return ()
+myStartupHook :: X ()
+myStartupHook = do
+  let indexes = zip myWorkspaces [1 ..]
+  mapM_ (\x -> PinnedWorkspaces.pinWorkspace (fst x) (snd x)) indexes
 
 myManageHook = composeAll
   [ className =? "mpv" --> doCenterFloat
@@ -225,4 +228,4 @@ myUnfocusedBorderColor = "#F2E6CE"
 myBorderWidth = 1
 myTerminal = "terminal"
 myModMask = mod4Mask
-myWorkspaces = ["def", "conn", "email", "web"]
+myWorkspaces = ["def", "email", "web", "dev"]

@@ -1,5 +1,6 @@
 module PinnedWorkspaces
   ( PinnedIndex
+  , pinWorkspace
   , pinCurrentWorkspace
   , unpinCurrentWorkspace
   , withPinnedIndex
@@ -33,15 +34,19 @@ instance ExtensionClass PinnedWorkspaceState where
     initialValue = PinnedWorkspaceState M.empty
     extensionType = PersistentExtension
 
+pinWorkspace :: WorkspaceTag -> PinnedIndex -> X ()
+pinWorkspace wtag idx = do
+  wmap <- XS.gets pinnedWorkspaceMap
+  let cleared = deleteIfExists wmap wtag
+  XS.modify $ \s -> s { pinnedWorkspaceMap = M.insert idx wtag cleared }
+
 -- Pin the currently selected workspaces to the given index.
 pinCurrentWorkspace :: PinnedIndex -> X ()
 pinCurrentWorkspace idx = do
   wtag <- gets (W.currentTag . windowset)
-  wmap <- XS.gets pinnedWorkspaceMap
-  let cleared = deleteIfExists wmap wtag
-  XS.modify $ \s -> s { pinnedWorkspaceMap = M.insert idx wtag cleared }
-  -- TODO: Shifting to this workspace is just used to force xmonad to 
-  -- trigger an event so that our log hook is called. Figure out how to 
+  pinWorkspace wtag idx
+  -- TODO: Shifting to this workspace is just used to force xmonad to
+  -- trigger an event so that our log hook is called. Figure out how to
   -- avoid needing to shift.
   withPinnedIndex W.shift idx
 
