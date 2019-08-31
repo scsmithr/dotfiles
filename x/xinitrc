@@ -17,9 +17,6 @@ esac
 xmodmap ~/.xmodmap
 xcape -e 'Control_L=Escape'
 
-# Disable middle mouse paste for gtk programs.
-gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
-
 dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
@@ -28,6 +25,7 @@ dunst&
 
 # Set up lockscreen
 xset s 300 5 # Lock after 5 minutes
-xss-lock -l -- i3lock -c 96A7A9&
+export XSECURELOCK_FONT="Source Code Pro"
+xss-lock -l -- xsecurelock&
 
 exec xmonad
