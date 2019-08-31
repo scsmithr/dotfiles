@@ -149,12 +149,23 @@
   (eshell "new"))
 
 (after! eshell
-        (add-hook 'eshell-mode-hook (lambda ()
-                                      (setq-local scroll-margin 0)))
-
         (defalias 'eshell/d 'dired)
         (defalias 'eshell/ff 'find-file)
         (defalias 'eshell/async 'async-shell-buffer)
+
+        (defun eshell/read-history ()
+          (interactive)
+          (insert (ido-completing-read "History: " (ring-elements eshell-history-ring))))
+
+        (add-hook 'eshell-mode-hook
+                  (lambda ()
+                    (setq-local scroll-margin 0)
+
+                    ;; Needs to be ran inside the hook since eshell-mode-map is
+                    ;; buffer local.
+                    ;;
+                    ;; See https://github.com/noctuid/general.el/issues/80
+                    (local-set-key (kbd "C-c h") 'eshell-mode-map)))
 
         (setq eshell-prompt-function #'eshell-default-prompt)
         (setq eshell-prompt-regexp "^.* > "))
