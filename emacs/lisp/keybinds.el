@@ -89,10 +89,10 @@ Treemacs buffers."
   (core/leader
    "ww" 'evil-window-vsplit
    "wh" 'evil-window-split
-   "w[" 'shrink-window-horizontally
-   "w]" 'enlarge-window-horizontally
-   "w{" 'shrink-window
-   "w}" 'enlarge-window
+   "Wh" 'shrink-window-horizontally
+   "Wl" 'enlarge-window-horizontally
+   "Wk" 'shrink-window
+   "Wj" 'enlarge-window
    "w=" 'balance-windows
    "." 'repeat)
   ;; Overwrite the default next window commands with one that skips treemacs.
