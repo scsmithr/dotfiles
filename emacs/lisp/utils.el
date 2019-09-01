@@ -148,6 +148,9 @@
   (interactive)
   (eshell "new"))
 
+(defun disable-completions-tramp ()
+  (when (file-remote-p default-directory) (company-mode -1)))
+
 (after! eshell
         (defalias 'eshell/d 'dired)
         (defalias 'eshell/ff 'find-file)
@@ -156,6 +159,8 @@
         (defun eshell/read-history ()
           (interactive)
           (insert (ido-completing-read "History: " (ring-elements eshell-history-ring))))
+
+        (add-hook 'eshell-mode-hook #'disable-completions-tramp)
 
         (add-hook 'eshell-mode-hook
                   (lambda ()
@@ -169,6 +174,11 @@
 
         (setq eshell-prompt-function #'eshell-default-prompt)
         (setq eshell-prompt-regexp "^.* > "))
+
+;; shell
+
+(after! shell
+        (add-hook 'shell-mode-hook #'disable-completions-tramp))
 
 ;; gcloud
 
