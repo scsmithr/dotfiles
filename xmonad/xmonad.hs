@@ -56,6 +56,7 @@ applicationKeys =
   [ ("M-<Return>", spawn myTerminal)
   , ("M-p"       , spawn "rofi -show run")
   , ("M-b"       , spawn "firefox")
+  , ("M-v"       , spawn "emacs")
   ]
 
 windowManagementKeys :: [(String, X ())]
