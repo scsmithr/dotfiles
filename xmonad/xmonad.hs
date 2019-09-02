@@ -222,7 +222,6 @@ primary = "#268bd2"
 urgent = "#cb4b16"
 
 -- config vars
--- myFocusedBorderColor = "#96A7A9"
 myFocusedBorderColor = "#c6c6c6"
 myUnfocusedBorderColor = "#F2E6CE"
 myBorderWidth = 1

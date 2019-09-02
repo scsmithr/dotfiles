@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mute_template="<fc=#96A7A9>(mute)</fc>"
+mute_template="(mute)"
 
 format_vol_status() {
     local curr
@@ -14,5 +14,5 @@ format_vol_status() {
     fi
 }
 
-echo " <fc=#96A7A9>vol:</fc> $(format_vol_status)"
+echo " vol: <fc=#96A7A9>$(format_vol_status)</fc>"
 

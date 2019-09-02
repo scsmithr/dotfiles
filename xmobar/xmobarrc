@@ -1,7 +1,7 @@
 Config {
     font = "xft:Source Code Pro:size=10:antialias=true",
     bgColor = "#FFFBEA",
-    fgColor = "#96A7A9",
+    fgColor = "#556b72",
     border = BottomB,
     borderColor = "#F2E6CE",
     borderWidth = 1,
