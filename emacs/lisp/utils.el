@@ -164,8 +164,6 @@
 
         (add-hook 'eshell-mode-hook
                   (lambda ()
-                    (setq-local scroll-margin 0)
-
                     ;; Needs to be ran inside the hook since eshell-mode-map is
                     ;; buffer local.
                     ;;
