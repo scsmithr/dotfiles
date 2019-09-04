@@ -5,17 +5,18 @@ xrdb ~/.Xresources
 
 case $HOSTNAME in
     "system22")
-        echo "Xft.dpi: 144" | xrdb -merge
-        echo "*dpi: 144" | xrdb -merge
+        dpi 144
         if [ -f ~/.icm/Y2XND_LQ156D1.icm ]; then
             xcalib ~/.icm/Y2XND_LQ156D1.icm
         fi
         ;;
+    "system7")
+        dpi 144
+        ;;
 esac
 
 # Change caplock to left control
-xmodmap ~/.xmodmap
-xcape -e 'Control_L=Escape'
+mm
 
 dbus-update-activation-environment --systemd DISPLAY
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
