@@ -8,6 +8,9 @@
 export PATH=$PATH:$HOME/.bin/:$HOME/.local/bin/
 
 export GOPATH=$HOME/.go
+export GO111MODULE=off
+export GOPROXY=direct
+
 export PATH=$PATH:$HOME/.go/bin
 export PATH=$PATH:/usr/local/go/bin
 
