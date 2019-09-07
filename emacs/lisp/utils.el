@@ -158,6 +158,7 @@
 
         (defun eshell/read-history ()
           (interactive)
+          (evil-insert 1)
           (insert (ido-completing-read "History: " (ring-elements eshell-history-ring))))
 
         (add-hook 'eshell-mode-hook #'disable-completions-tramp)
@@ -170,6 +171,8 @@
                     ;; See https://github.com/noctuid/general.el/issues/80
                     (local-set-key (kbd "C-c h") 'eshell/read-history)))
 
+        (setq eshell-history-size 1000)
+        (setq eshell-cmpl-cycle-completions nil)
         (setq eshell-prompt-function #'eshell-default-prompt)
         (setq eshell-prompt-regexp "^.* > "))
 
