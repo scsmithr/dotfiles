@@ -196,5 +196,14 @@
   :straight t
   :defer t)
 
+;; Common lisp
+
+(use-package slime
+  :straight t
+  :defer t
+  :config
+  (setq inferior-lisp-program "sbcl")
+  (setq slime-contribs '(slime-fancy)))
+
 (provide 'langs)
 ;;; langs.el ends here
