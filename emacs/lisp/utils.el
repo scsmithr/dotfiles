@@ -111,11 +111,19 @@
 
 ;; eshell
 
+(use-package shrink-path
+  :straight t
+  :commands shrink-path-prompt)
+
 (core/leader
  "ss" 'eshell
  "sn" 'eshell-new)
 
 (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
+  "TODO"
+  :group 'eshell)
+
+(defface eshell-prompt-short-pwd '((t :inherit font-lock-comment-face))
   "TODO"
   :group 'eshell)
 
@@ -132,17 +140,17 @@
       "")))
 
 (defun eshell-default-prompt ()
-  "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
-  (concat (if (bobp) "" "\n")
-          (let ((pwd (eshell/pwd)))
-            (propertize (if (equal pwd "~")
-                            pwd
-                          (abbreviate-file-name pwd))
-                        'face 'eshell-prompt-pwd))
-          (propertize (eshell--current-git-branch)
-                      'face 'eshell-prompt-git-branch)
-          (propertize " >" 'face (if (zerop eshell-last-command-status) 'success 'error))
-          " "))
+  "Generate the prompt string for eshell.  Use for `eshell-prompt-function'."
+  (let ((base/dir (shrink-path-prompt default-directory)))
+    (concat (propertize (car base/dir)
+                        'face 'eshell-prompt-short-pwd)
+            (propertize (cdr base/dir)
+                        'face 'eshell-prompt-pwd)
+            (propertize (eshell--current-git-branch)
+                        'face 'eshell-prompt-git-branch)
+            (propertize " >" 'face (if (zerop eshell-last-command-status) 'success 'error))
+            ;; needed for the input text to not have prompt face
+            (propertize " " 'face 'default))))
 
 (defun eshell-new ()
   (interactive)
