@@ -167,7 +167,10 @@
         (defun eshell/read-history ()
           (interactive)
           (evil-insert 1)
-          (insert (ido-completing-read "History: " (ring-elements eshell-history-ring))))
+          (insert (ido-completing-read "History: "
+                                       (mapcar #'string-trim
+                                               (delete-dups
+                                                (ring-elements eshell-history-ring))))))
 
         (add-hook 'eshell-mode-hook #'disable-completions-tramp)
 
