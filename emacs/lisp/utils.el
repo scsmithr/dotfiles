@@ -194,5 +194,18 @@
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
 
+;; Useful functions
+
+(defun rename-buffer-special (newname)
+  "Rename buffer to NEWNAME, wrapping NEWNAME in '*' characters when original name has them."
+  (interactive (list (read-string "Rename buffer (to new name): ")))
+  (let ((newname (if (string-prefix-p "*" (buffer-name))
+                     (format "*%s*" newname)
+                   newname)))
+    (rename-buffer newname t)))
+
+(core/leader
+ "rb" 'rename-buffer-special)
+
 (provide 'utils)
 ;;; utils.el ends here
