@@ -192,6 +192,13 @@
 (after! shell
         (add-hook 'shell-mode-hook #'disable-completions-tramp))
 
+;; dired
+
+(setq dired-listing-switches "-aBhl --group-directories-first")
+
+(core/leader
+ "dd" 'dired)
+
 ;; gcloud
 
 (use-package gcloud
