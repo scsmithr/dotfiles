@@ -99,9 +99,7 @@ Treemacs buffers."
   (define-key evil-window-map "C-w" #'evil-window-next-skip-treemacs)
   (define-key evil-window-map "w" #'evil-window-next-skip-treemacs)
   (define-key evil-motion-state-map (kbd "C-w w") #'evil-window-next-skip-treemacs)
-  (define-key evil-motion-state-map (kbd "C-w C-w") #'evil-window-next-skip-treemacs)
-  ;; rebind ctrl-p
-  (define-key evil-normal-state-map (kbd "C-p") #'projectile-find-file))
+  (define-key evil-motion-state-map (kbd "C-w C-w") #'evil-window-next-skip-treemacs))
 
 (use-package evil-commentary
   :straight t
