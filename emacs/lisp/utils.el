@@ -172,6 +172,12 @@
                                                (delete-dups
                                                 (ring-elements eshell-history-ring))))))
 
+        (defun eshell/clear ()
+          "Clear the eshell buffer."
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (eshell-send-input)))
+
         (add-hook 'eshell-mode-hook #'disable-completions-tramp)
 
         (add-hook 'eshell-mode-hook
@@ -181,6 +187,9 @@
                     ;;
                     ;; See https://github.com/noctuid/general.el/issues/80
                     (local-set-key (kbd "C-c h") 'eshell/read-history)))
+
+        (dolist (s (list "htop" "vim" "nvim" "tmux"))
+          (add-to-list 'eshell-visual-commands s))
 
         (setq eshell-history-size 1000)
         (setq eshell-cmpl-cycle-completions nil)
