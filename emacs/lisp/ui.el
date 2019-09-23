@@ -127,7 +127,7 @@ ALPHA (a float between 0 and 1)."
   (treemacs-git-mode 'deferred)
   (face-attr 'treemacs-fringe-indicator-face :background (doom-color 'blue))
   (face-attr 'treemacs-directory-face :foreground (doom-color 'blue))
-  (face-attr 'treemacs-term-node-face :foreground (doom-color 'blue) :weight 'normal)
+  (face-attr 'treemacs-term-node-face :foreground (doom-color 'blue) :weight 'bold)
   (face-attr 'treemacs-git-modified-face :foreground (doom-color 'yellow))
   (face-attr 'treemacs-git-untracked-face :foreground (doom-color 'green))
   (face-attr 'treemacs-git-ignored-face :foreground (doom-color 'fg-alt))

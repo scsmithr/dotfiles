@@ -188,9 +188,6 @@
                     ;; See https://github.com/noctuid/general.el/issues/80
                     (local-set-key (kbd "C-c h") 'eshell/read-history)))
 
-        (dolist (s (list "htop" "vim" "nvim" "tmux"))
-          (add-to-list 'eshell-visual-commands s))
-
         (setq eshell-history-size 1000)
         (setq eshell-cmpl-cycle-completions nil)
         (setq eshell-prompt-function #'eshell-default-prompt)
