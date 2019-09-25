@@ -19,6 +19,10 @@
   :straight t
   :commands go-rename)
 
+(use-package go-guru
+  :straight t
+  :after go-mode)
+
 (core/local 'go-mode-map
             "rn" 'go-rename
             "ta" 'go/go-tests-all
