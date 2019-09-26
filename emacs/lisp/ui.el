@@ -100,8 +100,8 @@ ALPHA (a float between 0 and 1)."
   (load-theme 'doom-solarized-light t)
   (face-attr 'fringe :background (doom-color 'bg))
   (face-attr 'whitespace-tab :background "inherit")
-  (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.15))
-  (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.15))
+  (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))
+  (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'whitespace-line
              :weight 'normal
              :foreground 'unspecified)
