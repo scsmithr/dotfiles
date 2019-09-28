@@ -44,6 +44,10 @@
 (setq-default hscroll-margin 0)
 (setq-default hscroll-step 1)
 
+;; Mouse scrolling
+(setq mouse-wheel-scroll-amount '(3))
+(setq mouse-wheel-progressive-speed nil)
+
 ;; ediff settings
 (winner-mode t)
 (add-hook 'ediff-quit-hook #'winner-undo)
