@@ -15,19 +15,12 @@
               (setq company-backends (delete 'company-capf company-backends))))
   (setq gofmt-command "goimports"))
 
-(use-package go-rename
-  :straight t
-  :commands go-rename)
-
-(use-package go-guru
-  :straight t
-  :after go-mode)
-
 (core/local 'go-mode-map
-            "rn" 'go-rename
+            "rn" 'lsp-rename
             "ta" 'go/go-tests-all
             "tv" 'go/go-tests-all-verbose
-            "v" 'go/go-vendor)
+            "v" 'go/go-vendor
+            "fr" 'lsp-find-references)
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")
@@ -38,7 +31,7 @@
 (defun go/go-tests (args)
   (interactive)
   (compilation-start (concat "cd " (projectile-project-root)
-                             " && " "go test " args)
+                             " && go test " args)
                      nil (lambda (n) go-test-buffer-name) nil))
 
 (defun go/go-tests-all ()
@@ -49,11 +42,10 @@
   (interactive)
   (go/go-tests "./... -v"))
 
-
 (defun go/go-vendor ()
   (interactive)
   (compilation-start (concat "cd " (projectile-project-root)
-                             " && GO111MODULE=on go mod vendor")
+                             " && go mod vendor")
                      nil (lambda (n) go-vendor-buffer-name) nil))
 
 ;; Haskell
