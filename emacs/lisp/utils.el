@@ -208,7 +208,10 @@
 ;; gcloud
 
 (use-package gcloud
-  :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
+  :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el")
+  :init
+  (core/leader
+   "ags" 'gcloud-instance-shell))
 
 ;; Useful functions
 
