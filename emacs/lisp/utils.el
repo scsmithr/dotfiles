@@ -211,7 +211,8 @@
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el")
   :init
   (core/leader
-   "ags" 'gcloud-instance-shell))
+   "ags" 'gcloud-instance-shell
+   "age" 'gcloud-instance-eshell))
 
 ;; Useful functions
 
