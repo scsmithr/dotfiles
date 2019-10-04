@@ -39,8 +39,12 @@
 
 (after! org
         (face-attr 'org-meta-line :foreground (doom-color 'fg-alt))
-        (face-attr 'org-block-begin-line :foreground (doom-color 'fg-alt))
-        (face-attr 'org-block-end-line :foreground (doom-color 'fg-alt))
+        (face-attr 'org-block-begin-line
+                   :foreground (doom-color 'fg-alt)
+                   :background (doom-blend 'yellow 'bg 0.04))
+        (face-attr 'org-block-end-line
+                   :foreground (doom-color 'fg-alt)
+                   :background (doom-blend 'yellow 'bg 0.04))
         (face-attr 'org-done :foreground (doom-color 'green))
         (face-attr 'org-todo :foreground (doom-color 'yellow)))
 

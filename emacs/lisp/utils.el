@@ -188,6 +188,11 @@
                     ;; See https://github.com/noctuid/general.el/issues/80
                     (local-set-key (kbd "C-c h") 'eshell/read-history)))
 
+        (add-hook 'eshell-mode-hook
+                  (lambda ()
+                    (dolist (p '("watch" "htop"))
+                            (add-to-list 'eshell-visual-commands p))))
+
         (setq eshell-history-size 1000)
         (setq eshell-cmpl-cycle-completions nil)
         (setq eshell-prompt-function #'eshell-default-prompt)

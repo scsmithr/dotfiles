@@ -176,7 +176,7 @@
 
 (after! markdown-mode
         (face-attr markdown-pre-face :background (doom-blend 'yellow 'bg 0.04))
-        (face-attr 'markdown-code-face :background (doom-blend 'yellow 'bg 0.08))
+        (face-attr 'markdown-code-face :background (doom-blend 'yellow 'bg 0.04))
         (face-attr markdown-header-delimiter-face :foreground (doom-color 'fg-alt))
         (face-attr markdown-header-face-1 :inherit 'outline-1)
         (face-attr markdown-header-face-2 :inherit 'outline-2)

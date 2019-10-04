@@ -131,14 +131,14 @@ ALPHA (a float between 0 and 1)."
   (treemacs-git-mode 'deferred)
   (face-attr 'treemacs-fringe-indicator-face :background (doom-color 'blue))
   (face-attr 'treemacs-directory-face :foreground (doom-color 'blue))
-  (face-attr 'treemacs-term-node-face :foreground (doom-color 'blue) :weight 'bold)
+  (face-attr 'treemacs-term-node-face :foreground (doom-color 'violet))
   (face-attr 'treemacs-git-modified-face :foreground (doom-color 'yellow))
   (face-attr 'treemacs-git-untracked-face :foreground (doom-color 'green))
   (face-attr 'treemacs-git-ignored-face :foreground (doom-color 'fg-alt))
   (face-attr 'treemacs-root-face
              :height 110
              :weight 'normal
-             :foreground (doom-color 'blue))
+             :foreground (doom-color 'violet))
   (add-hook 'treemacs-mode-hook (lambda () (setq mode-line-format " Seanmacs")))
   (core/leader
    "tt" 'treemacs-select-window
