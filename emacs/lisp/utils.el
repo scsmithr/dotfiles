@@ -146,8 +146,9 @@
                         'face 'eshell-prompt-short-pwd)
             (propertize (cdr base/dir)
                         'face 'eshell-prompt-pwd)
-            (propertize (eshell--current-git-branch)
-                        'face 'eshell-prompt-git-branch)
+            (unless (file-remote-p default-directory)
+              (propertize (eshell--current-git-branch)
+                        'face 'eshell-prompt-git-branch))
             (propertize " >" 'face (if (zerop eshell-last-command-status) 'success 'error))
             ;; needed for the input text to not have prompt face
             (propertize " " 'face 'default))))
