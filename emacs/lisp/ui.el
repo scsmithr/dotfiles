@@ -115,6 +115,18 @@ ALPHA (a float between 0 and 1)."
              :foreground (doom-color 'cyan))
   (face-attr 'line-number :foreground (doom-color 'fg-alt)))
 
+(defun treemacs-set-modeline ()
+  (setq mode-line-format " Seanmacs"))
+
+(defun hide-fringes ()
+  "Remove fringes in currnent window."
+  (when (display-graphic-p)
+    (set-window-fringes nil 0 0)))
+
+(defun treemacs-set-background ()
+  (setq buffer-face-mode-face `(:background ,(doom-color 'bg-alt)))
+  (buffer-face-mode 1))
+
 (use-package treemacs
   :straight t
   :after doom-themes
@@ -127,11 +139,8 @@ ALPHA (a float between 0 and 1)."
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode t)
   (treemacs-git-mode 'deferred)
-  (face-attr 'treemacs-fringe-indicator-face :background (doom-color 'blue))
   (face-attr 'treemacs-directory-face :foreground (doom-color 'blue))
-  (face-attr 'treemacs-term-node-face :foreground (doom-color 'violet))
   (face-attr 'treemacs-git-modified-face :foreground (doom-color 'yellow))
   (face-attr 'treemacs-git-untracked-face :foreground (doom-color 'green))
   (face-attr 'treemacs-git-ignored-face :foreground (doom-color 'fg-alt))
@@ -139,7 +148,10 @@ ALPHA (a float between 0 and 1)."
              :height 110
              :weight 'normal
              :foreground (doom-color 'violet))
-  (add-hook 'treemacs-mode-hook (lambda () (setq mode-line-format " Seanmacs")))
+  (add-hook 'treemacs-mode-hook #'treemacs-set-modeline)
+  (add-hook 'treemacs-mode-hook #'hide-fringes)
+  (advice-add #'treemacs-select-window :after #'hide-fringes)
+  (add-hook 'treemacs-mode-hook #'treemacs-set-background)
   (core/leader
    "tt" 'treemacs-select-window
    "te" 'treemacs-edit-workspaces
@@ -152,16 +164,16 @@ ALPHA (a float between 0 and 1)."
           :icon-directory (f-join treemacs-dir "icons/default")
           :config
           (progn
-            (treemacs-create-icon :file "root.png"        :extensions (root)       :fallback "")
-            (treemacs-create-icon :file "dir-closed.png"  :extensions (dir-closed) :fallback (propertize "+ " 'face 'treemacs-term-node-face))
-            (treemacs-create-icon :file "dir-open.png"    :extensions (dir-open)   :fallback (propertize "- " 'face 'treemacs-term-node-face))
-            (treemacs-create-icon :file "tags-leaf.png"   :extensions (tag-leaf)   :fallback (propertize "* " 'face 'font-lock-constant-face))
-            (treemacs-create-icon :file "tags-open.png"   :extensions (tag-open)   :fallback (propertize "* " 'face 'font-lock-string-face))
-            (treemacs-create-icon :file "tags-closed.png" :extensions (tag-closed) :fallback (propertize "* " 'face 'font-lock-string-face))
-            (treemacs-create-icon :file "error.png"       :extensions (error)      :fallback (propertize "* " 'face 'font-lock-string-face))
-            (treemacs-create-icon :file "warning.png"     :extensions (warning)    :fallback (propertize "* " 'face 'font-lock-string-face))
-            (treemacs-create-icon :file "info.png"        :extensions (info)       :fallback (propertize "* " 'face 'font-lock-string-face))
-            (treemacs-create-icon :file "txt.png"         :extensions (fallback)   :fallback "")))
+            (treemacs-create-icon :file "" :extensions (root) :fallback " ")
+            (treemacs-create-icon :file "" :extensions (dir-closed) :fallback "")
+            (treemacs-create-icon :file "" :extensions (dir-open) :fallback "")
+            (treemacs-create-icon :file "" :extensions (tag-leaf) :fallback "")
+            (treemacs-create-icon :file "" :extensions (tag-open) :fallback "")
+            (treemacs-create-icon :file "" :extensions (tag-closed) :fallback "")
+            (treemacs-create-icon :file "" :extensions (error) :fallback "")
+            (treemacs-create-icon :file "" :extensions (warning) :fallback "")
+            (treemacs-create-icon :file "" :extensions (info) :fallback "")
+            (treemacs-create-icon :file "" :extensions (fallback) :fallback "")))
         (treemacs-load-theme "minimal"))
 
 (use-package treemacs-evil
