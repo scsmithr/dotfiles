@@ -167,7 +167,14 @@
 
         (defun eshell/read-history ()
           (interactive)
-          (eshell-interrupt-process)
+          ;; Only reset prompt if the cursor is not at the end or there's
+          ;; already some input.
+          (let ((curr-point (point)))
+            (eshell-bol)
+            (let ((no-input (eq (- curr-point (point)) 0))
+                  (at-end (or (eobp) (eq (- (point-max) (point)) 1))))
+              (unless (and no-input at-end)
+                (eshell-reset))))
           (evil-insert 1)
           (insert (ido-completing-read
                    "History: "
