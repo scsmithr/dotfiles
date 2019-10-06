@@ -57,6 +57,9 @@
   (setq haskell-stylish-on-save t)
   (setq haskell-mode-stylish-haskell-path "brittany"))
 
+(core/local 'haskell-mode-map
+            "o" 'run-haskell)
+
 ;; Octave
 
 (use-package octave
