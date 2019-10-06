@@ -127,19 +127,6 @@
           ('errored (propertize "!!!  " 'face 'modeline-status-error))
           ('interrupted (propertize "---  " 'face 'modeline-status-grayed-out)))))
 
-(defun shorten-directory (dir max-length)
-  "Show up to MAX-LENGTH characters of a directory name DIR."
-  (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
-        (output ""))
-    (when (and path (equal "" (car path)))
-      (setq path (cdr path)))
-    (while (and path (< (length output) (- max-length 4)))
-      (setq output (concat (car path) "/" output))
-      (setq path (cdr path)))
-    (when path
-      (setq output (concat ".../" output)))
-    output))
-
 (defun modeline-segment-modified-or-readonly ()
   "Displays a color-coded buffer modification or readonly
 indicator in the modeline."
@@ -156,7 +143,7 @@ indicator in the modeline."
 
 (defun modeline-segment-dir ()
   "Display shortened working directory."
-  (propertize (shorten-directory default-directory 20)))
+  (propertize (shrink-path-dirs default-directory)))
 
 (defun modeline-segment-position ()
   "Displays the current cursor position in the modeline."

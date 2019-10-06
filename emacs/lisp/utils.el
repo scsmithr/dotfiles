@@ -29,9 +29,6 @@
 (use-package flycheck
   :straight t
   :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode)
-  (add-hook 'sh-mode-hook 'flycheck-mode)
-  (add-hook 'go-mode 'flycheck-mode)
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-indication-mode 'right-fringe)
@@ -113,7 +110,7 @@
 
 (use-package shrink-path
   :straight t
-  :commands shrink-path-prompt)
+  :commands (shrink-path-prompt shrink-path-dirs))
 
 (core/leader
  "ss" 'eshell
