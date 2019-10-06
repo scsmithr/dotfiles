@@ -148,7 +148,7 @@
                         'face 'eshell-prompt-pwd)
             (unless (file-remote-p default-directory)
               (propertize (eshell--current-git-branch)
-                        'face 'eshell-prompt-git-branch))
+                          'face 'eshell-prompt-git-branch))
             (propertize " >" 'face (if (zerop eshell-last-command-status) 'success 'error))
             ;; needed for the input text to not have prompt face
             (propertize " " 'face 'default))))
@@ -167,11 +167,13 @@
 
         (defun eshell/read-history ()
           (interactive)
+          (eshell-interrupt-process)
           (evil-insert 1)
-          (insert (ido-completing-read "History: "
-                                       (mapcar #'string-trim
-                                               (delete-dups
-                                                (ring-elements eshell-history-ring))))))
+          (insert (ido-completing-read
+                   "History: "
+                   (mapcar #'string-trim
+                           (delete-dups
+                            (ring-elements eshell-history-ring))))))
 
         (defun eshell/clear ()
           "Clear the eshell buffer."
@@ -192,7 +194,7 @@
         (add-hook 'eshell-mode-hook
                   (lambda ()
                     (dolist (p '("watch" "htop"))
-                            (add-to-list 'eshell-visual-commands p))))
+                      (add-to-list 'eshell-visual-commands p))))
 
         (setq eshell-history-size 1000)
         (setq eshell-cmpl-cycle-completions nil)

@@ -120,10 +120,11 @@ Treemacs buffers."
   :straight t
   :config (global-evil-surround-mode 1))
 
-(defun async-shell-buffer (args)
+(defun async-shell-buffer (program &rest args)
   (interactive)
-  (let ((output-buffer (concat "*" args "*")))
-    (async-shell-command args output-buffer)))
+  (let* ((command (string-join (append (list program) args) " "))
+         (output-buffer (concat "*" command "*")))
+    (async-shell-command command output-buffer)))
 
 (evil-define-command evil:shell (args)
   (interactive "<sh>")
