@@ -74,13 +74,13 @@
 
 ;; Rust
 
-(use-package rustic
+(use-package rust-mode
   :straight t
   :defer t
   :config
-  (setq rustic-format-on-save t)
-  (setq rustic-format-trigger 'on-save)
-  (setq lsp-rust-clippy-preference "on"))
+  (setq rust-format-on-save t)
+  (setq lsp-rust-clippy-preference "on")
+  :hook (rust-mode . lsp))
 
 ;; Typescript
 
