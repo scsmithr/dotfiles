@@ -57,7 +57,7 @@
  ("protobuf" . "b9f405ae46036860a4e73e167bee3800dfe53a9e")
  ("restclient.el" . "422ee8d8b077dffe65706a0f027ed700b84746bc")
  ("ripgrep.el" . "40e871dcc4519a70981e9f28acea304692a60978")
- ("rust-mode" . "af84c0fe9ec13e45f6b7f07caf144607d0b82fca")
+ ("rustic" . "89a68dc847de07b66670e458e84ef3987704a060")
  ("s.el" . "03410e6a7a2b11e47e1fea3b7d9899c7df26435e")
  ("seq" . "095fb15a3baa082079799dd36b6caccdb062cb90")
  ("shrink-path.el" . "c14882c8599aec79a6e8ef2d06454254bb3e1e41")
@@ -74,5 +74,6 @@
  ("use-package" . "4714d73b61bdb378f6e9e3f3838cae1abbf65ea0")
  ("web-mode" . "a31eb8592f09d789c4b08ccecfdaca6fd2f06a69")
  ("with-editor" . "45c29f9bfb7f2df93426ce1571e2f4f41ed4e492")
+ ("xterm-color" . "12296bb1f0166a81b7e602493ed81e04d3381989")
  ("yasnippet" . "d91dd66f2aed9bbaef32813a68b105ea77e83890"))
 :alpha
