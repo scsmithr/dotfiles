@@ -217,5 +217,12 @@
   :after treemacs projectile
   :straight t)
 
+(use-package xref
+  :straight (xref :type built-in)
+  :config
+  (shackle '(("^\\*xref"
+              :action seanmacs/display-buffer-bottom
+              :height 0.2))))
+
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here
