@@ -26,18 +26,6 @@
 ;; Wrap column
 (setq-default fill-column 80)
 
-;; Whitespace stuff
-(require 'whitespace)
-(setq whitespace-line-column 80)
-(setq whitespace-style '(
-                         face
-                         space-mark
-                         tab-mark lines-tail
-                         trailing
-                         tabs
-                         spaces))
-(add-hook 'prog-mode-hook 'whitespace-mode)
-
 ;; Scrolling
 (setq-default scroll-step 1
               scroll-margin 0
@@ -81,13 +69,25 @@
 ;; Don't wrap lines
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
+(use-package whitespace
+  :straight (whitespace :type built-in)
+  :config
+  (setq whitespace-line-column 80)
+  (setq whitespace-style '(
+                           face
+                           space-mark
+                           tab-mark lines-tail
+                           trailing
+                           tabs
+                           spaces))
+  (add-hook 'prog-mode-hook 'whitespace-mode))
+
 (use-package ibuffer
   :straight (ibuffer :type built-in)
   :init
   (core/leader
    "ob" 'ibuffer))
 
-;; Auto detect indentation type/level
 (use-package dtrt-indent
   :straight t
   :init
@@ -98,7 +98,6 @@
                '(web-mode javascript web-mode-code-indent-offset))
   (dtrt-indent-global-mode 1))
 
-;; Projectile
 (use-package projectile
   :straight t
   :init
