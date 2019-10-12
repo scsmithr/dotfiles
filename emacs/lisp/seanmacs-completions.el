@@ -1,11 +1,16 @@
-;;; completions.el --- Completions
+;;; seanmacs-completions.el --- Completions -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Completion configuration.
+
+;;; Code:
 
 (use-package company
   :straight t
   :config
-  (setq company-frontends '(company-posframe-frontend))
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.2)
+  (setq company-frontends '(company-posframe-frontend)
+        company-minimum-prefix-length 1
+        company-idle-delay 0.2)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   (setq company-backends (delete 'company-dabbrev company-backends))
   :init
@@ -24,9 +29,9 @@
 (use-package lsp-mode
   :straight t
   :config
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-auto-guess-root t)
-  (setq lsp-response-timeout 2)
+  (setq lsp-prefer-flymake nil
+        lsp-auto-guess-root t
+        lsp-response-timeout 2)
   :commands lsp)
 
 (use-package lsp-ui
@@ -40,5 +45,5 @@
         lsp-ui-flycheck-enable t)
   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
-(provide 'completions)
-;;; completions.el ends here
+(provide 'seanmacs-completions)
+;;; seanmacs-completions.el ends here

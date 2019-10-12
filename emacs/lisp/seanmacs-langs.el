@@ -1,7 +1,9 @@
-;;; langs.el --- Language stuff
-;;; Code:
+;;; seanmacs-langs.el --- Langs -*- lexical-binding: t; -*-
 
-;; Go
+;;; Commentary:
+;; Language configuration.
+
+;;; Code:
 
 (use-package go-mode
   :straight t
@@ -63,6 +65,7 @@
 ;; Octave
 
 (use-package octave
+  :straight (octave :type built-in)
   :defer t
   :mode ("\\.m\\'" . octave-mode))
 
@@ -105,7 +108,6 @@
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
 (use-package tide
-  :init
   :straight t
   :after (web-mode company flycheck))
 
@@ -132,9 +134,6 @@
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
         web-mode-enable-auto-indentation nil)
-  (face-attr 'web-mode-current-element-highlight-face
-             :weight 'bold
-             :background (doom-transparentize 'cyan 0.5))
   (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
   (add-hook 'web-mode-hook
             (lambda ()
@@ -155,9 +154,6 @@
   :straight t
   :defer t
   :config
-  ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
-  ;; to have it set to some default color, isn't easy to read.
-  (face-attr 'elixir-atom-face :foreground (doom-color 'blue))
   (add-hook 'elixir-mode-hook 'alchemist-mode)
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
@@ -170,20 +166,6 @@
 (core/local 'elixir-mode-map
             "mc" 'alchemist-mix-compile
             "mr" 'alchemist-mix-run)
-
-;; Markdown
-
-(after! markdown-mode
-        (face-attr markdown-pre-face :background (doom-blend 'yellow 'bg 0.04))
-        (face-attr 'markdown-code-face :background (doom-blend 'yellow 'bg 0.04))
-        (face-attr markdown-header-delimiter-face :foreground (doom-color 'fg-alt))
-        (face-attr markdown-header-face-1 :inherit 'outline-1)
-        (face-attr markdown-header-face-2 :inherit 'outline-2)
-        (face-attr markdown-header-face-3 :inherit 'outline-3)
-        (face-attr markdown-header-face-4 :inherit 'outline-4)
-        (face-attr markdown-header-face-5 :inherit 'outline-5)
-        (face-attr markdown-header-face-6 :inherit 'outline-6)
-        (flyspell-mode 1))
 
 ;; Protobuf
 
@@ -200,5 +182,5 @@
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy)))
 
-(provide 'langs)
-;;; langs.el ends here
+(provide 'seanmacs-langs)
+;;; seanmacs-langs.el ends here

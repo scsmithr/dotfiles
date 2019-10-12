@@ -1,4 +1,9 @@
-;; Mode line setup
+;;; seanmacs-modeline.el --- Modeline -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Modeline configuration.
+
+;;; Code:
 
 (defgroup modeline nil
   "A minimal modeline configuration inspired by doom-modeline."
@@ -244,5 +249,6 @@ indicator in the modeline."
       ;; Restore the original modeline format
       (setq-default modeline-format modeline--default-modeline))))
 
-(provide 'modeline)
+(provide 'seanmacs-modeline)
+;;; seanmacs-modeline.el ends here
 

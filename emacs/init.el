@@ -1,3 +1,11 @@
+
+;;; init.el --- Init -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Emacs configuration.
+
+;;; Code:
+
 ;; Hide some things.
 ;; Do this first so that I never see the menu bar.
 (menu-bar-mode -1)
@@ -38,50 +46,85 @@
   "Load BODY after TARGET."
   `(with-eval-after-load ',target ,@body))
 
-(defun face-attr (face &rest args)
-  (apply #'set-face-attribute face nil args))
-
 (defun set-evil-initial-state (modes state)
   "Set the initialize STATE of MODES using `evil-set-initial-state'."
   (declare (indent defun))
   (after! evil
-    (if (listp modes)
-        (dolist (mode modes)
-          (evil-set-initial-state mode state))
-      (evil-set-initial-state modes state))))
+          (if (listp modes)
+              (dolist (mode modes)
+                (evil-set-initial-state mode state))
+            (evil-set-initial-state modes state))))
 
-;; Core configuration
+(defun seanmacs/shackle (rules)
+  "Display buffers using RULES."
+  (dolist (rule rules)
+    (let* ((condition (car rule))
+           (plist (cdr rule))
+           (action (or (plist-get plist :action) #'seanmacs/display-buffer-below))
+           (height (or (plist-get plist :height) #'fit-window-to-buffer))
+           (alist `(window-height . ,height)))
+      (if (symbolp condition)
+          (add-to-list
+           'display-buffer-alist
+           `((lambda (buffer &optional action)
+               (eq (quote ,condition)
+                   (buffer-local-value 'major-mode (get-buffer buffer))))
+             ,action ,alist))
+        (add-to-list 'display-buffer-alist `(,condition ,action ,alist))))))
 
-(use-package keybinds
+(defalias 'shackle 'seanmacs/shackle)
+
+(defun seanmacs/display-buffer-below (buffer alist)
+  "Display BUFFER below current, using ALIST."
+  (when-let (window (display-buffer-below-selected buffer alist))
+    (select-window window)))
+
+(defun seanmacs/display-buffer-bottom (buffer alist)
+  "Display BUFFER at the bottom, using ALIST."
+  (when-let (window (display-buffer-at-bottom buffer alist))
+    (select-window window)))
+
+(use-package seanmacs-keybinds
   :load-path "lisp"
   :config
   (core/init-leader))
 
-(use-package ui
+(use-package seanmacs-funcs
   :load-path "lisp")
 
-(use-package completions
+(use-package seanmacs-theme
   :load-path "lisp")
 
-(use-package utils
+(use-package seanmacs-windows
   :load-path "lisp")
 
-(use-package orgmode
+(use-package seanmacs-edit
   :load-path "lisp")
 
-(use-package modeline
+(use-package seanmacs-completions
+  :load-path "lisp")
+
+(use-package seanmacs-utils
+  :load-path "lisp")
+
+(use-package seanmacs-version-control
+  :load-path "lisp")
+
+(use-package seanmacs-org
+  :load-path "lisp")
+
+(use-package seanmacs-modeline
   :load-path "lisp"
   :config
   (modeline-mode))
 
-(use-package langs
+(use-package seanmacs-langs
   :load-path "lisp")
 
-(use-package email
-  :load-path "lisp"
-  :init
-  (core/leader
-   "a e" 'mu4e))
+(use-package seanmacs-shell
+  :load-path "lisp")
 
-;; Useful functions
+(use-package seanmacs-email
+  :load-path "lisp")
 
+;;; init.el ends here
