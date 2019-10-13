@@ -57,7 +57,9 @@
   :defer t
   :config
   (setq haskell-stylish-on-save t)
-  (setq haskell-mode-stylish-haskell-path "brittany"))
+  (setq haskell-mode-stylish-haskell-path "brittany")
+  (shackle '(("^\\*haskell\\*"
+              :height 0.5))))
 
 (core/local 'haskell-mode-map
             "o" 'run-haskell)

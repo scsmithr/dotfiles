@@ -71,8 +71,8 @@
     (interactive)
     (eshell "new"))
 
-  (defalias 'eshell/d 'dired)
-  (defalias 'eshell/ff 'find-file)
+  (defalias 'eshell/d 'dired-other-window)
+  (defalias 'eshell/ff 'find-file-other-window)
   (defalias 'eshell/async 'async-shell-buffer)
 
   (defun eshell/read-history ()
