@@ -72,6 +72,7 @@ ALPHA (a float between 0 and 1)."
           (face-attr 'flx-highlight-face :foreground (doom-color 'magenta)))
 
   (after! treemacs
+          (face-attr 'treemacs-fringe-indicator-face :background (doom-color 'blue))
           (face-attr 'treemacs-directory-face :foreground (doom-color 'blue))
           (face-attr 'treemacs-git-modified-face :foreground (doom-color 'yellow))
           (face-attr 'treemacs-git-untracked-face :foreground (doom-color 'green))

@@ -158,15 +158,6 @@
 (defun treemacs-set-modeline ()
   (setq mode-line-format " Seanmacs"))
 
-(defun hide-fringes ()
-  "Remove fringes in currnent window."
-  (when (display-graphic-p)
-    (set-window-fringes nil 0 0)))
-
-(defun treemacs-set-background ()
-  (setq buffer-face-mode-face `(:background ,(doom-color 'bg-alt)))
-  (buffer-face-mode 1))
-
 (use-package treemacs
   :straight t
   :after doom-themes
@@ -186,10 +177,7 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-git-mode 'deferred)
-  (add-hook 'treemacs-mode-hook #'treemacs-set-modeline)
-  (add-hook 'treemacs-mode-hook #'hide-fringes)
-  (advice-add #'treemacs-select-window :after #'hide-fringes)
-  (add-hook 'treemacs-mode-hook #'treemacs-set-background))
+  (add-hook 'treemacs-mode-hook #'treemacs-set-modeline))
 
 (after! treemacs
         (treemacs-create-theme "minimal"
