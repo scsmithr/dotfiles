@@ -24,7 +24,6 @@
   :straight t)
 
 (use-package dired
-  :straight (dired :type built-in)
   :init
   (core/leader
    "dd" 'dired)
@@ -32,7 +31,6 @@
   (setq dired-listing-switches "-aBhl --group-directories-first"))
 
 (use-package help
-  :straight (help :type built-in)
   :config
   (shackle '(("^\\*Help\\*$" :height 0.3))))
 

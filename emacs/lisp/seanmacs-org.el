@@ -10,7 +10,6 @@
  "x a" 'org-agenda)
 
 (use-package org
-  :straight (org :type built-in)
   :config
   (setq org-default-notes-file "~/notes/refile.org"
         org-agenda-files (list "~/notes/")

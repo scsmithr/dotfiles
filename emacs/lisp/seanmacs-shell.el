@@ -21,7 +21,6 @@
   :commands (shrink-path-prompt shrink-path-dirs))
 
 (use-package eshell
-  :straight (eshell :type built-in)
   :init
   (core/leader
    "ss" 'eshell
@@ -112,7 +111,6 @@
         eshell-prompt-regexp "^.* > "))
 
 (use-package shell
-  :straight (shell :type built-in)
   :config
   (shackle '((shell-mode
               :action seanmacs/display-buffer-bottom

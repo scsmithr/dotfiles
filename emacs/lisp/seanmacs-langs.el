@@ -67,7 +67,6 @@
 ;; Octave
 
 (use-package octave
-  :straight (octave :type built-in)
   :defer t
   :mode ("\\.m\\'" . octave-mode))
 

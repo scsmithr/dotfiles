@@ -70,7 +70,6 @@
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
 (use-package whitespace
-  :straight (whitespace :type built-in)
   :config
   (setq whitespace-line-column 80)
   (setq whitespace-style '(
@@ -83,7 +82,6 @@
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
 (use-package ibuffer
-  :straight (ibuffer :type built-in)
   :init
   (core/leader
    "ob" 'ibuffer))
@@ -205,7 +203,6 @@
   :straight t)
 
 (use-package xref
-  :straight (xref :type built-in)
   :config
   (shackle '(("^\\*xref"
               :action seanmacs/display-buffer-bottom

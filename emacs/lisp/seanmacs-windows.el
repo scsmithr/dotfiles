@@ -16,7 +16,6 @@
    "." 'repeat)
 
 (use-package winner
-  :straight (winner :type built-in)
   :config
   (core/leader
    "wu" 'winner-undo)
