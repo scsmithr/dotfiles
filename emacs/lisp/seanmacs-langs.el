@@ -184,5 +184,18 @@
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy)))
 
+;; Julia
+
+(use-package julia-mode
+  :straight t
+  :interpreter "julia"
+  :defer t
+  :config
+  (add-hook 'julia-mode-hook 'julia-repl-mode))
+
+(use-package julia-repl
+  :straight t
+  :defer t)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

@@ -31,17 +31,19 @@
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   (append org-babel-load-languages
-           '((shell . t)))))
-
-(use-package ob-restclient
-  :straight t)
+  (defadvice org-babel-execute-src-block (around load-language nil activate)
+    "Load language if needed"
+    (let ((language (org-element-property :language (org-element-at-point))))
+      (unless (cdr (assoc (intern language) org-babel-load-languages))
+        (add-to-list 'org-babel-load-languages (cons (intern language) t))
+        (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+      ad-do-it)))
 
 (use-package ob-http
   :straight t)
 
+(use-package gnuplot
+  :straight t)
+
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here
-
