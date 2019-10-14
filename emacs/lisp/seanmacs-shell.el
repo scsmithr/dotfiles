@@ -27,10 +27,10 @@
    "sn" 'eshell-new)
   (shackle '((eshell-mode
               :action seanmacs/display-buffer-bottom
-              :height 0.2)
+              :height 0.3)
              ("^\\*eshell"
               :action seanmacs/display-buffer-bottom
-              :height 0.2)))
+              :height 0.3)))
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."

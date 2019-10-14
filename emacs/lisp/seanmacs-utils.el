@@ -14,7 +14,7 @@
    "ad" 'docker)
   (shackle '(("^\\*docker"
               :action seanmacs/display-buffer-bottom
-              :height 0.2))))
+              :height 0.3))))
 
 (use-package docker-tramp
   :straight t

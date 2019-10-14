@@ -196,5 +196,15 @@
   :straight t
   :defer t)
 
+;; C/C++
+
+(use-package ccls
+  :straight t
+  :defer t
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda ()
+           (require 'ccls)
+           (lsp))))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

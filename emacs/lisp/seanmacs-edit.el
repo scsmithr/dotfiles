@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(core/leader
+   "of" 'find-file)
+
 (setq inhibit-startup-message t
       use-dialog-box nil
       inihibit-startup-echo-area-message t)
@@ -111,7 +114,7 @@
   :config
   (shackle '(("^\\*ripgrep-search\\*"
               :action seanmacs/display-buffer-bottom
-              :height 0.2))))
+              :height 0.3))))
 
 (use-package flycheck
   :straight t
@@ -120,7 +123,7 @@
    "f" flycheck-command-map)
   (shackle '(("^\\*Flycheck errors"
               :action seanmacs/display-buffer-bottom
-              :height 0.2)))
+              :height 0.3)))
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe))
@@ -206,7 +209,7 @@
   :config
   (shackle '(("^\\*xref"
               :action seanmacs/display-buffer-bottom
-              :height 0.2))))
+              :height 0.3))))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here
