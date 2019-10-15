@@ -112,18 +112,14 @@
   :straight t
   :after projectile
   :config
-  (shackle '(("^\\*ripgrep-search\\*"
-              :action seanmacs/display-buffer-bottom
-              :height 0.3))))
+  (shackle '(("^\\*ripgrep-search\\*" :height 0.3))))
 
 (use-package flycheck
   :straight t
   :config
   (core/leader
    "f" flycheck-command-map)
-  (shackle '(("^\\*Flycheck errors"
-              :action seanmacs/display-buffer-bottom
-              :height 0.3)))
+  (shackle '(("^\\*Flycheck errors" :height 0.3)))
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe))
@@ -207,9 +203,7 @@
 
 (use-package xref
   :config
-  (shackle '(("^\\*xref"
-              :action seanmacs/display-buffer-bottom
-              :height 0.3))))
+  (shackle '(("^\\*xref" :height 0.3))))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

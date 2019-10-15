@@ -83,6 +83,9 @@
   (when-let (window (display-buffer-at-bottom buffer alist))
     (select-window window)))
 
+(defun seanmacs/display-buffer-same (buffer alist)
+  (display-buffer-same-window buffer alist))
+
 (use-package seanmacs-keybinds
   :load-path "lisp"
   :config

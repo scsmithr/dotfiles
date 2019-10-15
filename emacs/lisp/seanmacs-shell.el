@@ -26,11 +26,9 @@
    "ss" 'eshell
    "sn" 'eshell-new)
   (shackle '((eshell-mode
-              :action seanmacs/display-buffer-bottom
-              :height 0.3)
+              :action seanmacs/display-buffer-same)
              ("^\\*eshell"
-              :action seanmacs/display-buffer-bottom
-              :height 0.3)))
+              :action seanmacs/display-buffer-same)))
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."
@@ -113,11 +111,9 @@
 (use-package shell
   :config
   (shackle '((shell-mode
-              :action seanmacs/display-buffer-bottom
-              :height 0.2)
+              :action seanmacs/display-buffer-same)
              ("^\\*shell"
-              :action seanmacs/display-buffer-bottom
-              :height 0.2)))
+              :action seanmacs/display-buffer-same)))
   (add-hook 'shell-mode-hook #'disable-completions-tramp))
 
 (provide 'seanmacs-shell)
