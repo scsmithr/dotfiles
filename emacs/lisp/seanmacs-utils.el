@@ -14,7 +14,11 @@
    "ad" 'docker)
   (shackle '(("^\\*docker"
               :action seanmacs/display-buffer-bottom
-              :height 0.3))))
+              :height 0.3)))
+  :config
+  ;; Original keybding was 'tablist-do-kill-line'. Idk why.
+  (evil-collection-define-key 'normal 'tablist-minor-mode-map
+    "k" 'evil-previous-line))
 
 (use-package docker-tramp
   :straight t
@@ -26,7 +30,8 @@
 (use-package dired
   :init
   (core/leader
-   "dd" 'dired)
+   "dd" 'dired
+   "df" 'find-file)
   :config
   (setq dired-listing-switches "-aBhl --group-directories-first"))
 

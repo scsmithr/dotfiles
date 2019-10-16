@@ -5,9 +5,6 @@
 
 ;;; Code:
 
-(core/leader
-   "of" 'find-file)
-
 (setq inhibit-startup-message t
       use-dialog-box nil
       inihibit-startup-echo-area-message t)
