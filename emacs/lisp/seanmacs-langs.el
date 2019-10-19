@@ -182,6 +182,9 @@
   (setq inferior-lisp-program "sbcl")
   (setq slime-contribs '(slime-fancy)))
 
+(core/local 'lisp-mode-map
+            "o" 'slime)
+
 ;; Julia
 
 (use-package julia-mode
@@ -189,11 +192,10 @@
   :interpreter "julia"
   :defer t
   :config
-  (add-hook 'julia-mode-hook 'julia-repl-mode))
+  (shackle '(("^\\*Julia\\*" :height 0.5))))
 
-(use-package julia-repl
-  :straight t
-  :defer t)
+(core/local 'julia-mode-map
+            "o" 'run-julia)
 
 ;; C/C++
 
