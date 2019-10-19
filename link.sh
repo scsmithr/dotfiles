@@ -3,9 +3,6 @@
 
 DIR="$(pwd)"
 
-# Tmux
-ln -sv $DIR/tmux/tmux.conf ~/.tmux.conf
-
 # bash
 ln -sv $DIR/bash/bashrc ~/.bashrc
 
