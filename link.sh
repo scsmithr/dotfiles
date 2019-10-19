@@ -25,12 +25,6 @@ if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-# zsh
-ZSH_CONF_DIR=~/.config/zsh-config
-mkdir -p $ZSH_CONF_DIR
-ln -sv $DIR/zsh/* $ZSH_CONF_DIR
-ln -sv $DIR/zsh/zshrc ~/.zshrc
-
 # bash
 ln -sv $DIR/bash/bashrc ~/.bashrc
 
@@ -64,10 +58,6 @@ mkdir -p ~/.config/gtk-3.0
 ln -sv $DIR/gtk/settings.ini ~/.config/gtk-3.0
 ln -sv $DIR/gtk/gtkrc-2.0 ~/.gtkrc-2.0
 
-# kitty
-mkdir -p ~/.config/kitty
-ln -sv $DIR/kitty/kitty.conf ~/.config/kitty
-
 # alacritty
 mkdir -p ~/.config/alacritty
 ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
@@ -75,9 +65,6 @@ ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
 # rofi
 mkdir -p ~/.config/rofi
 ln -sv $DIR/rofi/* ~/.config/rofi
-
-# mycli
-ln -sv $DIR/mycli/myclirc ~/.myclirc
 
 # zathura
 ln -sv $DIR/zathura/zathurarc ~/.config/zathura
