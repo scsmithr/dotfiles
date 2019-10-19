@@ -14,10 +14,6 @@ ln -sv $DIR/xmonad/lib/*.hs ~/.xmonad/lib
 # xmobar
 ln -sv $DIR/xmobar/xmobarrc ~/.xmobarrc
 
-# vscode
-ln -sv $DIR/vscode/settings.json ~/.config/Code/User
-ln -sv $DIR/vscode/keybindings.json ~/.config/Code/User
-
 # bin/scripts
 mkdir -p ~/.bin
 ln -sv $DIR/bin/* ~/.bin
