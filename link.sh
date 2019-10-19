@@ -6,25 +6,6 @@ DIR="$(pwd)"
 # Tmux
 ln -sv $DIR/tmux/tmux.conf ~/.tmux.conf
 
-# vim
-ln -sv $DIR/vim/vimrc ~/.vimrc
-mkdir -p ~/.vim/colors
-ln -sv $DIR/nvim/base16-two.vim ~/.vim/colors
-mkdir -p ~/.vim/syntax
-ln -sv $DIR/vim/syntax/haskell.vim ~/.vim/syntax
-mkdir -p ~/.vim/tmp # Location for swap files
-
-# neovim
-mkdir -p ~/.config/nvim
-mkdir -p ~/.config/nvim/colors
-ln -sv $DIR/nvim/init.vim ~/.config/nvim
-ln -sv $DIR/nvim/base16-two.vim ~/.config/nvim/colors
-# Install vim-plug
-if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]; then
-    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
-
 # bash
 ln -sv $DIR/bash/bashrc ~/.bashrc
 
