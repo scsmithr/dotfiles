@@ -68,9 +68,16 @@
     (interactive)
     (eshell "new"))
 
-  (defalias 'eshell/d 'dired-other-window)
   (defalias 'eshell/ff 'find-file-other-window)
   (defalias 'eshell/async 'async-shell-buffer)
+
+  (defun eshell/d (&optional path)
+    (dired-other-window (or path ".")))
+
+  (defun eshell/mkcd (path)
+    (let ((args (list "-p" path)))
+      (eshell/mkdir args)
+      (eshell/cd path)))
 
   (defun eshell/read-history ()
     (interactive)
