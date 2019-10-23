@@ -14,11 +14,7 @@
    "ad" 'docker)
   (shackle '(("^\\*docker"
               :action seanmacs/display-buffer-bottom
-              :height 0.3)))
-  :config
-  ;; Original keybding was 'tablist-do-kill-line'. Idk why.
-  (evil-collection-define-key 'normal 'tablist-minor-mode-map
-    "k" 'evil-previous-line))
+              :height 0.3))))
 
 (use-package docker-tramp
   :straight t
