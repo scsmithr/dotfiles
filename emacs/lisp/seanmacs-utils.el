@@ -29,11 +29,17 @@
    "dd" 'dired
    "df" 'find-file)
   :config
-  (setq dired-listing-switches "-aBhl --group-directories-first"))
+  (setq dired-listing-switches "-aBhl --group-directories-first")
+  (advice-add 'dired-up-directory :around #'seanmacs/run-and-bury)
+  (advice-add 'dired-find-file :around #'seanmacs/run-and-bury))
 
 (use-package help
   :config
-  (shackle '(("^\\*Help\\*$" :height 0.3))))
+  (shackle '(("^\\*Help\\*$"
+              :height 0.3)
+             ("^\\*Completions\\*$"
+              :action display-buffer-below-selected
+              :height 0.2))))
 
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el")

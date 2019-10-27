@@ -87,7 +87,14 @@
     (select-window window)))
 
 (defun seanmacs/display-buffer-same (buffer alist)
+  "Display BUFFER in the currently selected buffer, using ALIST."
   (display-buffer-same-window buffer alist))
+
+(defun seanmacs/run-and-bury (fn &rest args)
+  "Run FN with ARGS then bury the buffer."
+  (let ((buf (buffer-name)))
+    (apply fn args)
+    (bury-buffer buf)))
 
 (use-package seanmacs-keybinds
   :load-path "lisp"

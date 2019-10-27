@@ -84,7 +84,9 @@
 (use-package ibuffer
   :init
   (core/leader
-   "ob" 'ibuffer))
+   "ob" 'ibuffer)
+  :config
+  (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury))
 
 (use-package dtrt-indent
   :straight t

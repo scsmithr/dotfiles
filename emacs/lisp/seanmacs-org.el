@@ -31,7 +31,7 @@
         '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
 
   (defadvice org-babel-execute-src-block (around load-language nil activate)
-    "Load language if needed"
+    "Load language if needed."
     (let ((language (org-element-property :language (org-element-at-point))))
       (unless (cdr (assoc (intern language) org-babel-load-languages))
         (add-to-list 'org-babel-load-languages (cons (intern language) t))
