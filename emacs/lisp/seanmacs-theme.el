@@ -9,8 +9,9 @@
   (apply #'set-face-attribute face nil args))
 
 ;; Default font
-(set-frame-font (font-spec :family "Source Code Pro Medium"))
+(set-frame-font (font-spec :family "Source Code Pro"))
 (face-attr 'default :height 110)
+(face-attr 'variable-pitch :family "Source Sans Pro" :height 120)
 
 (defun doom-transparentize (color alpha)
   "Transparentize a COLOR (a hexidecimal string) by a coefficient
