@@ -22,8 +22,6 @@ ln -sv $DIR/bin/* ~/.bin
 ln -sv $DIR/x/xinitrc ~/.xinitrc
 ln -sv $DIR/x/xmodmap ~/.xmodmap
 ln -sv $DIR/x/Xresources ~/.Xresources
-mkdir -p ~/.config
-ln -sv $DIR/x/compton.conf ~/.config
 
 # dunst
 mkdir -p ~/.config/dunst
