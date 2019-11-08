@@ -1,12 +1,9 @@
 import           XMonad
 
 import qualified XMonad.StackSet               as W
-import           XMonad.Operations              ( writeStateToFile )
-
 import           System.Exit                    ( exitWith
                                                 , ExitCode(ExitSuccess)
                                                 )
-
 import qualified XMonad.Hooks.DynamicLog       as D
 import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
                                                 , docks
@@ -82,8 +79,7 @@ windowManagementKeys =
   , ( "M-x"
     , RofiPrompt.exec
       "xmonad"
-      [ ("state"    , writeStateToFile)
-      , ("restart"  , spawn "xmonad --restart")
+      [ ("restart"  , spawn "xmonad --restart")
       , ("recompile", spawn "xmonad --recompile && xmonad --restart")
       , ("quit"     , io (exitWith ExitSuccess))
       ]
