@@ -33,7 +33,7 @@
   (let* ((symatpt (thing-at-point 'symbol))
          (default (and guess symatpt (seanmacs/idomenu--guess-default index-alist symatpt)))
          (names (mapcar 'car index-alist))
-         (name (ido-completing-read (or prompt "imenu ") names
+         (name (ido-completing-read (or prompt "[imenu] Jump to symbol: ") names
                                     nil t nil nil default))
          (choice (assoc name index-alist)))
     (if (imenu--subalist-p choice)
