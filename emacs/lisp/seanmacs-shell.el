@@ -110,10 +110,12 @@
               ;; See https://github.com/noctuid/general.el/issues/80
               (local-set-key (kbd "C-c h") 'eshell/read-history)))
 
-  ;; Shell command aliases. I'd rather not keep track of the eshell aliases
-  ;; file.
-  (dolist (alias '(("cargo" "cargo --color=always $*")))
-    (add-to-list 'eshell-command-aliases-list alias))
+  ;; Shell command aliases. I'd rather not keep track of the eshell
+  ;; aliases file.
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (dolist (alias '(("cargo" "cargo --color=always $*")))
+                (add-to-list 'eshell-command-aliases-list alias))))
 
   (setq eshell-history-size 1000
         eshell-cmpl-cycle-completions nil
