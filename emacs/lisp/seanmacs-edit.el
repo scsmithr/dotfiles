@@ -151,54 +151,21 @@
   (ido-everywhere 1)
   (flx-ido-mode 1))
 
-(defun treemacs-set-modeline ()
-  (setq mode-line-format " Seanmacs"))
+(use-package dired-subtree
+  :straight t)
 
-(use-package treemacs
+(use-package dired-sidebar
   :straight t
-  :after doom-themes
+  :commands (dired-sidebar-toggle-sidebar
+             dired-sidebar-jump-to-sidebar)
   :init
-  (setq treemacs-width 24)
-  (setq treemacs-no-png-images t)
-  ;; Allows ediff to take over the rest of the emacs frame. Uforturnately also
-  ;; means I can't use evil-move-left to get to it anymore.
-  (setq treemacs-is-never-other-window t)
-  :config
   (core/leader
-   "tt" 'treemacs-select-window
-   "te" 'treemacs-edit-workspaces
-   "tf" 'treemacs-finish-edit
-   "tn" 'treemacs
-   "ta" 'treemacs-add-and-display-current-project)
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-git-mode 'deferred)
-  (add-hook 'treemacs-mode-hook #'treemacs-set-modeline))
-
-(after! treemacs
-        (treemacs-create-theme "minimal"
-          :icon-directory (f-join treemacs-dir "icons/default")
-          :config
-          (progn
-            (treemacs-create-icon :file "" :extensions (root) :fallback " ")
-            (treemacs-create-icon :file "" :extensions (dir-closed) :fallback "")
-            (treemacs-create-icon :file "" :extensions (dir-open) :fallback "")
-            (treemacs-create-icon :file "" :extensions (tag-leaf) :fallback "")
-            (treemacs-create-icon :file "" :extensions (tag-open) :fallback "")
-            (treemacs-create-icon :file "" :extensions (tag-closed) :fallback "")
-            (treemacs-create-icon :file "" :extensions (error) :fallback "")
-            (treemacs-create-icon :file "" :extensions (warning) :fallback "")
-            (treemacs-create-icon :file "" :extensions (info) :fallback "")
-            (treemacs-create-icon :file "" :extensions (fallback) :fallback "")))
-        (treemacs-load-theme "minimal"))
-
-(use-package treemacs-evil
-  :after treemacs evil
-  :straight t)
-
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :straight t)
+   "tt" 'dired-sidebar-jump-to-sidebar
+   "tn" 'dired-sidebar-toggle-sidebar)
+  :config
+  (setq dired-sidebar-theme 'none
+        dired-sidebar-width 24
+        dired-sidebar-should-follow-file t))
 
 (use-package xref
   :config

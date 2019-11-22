@@ -72,17 +72,6 @@ ALPHA (a float between 0 and 1)."
   (after! flx-ido
           (face-attr 'flx-highlight-face :foreground (doom-color 'magenta)))
 
-  (after! treemacs
-          (face-attr 'treemacs-fringe-indicator-face :background (doom-color 'blue))
-          (face-attr 'treemacs-directory-face :foreground (doom-color 'blue))
-          (face-attr 'treemacs-git-modified-face :foreground (doom-color 'yellow))
-          (face-attr 'treemacs-git-untracked-face :foreground (doom-color 'green))
-          (face-attr 'treemacs-git-ignored-face :foreground (doom-color 'fg-alt))
-          (face-attr 'treemacs-root-face
-                     :height 110
-                     :weight 'normal
-                     :foreground (doom-color 'violet)))
-
   (after! mu4e
           (face-attr 'mu4e-highlight-face
                      :background (doom-color 'bg)
@@ -111,6 +100,12 @@ ALPHA (a float between 0 and 1)."
           (face-attr 'diff-hl-change
                      :foreground (doom-color 'yellow)
                      :background (doom-color 'yellow)))
+
+  (after! dired
+          (face-attr 'dired-directory
+                     :foreground (doom-color 'blue))
+          (face-attr 'dired-header
+                     :foreground (doom-color 'fg)))
 
   (face-attr 'fringe :background (doom-color 'bg))
   (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))

@@ -37,16 +37,16 @@
 
 (defalias 'core/local 'core/set-local-leader-keys)
 
-(defun evil-window-next-skip-treemacs ()
-  "Move the cursor to next window in cyclic order, skipping Treemacs buffers."
+(defun evil-window-next-skip-dired-sidebar ()
+  "Move the cursor to next window in cyclic order, skipping dired sidebar buffers."
   (interactive)
   (select-window (next-window))
-  (when (string-match-p (regexp-quote "Treemacs") (buffer-name))
+  (when (derived-mode-p 'dired-sidebar-mode)
     (select-window (next-window))))
 
 (defun evilify-window-switch (map)
-  (define-key map (kbd "C-w C-w") 'evil-window-next-skip-treemacs)
-  (define-key map (kbd "C-w w") 'evil-window-next-skip-treemacs))
+  (define-key map (kbd "C-w C-w") 'evil-window-next-skip-dired-sidebar)
+  (define-key map (kbd "C-w w") 'evil-window-next-skip-dired-sidbar))
 
 ;; evil
 (use-package evil
@@ -61,11 +61,12 @@
   (setq evil-want-keybinding nil)
   :config
   (evil-mode)
-  ;; Overwrite the default next window commands with one that skips treemacs.
-  (define-key evil-window-map "C-w" #'evil-window-next-skip-treemacs)
-  (define-key evil-window-map "w" #'evil-window-next-skip-treemacs)
-  (define-key evil-motion-state-map (kbd "C-w w") #'evil-window-next-skip-treemacs)
-  (define-key evil-motion-state-map (kbd "C-w C-w") #'evil-window-next-skip-treemacs))
+  ;; Overwrite the default next window commands with one that skips dired
+  ;; sidebar.
+  (define-key evil-window-map "C-w" #'evil-window-next-skip-dired-sidebar)
+  (define-key evil-window-map "w" #'evil-window-next-skip-dired-sidebar)
+  (define-key evil-motion-state-map (kbd "C-w w") #'evil-window-next-skip-dired-sidebar)
+  (define-key evil-motion-state-map (kbd "C-w C-w") #'evil-window-next-skip-dired-sidebar))
 
 (use-package evil-commentary
   :straight t
