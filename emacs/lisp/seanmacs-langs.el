@@ -21,8 +21,7 @@
             "rn" 'lsp-rename
             "ta" 'go/go-tests-all
             "tv" 'go/go-tests-all-verbose
-            "v" 'go/go-vendor
-            "fr" 'lsp-find-references)
+            "v" 'go/go-vendor)
 
 (defvar go-test-buffer-name "*go test*"
   "Name of buffer for go test output.")

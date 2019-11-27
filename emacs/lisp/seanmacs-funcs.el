@@ -48,7 +48,7 @@
 (defun seanmacs/idomenu--trim-alist (index-alist)
   "There must be a better way to apply a function to all cars of an alist"
   (mapcar (lambda (pair) (cons (seanmacs/idomenu--trim (car pair)) (cdr pair)))
-	  index-alist))
+          index-alist))
 
 (defun seanmacs/idomenu ()
   "Switch to a buffer-local tag from Imenu via Ido."
@@ -63,6 +63,18 @@
     (if (equal index-alist '(nil))
         (message "No imenu tags in buffer")
       (imenu (seanmacs/idomenu--read (seanmacs/idomenu--trim-alist index-alist) nil t)))))
+
+(use-package imenu
+  ;; built-in
+  :config
+  (setq imenu-auto-rescan t))
+
+(use-package xref
+  ;; built-in
+  :config
+  (core/leader
+   "ra" 'xref-find-apropos
+   "rr" 'xref-find-references))
 
 (defun seanmacs/indent-buffer ()
   (interactive)
