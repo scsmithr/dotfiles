@@ -160,7 +160,6 @@
 (use-package imenu
   ;; built-in
   :config
-  (setq imenu-auto-rescan t)
   (core/leader
    "os" 'imenu))
 
