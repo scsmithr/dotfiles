@@ -151,6 +151,26 @@
   (ido-everywhere 1)
   (flx-ido-mode 1))
 
+(use-package ido-completing-read+
+  :straight t
+  :after ido
+  :config
+  (ido-ubiquitous-mode 1))
+
+(use-package imenu
+  ;; built-in
+  :config
+  (setq imenu-auto-rescan t)
+  (core/leader
+   "os" 'imenu))
+
+(use-package xref
+  ;; built-in
+  :config
+  (core/leader
+   "ra" 'xref-find-apropos
+   "rr" 'xref-find-references))
+
 (use-package dired-subtree
   :straight t)
 
