@@ -24,7 +24,8 @@
   :init
   (core/leader
    "ss" 'eshell
-   "sn" 'eshell-new)
+   "sn" 'eshell-new
+   "sp" 'projectile-run-eshell)
   (shackle '((eshell-mode
               :action seanmacs/display-buffer-same)
              ("^\\*eshell"
