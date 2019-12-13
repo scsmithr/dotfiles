@@ -60,14 +60,11 @@ ALPHA (a float between 0 and 1)."
 
   (after! flycheck
           (face-attr 'flycheck-fringe-info
-                     :foreground (doom-transparentize 'green 0.5)
-                     :background (doom-transparentize 'green 0.5))
+                     :foreground (doom-transparentize 'green 0.5))
           (face-attr 'flycheck-fringe-warning
-                     :foreground (doom-transparentize 'orange 0.5)
-                     :background (doom-transparentize 'orange 0.5))
+                     :foreground (doom-transparentize 'orange 0.5))
           (face-attr 'flycheck-fringe-error
-                     :foreground (doom-transparentize 'red 0.5)
-                     :background (doom-transparentize 'red 0.5)))
+                     :foreground (doom-transparentize 'red 0.5)))
 
   (after! flx-ido
           (face-attr 'flx-highlight-face :foreground (doom-color 'magenta)))
@@ -86,20 +83,20 @@ ALPHA (a float between 0 and 1)."
                      :background (doom-transparentize 'cyan 0.5)))
 
   (after! elixir-mode
-          ;; Defaults to dark blue with doom emacs theme. Doom solarized light seems
-          ;; to have it set to some default color, isn't easy to read.
+          ;; Defaults to dark blue with doom emacs theme. Doom solarized light
+          ;; seems to have it set to some default color, isn't easy to read.
           (face-attr 'elixir-atom-face :foreground (doom-color 'blue)))
 
   (after! diff-hl
           (face-attr 'diff-hl-insert
-                     :foreground (doom-color 'green)
-                     :background (doom-color 'green))
+                     :foreground (doom-transparentize 'green 0.5)
+                     :background (doom-transparentize 'green 0.5))
           (face-attr 'diff-hl-delete
-                     :foreground (doom-color 'red)
-                     :background (doom-color 'red))
+                     :foreground (doom-transparentize 'red 0.5)
+                     :background (doom-transparentize 'red 0.5))
           (face-attr 'diff-hl-change
-                     :foreground (doom-color 'yellow)
-                     :background (doom-color 'yellow)))
+                     :foreground (doom-transparentize 'yellow 0.5)
+                     :background (doom-transparentize 'yellow 0.5)))
 
   (after! dired
           (face-attr 'dired-directory

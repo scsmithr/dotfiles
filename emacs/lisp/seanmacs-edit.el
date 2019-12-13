@@ -12,9 +12,6 @@
 ;; Highlight parenthesis
 (show-paren-mode 1)
 
-;; Resize fringe
-(fringe-mode '(4 . 4))
-
 ;; Line numbers
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
