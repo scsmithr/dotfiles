@@ -1,4 +1,6 @@
 (("alchemist.el" . "6f99367511ae209f8fe2c990779764bbb4ccb6ed")
+ ("all-the-icons-dired" . "980b7747d6c4a7992a1ec56afad908956db0a519")
+ ("all-the-icons.el" . "f996fafa5b2ea072d0ad1df9cd98acc75820f530")
  ("annalist.el" . "134fa3f0fb91a636a1c005c483516d4b64905a6d")
  ("cl-lib" . "e79686c4a26959c0ecba0951a7e335ed28035386")
  ("closql" . "4a0c5610570f24df8569717ab0808d368eb20894")

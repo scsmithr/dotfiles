@@ -29,7 +29,7 @@
    "dd" 'dired
    "df" 'find-file)
   :config
-  (setq dired-listing-switches "-aBhlv --group-directories-first")
+  (setq dired-listing-switches "-ABhlv --group-directories-first")
   (advice-add 'dired-up-directory :around #'seanmacs/run-and-bury)
   (advice-add 'dired-find-file :around #'seanmacs/run-and-bury))
 
