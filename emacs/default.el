@@ -40,6 +40,7 @@
  ("goto-chg" . "1829a13026c597e358f716d2c7793202458120b5")
  ("haskell-mode" . "f63f315d538c3de6fbc05d872cd6fd733bbf19fc")
  ("ht.el" . "66c5f9131242697fabaede5566d87ecda4c14b1f")
+ ("ibuffer-projectile" . "76496214144687cee0b5139be2e61b1e400cac87")
  ("ido-completing-read-plus" . "61c6fc60c2c7c70cf07fa533914bd2dae27c902a")
  ("ido-vertical-mode.el" . "16c4c1a112796ee0bcf401ea39d3e2643a89feaf")
  ("json-mode" . "0e819e519ae17a2686e0881c4ca51fa873fa9b83")

@@ -81,11 +81,21 @@
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
 (use-package ibuffer
+  ;; built-in
   :init
   (core/leader
    "ob" 'ibuffer)
   :config
   (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury))
+
+(use-package ibuffer-projectile
+  :straight t
+  :after ibuffer
+  :config
+  (add-hook 'ibuffer-hook (lambda ()
+                            (ibuffer-projectile-set-filter-groups)
+                            (unless (eq ibuffer-sorting-mode 'recency)
+                              (ibuffer-do-sort-by-recency)))))
 
 (use-package dtrt-indent
   :straight t
