@@ -217,7 +217,7 @@
   :config
   (setq dired-sidebar-theme 'icons
         dired-sidebar-width 24
-        dired-sidebar-should-follow-file t))
+        dired-sidebar-should-follow-file nil))
 
 (use-package xref
   :config
