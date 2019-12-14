@@ -17,7 +17,11 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-posframe
-  :straight t)
+  :straight t
+  :init
+  (setq company-posframe-show-indicator nil
+        company-posframe-show-metadata nil
+        company-posframe-quickhelp-delay nil))
 
 (use-package company-lsp
   :straight t
