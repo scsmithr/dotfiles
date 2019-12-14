@@ -80,6 +80,10 @@
       (eshell/mkdir args)
       (eshell/cd path)))
 
+  (defun eshell/pd ()
+    (when (projectile-project-p)
+        (cd (projectile-project-root))))
+
   (defun eshell/read-history ()
     (interactive)
     (goto-char (point-max))
