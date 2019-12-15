@@ -113,5 +113,48 @@ ALPHA (a float between 0 and 1)."
              :foreground (doom-color 'cyan))
   (face-attr 'line-number :foreground (doom-color 'fg-alt)))
 
+(use-package all-the-icons
+  :straight t
+  :config
+  (setq all-the-icons-color-icons nil
+        all-the-icons-scale-factor 1.0
+        all-the-icons-default-adjust 0.0)
+  (setq all-the-icons-icon-alist
+        '(
+          ("\\.md$" all-the-icons-octicon "file-text")
+          ("\\.org$" all-the-icons-octicon "file-text")
+          ("\\.txt$" all-the-icons-octicon "file-text")
+          ("\\.log$" all-the-icons-octicon "file-text")
+          ("\\.rst$" all-the-icons-octicon "file-text")
+          ("\\.o$" all-the-icons-octicon "file-binary")
+          ("\\.exe$" all-the-icons-octicon "file-binary")
+          ("\\.so$" all-the-icons-octicon "file-binary")
+          ("\\.out$" all-the-icons-octicon "file-binary")
+          ("\\.pdf$" all-the-icons-octicon "file-pdf")
+          ("\\.zip$" all-the-icons-octicon "file-zip")
+          ("\\.tar$" all-the-icons-octicon "file-zip")
+          ("\\.tgz$" all-the-icons-octicon "file-zip")
+          ("\\.gz$" all-the-icons-octicon "file-zip")
+          ("\\.jpg$" all-the-icons-octicon "file-media")
+          ("\\.jpeg$" all-the-icons-octicon "file-media")
+          ("\\.png$" all-the-icons-octicon "file-media")
+          ("\\.gif$" all-the-icons-octicon "file-media")
+          ("\\.svg$" all-the-icons-octicon "file-media")
+          ("\\.mkv$" all-the-icons-octicon "file-media")
+          ("\\.mp3$" all-the-icons-octicon "file-media")
+          ("\\.mp4$" all-the-icons-octicon "file-media")
+          ("\\.ogg$" all-the-icons-octicon "file-media")
+          ("\\.midi$" all-the-icons-octicon "file-media")
+          ("." all-the-icons-octicon "file-code")))
+  (setq all-the-icons-dir-icon-alist
+        '(
+          ("." all-the-icons-octicon "file-directory"))))
+
+(use-package all-the-icons-dired
+  :straight t
+  :config
+  (setq all-the-icons-dired-v-adjust 0.0)
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
 (provide 'seanmacs-theme)
 ;;; seanmacs-theme.el ends here
