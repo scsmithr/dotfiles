@@ -86,6 +86,35 @@
   (core/leader
    "ob" 'ibuffer)
   :config
+  (setq ibuffer-read-only-char ?R)
+  (setq ibuffer-formats
+        '((mark modified read-only
+                " " (name 24 24 :left :elide)
+                " " (size-h 9 9 :right)
+                " " (mode 16 16 :left :elide)
+                " " filename-and-process)))
+
+  (define-ibuffer-column size-h
+    (:name "Size"
+           :inline t
+           :summarizer
+           ;; OPTIMIZE: Would be better to get the original values and sum those.
+           (lambda (strings)
+             (file-size-human-readable
+              (seq-reduce
+               (lambda (total value)
+                 (let* ((suffixes '("" "k" "M" "G" "T" "P" "E" "Z" "Y"))
+                        (suffix (car (member (substring value -1) suffixes)))
+                        (power 1000.0)
+                        (bytes (string-to-number value)))
+                   (while (and suffix (car suffixes) (not (string= (car suffixes) suffix)))
+                     (setq bytes (* bytes power)
+                           suffixes (cdr suffixes)))
+                   (+ total bytes)))
+               strings 0)
+              "si")))
+    (file-size-human-readable (buffer-size) "si"))
+
   (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury))
 
 (use-package dtrt-indent
