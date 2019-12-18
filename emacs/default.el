@@ -40,6 +40,7 @@
  ("goto-chg" . "1829a13026c597e358f716d2c7793202458120b5")
  ("haskell-mode" . "f63f315d538c3de6fbc05d872cd6fd733bbf19fc")
  ("ht.el" . "66c5f9131242697fabaede5566d87ecda4c14b1f")
+ ("hydra" . "74b32f3ff004cd2ad7707722ffa7f85e8233a845")
  ("ido-completing-read-plus" . "74861eabd0a2619be9efc4c91fe0c5e69db5f263")
  ("ido-vertical-mode.el" . "16c4c1a112796ee0bcf401ea39d3e2643a89feaf")
  ("json-mode" . "0e819e519ae17a2686e0881c4ca51fa873fa9b83")
@@ -51,7 +52,6 @@
  ("lsp-ui" . "e2b124dc677cf9e5a1c1a383e61edc1f136b284a")
  ("macrostep" . "424e3734a1ee526a1bd7b5c3cd1d3ef19d184267")
  ("magit" . "4b97f23ace4132b3313a1bca73dcbbcd06bb4b9b")
- ("magit-popup" . "4250c3a606011e3ff2477e3b5bbde2b493f3c85c")
  ("markdown-mode" . "f3c54e34cc5228001af36a5301883325319f21d4")
  ("melpa" . "26682a1fb2d885168ca922521df7f3d8fbfe43a8")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
@@ -78,5 +78,6 @@
  ("use-package" . "4b58ab78177f636f862a66c7a8fdcf9b070e0925")
  ("web-mode" . "cd000fcfce97152f8b831b7eef4ea0d0b1eed11a")
  ("with-editor" . "814777ce8ad42ad115eebc38743c55b99af5d2e7")
+ ("yaml-mode" . "cecf4b106b0c4236931b14919fdf87ff3546e2c9")
  ("yasnippet" . "4046f61588dbd63b1b579bbf6eb6977ad605d262"))
 :alpha

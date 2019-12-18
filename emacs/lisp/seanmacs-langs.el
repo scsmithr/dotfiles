@@ -206,5 +206,8 @@
            (require 'ccls)
            (lsp))))
 
+(use-package yaml-mode
+  :straight t)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
