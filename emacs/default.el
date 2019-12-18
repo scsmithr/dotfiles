@@ -13,6 +13,7 @@
  ("dired-sidebar" . "21ccb6723bea69f2e2ca25998268d8a039f904cc")
  ("docker-tramp.el" . "8e2b671eff7a81af43b76d9dfcf94ddaa8333a23")
  ("docker.el" . "5c8da5c39193c41307b7b4691e33bc4eb8628ba9")
+ ("dockerfile-mode" . "ed73e82dcc636dad00d1a8c3b32a49136d25ee60")
  ("dtrt-indent" . "48221c928b72746d18c1e284c45748a0c2f1691f")
  ("emacs-async" . "03667dde4789513b6f3fd0c580d04c15b7f295e1")
  ("emacs-ccls" . "36414bc8bf93966577b02482935298078be4858a")

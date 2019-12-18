@@ -206,7 +206,14 @@
            (require 'ccls)
            (lsp))))
 
+;; Yaml
+
 (use-package yaml-mode
+  :straight t)
+
+;; Dockerfile
+
+(use-package dockerfile-mode
   :straight t)
 
 (provide 'seanmacs-langs)
