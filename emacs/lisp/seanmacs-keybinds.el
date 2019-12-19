@@ -79,7 +79,7 @@
   :after evil
   :init
   (setq evil-collection-key-blacklist
-        (list core-leader-key core-local-leader-key))
+        (list core-leader-key))
   :config
   (evil-collection-init))
 
