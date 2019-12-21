@@ -17,5 +17,5 @@ case $bat_stat in
         ;;
 esac
 
-echo " bat: <fc=#96A7A9>$percent% $stat_icon</fc>"
+echo "<fc=#657b83> bat:</fc> $percent% $stat_icon"
 

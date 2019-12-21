@@ -1,9 +1,9 @@
 Config {
-    font = "xft:Source Code Pro:size=10:antialias=true",
-    bgColor = "#FFFBEA",
-    fgColor = "#556b72",
+    font = "xft:Source Code Pro Semibold:size=10:antialias=true",
+    bgColor = "#002b36",
+    fgColor = "#96A7A9",
     border = BottomB,
-    borderColor = "#F2E6CE",
+    borderColor = "#00212B",
     borderWidth = 1,
     position = Top,
     allDesktops = False,

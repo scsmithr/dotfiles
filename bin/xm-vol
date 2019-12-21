@@ -14,5 +14,5 @@ format_vol_status() {
     fi
 }
 
-echo " vol: <fc=#96A7A9>$(format_vol_status)</fc>"
+echo "<fc=#657b83> vol:</fc> $(format_vol_status)"
 
