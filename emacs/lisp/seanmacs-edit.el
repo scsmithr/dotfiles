@@ -92,7 +92,24 @@
                 " " (name 24 24 :left :elide)
                 " " (size-h 9 9 :right)
                 " " (mode 16 16 :left :elide)
-                " " filename-and-process)))
+                " " filename-and-process))
+        ibuffer-show-empty-filter-groups nil
+        ibuffer-saved-filter-groups
+        '(("seanmacs"
+           ("shell" (or (mode . eshell-mode) (mode . term-mode)))
+           ("dired" (mode . dired-mode))
+           ("scratch" (name . "\*scratch"))
+           ("special" (name . "\*"))
+           ("sidebar" (mode . dired-sidebar-mode))
+           ("magit" (name . "magit")))))
+
+  (defun seanmacs/ibuffer-switch-to-saved-filter-groups ()
+    (ibuffer-switch-to-saved-filter-groups "seanmacs"))
+  (add-hook 'ibuffer-mode-hook #'seanmacs/ibuffer-switch-to-saved-filter-groups)
+
+  (defun seanmacs/ibuffer-jump-to-last-buffer ()
+    (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
+  (add-hook 'ibuffer-hook #'seanmacs/ibuffer-jump-to-last-buffer)
 
   (define-ibuffer-column size-h
     (:name "Size"
