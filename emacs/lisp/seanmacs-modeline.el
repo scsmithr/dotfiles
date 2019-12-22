@@ -138,7 +138,7 @@ indicator in the modeline."
   (cond (buffer-read-only
          (propertize " R " 'face 'modeline-modified))
         ((buffer-modified-p)
-         (propertize " ! " 'face 'modeline-modified))
+         (propertize " * " 'face 'modeline-modified))
         (t "   ")))
 
 (defun modeline-segment-buffer-name ()
@@ -170,10 +170,7 @@ indicator in the modeline."
 
 (defun modeline-segment-major-mode ()
   "Displays the current major mode in the modeline."
-  (propertize "%m "
-              'face (if (modeline-is-active)
-                        'modeline-status-mode
-                      'modeline-status-grayed-out)))
+  (propertize "%m "'face 'modeline-status-mode))
 
 (defun modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the modeline (if available)."
@@ -183,9 +180,6 @@ indicator in the modeline."
   "Displays the current value of `mode-line-process' in the modeline."
   (when mode-line-process
     (list mode-line-process "  ")))
-
-;; Store the default mode-line format
-(defvar mood-line--default-mode-line mode-line-format)
 
 ;;;###autoload
 (define-minor-mode modeline-mode
