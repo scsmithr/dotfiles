@@ -213,9 +213,9 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
-foreground = "#96A7A9"
-muted = "#657b83"
-primary = "#35a69c"
+muted = "#96A7A9"
+foreground = "#556b72"
+primary = "#268bd2"
 urgent = "#cb4b16"
 
 -- config vars
