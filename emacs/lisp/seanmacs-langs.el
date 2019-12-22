@@ -82,7 +82,18 @@
   :config
   (setq rust-format-on-save t)
   (setq lsp-rust-clippy-preference "on")
-  :hook (rust-mode . lsp))
+  (add-hook 'rust-mode-hook #'lsp)
+  (add-hook 'rust-mode-hook #'cargo-minor-mode))
+
+(use-package cargo
+  :straight t
+  :defer t)
+
+(core/local 'rust-mode-map
+            "rn" 'lsp-rename
+            "ta" 'cargo-process-test
+            "tc" 'cargo-process-current-test
+            "tf" 'cargo-process-current-file-tests)
 
 ;; Typescript
 
