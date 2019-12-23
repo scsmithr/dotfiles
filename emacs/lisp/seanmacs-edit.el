@@ -96,7 +96,10 @@
         ibuffer-show-empty-filter-groups nil
         ibuffer-saved-filter-groups
         '(("seanmacs"
-           ("shell" (or (mode . eshell-mode) (mode . term-mode)))
+           ("shell" (or
+                     (mode . eshell-mode)
+                     (mode . term-mode)
+                     (mode . shell-mode)))
            ("dired" (mode . dired-mode))
            ("scratch" (name . "\*scratch"))
            ("special" (name . "\*"))

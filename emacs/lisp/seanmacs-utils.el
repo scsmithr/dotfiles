@@ -55,7 +55,9 @@
    "ak" 'kube)
   (shackle '(("^\\*kube\\*"
               :action seanmacs/display-buffer-bottom
-              :height 0.3))))
+              :height 0.3)))
+  (shackle '(("^\\*kube "
+              :action seanmacs/display-buffer-same))))
 
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here
