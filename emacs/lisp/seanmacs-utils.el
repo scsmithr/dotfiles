@@ -48,5 +48,14 @@
    "ags" 'gcloud-instance-shell
    "age" 'gcloud-instance-eshell))
 
+(use-package kube
+  :straight (kube :type git :host github :repo "scsmithr/kube.el")
+  :init
+  (core/leader
+   "ak" 'kube)
+  (shackle '(("^\\*kube"
+              :action seanmacs/display-buffer-bottom
+              :height 0.3))))
+
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

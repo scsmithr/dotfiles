@@ -49,6 +49,7 @@
  ("json-reformat" . "8eb6668ed447988aea06467ba8f42e1f2178246f")
  ("json-snatcher" . "c4cecc0a5051bd364373aa499c47a1bb7a5ac51c")
  ("julia-emacs" . "d21b83db56ae74d232dc2be2cd87810c5b8a6451")
+ ("kube.el" . "185da28732ccd82f8e0d7b76318554f0a494f623")
  ("let-alist" . "57561d7d9267da48e8b7ab1f3bd45c9d05951289")
  ("lsp-mode" . "47484c4969b467c3dddfbd073efa655d1fcc6983")
  ("lsp-ui" . "e2b124dc677cf9e5a1c1a383e61edc1f136b284a")
