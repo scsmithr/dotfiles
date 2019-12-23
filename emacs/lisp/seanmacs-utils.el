@@ -25,7 +25,7 @@
 
 (use-package dired
   :init
-  (core/leader
+ (core/leader
    "dd" 'dired
    "df" 'find-file)
   :config
@@ -53,7 +53,7 @@
   :init
   (core/leader
    "ak" 'kube)
-  (shackle '(("^\\*kube"
+  (shackle '(("^\\*kube\\*"
               :action seanmacs/display-buffer-bottom
               :height 0.3))))
 
