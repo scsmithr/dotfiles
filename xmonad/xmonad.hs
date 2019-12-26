@@ -19,7 +19,9 @@ import           XMonad.Hooks.EwmhDesktops      ( ewmh
                                                 , fullscreenEventHook
                                                 )
 
-import           XMonad.Layout.NoBorders        ( smartBorders )
+import           XMonad.Layout.NoBorders        ( Ambiguity(..)
+                                                , lessBorders
+                                                )
 import           XMonad.Layout.ResizableTile    ( ResizableTall(..)
                                                 , MirrorResize(..)
                                                 )
@@ -173,7 +175,7 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
     ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
-myLayoutHook = uniformSpacing (tiled ||| Full)
+myLayoutHook = uniformSpacing $ lessBorders (OnlyScreenFloat) (tiled ||| Full)
  where
   tiled          = ResizableTall nmaster delta (1 / 2) []
   nmaster        = 1
