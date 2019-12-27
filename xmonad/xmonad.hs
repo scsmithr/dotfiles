@@ -65,6 +65,7 @@ windowManagementKeys =
   , ("M-S-c"    , kill)
   , ("M-<Space>", sendMessage NextLayout)
   , ("M-t"      , withFocused $ windows . W.sink)
+  , ("M-f"      , withFocused $ float)
   , ("M-n"      , sendMessage ToggleStruts)
   , ("M-o"      , RofiPrompt.selectWorkspace)
   , ("M-S-o"    , RofiPrompt.moveToWorkspace)
