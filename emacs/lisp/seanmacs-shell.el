@@ -48,7 +48,7 @@
                                 if (string-match-p "^\*" match)
                                 collect match))))
       (if (not (eq branch nil))
-          (format " (%s)" (substring branch 2))
+          (format " %s" (substring branch 2))
         "")))
 
   (defun eshell-default-prompt ()

@@ -13,17 +13,14 @@
 (defvar mode-line-box `(:line-width 1 :color ,(doom-lighten 'base3 0.2) :style nil))
 
 (set-face-attribute 'mode-line nil
-                    :foreground (doom-color 'fg) :background mode-line-bg
+                    :foreground (doom-color 'fg)
+                    :background mode-line-bg
                     :box mode-line-box)
 
 (set-face-attribute 'mode-line-inactive nil
-                    :foreground (doom-color 'fg-alt) :background mode-line-bg
+                    :foreground (doom-lighten 'fg 0.25)
+                    :background mode-line-bg
                     :box mode-line-box)
-
-(defcustom modeline-show-point nil
-  "If t, the value of `point' will be displayed next to the cursor position in the modeline."
-  :group 'modeline
-  :type 'boolean)
 
 (defface modeline-status-grayed-out
   '((t (:inherit (font-lock-doc-face))))
@@ -55,11 +52,6 @@
   "Face for error stauts indicators in the modeline."
   :group 'modeline)
 
-(defface modeline-unimportant
-  '((t (:inherit (font-lock-doc-face))))
-  "Face used for less important modeline elements."
-  :group 'modeline)
-
 (defface modeline-modified
   `((t (:inherit (error) :foreground ,(doom-color 'cyan))))
   "Face used for the 'modified' indicator symbol in the modeline."
@@ -76,11 +68,11 @@
                  'display `((space :align-to (- (+ right right-margin) ,(+ reserve 0)))))
      right)))
 
-;; Define a helper function to determine whether or not the current window is
-;; active.
-(defsubst modeline-is-active ()
-  "Return \"t\" if the current window is active, \"nil\" if it is not."
-  (eq (selected-window) modeline--current-window))
+(defun modeline-active-face (face)
+  "Use FACE when modeline is active."
+  (if (modeline-is-active)
+      face
+    'modeline-status-grayed-out))
 
 ;; Window update function
 (defvar-local modeline--current-window (frame-selected-window))
@@ -99,9 +91,9 @@
         (when (and vc-mode buffer-file-name)
           (let ((backend (vc-backend buffer-file-name))
                 (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-            (concat (propertize (concat "(" (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2)) ")")
-                                'face 'modeline-status-vc)
-                    "  ")))))
+            (concat
+             (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
+             " ")))))
 
 ;; Flycheck update function
 (defvar-local modeline--flycheck-text nil)
@@ -112,61 +104,63 @@
           (`finished (let-alist (flycheck-count-errors flycheck-current-errors)
                        (let ((error (or .error 0))
                              (warning (or .warning 0))
-                             (info (or .info 0)))
-                         (format "%s/%s/%s  "
-                                 (propertize (number-to-string error)
-                                             'face (if (> error 0)
-                                                       'modeline-status-error
-                                                     'modeline-status-grayed-out))
-                                 (propertize (number-to-string warning)
-                                             'face (if (> warning 0)
-                                                       'modeline-status-warning
-                                                     'modeline-status-grayed-out))
-                                 (propertize (number-to-string info)
-                                             'face  (if (> info 0)
-                                                        'modeline-status-success
-                                                      'modeline-status-grayed-out))
+                             (info (or .info 0))
+                             (sep (propertize "/" 'face 'modeline-status-grayed-out)))
+                         (format "%s%s%s%s%s "
+                                 (propertize
+                                  (number-to-string error)
+                                  'face (if (> error 0)
+                                            'modeline-status-error
+                                          'modeline-status-grayed-out))
+                                 sep
+                                 (propertize
+                                  (number-to-string warning)
+                                  'face (if (> warning 0)
+                                            'modeline-status-warning
+                                          'modeline-status-grayed-out))
+                                 sep
+                                 (propertize
+                                  (number-to-string info)
+                                  'face (if (> info 0)
+                                            'modeline-status-success
+                                          'modeline-status-grayed-out))
                                  ))))
-          ('running "-/-/-  ")
+          ('running "-/-/- ")
           ('no-checker "")
-          ('errored (propertize "!!!  " 'face 'modeline-status-error))
-          ('interrupted (propertize "---  " 'face 'modeline-status-grayed-out)))))
+          ('errored (propertize "!!! " 'face 'modeline-status-error))
+          ('interrupted (propertize "--- " 'face 'modeline-status-grayed-out)))))
 
 (defun modeline-segment-modified-or-readonly ()
   "Displays a color-coded buffer modification or readonly
 indicator in the modeline."
   (cond (buffer-read-only
-         (propertize " R " 'face 'modeline-modified))
+         (propertize "R " 'face 'modeline-modified))
         ((buffer-modified-p)
-         (propertize " * " 'face 'modeline-modified))
-        (t "   ")))
+         (propertize "U " 'face 'modeline-modified))
+        (t (propertize "- " 'face 'modeline-status-grayed-out))))
 
 (defun modeline-segment-buffer-name ()
   "Displays the name of the current buffer in the modeline."
-  (concat
-   (propertize "%b" 'face 'mode-line-buffer-id) "  "))
+  (propertize "%b " 'face 'mode-line-buffer-id))
 
 (defun modeline-segment-dir ()
   "Display shortened working directory."
-  (propertize (shrink-path-dirs default-directory)))
+  (shrink-path-dirs default-directory))
 
 (defun modeline-segment-position ()
   "Displays the current cursor position in the modeline."
-  (concat "%l:%c"
-          (when modeline-show-point
-            (concat ":"
-                    (propertize (format "%d" (point)) 'face (if (modeline-is-active)
-                                                                'modeline-unimportant
-                                                              'mode-line-inactive))))
-          " "
-          (propertize "%p%%" 'face (if (modeline-is-active)
-                                       'modeline-unimportant
-                                     'mode-line-inactive))
-          "  "))
+  (let ((fmt-string "%4l:%2c "))
+    (propertize fmt-string 'face 'modeline-status-grayed-out)))
+
+(defun modeline-segment-buffer-percent ()
+  "Displays the percentage of buffer above current point."
+  (let ((fmt-string "%p%%"))
+    (propertize fmt-string 'face 'modeline-status-grayed-out)))
 
 (defun modeline-segment-vc ()
   "Displays color-coded version control information in the modeline."
-  modeline--vc-text)
+  (when modeline--vc-text
+    (propertize modeline--vc-text 'face 'modeline-status-vc)))
 
 (defun modeline-segment-major-mode ()
   "Displays the current major mode in the modeline."
@@ -179,7 +173,7 @@ indicator in the modeline."
 (defun modeline-segment-process ()
   "Displays the current value of `mode-line-process' in the modeline."
   (when mode-line-process
-    (list mode-line-process "  ")))
+    (list mode-line-process)))
 
 ;;;###autoload
 (define-minor-mode modeline-mode
@@ -211,10 +205,11 @@ indicator in the modeline."
                          (modeline-format
                           ;; Left
                           (format-mode-line
-                           '((:eval (modeline-segment-modified-or-readonly))
+                           '((:eval (modeline-segment-position))
+                             (:eval (modeline-segment-modified-or-readonly))
                              (:eval (modeline-segment-dir))
                              (:eval (modeline-segment-buffer-name))
-                             (:eval (modeline-segment-position))))
+                             (:eval (modeline-segment-buffer-percent))))
 
                           ;; Right
                           (format-mode-line
