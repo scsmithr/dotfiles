@@ -68,12 +68,6 @@
                  'display `((space :align-to (- (+ right right-margin) ,(+ reserve 0)))))
      right)))
 
-(defun modeline-active-face (face)
-  "Use FACE when modeline is active."
-  (if (modeline-is-active)
-      face
-    'modeline-status-grayed-out))
-
 ;; Window update function
 (defvar-local modeline--current-window (frame-selected-window))
 (defun modeline--update-selected-window (&rest _)
