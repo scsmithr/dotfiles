@@ -197,20 +197,13 @@
 
 ;; Julia
 
-(use-package julia-mode
+(use-package ess
   :straight t
-  :interpreter "julia"
-  :defer t
-  :config
-  (add-hook 'julia-mode-hook 'julia-repl-mode)
-  (shackle '(("^\\*julia\\*" :height 0.5))))
-
-(use-package julia-repl
-  :straight t
+  :mode ("\\.jl\\'" . ess-julia-mode)
   :defer t)
 
-(core/local 'julia-mode-map
-            "o" 'julia-repl)
+(core/local 'ess-julia-mode-map
+             "o" 'julia)
 
 ;; C/C++
 
