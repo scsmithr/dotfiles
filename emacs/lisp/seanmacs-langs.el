@@ -202,10 +202,15 @@
   :interpreter "julia"
   :defer t
   :config
-  (shackle '(("^\\*Julia\\*" :height 0.5))))
+  (add-hook 'julia-mode-hook 'julia-repl-mode)
+  (shackle '(("^\\*julia\\*" :height 0.5))))
+
+(use-package julia-repl
+  :straight t
+  :defer t)
 
 (core/local 'julia-mode-map
-            "o" 'run-julia)
+            "o" 'julia-repl)
 
 ;; C/C++
 
