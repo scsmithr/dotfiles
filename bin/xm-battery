@@ -10,12 +10,12 @@ percent=$(( curr * 100 / max ))
 bat_stat=$(cat /sys/class/power_supply/BAT0/status | awk '{print tolower($0)}')
 case $bat_stat in
     "discharging")
-        stat_icon="-"
+        stat_icon=" -"
         ;;
     "charging")
-        stat_icon="+"
+        stat_icon=" +"
         ;;
 esac
 
-echo "<fc=#96A7A9> bat:</fc> $percent% $stat_icon"
+echo "<fc=#96A7A9> bat:</fc> $percent%$stat_icon"
 
