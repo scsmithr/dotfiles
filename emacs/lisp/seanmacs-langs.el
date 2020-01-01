@@ -200,7 +200,11 @@
 (use-package ess
   :straight t
   :mode ("\\.jl\\'" . ess-julia-mode)
-  :defer t)
+  :defer t
+  :config
+  ;; Force usage of colors, looks prettier and helps with spotting
+  ;; errors/warnings with the @code_warntype macro.
+  (setq inferior-julia-args "--color=yes"))
 
 (core/local 'ess-julia-mode-map
              "o" 'julia)
