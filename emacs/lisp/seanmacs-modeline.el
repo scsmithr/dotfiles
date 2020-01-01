@@ -85,9 +85,7 @@
         (when (and vc-mode buffer-file-name)
           (let ((backend (vc-backend buffer-file-name))
                 (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-            (concat
-             (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
-             " ")))))
+            (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))))))
 
 ;; Flycheck update function
 (defvar-local modeline--flycheck-text nil)
@@ -148,7 +146,7 @@ indicator in the modeline."
 
 (defun modeline-segment-buffer-percent ()
   "Displays the percentage of buffer above current point."
-  (let ((fmt-string "%p%%"))
+  (let ((fmt-string "%p%% "))
     (propertize fmt-string 'face 'modeline-status-grayed-out)))
 
 (defun modeline-segment-vc ()
@@ -158,7 +156,7 @@ indicator in the modeline."
 
 (defun modeline-segment-major-mode ()
   "Displays the current major mode in the modeline."
-  (propertize "%m"'face 'modeline-status-mode))
+  (propertize " %m" 'face 'modeline-status-mode))
 
 (defun modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the modeline (if available)."
