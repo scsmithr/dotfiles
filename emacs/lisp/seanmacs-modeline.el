@@ -158,7 +158,7 @@ indicator in the modeline."
 
 (defun modeline-segment-major-mode ()
   "Displays the current major mode in the modeline."
-  (propertize "%m "'face 'modeline-status-mode))
+  (propertize "%m"'face 'modeline-status-mode))
 
 (defun modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the modeline (if available)."
