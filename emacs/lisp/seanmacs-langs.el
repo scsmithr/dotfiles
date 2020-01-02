@@ -5,6 +5,26 @@
 
 ;;; Code:
 
+;; General keymap rules:
+;; All mode specific keymaps live under the local leader prefix.
+;;
+;; 'o' - Open repl
+;;
+;; 's' - Send to repl prefix
+;;
+;; 't' - Test prefix
+;; 'tt' - Test current package/module/file
+;; 'tp' - Test everything from project root
+;; 'ti' - Interactively run test
+;;
+;; 'v' - Dependency vendoring
+;;
+;; 'r' - Rename prefix
+;; 'rn' - Rename symbol
+;; 'rf' - Rename file
+
+
+
 (use-package go-mode
   :straight t
   :defer t
@@ -19,8 +39,9 @@
 
 (core/local 'go-mode-map
             "rn" 'lsp-rename
-            "ta" 'go/go-tests-all
-            "tv" 'go/go-tests-all-verbose
+            "tt" 'go/go-test-current-pkg
+            "tp" 'go/go-test-root
+            "ti" 'go/go-test-run
             "v" 'go/go-vendor)
 
 (defvar go-test-buffer-name "*go test*"
@@ -29,25 +50,30 @@
 (defvar go-vendor-buffer-name "*go vendor*"
   "Name of buffer for go test output.")
 
-(defun go/go-tests (args)
-  (interactive)
-  (compilation-start (concat "cd " (projectile-project-root)
-                             " && go test " args)
-                     nil (lambda (n) go-test-buffer-name) nil))
+(defun go/spawn (cmd buf-name)
+  (compilation-start cmd nil (lambda (_n) buf-name)))
 
-(defun go/go-tests-all ()
+(defun go/go-test-current-pkg ()
   (interactive)
-  (go/go-tests "./..."))
+  (go/spawn "go test" go-test-buffer-name))
 
-(defun go/go-tests-all-verbose ()
+(defun go/go-test-root ()
   (interactive)
-  (go/go-tests "./... -v"))
+  (let ((cmd (format "cd %s; go test ./..." (projectile-project-root))))
+    (go/spawn cmd go-test-buffer-name)))
+
+(defun go/go-test-run (test-name)
+  (interactive (list (read-string "Test name: ")))
+  (let ((cmd
+         (format "cd %s; go test -run %s ./..."
+                 (projectile-project-root)
+                 test-name)))
+    (go/spawn cmd go-test-buffer-name)))
 
 (defun go/go-vendor ()
   (interactive)
-  (compilation-start (concat "cd " (projectile-project-root)
-                             " && go mod vendor")
-                     nil (lambda (n) go-vendor-buffer-name) nil))
+  (let ((cmd (format "cd %s; go mod vendor" (projectile-project-root))))
+    (go/spawn cmd go-vendor-buffer-name)))
 
 ;; Haskell
 
@@ -91,9 +117,8 @@
 
 (core/local 'rust-mode-map
             "rn" 'lsp-rename
-            "ta" 'cargo-process-test
-            "tc" 'cargo-process-current-test
-            "tf" 'cargo-process-current-file-tests)
+            "tp" 'cargo-process-test
+            "tt" 'cargo-process-current-file-tests)
 
 ;; Typescript
 
@@ -207,7 +232,7 @@
   (setq inferior-julia-args "--color=yes"))
 
 (core/local 'ess-julia-mode-map
-             "o" 'julia)
+            "o" 'julia)
 
 ;; C/C++
 
