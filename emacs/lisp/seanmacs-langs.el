@@ -234,6 +234,17 @@
 (core/local 'ess-julia-mode-map
             "o" 'julia)
 
+;; Emacs lisp
+
+(use-package elisp-mode
+  ;; built-in
+  :defer t
+  :config
+  (shackle '((inferior-emacs-lisp-mode :height 0.5))))
+
+(core/local 'emacs-lisp-mode-map
+            "o" 'ielm)
+
 ;; C/C++
 
 (use-package ccls
