@@ -80,6 +80,9 @@
                            spaces))
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
+(defvar seanmacs/ibuffer-filter-group-order nil
+  "Forced order for ibuffer's filter groups.")
+
 (use-package ibuffer
   ;; built-in
   :init
@@ -106,12 +109,31 @@
            ("sidebar" (mode . dired-sidebar-mode))
            ("magit" (name . "magit")))))
 
+  (setq seanmacs/ibuffer-filter-group-order '("Default" "shell"))
+
+  (defun seanmacs/ibuffer-order-filter-groups (groups)
+    "Sort GROUPS using `seanmacs/ibuffer-filter-group-order' and then alphabetically."
+    ;; Note that this sorts in reverse order because ibuffer reverses these
+    ;; groups before printing.
+    (sort groups
+          (lambda (a b)
+            (let ((apos (cl-position (car a) seanmacs/ibuffer-filter-group-order :test 'equal))
+                  (bpos (cl-position (car b) seanmacs/ibuffer-filter-group-order :test 'equal)))
+              (cond ((and apos bpos) (> apos bpos))
+                    (apos nil)
+                    (bpos t)
+                    (t (string> (car a) (car b))))))))
+
+  (advice-add 'ibuffer-generate-filter-groups :filter-return #'seanmacs/ibuffer-order-filter-groups)
+
   (defun seanmacs/ibuffer-switch-to-saved-filter-groups ()
     (ibuffer-switch-to-saved-filter-groups "seanmacs"))
+
   (add-hook 'ibuffer-mode-hook #'seanmacs/ibuffer-switch-to-saved-filter-groups)
 
   (defun seanmacs/ibuffer-jump-to-last-buffer ()
     (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
+
   (add-hook 'ibuffer-hook #'seanmacs/ibuffer-jump-to-last-buffer)
 
   (define-ibuffer-column size-h
