@@ -11,7 +11,7 @@ case $HOSTNAME in
         fi
         ;;
     "system7")
-        dpi monitor
+        dpi work
         ;;
 esac
 

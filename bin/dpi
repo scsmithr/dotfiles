@@ -2,6 +2,7 @@
 
 laptop_dpi=216
 monitor_dpi=148
+work_dpi=116
 
 function set_dpi() {
    echo "Xft.dpi: $1" | xrdb -merge
@@ -15,6 +16,9 @@ if [ "$#" -eq 1 ]; then
            ;;
        "monitor")
            set_dpi $monitor_dpi
+           ;;
+       "work")
+           set_dpi $work_dpi
            ;;
        *)
            set_dpi "$1"
