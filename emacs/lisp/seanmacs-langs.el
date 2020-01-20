@@ -234,6 +234,16 @@
 (core/local 'ess-julia-mode-map
             "o" 'julia)
 
+;; Clojure
+
+(use-package clojure-mode
+  :straight t
+  :defer t)
+
+(use-package cider
+  :straight t
+  :defer t)
+
 ;; Emacs lisp
 
 (use-package elisp-mode
