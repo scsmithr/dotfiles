@@ -242,7 +242,9 @@
 
 (use-package cider
   :straight t
-  :defer t)
+  :defer t
+  :config
+  (evil-add-command-properties #'cider-find-var :jump t))
 
 ;; Emacs lisp
 
