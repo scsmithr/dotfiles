@@ -110,8 +110,7 @@ ALPHA (a float between 0 and 1)."
   (face-attr 'show-paren-match
              :weight 'bold
              :background (doom-transparentize 'cyan 0.5)
-             :foreground (doom-color 'cyan))
-  (face-attr 'line-number :foreground (doom-color 'fg-alt)))
+             :foreground (doom-color 'cyan)))
 
 (use-package all-the-icons
   :straight t
