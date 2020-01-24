@@ -272,6 +272,14 @@
 (use-package yaml-mode
   :straight t)
 
+;; Markdown
+
+(use-package markdown-mode
+  :straight t
+  :config
+  (evil-collection-define-key 'normal 'markdown-mode-map
+    (kbd "TAB") 'markdown-cycle))
+
 ;; Dockerfile
 
 (use-package dockerfile-mode
