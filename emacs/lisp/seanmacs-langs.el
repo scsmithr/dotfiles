@@ -276,6 +276,7 @@
 
 (use-package markdown-mode
   :straight t
+  :defer t
   :config
   (evil-collection-define-key 'normal 'markdown-mode-map
     (kbd "TAB") 'markdown-cycle))
