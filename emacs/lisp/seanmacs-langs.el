@@ -23,7 +23,7 @@
 ;; 'rn' - Rename symbol
 ;; 'rf' - Rename file
 
-
+;; Go
 
 (use-package go-mode
   :straight t
@@ -284,7 +284,8 @@
 ;; Dockerfile
 
 (use-package dockerfile-mode
-  :straight t)
+  :straight t
+  :defer t)
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

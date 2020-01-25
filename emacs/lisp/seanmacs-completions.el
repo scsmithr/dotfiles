@@ -32,11 +32,11 @@
 
 (use-package lsp-mode
   :straight t
+  :commands lsp
   :config
   (setq lsp-prefer-flymake nil
         lsp-auto-guess-root t
-        lsp-response-timeout 2)
-  :commands lsp)
+        lsp-response-timeout 2))
 
 (use-package lsp-ui
   :straight t

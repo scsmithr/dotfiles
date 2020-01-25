@@ -237,6 +237,7 @@
 (use-package xref
   ;; built-in
   :config
+  (shackle '(("^\\*xref" :height 0.3)))
   (core/leader
    "ra" 'xref-find-apropos
    "rr" 'xref-find-references))
@@ -262,10 +263,6 @@
   (setq dired-sidebar-theme 'icons
         dired-sidebar-width 24
         dired-sidebar-should-follow-file nil))
-
-(use-package xref
-  :config
-  (shackle '(("^\\*xref" :height 0.3))))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

@@ -44,21 +44,17 @@
   (when (derived-mode-p 'dired-sidebar-mode)
     (select-window (next-window))))
 
-(defun evilify-window-switch (map)
-  (define-key map (kbd "C-w C-w") 'evil-window-next-skip-dired-sidebar)
-  (define-key map (kbd "C-w w") 'evil-window-next-skip-dired-sidbar))
-
 ;; evil
 (use-package evil
   :straight t
   :init
-  (setq evil-search-module 'evil-search)
-  (setq evil-ex-complete-emacs-commands nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  (setq evil-shift-round nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-keybinding nil)
+  (setq evil-search-module 'evil-search
+        evil-ex-complete-emacs-commands nil
+        evil-vsplit-window-right t
+        evil-split-window-below t
+        evil-shift-round nil
+        evil-want-C-u-scroll t
+        evil-want-keybinding nil)
   :config
   (evil-mode)
   ;; Overwrite the default next window commands with one that skips dired
