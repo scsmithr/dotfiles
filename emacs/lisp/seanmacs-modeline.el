@@ -10,6 +10,7 @@
   :group 'modeline)
 
 (defvar mode-line-bg (doom-color 'bg-alt))
+(defvar mode-line-inactive-bg (doom-darken 'bg-alt 0.01))
 (defvar mode-line-box `(:line-width 1 :color ,(doom-lighten 'base3 0.2) :style nil))
 
 (set-face-attribute 'mode-line nil
@@ -19,7 +20,7 @@
 
 (set-face-attribute 'mode-line-inactive nil
                     :foreground (doom-lighten 'fg 0.25)
-                    :background mode-line-bg
+                    :background mode-line-inactive-bg
                     :box mode-line-box)
 
 (defface modeline-status-grayed-out
