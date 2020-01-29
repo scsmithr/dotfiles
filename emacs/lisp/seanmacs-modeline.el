@@ -10,7 +10,7 @@
   :group 'modeline)
 
 (defvar mode-line-bg (doom-color 'bg-alt))
-(defvar mode-line-inactive-bg (doom-darken 'bg-alt 0.01))
+(defvar mode-line-inactive-bg (doom-color 'bg-alt))
 (defvar mode-line-box `(:line-width 1 :color ,(doom-lighten 'base3 0.2) :style nil))
 
 (set-face-attribute 'mode-line nil
