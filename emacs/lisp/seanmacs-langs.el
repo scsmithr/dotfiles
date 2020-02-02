@@ -223,7 +223,8 @@
 ;; Yaml
 
 (use-package yaml-mode
-  :straight t)
+  :straight t
+  :defer t)
 
 ;; Markdown
 
