@@ -9,12 +9,10 @@
 ;;; Code:
 
 (core/leader
- "ci" 'seanmacs/indent-buffer)
-
-(core/leader
  "br" 'seanmacs/rename-buffer-special
  "bv" 'revert-buffer
- "bk" 'kill-this-buffer)
+ "bk" 'kill-this-buffer
+ "bi" 'seanmacs/indent-buffer)
 
 (defun seanmacs/rename-buffer-special (newname)
   "Rename buffer to NEWNAME, wrapping NEWNAME in '*' characters when original name has them."

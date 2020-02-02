@@ -56,7 +56,7 @@ ALPHA (a float between 0 and 1)."
           (face-attr markdown-header-face-6 :inherit 'outline-6))
 
   (after! ripgrep
-          (face-attr 'ripgrep-match-face :foreground (doom-color 'yellow)))
+          (face-attr 'ripgrep-match-face :inherit 'highlight))
 
   (after! flycheck
           (face-attr 'flycheck-fringe-info

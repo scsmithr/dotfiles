@@ -9,16 +9,7 @@
 ;; All mode specific keymaps live under the local leader prefix.
 ;;
 ;; 'o' - Open repl
-;;
-;; 's' - Send to repl prefix
-;;
-;; 't' - Test prefix
-;; 'tt' - Test current package/module/file
-;; 'tp' - Test everything from project root
-;; 'ti' - Interactively run test
-;;
-;; 'v' - Dependency vendoring
-;;
+;
 ;; 'r' - Rename prefix
 ;; 'rn' - Rename symbol
 ;; 'rf' - Rename file
@@ -39,42 +30,7 @@
   (define-key go-mode-map (kbd "C-c C-d") #'lsp-describe-thing-at-point))
 
 (core/local 'go-mode-map
-            "rn" 'lsp-rename
-            "tt" 'go/go-test-current-pkg
-            "tp" 'go/go-test-root
-            "ti" 'go/go-test-run
-            "v" 'go/go-vendor)
-
-(defvar go-test-buffer-name "*go test*"
-  "Name of buffer for go test output.")
-
-(defvar go-vendor-buffer-name "*go vendor*"
-  "Name of buffer for go test output.")
-
-(defun go/spawn (cmd buf-name)
-  (compilation-start cmd nil (lambda (_n) buf-name)))
-
-(defun go/go-test-current-pkg ()
-  (interactive)
-  (go/spawn "go test" go-test-buffer-name))
-
-(defun go/go-test-root ()
-  (interactive)
-  (let ((cmd (format "cd %s; go test ./..." (projectile-project-root))))
-    (go/spawn cmd go-test-buffer-name)))
-
-(defun go/go-test-run (test-name)
-  (interactive (list (read-string "Test name: ")))
-  (let ((cmd
-         (format "cd %s; go test -run %s ./..."
-                 (projectile-project-root)
-                 test-name)))
-    (go/spawn cmd go-test-buffer-name)))
-
-(defun go/go-vendor ()
-  (interactive)
-  (let ((cmd (format "cd %s; go mod vendor" (projectile-project-root))))
-    (go/spawn cmd go-vendor-buffer-name)))
+            "rn" 'lsp-rename)
 
 ;; Haskell
 
@@ -96,10 +52,7 @@
   :mode ("\\.m\\'" . octave-mode))
 
 (core/local 'octave-mode-map
-            "o" 'run-octave
-            "sr" 'octave-send-region
-            "sb" 'octave-send-buffer
-            "sl" 'octave-send-line)
+            "o" 'run-octave)
 
 ;; Rust
 
@@ -118,9 +71,7 @@
   :defer t)
 
 (core/local 'rust-mode-map
-            "rn" 'lsp-rename
-            "tp" 'cargo-process-test
-            "tt" 'cargo-process-current-file-tests)
+            "rn" 'lsp-rename)
 
 ;; Typescript
 
@@ -202,10 +153,6 @@
 (use-package alchemist
   :straight t
   :defer t)
-
-(core/local 'elixir-mode-map
-            "mc" 'alchemist-mix-compile
-            "mr" 'alchemist-mix-run)
 
 ;; Protobuf
 
