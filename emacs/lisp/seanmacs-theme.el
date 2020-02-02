@@ -104,9 +104,36 @@ ALPHA (a float between 0 and 1)."
           (face-attr 'dired-header
                      :foreground (doom-color 'fg)))
 
+  (after! magit
+          (face-attr 'magit-header-line
+                     :background nil
+                     :foreground (doom-color 'fg)
+                     :weight 'bold
+                     :box nil))
+
+  (after! lsp
+          (face-attr 'lsp-face-highlight-textual
+                     :weight 'normal
+                     :foreground nil
+                     :background (doom-transparentize 'orange 0.9)))
+
+  (after! tide
+          (face-attr 'tide-hl-identifier-face
+                     :background (doom-transparentize 'orange 0.9)))
+
   (face-attr 'fringe :background (doom-color 'bg))
+  (face-attr 'highlight
+             :weight 'normal
+             :foreground nil
+             :background (doom-transparentize 'cyan 0.8))
+  (face-attr 'lazy-highlight
+             :weight 'normal
+             :foreground nil
+             :background (doom-transparentize 'cyan 0.8))
   (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.25))
+  (face-attr 'font-lock-keyword-face :weight 'normal)
+  (face-attr 'font-lock-constant-face :weight 'normal)
   (face-attr 'show-paren-match
              :weight 'bold
              :background (doom-transparentize 'cyan 0.5)

@@ -36,7 +36,9 @@
   :config
   (setq lsp-prefer-flymake nil
         lsp-auto-guess-root t
-        lsp-response-timeout 2))
+        lsp-eldoc-render-all nil
+        lsp-response-timeout 2)
+  (shackle '(("^\\*lsp-help\\*" :height 0.3))))
 
 (use-package lsp-ui
   :straight t

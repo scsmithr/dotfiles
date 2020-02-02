@@ -35,7 +35,8 @@
   (add-hook 'go-mode-hook
             (lambda ()
               (setq company-backends (delete 'company-capf company-backends))))
-  (setq gofmt-command "goimports"))
+  (setq gofmt-command "goimports")
+  (define-key go-mode-map (kbd "C-c C-d") #'lsp-describe-thing-at-point))
 
 (core/local 'go-mode-map
             "rn" 'lsp-rename
@@ -109,7 +110,8 @@
   (setq rust-format-on-save t)
   (setq lsp-rust-clippy-preference "on")
   (add-hook 'rust-mode-hook #'lsp)
-  (add-hook 'rust-mode-hook #'cargo-minor-mode))
+  (add-hook 'rust-mode-hook #'cargo-minor-mode)
+  (define-key rust-mode-map (kbd "C-c C-d") #'lsp-describe-thing-at-point))
 
 (use-package cargo
   :straight t
@@ -144,7 +146,9 @@
 
 (use-package tide
   :straight t
-  :after (web-mode company flycheck))
+  :after (web-mode company flycheck)
+  :config
+  (shackle '(("^\\*tide-documentation\\*" :height 0.3))))
 
 (use-package prettier-js
   :straight t
@@ -169,6 +173,7 @@
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
         web-mode-enable-auto-indentation nil)
+  (define-key web-mode-map (kbd "C-c C-d") #'tide-documentation-at-point)
   (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
   (add-hook 'web-mode-hook
             (lambda ()
