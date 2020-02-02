@@ -234,7 +234,8 @@
   :config
   ;; Force usage of colors, looks prettier and helps with spotting
   ;; errors/warnings with the @code_warntype macro.
-  (setq inferior-julia-args "--color=yes"))
+  (setq inferior-julia-args "--color=yes")
+  (evil-set-initial-state 'ess-help-mode 'motion))
 
 (core/local 'ess-julia-mode-map
             "o" 'julia)
