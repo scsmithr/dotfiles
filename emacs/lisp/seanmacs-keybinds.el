@@ -57,6 +57,8 @@
         evil-want-keybinding nil)
   :config
   (evil-mode)
+  (evil-update-insert-state-bindings "\C-n" t)
+  (evil-update-insert-state-bindings "\C-p" t)
   ;; Overwrite the default next window commands with one that skips dired
   ;; sidebar.
   (define-key evil-window-map "C-w" #'evil-window-next-skip-dired-sidebar)
