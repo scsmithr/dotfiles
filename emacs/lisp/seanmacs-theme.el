@@ -79,8 +79,9 @@ ALPHA (a float between 0 and 1)."
 
   (after! web-mode
           (face-attr 'web-mode-current-element-highlight-face
-                     :weight 'bold
-                     :background (doom-transparentize 'cyan 0.5)))
+                     :weight 'normal
+                     :foreground nil
+                     :background (doom-color 'base3)))
 
   (after! elixir-mode
           ;; Defaults to dark blue with doom emacs theme. Doom solarized light
@@ -115,21 +116,24 @@ ALPHA (a float between 0 and 1)."
           (face-attr 'lsp-face-highlight-textual
                      :weight 'normal
                      :foreground nil
-                     :background (doom-transparentize 'orange 0.9)))
+                     :background (doom-color 'base3)))
 
   (after! tide
           (face-attr 'tide-hl-identifier-face
-                     :background (doom-transparentize 'orange 0.9)))
+                     :weight 'normal
+                     :foreground nil
+                     :background (doom-color 'base3)))
 
+  (face-attr 'trailing-whitespace :background (doom-transparentize 'red 0.8))
   (face-attr 'fringe :background (doom-color 'bg))
   (face-attr 'highlight
-             :weight 'normal
+             :weight 'bold
              :foreground nil
-             :background (doom-transparentize 'cyan 0.8))
+             :background (doom-darken 'bg-alt 0.1))
   (face-attr 'lazy-highlight
-             :weight 'normal
+             :weight 'bold
              :foreground nil
-             :background (doom-transparentize 'cyan 0.8))
+             :background (doom-darken 'bg-alt 0.1))
   (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-keyword-face :weight 'normal)
