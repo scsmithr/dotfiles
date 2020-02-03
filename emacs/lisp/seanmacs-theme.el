@@ -126,13 +126,16 @@ ALPHA (a float between 0 and 1)."
 
   (face-attr 'trailing-whitespace :background (doom-transparentize 'red 0.8))
   (face-attr 'fringe :background (doom-color 'bg))
+  (face-attr 'region :foreground nil :distant-foreground nil)
   (face-attr 'highlight
              :weight 'bold
              :foreground nil
+             :distant-foreground nil
              :background (doom-darken 'bg-alt 0.1))
   (face-attr 'lazy-highlight
              :weight 'bold
              :foreground nil
+             :distant-foreground nil
              :background (doom-darken 'bg-alt 0.1))
   (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.25))
