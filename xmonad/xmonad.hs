@@ -28,6 +28,7 @@ import           XMonad.Layout.ResizableTile    ( ResizableTall(..)
 import           XMonad.Layout.Spacing          ( Border(..)
                                                 , spacingRaw
                                                 )
+import           XMonad.Layout.ThreeColumns     ( ThreeCol(..) )
 
 import           XMonad.Actions.DynamicWorkspaces
                                                 ( removeEmptyWorkspace )
@@ -125,6 +126,7 @@ formatIcon
 formatIcon bg fg l | t "Tall" l && t "Mirror" l = fmt "=="
                    | t "Tall" l                 = fmt "|="
                    | t "Full" l                 = fmt "[]"
+                   | t "ThreeCol" l             = fmt "|||"
                    | otherwise                  = fmt l
  where
   t   = List.isInfixOf
@@ -176,9 +178,11 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
            (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
     ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
-myLayoutHook = uniformSpacing $ lessBorders (OnlyScreenFloat) (tiled ||| Full)
+myLayoutHook = uniformSpacing
+  $ lessBorders (OnlyScreenFloat) (tiled ||| Full ||| threeCol)
  where
   tiled          = ResizableTall nmaster delta (1 / 2) []
+  threeCol       = ThreeCol nmaster delta (1 / 3)
   nmaster        = 1
   delta          = 3 / 100
   gs             = 4
