@@ -109,7 +109,7 @@
            ("sidebar" (mode . dired-sidebar-mode))
            ("magit" (name . "magit")))))
 
-  (setq seanmacs/ibuffer-filter-group-order '("Default" "shell"))
+  (setq seanmacs/ibuffer-filter-group-order '("Default" "shell" "special"))
 
   (defun seanmacs/ibuffer-order-filter-groups (groups)
     "Sort GROUPS using `seanmacs/ibuffer-filter-group-order' and then alphabetically."
