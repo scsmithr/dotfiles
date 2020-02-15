@@ -14,15 +14,11 @@ Config {
     commands = [
         Run Date "%a, %b %d %I:%M%P" "date" 10,
 
-        Run Com "xm-wifi" [] "wifi" 100,
-
-        Run Com "xm-vol" [] "vol" 100,
-
-        Run Com "xm-battery" [] "bat" 100,
+        Run CommandReader "~/dotfiles/status/status.scm" "status",
 
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %StdinReader% }  %date%  { %wifi%%vol%%bat% "
+    template = " %StdinReader% }  %date%  { %status% "
 }
