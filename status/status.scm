@@ -74,7 +74,7 @@
     (format-wifi)
     (format-volume)
     (format-battery))
-   " "))
+   "  "))
 
 (define (print-loop)
   (while #t

@@ -118,16 +118,15 @@ notify :: String -> String -> X ()
 notify title msg = do
   spawn $ "notify-send '" ++ title ++ "' '" ++ msg ++ "'"
 
-formatIcon
+formatLayout
   :: String -- icon bg
   -> String -- icon fg
   -> String -- layout name
   -> String
-formatIcon bg fg l | t "Tall" l && t "Mirror" l = fmt "=="
-                   | t "Tall" l                 = fmt "|="
-                   | t "Full" l                 = fmt "[]"
-                   | t "ThreeCol" l             = fmt "|||"
-                   | otherwise                  = fmt l
+formatLayout bg fg l | t "Tall" l     = fmt "tall"
+                     | t "Full" l     = fmt "full"
+                     | t "ThreeCol" l = fmt "col"
+                     | otherwise      = fmt l
  where
   t   = List.isInfixOf
   fmt = D.pad . (D.xmobarColor fg bg)
@@ -142,9 +141,9 @@ formatWorkspace
   -> WorkspaceId -- workspace name
   -> String
 formatWorkspace getIndex idxBg idxFg wsBg wsFg mustShow ws = case idx of
-  Just n  -> (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
+  Just n  -> D.pad $ (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
   Nothing -> case mustShow of
-    True  -> wsStr
+    True  -> D.pad $ wsStr
     False -> ""
  where
   idx   = getIndex ws
@@ -159,9 +158,9 @@ myLogHook h = do
                                 , D.ppHidden  = fmt "" muted "" muted False
                                 , D.ppVisible = fmt "" muted "" foreground True
                                 , D.ppUrgent  = fmt "" muted "" urgent True
-                                , D.ppLayout  = formatIcon "" muted
+                                , D.ppLayout  = formatLayout "" muted
                                 , D.ppTitle   = const ""
-                                , D.ppSep     = ""
+                                , D.ppSep     = " "
                                 , D.ppSort    = PinnedWorkspaces.getSortByPinned
                                 , D.ppOutput  = hPutStrLn h
                                 }
