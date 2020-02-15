@@ -172,6 +172,12 @@
 (core/local 'lisp-mode-map
             "o" 'slime)
 
+;; Scheme
+
+(use-package geiser
+  :straight t
+  :defer t)
+
 ;; Julia
 
 (use-package ess

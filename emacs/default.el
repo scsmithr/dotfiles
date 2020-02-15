@@ -39,6 +39,7 @@
  ("flycheck" . "269237f6529a4ad7db5bbbc5a40c1f038accf3cd")
  ("forge" . "3eadbebbdb72a577aba4bcb7515f926a5e6323ef")
  ("gcloud.el" . "3d459f2a803a30a5d1f0e1dbc80b0d9c4d590562")
+ ("geiser" . "f6f4ac04d88f3a85db02b2a54202e80ea0056991")
  ("ghub" . "0804a981cea6deba69b4566d21f8f12fc5789b17")
  ("gnu-elpa-mirror" . "aff85e0b92a41ee6efce6caf35277bc1ed11ff74")
  ("gnuplot" . "a406143d52618638d908b6b0b1c1c90c045b83ee")
