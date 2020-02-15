@@ -5,10 +5,6 @@
 
 ;;; Code:
 
-(defun disable-completions-tramp ()
-  "Disable completions if buffer is remote."
-  (when (file-remote-p default-directory) (company-mode -1)))
-
 (defun async-shell-buffer (program &rest args)
   "Run PROGRAM with ARGS async."
   (interactive)
@@ -106,7 +102,6 @@
       (erase-buffer)
       (eshell-send-input)))
 
-  (add-hook 'eshell-mode-hook #'disable-completions-tramp)
   (add-hook 'eshell-mode-hook
             (lambda ()
               ;; Needs to be ran inside the hook since eshell-mode-map is
@@ -132,8 +127,7 @@
   (shackle '((shell-mode
               :action seanmacs/display-buffer-same)
              ("^\\*shell"
-              :action seanmacs/display-buffer-same)))
-  (add-hook 'shell-mode-hook #'disable-completions-tramp))
+              :action seanmacs/display-buffer-same))))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here
