@@ -9,20 +9,6 @@
   "A minimal modeline configuration inspired by doom-modeline."
   :group 'modeline)
 
-(defvar mode-line-bg (doom-color 'bg-alt))
-(defvar mode-line-inactive-bg (doom-color 'bg-alt))
-(defvar mode-line-box `(:line-width 1 :color ,(doom-lighten 'base3 0.2) :style nil))
-
-(set-face-attribute 'mode-line nil
-                    :foreground (doom-color 'fg)
-                    :background mode-line-bg
-                    :box mode-line-box)
-
-(set-face-attribute 'mode-line-inactive nil
-                    :foreground (doom-lighten 'fg 0.25)
-                    :background mode-line-inactive-bg
-                    :box mode-line-box)
-
 (defface modeline-status-grayed-out
   '((t (:inherit (font-lock-doc-face))))
   "Face used for neutral or inactive status indicators in the modeline."
@@ -54,7 +40,7 @@
   :group 'modeline)
 
 (defface modeline-modified
-  `((t (:inherit (error) :foreground ,(doom-color 'cyan))))
+  `((t (:inherit (success) :foreground ,(doom-color 'cyan))))
   "Face used for the 'modified' indicator symbol in the modeline."
   :group 'modeline)
 

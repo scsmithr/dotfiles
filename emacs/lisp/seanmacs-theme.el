@@ -31,7 +31,8 @@ ALPHA (a float between 0 and 1)."
           (face-attr 'whitespace-line
                      :weight 'normal
                      :foreground 'unspecified)
-          (face-attr 'whitespace-tab :background nil))
+          (face-attr 'whitespace-tab :background nil)
+          (face-attr 'trailing-whitespace :background (doom-transparentize 'red 0.8)))
 
   (after! org
           (face-attr 'org-meta-line :foreground (doom-color 'fg-alt))
@@ -58,14 +59,6 @@ ALPHA (a float between 0 and 1)."
   (after! ripgrep
           (face-attr 'ripgrep-match-face :inherit 'highlight))
 
-  (after! flycheck
-          (face-attr 'flycheck-fringe-info
-                     :foreground (doom-transparentize 'green 0.5))
-          (face-attr 'flycheck-fringe-warning
-                     :foreground (doom-transparentize 'orange 0.5))
-          (face-attr 'flycheck-fringe-error
-                     :foreground (doom-transparentize 'red 0.5)))
-
   (after! flx-ido
           (face-attr 'flx-highlight-face :foreground (doom-color 'magenta)))
 
@@ -82,11 +75,6 @@ ALPHA (a float between 0 and 1)."
                      :weight 'normal
                      :foreground nil
                      :background (doom-color 'base3)))
-
-  (after! elixir-mode
-          ;; Defaults to dark blue with doom emacs theme. Doom solarized light
-          ;; seems to have it set to some default color, isn't easy to read.
-          (face-attr 'elixir-atom-face :foreground (doom-color 'blue)))
 
   (after! diff-hl
           (face-attr 'diff-hl-insert
@@ -124,12 +112,6 @@ ALPHA (a float between 0 and 1)."
                      :foreground nil
                      :background (doom-color 'base3)))
 
-  (face-attr 'trailing-whitespace :background (doom-transparentize 'red 0.8))
-  (face-attr 'fringe :background (doom-color 'bg))
-  (face-attr 'region
-             :foreground nil
-             :distant-foreground nil
-             :background (doom-darken 'bg-alt 0.05))
   (face-attr 'highlight
              :weight 'bold
              :foreground nil
@@ -140,6 +122,7 @@ ALPHA (a float between 0 and 1)."
              :foreground nil
              :distant-foreground nil
              :background (doom-darken 'bg-alt 0.1))
+  (face-attr 'fringe :background (doom-color 'bg))
   (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-keyword-face :weight 'normal)
