@@ -1,74 +1,100 @@
+/* -*- mode: css; -*- */
+configuration {
+  cycle:            true;
+  disable-history:  false;
+  monitor:          "-4";
+}
+
 * {
-	selected: #556b72;
-	prompt: #c678dd;
-	hint: #b6b6b6;
-	background-color: @background;
-	background: #FFFBEA;
-	font: "Source Code Pro 10";
-	foreground: #96A7A9;
-	separator: #c6c6c6;
-	highlight: none none #268bd2;
+  accent:   #268bd2;
+  bg:       #002b36;
+  bg-focus: #00212B;
+  bg-dark:  #00212B;
+  fg:       #a3b4b6;
+  fg-list:  #a3b4b6;
+
+  text-font:        "Source Sans Pro Semibold 12";
+
+  background-color: transparent;
+  text-color: @fg-list;
+  font: @text-font;
+  border-color: @bg-dark;
 }
 
-#window {
-	anchor: center;
-	location: center;
-	margin: 0 0 0 0;
-	width: 560px;
-	padding: 2px 14px 0 14px;
-	border-color: @separator;
-    border: 1px 1px 1px 1px;
+
+/**** Layout ****/
+window {
+  width:    800px;
+  y-offset: -25%;
+  anchor:   north;
+  location: center;
+  border: 1px;
+  children: [ inputbar, listview ];
+}
+listview {
+  lines: 12;
+  fixed-height: false;
+  /* reverse: true; */
+  margin: -2px 0 0;
+  columns: 1;
+  scrollbar: true;
+  spacing: 0px;
+}
+scrollbar {
+  handle-width: 1px;
+}
+inputbar {
+  children: [ textbox-icon, prompt, entry ];
+  border: 0 0 1px;
+}
+textbox-icon, prompt {
+  padding: 11px;
+  expand: false;
+  border: 0 1px 0 0;
+  margin: 0 -2px 0 0;
+}
+textbox-icon {
+  padding: 7px -6px 0;
+}
+entry, element {
+  padding: 11px 14px;
+}
+textbox {
+  padding: 24px;
+  margin: 20px;
 }
 
-#mainbox {
-	padding: 0px 4px 0px 4px;
-	background-color: @background;
-	text-color: @foreground;
-	children: [inputbar, listview, message];
-	orientation: vertical;
-}
 
-#textbox {
-	padding: 10px;
+/**** Looks ****/
+scrollbar {
+  background-color: @bg-dark;
+  handle-color: @accent;
+  border-color: @bg-dark;
 }
-
-#listview {
-	fixed-height: true;
-	scrollbar: false;
-	layout: horizontal;
-	lines: 16;
-	padding: 14px 0 14px 0;
-	border: 1px solid 0px 0px;
-	border-color: @separator;
+listview, inputbar {
+  background-color: @bg-dark;
 }
-
-#element {
-	padding: 0px 10px;
-	text-color: @foreground;
+textbox-icon, prompt, entry {
+  text-color: @accent;
 }
-
-#element.selected {
-	text-color: @selected;
+prompt, entry {
+  background-color: @bg-focus;
 }
-
-#inputbar {
-	children: [textbox-prompt-colon, entry, prompt];
-	padding: 12px 10px;
-	spacing: 0px;
+textbox-icon, prompt {
+  background-color: @bg-focus;
 }
-
-#prompt {
-	text-color: @hint;
-	style: bold;
+prompt {
+  background-color: @bg-focus;
 }
-
-textbox-prompt-colon {
-	expand: false;
-	str: "> ";
-	text-color: @prompt;
+entry {
+  font: @text-font;
+  text-color: @fg;
 }
-
-#entry {
-	padding: 0;
-	text-color: @foreground;
+element {
+  background-color: @bg;
+  text-color: @fg;
+}
+element selected {
+  background-color: @bg-dark;
+  text-color: @accent;
 }

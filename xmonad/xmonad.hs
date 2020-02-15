@@ -54,7 +54,7 @@ import qualified PinnedWorkspaces
 applicationKeys :: [(String, X ())]
 applicationKeys =
   [ ("M-<Return>", spawn myTerminal)
-  , ("M-p"       , spawn "rofi -show run")
+  , ("M-p"       , spawn "rofi -show drun -modi drun,run")
   , ("M-b"       , spawn "firefox")
   , ("M-v"       , spawn "emacs")
   ]
@@ -220,15 +220,15 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- colors
-muted = "#96A7A9"
-foreground = "#556b72"
+muted = "#657b83"
+foreground = "#a3b4b6"
 primary = "#268bd2"
 urgent = "#cb4b16"
 
 -- config vars
-myFocusedBorderColor = "#c6c6c6"
-myUnfocusedBorderColor = "#F2E6CE"
-myBorderWidth = 1
+myFocusedBorderColor = "#a3b4b6"
+myUnfocusedBorderColor = "#c6d3d3"
+myBorderWidth = 2
 myTerminal = "terminal"
 myModMask = mod4Mask
 myWorkspaces = ["def", "email", "web", "dev"]

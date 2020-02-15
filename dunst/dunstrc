@@ -64,7 +64,7 @@
     frame_width = 1
 
     # Defines color of the frame around the notification window.
-    frame_color = "#c6c6c6"
+    frame_color = "#c6d3d3"
 
     # Define a color for the separator.
     # possible values are:
@@ -85,7 +85,7 @@
 
     ### Text ###
 
-    font = Source Code Pro Medium 10
+    font = Source Sans Pro Semibold 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -245,22 +245,22 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#FDF6E3"
-    foreground = "#556b72"
+    background = "#002b36"
+    foreground = "#a3b4b6"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#FDF6E3"
-    foreground = "#556b72"
+    background = "#002b36"
+    foreground = "#a3b4b6"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_critical]
-    background = "#FDF6E3"
-    foreground = "#556b72"
+    background = "#002b36"
+    foreground = "#a3b4b6"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon
