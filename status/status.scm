@@ -36,7 +36,7 @@
 (define (battery-percent)
   (let ((full (file->number charge-full-f))
         (curr (file->number charge-now-f)))
-    (/ (* curr 100) full)))
+    (floor (/ (* curr 100) full))))
 
 (define (volume-percent)
   (command->string "vol get"))
