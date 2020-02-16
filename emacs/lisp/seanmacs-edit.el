@@ -242,27 +242,5 @@
    "ra" 'xref-find-apropos
    "rr" 'xref-find-references))
 
-(use-package dired-subtree
-  :straight t)
-
-(use-package dired-sidebar
-  :straight t
-  :commands (dired-sidebar-toggle-sidebar
-             dired-sidebar-show-sidebar
-             dired-sidebar-jump-to-sidebar)
-  :init
-  (core/leader
-   "tt" 'seanmacs/jump-to-sidebar
-   "tn" 'dired-sidebar-toggle-sidebar)
-  (defun seanmacs/jump-to-sidebar ()
-    (interactive)
-    (dired-sidebar-show-sidebar)
-    (dired-sidebar-follow-file)
-    (dired-sidebar-jump-to-sidebar))
-  :config
-  (setq dired-sidebar-theme 'icons
-        dired-sidebar-width 24
-        dired-sidebar-should-follow-file nil))
-
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

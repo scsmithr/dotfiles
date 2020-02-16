@@ -33,6 +33,32 @@
   (advice-add 'dired-up-directory :around #'seanmacs/run-and-bury)
   (advice-add 'dired-find-file :around #'seanmacs/run-and-bury))
 
+(use-package dired-subtree
+  :straight t
+  :config
+  (defun seanmacs/dired-refresh-icons ()
+    (revert-buffer))
+  (advice-add 'dired-subtree-toggle :after #'seanmacs/dired-refresh-icons))
+
+(use-package dired-sidebar
+  :straight t
+  :commands (dired-sidebar-toggle-sidebar
+             dired-sidebar-show-sidebar
+             dired-sidebar-jump-to-sidebar)
+  :init
+  (core/leader
+   "tt" 'seanmacs/jump-to-sidebar
+   "tn" 'dired-sidebar-toggle-sidebar)
+  (defun seanmacs/jump-to-sidebar ()
+    (interactive)
+    (dired-sidebar-show-sidebar)
+    (dired-sidebar-follow-file)
+    (dired-sidebar-jump-to-sidebar))
+  :config
+  (setq dired-sidebar-theme 'icons
+        dired-sidebar-width 24
+        dired-sidebar-should-follow-file nil))
+
 (use-package help
   :config
   (shackle '(("^\\*Help\\*$"
