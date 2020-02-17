@@ -46,10 +46,6 @@ ln -sv $DIR/zathura/zathurarc ~/.config/zathura
 # readline
 ln -sv $DIR/readline/inputrc ~/.inputrc
 
-# fonts
-mkdir -p ~/.config/fontconfig
-ln -sv $DIR/fontconfig/fonts.conf ~/.config/fontconfig
-
 # git
 ln -sv $DIR/git/gitconfig ~/.gitconfig
 ln -sv $DIR/git/gitignore ~/.gitignore
