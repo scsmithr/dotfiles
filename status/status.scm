@@ -52,13 +52,14 @@
   (format #f "<fc=#657b83> ~A:</fc> ~A" section value))
 
 (define (format-battery)
-  (when (battery?)
+  (if (battery?)
     (let* ((status (battery-status))
            (icon (cond ((eq? status 'discharging) " -")
                        ((eq? status 'charging) " +")
                        (else "")))
            (s (format #f "~A%~A" (battery-percent) icon)))
-      (format-section "bat" s))))
+      (format-section "bat" s))
+    ""))
 
 (define (format-volume)
   (let* ((mute-str (if (mute?) " (mute)" ""))
@@ -69,12 +70,13 @@
   (format-section "wifi" (essid)))
 
 (define (format-status)
-  (string-join
-   (list
-    (format-wifi)
-    (format-volume)
-    (format-battery))
-   "  "))
+  (string-trim-both
+   (string-join
+    (list
+     (format-wifi)
+     (format-volume)
+     (format-battery))
+    "  ")))
 
 (define (print-loop)
   (while #t
