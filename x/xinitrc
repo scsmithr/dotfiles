@@ -26,7 +26,8 @@ dunst&
 
 # Set up lockscreen
 xset s 300 5 # Lock after 5 minutes
-export XSECURELOCK_FONT="Source Code Pro"
+export XSECURELOCK_PASSWORD_PROMPT=time
+export XSECURELOCK_FONT="Noto Sans Medium"
 xss-lock -l -- xsecurelock&
 
 exec xmonad

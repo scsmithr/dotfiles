@@ -13,7 +13,7 @@ configuration {
   fg:       #a3b4b6;
   fg-list:  #a3b4b6;
 
-  text-font:        "Source Sans Pro Semibold 12";
+  text-font:        "Noto Sans Medium 12";
 
   background-color: transparent;
   text-color: @fg-list;
