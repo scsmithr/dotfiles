@@ -247,5 +247,10 @@
   :straight t
   :defer t)
 
+;; Nix
+
+(use-package nix-mode
+  :straight t)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
