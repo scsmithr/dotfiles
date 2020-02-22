@@ -100,6 +100,13 @@ ALPHA (a float between 0 and 1)."
                      :weight 'bold
                      :box nil))
 
+  (after! company
+          (face-attr 'company-preview :inherit 'hl-line)
+          (face-attr 'company-echo-common
+                     :inherit 'company-tooltip-common
+                     :background 'unspecified
+                     :weight 'normal))
+
   (after! lsp
           (face-attr 'lsp-face-highlight-textual
                      :weight 'normal
