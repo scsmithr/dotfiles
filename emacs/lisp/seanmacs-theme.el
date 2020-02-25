@@ -11,7 +11,7 @@
 ;; Default font
 (set-frame-font (font-spec :family "Fira Mono"))
 (face-attr 'default :height 110)
-(face-attr 'variable-pitch :family "Noto Sans" :height 120)
+(face-attr 'variable-pitch :family "Fira Sans" :height 110)
 
 (defun doom-transparentize (color alpha)
   "Transparentize a COLOR (a hexidecimal string) by a coefficient
