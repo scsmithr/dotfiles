@@ -102,6 +102,7 @@ ALPHA (a float between 0 and 1)."
 
   (after! company
           (face-attr 'company-preview :inherit 'hl-line)
+          (face-attr 'company-echo :foreground (doom-color 'fg-alt))
           (face-attr 'company-echo-common
                      :inherit 'company-tooltip-common
                      :background 'unspecified
