@@ -5,7 +5,7 @@
  ("all-the-icons.el" . "1416f37984486a44c6c0cbe0a2c985e82f965b6b")
  ("annalist.el" . "134fa3f0fb91a636a1c005c483516d4b64905a6d")
  ("cargo.el" . "3d9f7d20d01ca046dbc739d8aeca2838bfb1c413")
- ("cider" . "6ad997e7f35a303757d15d5498e567182678163c")
+ ("cider" . "7a5ff726b72dc8194edd20cb6d012f677ea030f5")
  ("cl-lib" . "e79686c4a26959c0ecba0951a7e335ed28035386")
  ("clojure-mode" . "51016faaa88956bdd4decf2fa94dd5198777a47c")
  ("closql" . "92f8f2dba684b7c9cc60821aa5668d336544ab99")
