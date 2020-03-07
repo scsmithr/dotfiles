@@ -5,6 +5,12 @@
 
 ;;; Code:
 
+(defvar modeline-active-box `(:line-width 2 :color ,(doom-lighten 'base3 0.2) :style nil))
+(defvar modeline-inactive-box `(:line-width 2 :color ,(doom-darken 'bg 0.02) :style nil))
+
+(face-attr 'mode-line :box modeline-active-box)
+(face-attr 'mode-line-inactive :box modeline-inactive-box)
+
 (defgroup modeline nil
   "A minimal modeline configuration inspired by doom-modeline."
   :group 'modeline)
