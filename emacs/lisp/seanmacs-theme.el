@@ -138,8 +138,8 @@ ALPHA (a float between 0 and 1)."
   (face-attr 'font-lock-constant-face :weight 'normal)
   (face-attr 'show-paren-match
              :weight 'bold
-             :background (doom-transparentize 'cyan 0.5)
-             :foreground (doom-color 'cyan)))
+             :background nil
+             :foreground (doom-color 'yellow)))
 
 (use-package all-the-icons
   :straight t
