@@ -184,7 +184,7 @@ myLayoutHook = uniformSpacing
   threeCol       = ThreeCol nmaster delta (1 / 3)
   nmaster        = 1
   delta          = 3 / 100
-  gs             = 4
+  gs             = 5
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
