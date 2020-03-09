@@ -113,12 +113,14 @@ ALPHA (a float between 0 and 1)."
           (face-attr 'lsp-face-highlight-textual
                      :weight 'normal
                      :foreground nil
+                     :distant-foreground nil
                      :background (doom-color 'base3)))
 
   (after! tide
           (face-attr 'tide-hl-identifier-face
                      :weight 'normal
                      :foreground nil
+                     :distant-foreground nil
                      :background (doom-color 'base3)))
 
   (face-attr 'highlight
