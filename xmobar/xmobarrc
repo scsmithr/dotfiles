@@ -1,9 +1,9 @@
 Config {
     font = "xft:Fira Sans:medium:size=10:antialias=true",
-    bgColor = "#073642",
+    bgColor = "#002b36",
     fgColor = "#a3b4b6",
     border = BottomB,
-    borderColor = "#002b36",
+    borderColor = "#00212B",
     borderWidth = 2,
     position = Top,
     allDesktops = False,
