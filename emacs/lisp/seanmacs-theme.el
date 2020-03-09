@@ -8,6 +8,9 @@
 (defun face-attr (face &rest args)
   (apply #'set-face-attribute face nil args))
 
+(defun reset-face (face)
+  (apply #'face-spec-reset-face face nil))
+
 ;; Default font
 (let ((default-monospace "Fira Mono"))
   (set-frame-font (font-spec :family default-monospace))
@@ -33,7 +36,7 @@ ALPHA (a float between 0 and 1)."
                      :weight 'normal
                      :foreground 'unspecified)
           (face-attr 'whitespace-tab :background nil)
-          (face-attr 'trailing-whitespace :background (doom-transparentize 'red 0.8)))
+          (face-attr 'trailing-whitespace :background (doom-transparentize 'red 0.9)))
 
   (after! org
           (face-attr 'org-meta-line :foreground (doom-color 'fg-alt))
@@ -71,12 +74,6 @@ ALPHA (a float between 0 and 1)."
                      :inherit 'hl-line
                      :underline nil))
 
-  (after! web-mode
-          (face-attr 'web-mode-current-element-highlight-face
-                     :weight 'normal
-                     :foreground nil
-                     :background (doom-color 'base3)))
-
   (after! diff-hl
           (face-attr 'diff-hl-insert
                      :foreground (doom-transparentize 'green 0.5)
@@ -109,30 +106,30 @@ ALPHA (a float between 0 and 1)."
                      :background 'unspecified
                      :weight 'normal))
 
+  (after! web-mode
+          (reset-face 'web-mode-current-element-highlight-face)
+          (face-attr 'web-mode-current-element-highlight-face :inherit 'highlight :weight 'normal))
+
   (after! lsp
-          (face-attr 'lsp-face-highlight-textual
-                     :weight 'normal
-                     :foreground nil
-                     :distant-foreground nil
-                     :background (doom-color 'base3)))
+          (reset-face 'lsp-face-highlight-textual)
+          (face-attr 'lsp-face-highlight-textual :inherit 'highlight :weight 'normal))
 
   (after! tide
-          (face-attr 'tide-hl-identifier-face
-                     :weight 'normal
-                     :foreground nil
-                     :distant-foreground nil
-                     :background (doom-color 'base3)))
+          (reset-face 'tide-hl-identifier-face)
+          (face-attr 'tide-hl-identifier-face :inherit 'highlight :weight 'normal))
 
+  (face-attr 'region :distant-foreground (doom-color 'fg-alt))
   (face-attr 'highlight
              :weight 'bold
              :foreground nil
-             :distant-foreground nil
-             :background (doom-darken 'bg-alt 0.1))
+             :distant-foreground (doom-color 'fg)
+             :background (doom-transparentize 'blue 0.9))
   (face-attr 'lazy-highlight
              :weight 'bold
              :foreground nil
-             :distant-foreground nil
-             :background (doom-darken 'bg-alt 0.1))
+             :distant-foreground (doom-color 'fg)
+             :background (doom-transparentize 'blue 0.9))
+
   (face-attr 'fringe :background (doom-color 'bg))
   (face-attr 'font-lock-comment-face :foreground (doom-lighten 'fg 0.25))
   (face-attr 'font-lock-doc-face :foreground (doom-lighten 'fg 0.25))
