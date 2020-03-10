@@ -7,7 +7,8 @@
 
 (core/leader
  "x x" 'org-capture
- "x a" 'org-agenda)
+ "x l" 'org-agenda-list
+ "x s" 'org-search-view)
 
 (use-package org
   :defer t
