@@ -16,6 +16,7 @@
         org-agenda-files (list "~/notes/")
         org-agenda-restore-windows-after-quit t
         org-agenda-span 'fortnight
+        org-agenda-window-setup 'current-window
         org-refile-targets '((org-agenda-files :maxlevel . 3))
         org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
@@ -33,8 +34,9 @@
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
 
-  (define-key org-agenda-mode-map "j" 'evil-next-line)
-  (define-key org-agenda-mode-map "k" 'evil-previous-line))
+  (after! org-agenda
+          (define-key org-agenda-mode-map "j" 'evil-next-line)
+          (define-key org-agenda-mode-map "k" 'evil-previous-line)))
 
 (use-package ob
   ;; built-in
