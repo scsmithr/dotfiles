@@ -6,6 +6,7 @@
 [core]
     editor = nvim
 	excludesfile = /home/sean/.gitignore
+    hooksPath = nohooks
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [url "git@gh.coder-internal.com:"]
@@ -23,3 +24,5 @@
 	wta = "!f() { git worktree add worktree/$1; }; f"
 	wtr = "!f() { git worktree remove worktree/$1; }; f"
 	wtl = worktree list
+[github]
+	user = scsmithr
