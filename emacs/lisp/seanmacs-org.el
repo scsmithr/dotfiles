@@ -14,6 +14,8 @@
   :config
   (setq org-default-notes-file "~/notes/refile.org"
         org-agenda-files (list "~/notes/")
+        org-agenda-restore-windows-after-quit t
+        org-agenda-span 'fortnight
         org-refile-targets '((org-agenda-files :maxlevel . 3))
         org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
