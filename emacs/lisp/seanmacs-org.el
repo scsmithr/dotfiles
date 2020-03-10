@@ -29,7 +29,10 @@
            (file ,(concat org-template-directory "/task")))))
 
   (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED"))))
+        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
+
+  (define-key org-agenda-mode-map "j" 'evil-next-line)
+  (define-key org-agenda-mode-map "k" 'evil-previous-line))
 
 (use-package ob
   ;; built-in
