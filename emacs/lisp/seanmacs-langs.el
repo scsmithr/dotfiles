@@ -23,10 +23,8 @@
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'before-save-hook #'gofmt-before-save)
   (evil-add-command-properties #'godef-jump :jump t)
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (setq company-backends (delete 'company-capf company-backends))))
   (setq gofmt-command "goimports")
+  (setq gofmt-args '("-local=go.coder.com"))
   (define-key go-mode-map (kbd "C-c C-d") #'lsp-describe-thing-at-point))
 
 (core/local 'go-mode-map
