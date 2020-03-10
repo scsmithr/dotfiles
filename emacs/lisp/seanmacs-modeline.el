@@ -15,11 +15,6 @@
   "A minimal modeline configuration inspired by doom-modeline."
   :group 'modeline)
 
-(defface modeline-status-grayed-out
-  '((t (:inherit (font-lock-doc-face))))
-  "Face used for neutral or inactive status indicators in the modeline."
-  :group 'modeline)
-
 (defface modeline-status-mode
   `((t (:inherit (font-lock-keyword-face) :foreground ,(doom-color 'blue))))
   "Face used for mode indicators in the modeline."
@@ -89,31 +84,21 @@
           (`finished (let-alist (flycheck-count-errors flycheck-current-errors)
                        (let ((error (or .error 0))
                              (warning (or .warning 0))
-                             (info (or .info 0))
-                             (sep (propertize "/" 'face 'modeline-status-grayed-out)))
-                         (format "%s%s%s%s%s "
-                                 (propertize
-                                  (number-to-string error)
-                                  'face (if (> error 0)
-                                            'modeline-status-error
-                                          'modeline-status-grayed-out))
-                                 sep
-                                 (propertize
-                                  (number-to-string warning)
-                                  'face (if (> warning 0)
-                                            'modeline-status-warning
-                                          'modeline-status-grayed-out))
-                                 sep
-                                 (propertize
-                                  (number-to-string info)
-                                  'face (if (> info 0)
-                                            'modeline-status-success
-                                          'modeline-status-grayed-out))
-                                 ))))
+                             (info (or .info 0)))
+                           (format "%s/%s/%s "
+                                   (if (> error 0)
+                                       (propertize (number-to-string error) 'face 'modeline-status-error)
+                                     (number-to-string error))
+                                   (if (> warning 0)
+                                       (propertize (number-to-string warning) 'face 'modeline-status-warning)
+                                     (number-to-string warning))
+                                   (if (> info 0)
+                                       (propertize (number-to-string info) 'face 'modeline-status-info)
+                                     (number-to-string info))))))
           ('running "-/-/- ")
           ('no-checker "")
           ('errored (propertize "!!! " 'face 'modeline-status-error))
-          ('interrupted (propertize "--- " 'face 'modeline-status-grayed-out)))))
+          ('interrupted "--- "))))
 
 (defun modeline-segment-modified-or-readonly ()
   "Displays a color-coded buffer modification or readonly
@@ -122,7 +107,7 @@ indicator in the modeline."
          (propertize "R " 'face 'modeline-modified))
         ((buffer-modified-p)
          (propertize "U " 'face 'modeline-modified))
-        (t (propertize "- " 'face 'modeline-status-grayed-out))))
+        (t "- ")))
 
 (defun modeline-segment-buffer-name ()
   "Displays the name of the current buffer in the modeline."
@@ -135,12 +120,12 @@ indicator in the modeline."
 (defun modeline-segment-position ()
   "Displays the current cursor position in the modeline."
   (let ((fmt-string "%4l:%2c "))
-    (propertize fmt-string 'face 'modeline-status-grayed-out)))
+    fmt-string))
 
 (defun modeline-segment-buffer-percent ()
   "Displays the percentage of buffer above current point."
   (let ((fmt-string "%p%% "))
-    (propertize fmt-string 'face 'modeline-status-grayed-out)))
+    fmt-string))
 
 (defun modeline-segment-vc ()
   "Displays color-coded version control information in the modeline."

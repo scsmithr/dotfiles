@@ -24,13 +24,6 @@
         company-posframe-show-metadata nil
         company-posframe-quickhelp-delay nil))
 
-(use-package company-lsp
-  :straight t
-  :after (company lsp)
-  :config
-  (add-to-list 'company-lsp-filter-candidates '(gopls . nil))
-  (push 'company-lsp company-backends))
-
 (use-package lsp-mode
   :straight t
   :commands lsp
@@ -38,6 +31,7 @@
   (setq lsp-prefer-flymake nil
         lsp-auto-guess-root t
         lsp-eldoc-render-all nil
+        lsp-prefer-capf t
         lsp-response-timeout 2)
   (shackle '(("^\\*lsp-help\\*" :height 0.3))))
 
