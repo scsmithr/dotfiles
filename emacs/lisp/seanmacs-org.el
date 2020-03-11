@@ -28,9 +28,11 @@
   (setq org-capture-templates
         `(
           ("n" "Note" entry (file+headline "" "Notes")
-           (file ,(concat org-template-directory "/note")))
+           (file ,(concat org-template-directory "/note"))
+           :empty-lines 1)
           ("t" "Task" entry (file+headline "" "Tasks")
-           (file ,(concat org-template-directory "/task")))))
+           (file ,(concat org-template-directory "/task"))
+           :empty-lines 1)))
 
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
