@@ -44,15 +44,29 @@ import           XMonad.Util.Run                ( spawnPipe
                                                 , runProcessWithInput
                                                 )
 
+import           XMonad.Prompt
+import           XMonad.Prompt.Shell
+
 import qualified Data.List                     as List
 import qualified Data.Map                      as Map
 import qualified Data.Map.Strict               as StrictMap
 
-import qualified RofiPrompt
+promptConf = def { position          = Bottom
+                 , font              = "xft:Fira Sans Medium-10"
+                 , height            = 44
+                 , bgColor           = background
+                 , fgColor           = foreground
+                 , bgHLight          = background
+                 , fgHLight          = primary
+                 , promptBorderWidth = 2
+                 , borderColor       = darkBackground
+                 , maxComplRows      = Just 3
+                 }
 
 applicationKeys :: [(String, X ())]
 applicationKeys =
   [ ("M-<Return>", spawn myTerminal)
+  , ("M-p"       , shellPrompt promptConf)
   , ("M-b"       , spawn "firefox")
   , ("M-v"       , spawn "emacs")
   , ("M-q"       , spawn "lock")
@@ -90,6 +104,18 @@ mediaKeys =
   ]
 
 myKeys = applicationKeys ++ windowManagementKeys ++ mediaKeys
+
+myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
+  Map.fromList
+    $  [ ((m .|. modm, key), f sc)
+       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..]
+       , (f  , m ) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
+       ]
+    ++ [ ((m .|. modm, k), windows $ f i)
+       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+       , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+       ]
+    ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
 stringifyLayout :: String -> String
 stringifyLayout l | t "Tall" l     = "tall"
@@ -137,6 +163,7 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
       , workspaces         = myWorkspaces
       , terminal           = myTerminal
       , modMask            = myModMask
+      , keys               = myWorkspaceKeys
       , borderWidth        = myBorderWidth
       , normalBorderColor  = myUnfocusedBorderColor
       , focusedBorderColor = myFocusedBorderColor
@@ -148,6 +175,8 @@ main = xmonad . myConfig =<< spawnPipe "xmobar"
 -- colors
 muted = "#657b83"
 foreground = "#a3b4b6"
+background = "#002b36"
+darkBackground = "#00212B"
 primary = "#268bd2"
 urgent = "#cb4b16"
 
