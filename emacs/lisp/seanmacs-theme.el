@@ -22,7 +22,6 @@
 ALPHA (a float between 0 and 1)."
   (doom-blend (doom-color color) (doom-color 'bg) (- 1 alpha)))
 
-;; Doom themes
 (use-package doom-themes
   :straight t
   :init
@@ -105,6 +104,15 @@ ALPHA (a float between 0 and 1)."
                      :inherit 'company-tooltip-common
                      :background 'unspecified
                      :weight 'normal))
+
+  (after! ediff
+          (face-attr 'ediff-fine-diff-A :background (doom-transparentize 'blue 0.7))
+          (face-attr 'ediff-current-diff-A :background (doom-transparentize 'blue 0.9)))
+
+  (after! smerge-mode
+          (face-attr 'smerge-lower :background (doom-transparentize 'green 0.9))
+          (face-attr 'smerge-upper :background (doom-transparentize 'red 0.9))
+          (face-attr 'smerge-base :background (doom-transparentize 'blue 0.9)))
 
   (after! web-mode
           (reset-face 'web-mode-current-element-highlight-face)
