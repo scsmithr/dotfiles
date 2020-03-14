@@ -102,8 +102,13 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
          )
 
     -- increase or decrease number of windows in the master area
-       , ((modMask, xK_comma) , sendMessage (IncMasterN 1))
-       , ((modMask, xK_period), sendMessage (IncMasterN (-1)))
+       , ((modMask, xK_comma), sendMessage (IncMasterN 1))
+       , ( (modMask, xK_period)
+         , sendMessage (IncMasterN (-1))
+         )
+
+     -- quickly jump back to prev workspace
+       , ((modMask, xK_minus), toggleWS)
        ]
 
     -- navigate screens based on physical position
