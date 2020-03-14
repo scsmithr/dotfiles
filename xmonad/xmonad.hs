@@ -35,10 +35,10 @@ import           XMonad.Actions.DynamicWorkspaces
 import           XMonad.Actions.PhysicalScreens ( viewScreen
                                                 , sendToScreen
                                                 )
-import           XMonad.Actions.Submap          ( submap )
 import           XMonad.Actions.CycleWS         ( toggleWS )
 
 import           XMonad.Util.EZConfig           ( additionalKeysP )
+import           XMonad.Util.WorkspaceCompare   ( getSortByIndex )
 import           XMonad.Util.Run                ( spawnPipe
                                                 , hPutStrLn
                                                 , runProcessWithInput
@@ -49,46 +49,23 @@ import qualified Data.Map                      as Map
 import qualified Data.Map.Strict               as StrictMap
 
 import qualified RofiPrompt
-import qualified PinnedWorkspaces
 
 applicationKeys :: [(String, X ())]
 applicationKeys =
   [ ("M-<Return>", spawn myTerminal)
-  , ("M-p"       , spawn "rofi -show drun -modi drun,run")
   , ("M-b"       , spawn "firefox")
   , ("M-v"       , spawn "emacs")
+  , ("M-q"       , spawn "lock")
+  , ("M-S-s"     , spawn "lock suspend")
   ]
 
 windowManagementKeys :: [(String, X ())]
 windowManagementKeys =
-  [ ("M-q"      , spawn "lock")
-  , ("M-S-s"    , spawn "lock suspend")
-  , ("M-S-c"    , kill)
-  , ("M-<Space>", sendMessage NextLayout)
-  , ("M-t"      , withFocused $ windows . W.sink)
-  , ("M-f"      , withFocused $ float)
-  , ("M-n"      , sendMessage ToggleStruts)
-  , ("M-o"      , RofiPrompt.selectWorkspace)
-  , ("M-S-o"    , RofiPrompt.moveToWorkspace)
-  , ("M-S-y"    , RofiPrompt.renameWorkspace)
-  , ( "M-u"
-    , submap
-      .  Map.fromList
-      $  [ ((0, xK_u), PinnedWorkspaces.unpinCurrentWorkspace)
-         , ((0, xK_d), removeEmptyWorkspace)
-         ]
-      ++ zip (zip (repeat (0)) [xK_1 .. xK_9])
-             (map (PinnedWorkspaces.pinCurrentWorkspace) [1 ..])
-    )
-  , ( "M-x"
-    , RofiPrompt.exec
-      "xmonad"
-      [ ("restart"  , spawn "xmonad --restart")
-      , ("recompile", spawn "xmonad --recompile && xmonad --restart")
-      , ("quit"     , io (exitWith ExitSuccess))
-      ]
-      (\s -> notify "xmonad" $ "unknown option: " ++ s)
-    )
+  [ ("M-S-c"       , kill)
+  , ("M-<Space>"   , sendMessage NextLayout)
+  , ("M-t"         , withFocused $ windows . W.sink)
+  , ("M-f"         , withFocused $ float)
+  , ("M-n"         , sendMessage ToggleStruts)
   , ("M--"         , toggleWS)
   , ("M-j"         , windows W.focusDown)
   , ("M-k"         , windows W.focusUp)
@@ -114,68 +91,25 @@ mediaKeys =
 
 myKeys = applicationKeys ++ windowManagementKeys ++ mediaKeys
 
-notify :: String -> String -> X ()
-notify title msg = do
-  spawn $ "notify-send '" ++ title ++ "' '" ++ msg ++ "'"
-
-formatLayout
-  :: String -- icon bg
-  -> String -- icon fg
-  -> String -- layout name
-  -> String
-formatLayout bg fg l | t "Tall" l     = fmt "tall"
-                     | t "Full" l     = fmt "full"
-                     | t "ThreeCol" l = fmt "col"
-                     | otherwise      = fmt l
- where
-  t   = List.isInfixOf
-  fmt = D.pad . (D.xmobarColor fg bg)
-
-formatWorkspace
-  :: (WorkspaceId -> Maybe PinnedWorkspaces.PinnedIndex)
-  -> String -- index bg
-  -> String -- index fg
-  -> String -- workspace bg
-  -> String -- workspace fg
-  -> Bool -- show workspace
-  -> WorkspaceId -- workspace name
-  -> String
-formatWorkspace getIndex idxBg idxFg wsBg wsFg mustShow ws = case idx of
-  Just n  -> D.pad $ (D.xmobarColor idxFg idxBg $ (show n) ++ ":") ++ wsStr
-  Nothing -> case mustShow of
-    True  -> D.pad $ wsStr
-    False -> ""
- where
-  idx   = getIndex ws
-  wsStr = (D.xmobarColor wsFg wsBg ws)
+stringifyLayout :: String -> String
+stringifyLayout l | t "Tall" l     = "tall"
+                  | t "Full" l     = "full"
+                  | t "ThreeCol" l = "col"
+                  | otherwise      = l
+  where t = List.isInfixOf
 
 myLogHook h = do
-  wmap <- PinnedWorkspaces.getMap
-  let getIndex ws = PinnedWorkspaces.getIndex (StrictMap.toList wmap) ws
-
-  let fmt = formatWorkspace getIndex
-  D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt "" muted "" primary True
-                                , D.ppHidden  = fmt "" muted "" muted False
-                                , D.ppVisible = fmt "" muted "" foreground True
-                                , D.ppUrgent  = fmt "" muted "" urgent True
-                                , D.ppLayout  = formatLayout "" muted
+  let fmt fg bg = D.pad . D.xmobarColor fg bg
+  D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt primary ""
+                                , D.ppHidden  = fmt muted ""
+                                , D.ppVisible = fmt foreground ""
+                                , D.ppUrgent  = fmt urgent ""
+                                , D.ppLayout  = fmt muted "" . stringifyLayout
                                 , D.ppTitle   = const ""
                                 , D.ppSep     = " "
-                                , D.ppSort    = PinnedWorkspaces.getSortByPinned
+                                , D.ppSort    = getSortByIndex
                                 , D.ppOutput  = hPutStrLn h
                                 }
-
-myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
-  Map.fromList
-    $  [ ((m .|. modm, key), f sc)
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..]
-       , (f  , m ) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
-       ]
-    ++ zip (zip (repeat (modm)) [xK_1 .. xK_9])
-           (map (PinnedWorkspaces.withPinnedIndex W.greedyView) [1 ..])
-    ++ zip (zip (repeat (modm .|. shiftMask)) [xK_1 .. xK_9])
-           (map (PinnedWorkspaces.withPinnedIndex W.shift) [1 ..])
-    ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
 
 myLayoutHook = uniformSpacing
   $ lessBorders (OnlyScreenFloat) (tiled ||| Full ||| threeCol)
@@ -187,11 +121,6 @@ myLayoutHook = uniformSpacing
   gs             = 5
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
-
-myStartupHook :: X ()
-myStartupHook = do
-  let indexes = zip myWorkspaces [1 ..]
-  mapM_ (\x -> PinnedWorkspaces.pinWorkspace (fst x) (snd x)) indexes
 
 myManageHook = composeAll
   [ className =? "mpv" --> doCenterFloat
@@ -206,13 +135,11 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
       , handleEventHook    = fullscreenEventHook
       , focusFollowsMouse  = False
       , workspaces         = myWorkspaces
-      , keys               = myWorkspaceKeys
       , terminal           = myTerminal
       , modMask            = myModMask
       , borderWidth        = myBorderWidth
       , normalBorderColor  = myUnfocusedBorderColor
       , focusedBorderColor = myFocusedBorderColor
-      , startupHook        = myStartupHook
       }
   myKeys
 
