@@ -18,7 +18,6 @@ import           XMonad.Hooks.UrgencyHook       ( NoUrgencyHook(..)
 import           XMonad.Hooks.EwmhDesktops      ( ewmh
                                                 , fullscreenEventHook
                                                 )
-
 import           XMonad.Layout.NoBorders        ( Ambiguity(..)
                                                 , lessBorders
                                                 )
@@ -29,24 +28,18 @@ import           XMonad.Layout.Spacing          ( Border(..)
                                                 , spacingRaw
                                                 )
 import           XMonad.Layout.ThreeColumns     ( ThreeCol(..) )
-
-import           XMonad.Actions.DynamicWorkspaces
-                                                ( removeEmptyWorkspace )
 import           XMonad.Actions.PhysicalScreens ( viewScreen
                                                 , sendToScreen
                                                 )
 import           XMonad.Actions.CycleWS         ( toggleWS )
-
-import           XMonad.Util.EZConfig           ( additionalKeysP )
 import           XMonad.Util.WorkspaceCompare   ( getSortByIndex )
 import           XMonad.Util.Run                ( spawnPipe
                                                 , hPutStrLn
                                                 , runProcessWithInput
                                                 )
-
 import           XMonad.Prompt
 import           XMonad.Prompt.Shell
-
+import           Graphics.X11.ExtraTypes.XF86
 import qualified Data.List                     as List
 import qualified Data.Map                      as Map
 import qualified Data.Map.Strict               as StrictMap
@@ -58,64 +51,79 @@ promptConf = def { position          = Bottom
                  , fgColor           = foreground
                  , bgHLight          = background
                  , fgHLight          = primary
-                 , promptBorderWidth = 2
+                 , promptBorderWidth = myBorderWidth
                  , borderColor       = darkBackground
                  , maxComplRows      = Just 3
                  }
 
-applicationKeys :: [(String, X ())]
-applicationKeys =
-  [ ("M-<Return>", spawn myTerminal)
-  , ("M-p"       , shellPrompt promptConf)
-  , ("M-b"       , spawn "firefox")
-  , ("M-v"       , spawn "emacs")
-  , ("M-q"       , spawn "lock")
-  , ("M-S-s"     , spawn "lock suspend")
-  ]
-
-windowManagementKeys :: [(String, X ())]
-windowManagementKeys =
-  [ ("M-S-c"       , kill)
-  , ("M-<Space>"   , sendMessage NextLayout)
-  , ("M-t"         , withFocused $ windows . W.sink)
-  , ("M-f"         , withFocused $ float)
-  , ("M-n"         , sendMessage ToggleStruts)
-  , ("M--"         , toggleWS)
-  , ("M-j"         , windows W.focusDown)
-  , ("M-k"         , windows W.focusUp)
-  , ("M-S-j"       , windows W.swapDown)
-  , ("M-S-k"       , windows W.swapUp)
-  , ("M-S-<Return>", windows W.swapMaster)
-  , ("M-h"         , sendMessage Shrink)
-  , ("M-l"         , sendMessage Expand)
-  , ("M-S-h"       , sendMessage MirrorExpand)
-  , ("M-S-l"       , sendMessage MirrorShrink)
-  , ("M-,"         , sendMessage (IncMasterN 1))
-  , ("M-."         , sendMessage (IncMasterN (-1)))
-  ]
-
-mediaKeys :: [(String, X ())]
-mediaKeys =
-  [ ("<XF86MonBrightnessUp>"  , spawn "bri laptop up")
-  , ("<XF86MonBrightnessDown>", spawn "bri laptop down")
-  , ("<XF86AudioRaiseVolume>" , spawn "vol up")
-  , ("<XF86AudioLowerVolume>" , spawn "vol down")
-  , ("<XF86AudioMute>"        , spawn "vol mute")
-  ]
-
-myKeys = applicationKeys ++ windowManagementKeys ++ mediaKeys
-
-myWorkspaceKeys conf@(XConfig { XMonad.modMask = modm }) =
+myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
   Map.fromList
-    $  [ ((m .|. modm, key), f sc)
+    $  [ ((modMask, xK_Return), spawn myTerminal)
+       , ((modMask, xK_p)     , shellPrompt promptConf)
+       , ((modMask, xK_b)     , spawn myBrowser)
+       , ((modMask, xK_v)     , spawn myEditor)
+       , ((modMask, xK_q)     , spawn "lock")
+       , ( (modMask .|. shiftMask, xK_q)
+         , spawn "lock suspend"
+         )
+
+     -- switch layouts
+       , ((modMask .|. shiftMask, xK_c), kill)
+       , ((modMask, xK_space)          , sendMessage NextLayout)
+       , ( (modMask .|. shiftMask, xK_space)
+         , setLayout $ XMonad.layoutHook conf
+         )
+
+    -- move focus up or down the window stack
+       , ((modMask, xK_Tab)              , windows W.focusDown)
+       , ((modMask .|. shiftMask, xK_Tab), windows W.focusUp)
+       , ((modMask, xK_j)                , windows W.focusDown)
+       , ((modMask, xK_k)                , windows W.focusUp)
+       , ( (modMask, xK_m)
+         , windows W.focusMaster
+         )
+
+    -- modifying the window order
+       , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster)
+       , ((modMask .|. shiftMask, xK_j)     , windows W.swapDown)
+       , ( (modMask .|. shiftMask, xK_k)
+         , windows W.swapUp
+         )
+
+    -- resizing the master/slave ratio
+       , ((modMask, xK_h), sendMessage Shrink)
+       , ( (modMask, xK_l)
+         , sendMessage Expand
+         )
+
+    -- floating layer support
+       , ( (modMask, xK_t)
+         , withFocused $ windows . W.sink
+         )
+
+    -- increase or decrease number of windows in the master area
+       , ((modMask, xK_comma) , sendMessage (IncMasterN 1))
+       , ((modMask, xK_period), sendMessage (IncMasterN (-1)))
+       ]
+
+    -- navigate screens based on physical position
+    ++ [ ((m .|. modMask, key), f sc)
        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..]
        , (f  , m ) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
        ]
-    ++ [ ((m .|. modm, k), windows $ f i)
+
+    ++ [ ((m .|. modMask, k), windows $ f i)
        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
        ]
-    ++ [((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)]
+
+  -- media keys
+    ++ [ ((0, xF86XK_MonBrightnessUp)  , spawn "bri laptop up")
+       , ((0, xF86XK_MonBrightnessDown), spawn "bri laptop down")
+       , ((0, xF86XK_AudioRaiseVolume) , spawn "vol up")
+       , ((0, xF86XK_AudioLowerVolume) , spawn "vol down")
+       , ((0, xF86XK_AudioMute)        , spawn "vol mute")
+       ]
 
 stringifyLayout :: String -> String
 stringifyLayout l | t "Tall" l     = "tall"
@@ -132,7 +140,7 @@ myLogHook h = do
                                 , D.ppUrgent  = fmt urgent ""
                                 , D.ppLayout  = fmt muted "" . stringifyLayout
                                 , D.ppTitle   = const ""
-                                , D.ppSep     = " "
+                                , D.ppSep     = fmt muted "" "-"
                                 , D.ppSort    = getSortByIndex
                                 , D.ppOutput  = hPutStrLn h
                                 }
@@ -154,23 +162,27 @@ myManageHook = composeAll
   , isDialog =? True --> doCenterFloat
   ]
 
-myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks $ additionalKeysP
-  def { logHook            = myLogHook pipe
-      , manageHook         = myManageHook
-      , layoutHook         = avoidStruts $ myLayoutHook
-      , handleEventHook    = fullscreenEventHook
-      , focusFollowsMouse  = False
-      , workspaces         = myWorkspaces
-      , terminal           = myTerminal
-      , modMask            = myModMask
-      , keys               = myWorkspaceKeys
-      , borderWidth        = myBorderWidth
-      , normalBorderColor  = myUnfocusedBorderColor
-      , focusedBorderColor = myFocusedBorderColor
-      }
-  myKeys
+myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks def
+  { logHook            = myLogHook pipe
+  , manageHook         = myManageHook
+  , layoutHook         = avoidStruts $ myLayoutHook
+  , handleEventHook    = fullscreenEventHook
+  , focusFollowsMouse  = False
+  , workspaces         = myWorkspaces
+  , terminal           = myTerminal
+  , modMask            = myModMask
+  , keys               = myWorkspaceKeys
+  , borderWidth        = myBorderWidth
+  , normalBorderColor  = myUnfocusedBorderColor
+  , focusedBorderColor = myFocusedBorderColor
+  }
 
 main = xmonad . myConfig =<< spawnPipe "xmobar"
+
+-- programs
+myEditor = "emacs"
+myTerminal = "terminal"
+myBrowser = "firefox"
 
 -- colors
 muted = "#657b83"
@@ -179,11 +191,10 @@ background = "#002b36"
 darkBackground = "#00212B"
 primary = "#268bd2"
 urgent = "#cb4b16"
-
--- config vars
 myFocusedBorderColor = "#a3b4b6"
 myUnfocusedBorderColor = "#c6d3d3"
+
+-- config vars
 myBorderWidth = 2
-myTerminal = "terminal"
 myModMask = mod4Mask
 myWorkspaces = ["def", "email", "web", "dev"]
