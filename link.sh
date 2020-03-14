@@ -36,10 +36,6 @@ ln -sv $DIR/gtk/gtkrc-2.0 ~/.gtkrc-2.0
 mkdir -p ~/.config/alacritty
 ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
 
-# rofi
-mkdir -p ~/.config/rofi
-ln -sv $DIR/rofi/* ~/.config/rofi
-
 # zathura
 ln -sv $DIR/zathura/zathurarc ~/.config/zathura
 
