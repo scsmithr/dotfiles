@@ -193,7 +193,7 @@ myBrowser = "firefox"
 
 -- colors
 dark = "#26272d"
-light = "#ffffff"
+light = "#fcfcfc"
 muted = "#828282"
 foreground = "#ababb4"
 primary = "#e8e8e8"
