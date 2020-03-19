@@ -60,7 +60,7 @@
  ("magit" . "1916e83aa463fee86ac1c6bcfd80d780d0544901")
  ("markdown-mode" . "e9dff50d572caa96b68a7466c18c97a8d6ed651c")
  ("melpa" . "26682a1fb2d885168ca922521df7f3d8fbfe43a8")
- ("modus-themes" . "4adccbdad080e1dc192a9eca378b3e809a726097")
+ ("modus-themes" . "3238db3b97fdead59652da74353c4bd57626dc49")
  ("nix-mode" . "5b5961780f3b1c1b62453d2087f775298980f10d")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
  ("parseclj" . "b34d3e13a249d4b92f1a008cdc1df20a92f866c5")

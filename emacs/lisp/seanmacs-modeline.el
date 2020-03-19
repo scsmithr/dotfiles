@@ -108,7 +108,7 @@ indicator in the modeline."
 
 (defun modeline-segment-position ()
   "Displays the current cursor position in the modeline."
-  (let ((fmt-string "%4l:%2c "))
+  (let ((fmt-string " %3l:%2c "))
     fmt-string))
 
 (defun modeline-segment-buffer-percent ()
