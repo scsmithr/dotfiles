@@ -125,25 +125,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0xffffff'
+    black:   '0x23242a'
     red:     '0xa80000'
     green:   '0x005200'
     yellow:  '0x8b3800'
     blue:    '0x0030a6'
     magenta: '0x721045'
     cyan:    '0x005589'
-    white:   '0x26272d'
+    white:   '0xe8e8e8'
 
   # Bright colors
   bright:
-    black:   '0xf3f1f3'
+    black:   '0x828282'
     red:     '0xa80000'
     green:   '0x005200'
     yellow:  '0x8b3800'
     blue:    '0x0030a6'
     magenta: '0x721045'
     cyan:    '0x005589'
-    white:   '0x808080'
+    white:   '0xf8f8f8'
 
 # Visual Bell
 #
