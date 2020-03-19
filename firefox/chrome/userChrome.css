@@ -1,7 +1,0 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-
-/* Seems to be the background used briefly when opening a new tab. */
-browser[type="content-primary"], browser[type="content"],
-#main-window, #appcontent {
-	background-color: #FDF6E3 !important;
-}

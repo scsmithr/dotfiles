@@ -116,34 +116,34 @@ font:
 # Should display the render timer
 #render_timer: false
 
-# Colors (Solarized Light)
+# Colors
 colors:
   # Default colors
   primary:
-    background: '0xfdf6e3'
-    foreground: '0x586e75'
+    background: '0xffffff'
+    foreground: '0x26272d'
 
   # Normal colors
   normal:
-    black:   '0xeee8d5'
-    red:     '0xdc322f'
-    green:   '0x859900'
-    yellow:  '0xb58900'
-    blue:    '0x268bd2'
-    magenta: '0xd33682'
-    cyan:    '0x2aa198'
-    white:   '0x073642'
+    black:   '0xffffff'
+    red:     '0xa80000'
+    green:   '0x005200'
+    yellow:  '0x8b3800'
+    blue:    '0x0030a6'
+    magenta: '0x721045'
+    cyan:    '0x005589'
+    white:   '0x26272d'
 
   # Bright colors
   bright:
-    black:   '0xb6b6b6'
-    red:     '0xdc322f'
-    green:   '0x859900'
-    yellow:  '0xb58900'
-    blue:    '0x268bd2'
-    magenta: '0xd33682'
-    cyan:    '0x2aa198'
-    white:   '0x002b36'
+    black:   '0xf3f1f3'
+    red:     '0xa80000'
+    green:   '0x005200'
+    yellow:  '0x8b3800'
+    blue:    '0x0030a6'
+    magenta: '0x721045'
+    cyan:    '0x005589'
+    white:   '0x808080'
 
 # Visual Bell
 #

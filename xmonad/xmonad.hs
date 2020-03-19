@@ -47,12 +47,12 @@ import qualified Data.Map.Strict               as StrictMap
 promptConf = def { position          = Bottom
                  , font              = "xft:Fira Sans Medium-10"
                  , height            = 44
-                 , bgColor           = background
-                 , fgColor           = foreground
-                 , bgHLight          = background
-                 , fgHLight          = primary
+                 , bgColor           = light
+                 , fgColor           = muted
+                 , bgHLight          = light
+                 , fgHLight          = dark
                  , promptBorderWidth = myBorderWidth
-                 , borderColor       = darkBackground
+                 , borderColor       = myUnfocusedBorderColor
                  , maxComplRows      = Just 3
                  }
 
@@ -131,11 +131,13 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
        ]
 
 stringifyLayout :: String -> String
-stringifyLayout l | t "Tall" l     = "tall"
-                  | t "Full" l     = "full"
-                  | t "ThreeCol" l = "col"
-                  | otherwise      = l
-  where t = List.isInfixOf
+stringifyLayout l | t "Tall" l     = fmt "tall"
+                  | t "Full" l     = fmt "full"
+                  | t "ThreeCol" l = fmt "col"
+                  | otherwise      = fmt l
+ where
+  t = List.isInfixOf
+  fmt s = "[" ++ s ++ "]"
 
 myLogHook h = do
   let fmt fg bg = D.pad . D.xmobarColor fg bg
@@ -145,7 +147,7 @@ myLogHook h = do
                                 , D.ppUrgent  = fmt urgent ""
                                 , D.ppLayout  = fmt muted "" . stringifyLayout
                                 , D.ppTitle   = const ""
-                                , D.ppSep     = fmt muted "" "-"
+                                , D.ppSep     = " "
                                 , D.ppSort    = getSortByIndex
                                 , D.ppOutput  = hPutStrLn h
                                 }
@@ -190,12 +192,12 @@ myTerminal = "terminal"
 myBrowser = "firefox"
 
 -- colors
-muted = "#657b83"
-foreground = "#a3b4b6"
-background = "#002b36"
-darkBackground = "#00212B"
-primary = "#268bd2"
-urgent = "#cb4b16"
+dark = "#26272d"
+light = "#ffffff"
+muted = "#828282"
+foreground = "#ababb4"
+primary = "#e8e8e8"
+urgent = "#8b3800"
 myFocusedBorderColor = "#a3b4b6"
 myUnfocusedBorderColor = "#c6d3d3"
 

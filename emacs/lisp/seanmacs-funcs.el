@@ -2,9 +2,6 @@
 
 ;;; Commentary:
 ;; Useful funcs.
-;;
-;; TODO: Use lexical binding, ido-goto-symbol breaks when lexical binding is
-;; enabled.
 
 ;;; Code:
 

@@ -5,18 +5,12 @@
 
 ;;; Code:
 
-(defvar modeline-active-box `(:line-width 1 :color ,(doom-lighten 'base3 0.2) :style nil))
-(defvar modeline-inactive-box `(:line-width 1 :color ,(doom-darken 'bg 0.02) :style nil))
-
-(face-attr 'mode-line :box modeline-active-box)
-(face-attr 'mode-line-inactive :box modeline-inactive-box)
-
 (defgroup modeline nil
   "A minimal modeline configuration inspired by doom-modeline."
   :group 'modeline)
 
 (defface modeline-status-mode
-  `((t (:inherit (font-lock-keyword-face) :foreground ,(doom-color 'blue))))
+  `((t (:inherit (font-lock-keyword-face))))
   "Face used for mode indicators in the modeline."
   :group 'modeline)
 
@@ -26,7 +20,7 @@
   :group 'modeline)
 
 (defface modeline-status-success
-  `((t (:inherit (success) :foreground ,(doom-color 'green))))
+  `((t (:inherit (success))))
   "Face used for success status indicators in the modeline."
   :group 'modeline)
 
@@ -38,11 +32,6 @@
 (defface modeline-status-error
   '((t (:inherit (error))))
   "Face for error stauts indicators in the modeline."
-  :group 'modeline)
-
-(defface modeline-modified
-  `((t (:inherit (success) :foreground ,(doom-color 'cyan))))
-  "Face used for the 'modified' indicator symbol in the modeline."
   :group 'modeline)
 
 (defun modeline-format (left right)
@@ -104,9 +93,9 @@
   "Displays a color-coded buffer modification or readonly
 indicator in the modeline."
   (cond (buffer-read-only
-         (propertize "R " 'face 'modeline-modified))
+         "R ")
         ((buffer-modified-p)
-         (propertize "U " 'face 'modeline-modified))
+         "U ")
         (t "- ")))
 
 (defun modeline-segment-buffer-name ()

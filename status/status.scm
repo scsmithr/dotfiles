@@ -49,7 +49,7 @@
   (command->string "essid"))
 
 (define (format-section section value)
-  (format #f "<fc=#657b83> ~A:</fc> ~A" section value))
+  (format #f "<fc=#828282> ~A:</fc> ~A" section value))
 
 (define (format-battery)
   (if (battery?)
