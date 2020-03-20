@@ -23,6 +23,10 @@ ln -sv $DIR/x/xinitrc ~/.xinitrc
 ln -sv $DIR/x/xmodmap ~/.xmodmap
 ln -sv $DIR/x/Xresources ~/.Xresources
 
+# redshift
+mkdir -p ~/.config/redshift
+ln -sv $DIR/redshift/redshift.conf ~/.config/redshift
+
 # dunst
 mkdir -p ~/.config/dunst
 ln -sv $DIR/dunst/dunstrc ~/.config/dunst
@@ -55,3 +59,4 @@ mkdir -p ~/.emacs.d
 ln -sv $DIR/emacs/* ~/.emacs.d
 mkdir -p ~/.emacs.d/straight/versions/
 ln -sv $DIR/emacs/default.el ~/.emacs.d/straight/versions
+
