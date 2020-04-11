@@ -82,7 +82,7 @@
                                        (propertize (number-to-string warning) 'face 'modeline-status-warning)
                                      (number-to-string warning))
                                    (if (> info 0)
-                                       (propertize (number-to-string info) 'face 'modeline-status-info)
+                                       (propertize (number-to-string info) 'face 'modeline-status-success)
                                      (number-to-string info))))))
           ('running "-/-/- ")
           ('no-checker "")

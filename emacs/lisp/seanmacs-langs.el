@@ -275,5 +275,11 @@
   :straight t
   :after lean-mode)
 
+;; Coq
+
+(use-package proof-general
+  :straight t
+  :defer t)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

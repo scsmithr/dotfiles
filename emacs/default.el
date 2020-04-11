@@ -1,4 +1,5 @@
 (("ESS" . "ac32ab1860cd9b9aeaf86945cc92b49c4c415562")
+ ("PG" . "1ef1286c43d4d099b3b017069ed09c261eb8b6ca")
  ("a.el" . "18966975db7110d0aac726be95b593e2fc3d44ed")
  ("alchemist.el" . "6f99367511ae209f8fe2c990779764bbb4ccb6ed")
  ("all-the-icons-dired" . "980b7747d6c4a7992a1ec56afad908956db0a519")
