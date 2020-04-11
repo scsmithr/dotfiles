@@ -53,6 +53,7 @@
  ("json-snatcher" . "c4cecc0a5051bd364373aa499c47a1bb7a5ac51c")
  ("julia-emacs" . "5238f9adb7dd1c161fd6130435ebf0ac3755f33c")
  ("kube.el" . "6807b76532ec6deebb60cdc2e93281a1c40ca865")
+ ("lean-mode" . "65b55b1711fb61129312044d5ac7e6a2c2ee245c")
  ("let-alist" . "b299c78897cc307f9d5521927376fbd06a26f123")
  ("lsp-mode" . "c830f431be01753e0e697d96e79e6106f67f2514")
  ("lsp-ui" . "242dfe859c3497c456eaacfd84942e12419529fe")

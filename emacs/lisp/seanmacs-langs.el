@@ -265,5 +265,15 @@
   :straight t
   :defer t)
 
+;; Lean
+
+(use-package lean-mode
+  :straight t
+  :defer t)
+
+(use-package company-lean
+  :straight t
+  :after lean-mode)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
