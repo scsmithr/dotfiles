@@ -60,6 +60,7 @@
 
 (use-package all-the-icons-dired
   :straight t
+  :if window-system
   :config
   (setq all-the-icons-dired-v-adjust 0.0)
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))

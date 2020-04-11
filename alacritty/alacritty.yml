@@ -44,13 +44,6 @@ scrolling:
   # scrolled when scrollback is enabled (history > 0).
   multiplier: 3
 
-  # Automatically scroll to the bottom when new text is written
-  # to the terminal.
-  auto_scroll: false
-
-# Display tabs using this many cells (changes require restart)
-tabspaces: 8
-
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
 

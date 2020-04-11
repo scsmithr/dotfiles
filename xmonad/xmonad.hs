@@ -51,7 +51,7 @@ promptConf = def { position          = Bottom
                  , fgColor           = muted
                  , bgHLight          = light
                  , fgHLight          = dark
-                 , promptBorderWidth = myBorderWidth
+                 , promptBorderWidth = 1
                  , borderColor       = myUnfocusedBorderColor
                  , maxComplRows      = Just 3
                  }
@@ -198,7 +198,7 @@ muted = "#828282"
 foreground = "#ababb4"
 primary = "#e8e8e8"
 urgent = "#8b3800"
-myFocusedBorderColor = "#a3b4b6"
+myFocusedBorderColor = "#93a4a6"
 myUnfocusedBorderColor = "#c6d3d3"
 
 -- config vars

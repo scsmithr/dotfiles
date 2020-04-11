@@ -8,8 +8,7 @@
 (use-package company
   :straight t
   :config
-  (setq company-frontends '(company-posframe-frontend)
-        company-minimum-prefix-length 1
+  (setq company-minimum-prefix-length 1
         company-idle-delay 0.2)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   (setq company-backends (delete 'company-dabbrev company-backends))
@@ -19,8 +18,10 @@
 
 (use-package company-posframe
   :straight t
+  :if window-system
   :init
-  (setq company-posframe-show-indicator nil
+  (setq company-frontends '(company-posframe-frontend)
+        company-posframe-show-indicator nil
         company-posframe-show-metadata nil
         company-posframe-quickhelp-delay nil))
 
