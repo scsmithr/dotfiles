@@ -19,7 +19,10 @@
 
 (use-package modus-operandi-theme
   :straight (modus-operandi-theme :type git :host github :repo "scsmithr/modus-themes")
-  :config (load-theme 'modus-operandi t))
+  :config
+  (setq modus-operandi-theme-distinct-org-blocks t
+        modus-operandi-theme-rainbow-headings t)
+  (load-theme 'modus-operandi t))
 
 (use-package all-the-icons
   :straight t
