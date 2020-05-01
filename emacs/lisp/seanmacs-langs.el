@@ -71,6 +71,16 @@
 (core/local 'rust-mode-map
             "rn" 'lsp-rename)
 
+;; Python
+
+(use-package elpy
+  :straight t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  (add-hook 'elpy-mode-hook (lambda ()
+                              (highlight-indentation-mode -1))))
+
 ;; Typescript
 
 (defun setup-tide-mode ()
