@@ -36,8 +36,9 @@
   :straight t
   :defer t
   :config
-  (setq haskell-stylish-on-save t)
-  (setq haskell-mode-stylish-haskell-path "brittany")
+  (setq haskell-stylish-on-save t
+        haskell-mode-stylish-haskell-path "brittany")
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (shackle '(("^\\*haskell\\*" :height 0.5))))
 
 (core/local 'haskell-mode-map
