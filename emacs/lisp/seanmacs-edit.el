@@ -52,6 +52,15 @@
 ;; Folding
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
+(defun ignore-errors-fn (orig-fn &rest args)
+  "Ignore any errors resulting from calling ORIG-FN with ARGS."
+  (ignore-errors (apply orig-fn args)))
+
+;; Some modes that derive from prog-mode don't properly support hideshow
+;; (specifically lean info mode). I don't really care if a mode doesn't support
+;; hideshow.
+(advice-add 'hs-grok-mode-type :around #'ignore-errors-fn)
+
 (setq inhibit-compacting-font-caches t)
 
 (setq-default require-final-newline t)
