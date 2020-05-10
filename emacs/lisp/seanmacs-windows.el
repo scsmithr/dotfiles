@@ -39,13 +39,14 @@
          (buf (if (get-buffer buf-name)
                   (get-buffer buf-name)
                 (dired-noselect dir))))
-    (display-buffer-in-side-window
+    (seanmacs/display-buffer-in-side-window-select
      buf `((side . left)
            (slot . -1)
            (window-width . 25)
            (window-parameters . ((mode-line-format . (" "
                                                       mode-line-buffer-identification))))))
     (with-current-buffer buf
+      (dired-unadvertise dir)
       (dired-hide-details-mode 1)
       (rename-buffer buf-name)
       (setq-local window-size-fixed 'width))))

@@ -26,16 +26,17 @@
    "dd" 'dired
    "df" 'find-file)
   :config
-  (setq dired-listing-switches "-Ahlv --group-directories-first")
+  (add-hook 'dired-mode-hook 'diredfl-mode)
+  (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
   (advice-add 'dired-up-directory :around #'seanmacs/run-and-bury)
   (advice-add 'dired-find-file :around #'seanmacs/run-and-bury))
 
-(use-package dired-subtree
+(use-package diredfl
   :straight t
-  :config
-  (defun seanmacs/dired-refresh-icons ()
-    (revert-buffer))
-  (advice-add 'dired-subtree-toggle :after #'seanmacs/dired-refresh-icons))
+  :defer t)
+
+(use-package dired-subtree
+  :straight t)
 
 (use-package help
   :config)
