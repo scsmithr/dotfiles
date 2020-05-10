@@ -27,7 +27,7 @@
 (use-package all-the-icons
   :straight t
   :config
-  (setq all-the-icons-color-icons nil
+  (setq all-the-icons-color-icons t
         all-the-icons-scale-factor 1.0
         all-the-icons-default-adjust 0.0)
   (setq all-the-icons-icon-alist
@@ -65,7 +65,7 @@
   :straight t
   :if window-system
   :config
-  (setq all-the-icons-dired-v-adjust 0.0)
+  (setq all-the-icons-dired-v-adjust 0.1)
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
 (provide 'seanmacs-theme)
