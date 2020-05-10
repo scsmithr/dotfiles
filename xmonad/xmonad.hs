@@ -44,16 +44,17 @@ import qualified Data.List                     as List
 import qualified Data.Map                      as Map
 import qualified Data.Map.Strict               as StrictMap
 
-promptConf = def { position          = Bottom
-                 , font              = "xft:Fira Sans Medium-10"
-                 , height            = 44
-                 , bgColor           = light
-                 , fgColor           = muted
-                 , bgHLight          = light
-                 , fgHLight          = dark
-                 , promptBorderWidth = myBorderWidth
-                 , borderColor       = myUnfocusedBorderColor
-                 , maxComplRows      = Just 3
+promptConf = def { position            = Bottom
+                 , font                = "xft:Fira Sans Medium-10"
+                 , height              = 44
+                 , bgColor             = light
+                 , fgColor             = muted
+                 , bgHLight            = light
+                 , fgHLight            = dark
+                 , promptBorderWidth   = myBorderWidth
+                 , borderColor         = myUnfocusedBorderColor
+                 , maxComplRows        = Just 3
+                 , showCompletionOnTab = True
                  }
 
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
