@@ -12,7 +12,6 @@
         company-idle-delay 0.2)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
   (setq company-backends (delete 'company-dabbrev company-backends))
-  (shackle '(("^\\*company-documentation\\*" :height 0.3)))
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
@@ -33,8 +32,7 @@
         lsp-auto-guess-root t
         lsp-eldoc-render-all nil
         lsp-prefer-capf t
-        lsp-response-timeout 2)
-  (shackle '(("^\\*lsp-help\\*" :height 0.3))))
+        lsp-response-timeout 2))
 
 (use-package lsp-ui
   :straight t

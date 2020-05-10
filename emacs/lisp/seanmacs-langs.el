@@ -38,8 +38,7 @@
   :config
   (setq haskell-stylish-on-save t
         haskell-mode-stylish-haskell-path "brittany")
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (shackle '(("^\\*haskell\\*" :height 0.5))))
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
 
 (core/local 'haskell-mode-map
             "o" 'run-haskell)
@@ -107,8 +106,7 @@
 (use-package tide
   :straight t
   :after (web-mode company flycheck)
-  :config
-  (shackle '(("^\\*tide-documentation\\*" :height 0.3))))
+  :config)
 
 (use-package prettier-js
   :straight t
@@ -233,8 +231,7 @@
 (use-package elisp-mode
   ;; built-in
   :defer t
-  :config
-  (shackle '((inferior-emacs-lisp-mode :height 0.5))))
+  :config)
 
 (core/local 'emacs-lisp-mode-map
             "o" 'ielm)

@@ -16,7 +16,6 @@
  ("dash.el" . "721436b04da4e2795387cb48a98ac6de37ece0fd")
  ("diff-hl" . "f95d12343be67a9378249842911019939863b148")
  ("dired-hacks" . "f49a8bbf95f70671a74a24f7f4de453b2686be46")
- ("dired-sidebar" . "21ccb6723bea69f2e2ca25998268d8a039f904cc")
  ("docker-tramp.el" . "8e2b671eff7a81af43b76d9dfcf94ddaa8333a23")
  ("docker.el" . "5c8da5c39193c41307b7b4691e33bc4eb8628ba9")
  ("dockerfile-mode" . "ed73e82dcc636dad00d1a8c3b32a49136d25ee60")

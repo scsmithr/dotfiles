@@ -51,7 +51,7 @@ promptConf = def { position          = Bottom
                  , fgColor           = muted
                  , bgHLight          = light
                  , fgHLight          = dark
-                 , promptBorderWidth = 1
+                 , promptBorderWidth = myBorderWidth
                  , borderColor       = myUnfocusedBorderColor
                  , maxComplRows      = Just 3
                  }
@@ -202,6 +202,6 @@ myFocusedBorderColor = "#93a4a6"
 myUnfocusedBorderColor = "#c6d3d3"
 
 -- config vars
-myBorderWidth = 2
+myBorderWidth = 1
 myModMask = mod4Mask
 myWorkspaces = ["def", "email", "web", "dev"]

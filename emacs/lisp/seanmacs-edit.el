@@ -189,16 +189,13 @@
 
 (use-package ripgrep
   :straight t
-  :after projectile
-  :config
-  (shackle '(("^\\*ripgrep-search\\*" :height 0.3))))
+  :after projectile)
 
 (use-package flycheck
   :straight t
   :config
   (core/leader
    "f" flycheck-command-map)
-  (shackle '(("^\\*Flycheck errors" :height 0.3)))
   (global-flycheck-mode)
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe))
@@ -246,7 +243,6 @@
 (use-package xref
   ;; built-in
   :config
-  (shackle '(("^\\*xref" :height 0.3)))
   (core/leader
    "ra" 'xref-find-apropos
    "rr" 'xref-find-references))

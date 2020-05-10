@@ -22,10 +22,6 @@
    "ss" 'eshell
    "sn" 'eshell-new
    "sp" 'projectile-run-eshell)
-  (shackle '((eshell-mode
-              :action seanmacs/display-buffer-same)
-             ("^\\*eshell"
-              :action seanmacs/display-buffer-same)))
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."
@@ -123,11 +119,7 @@
         eshell-prompt-regexp "^.* > "))
 
 (use-package shell
-  :config
-  (shackle '((shell-mode
-              :action seanmacs/display-buffer-same)
-             ("^\\*shell"
-              :action seanmacs/display-buffer-same))))
+  :config)
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here

@@ -41,7 +41,7 @@
   "Move the cursor to next window in cyclic order, skipping dired sidebar buffers."
   (interactive)
   (select-window (next-window))
-  (when (derived-mode-p 'dired-sidebar-mode)
+  (when (string-prefix-p "*Dired Side:" (buffer-name))
     (select-window (next-window))))
 
 ;; evil

@@ -58,39 +58,6 @@
                 (evil-set-initial-state mode state))
             (evil-set-initial-state modes state))))
 
-(defun seanmacs/shackle (rules)
-  "Display buffers using RULES."
-  (dolist (rule rules)
-    (let* ((condition (car rule))
-           (plist (cdr rule))
-           (action (or (plist-get plist :action) #'seanmacs/display-buffer-below))
-           (height (or (plist-get plist :height) #'fit-window-to-buffer))
-           (alist `(window-height . ,height)))
-      (if (symbolp condition)
-          (add-to-list
-           'display-buffer-alist
-           `((lambda (buffer &optional action)
-               (eq (quote ,condition)
-                   (buffer-local-value 'major-mode (get-buffer buffer))))
-             ,action ,alist))
-        (add-to-list 'display-buffer-alist `(,condition ,action ,alist))))))
-
-(defalias 'shackle 'seanmacs/shackle)
-
-(defun seanmacs/display-buffer-below (buffer alist)
-  "Display BUFFER below current, using ALIST."
-  (when-let (window (display-buffer-below-selected buffer alist))
-    (select-window window)))
-
-(defun seanmacs/display-buffer-bottom (buffer alist)
-  "Display BUFFER at the bottom, using ALIST."
-  (when-let (window (display-buffer-at-bottom buffer alist))
-    (select-window window)))
-
-(defun seanmacs/display-buffer-same (buffer alist)
-  "Display BUFFER in the currently selected buffer, using ALIST."
-  (display-buffer-same-window buffer alist))
-
 (defun seanmacs/run-and-bury (fn &rest args)
   "Run FN with ARGS then bury the buffer."
   (let ((buf (buffer-name)))
