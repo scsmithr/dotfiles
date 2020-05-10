@@ -280,7 +280,10 @@
 
 (use-package lean-mode
   :straight t
-  :defer t)
+  :defer t
+  :config
+  (setq lean-memory-limit 8192
+        lean-extra-arguments '("-D class.instance_max_depth=1000")))
 
 (use-package company-lean
   :straight t
