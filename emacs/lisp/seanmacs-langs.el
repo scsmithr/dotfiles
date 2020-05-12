@@ -19,13 +19,19 @@
 (use-package go-mode
   :straight t
   :defer t
+  :commands gofmt
+  :init
+  (defun seanmacs/gofmt-before-save ()
+    (when (eq major-mode 'go-mode)
+      (gofmt)))
   :config
-  (add-hook 'go-mode-hook #'lsp)
-  (add-hook 'before-save-hook #'gofmt-before-save)
   (evil-add-command-properties #'godef-jump :jump t)
-  (setq gofmt-command "goimports")
-  (setq gofmt-args '("-local=go.coder.com"))
-  (define-key go-mode-map (kbd "C-c C-d") #'lsp-describe-thing-at-point))
+  (setq gofmt-command "goimports"
+        gofmt-args '("-local=go.coder.com"))
+  :hook ((go-mode . lsp)
+         (before-save . seanmacs/gofmt-before-save))
+  :bind(:map go-mode-map
+             ("C-c C-d" . lsp-describe-thing-at-point)))
 
 (core/local 'go-mode-map
             "rn" 'lsp-rename)
@@ -38,7 +44,7 @@
   :config
   (setq haskell-stylish-on-save t
         haskell-mode-stylish-haskell-path "brittany")
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
+  :hook ((haskell-mode . interactive-haskell-mode)))
 
 (core/local 'haskell-mode-map
             "o" 'run-haskell)
@@ -58,11 +64,12 @@
   :straight t
   :defer t
   :config
-  (setq rust-format-on-save t)
-  (setq lsp-rust-clippy-preference "on")
-  (add-hook 'rust-mode-hook #'lsp)
-  (add-hook 'rust-mode-hook #'cargo-minor-mode)
-  (define-key rust-mode-map (kbd "C-c C-d") #'lsp-describe-thing-at-point))
+  (setq rust-format-on-save t
+        lsp-rust-clippy-preference "on")
+  :hook ((rust-mode . lsp)
+         (rust-mode . cargo-minor-mode))
+  :bind(:map rust-mode-map
+             ("C-c C-d" . lsp-describe-thing-at-point)))
 
 (use-package cargo
   :straight t
@@ -83,34 +90,31 @@
 
 ;; Typescript
 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-
-(defun use-eslint-from-node-modules ()
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
-         (eslint
-          (and root
-               (expand-file-name "node_modules/.bin/eslint"
-                                 root))))
-    (when (and eslint (file-executable-p eslint))
-      (setq-local flycheck-javascript-eslint-executable eslint))))
+(defun seanmacs/bin-from-node-modules (bin)
+  "Return the full path if BIN exists in dominating node modules
+dir. Return nil otherwise."
+  (let* ((dir (or (projectile-project-root)
+                  (buffer-file-name)
+                  default-directory))
+         (root (locate-dominating-file dir "node_modules"))
+         (rel-path (format "node_modules/.bin/%s" bin))
+         (path (and root (expand-file-name rel-path root))))
+    (when (and path (file-executable-p path))
+      path)))
 
 (use-package tide
   :straight t
-  :after (web-mode company flycheck)
-  :config)
+  :defer t
+  :commands tide-setup)
 
 (use-package prettier-js
   :straight t
-  :after (web-mode))
+  :defer t
+  :init
+  (defun seanmacs/use-node-modules-prettier ()
+    (when-let ((prettier (seanmacs/bin-from-node-modules "prettier")))
+      (setq-local prettier-js-command prettier)))
+  :hook ((prettier-js-mode . seanmacs/use-node-modules-prettier)))
 
 (use-package web-mode
   :straight t
@@ -118,6 +122,19 @@
   :mode (("\\.html?\\'" . web-mode)
          ("\\.tsx?\\'" . web-mode)
          ("\\.jsx\\'" . web-mode))
+  :init
+  (defun seanmacs/use-node-modules-eslint ()
+    (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
+      (setq-local flycheck-javascript-eslint-executable eslint)))
+  (defun seanmacs/setup-tide ()
+    (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
+      (tide-setup)
+      (tide-hl-identifier-mode +1)
+      (prettier-js-mode)
+      (evil-add-command-properties #'tide-jump-to-definition :jump t)
+      ;; Eslint doesn't work...
+      (flycheck-add-mode 'javascript-eslint 'web-mode)
+      (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
   :config
   (setq web-mode-markup-indent-offset 4
         web-mode-css-indent-offset 4
@@ -131,16 +148,10 @@
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
         web-mode-enable-auto-indentation nil)
-  (define-key web-mode-map (kbd "C-c C-d") #'tide-documentation-at-point)
-  (add-hook 'web-mode-hook #'use-eslint-from-node-modules)
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
-                (setup-tide-mode)
-                (evil-add-command-properties #'tide-jump-to-definition :jump t)
-                (prettier-js-mode)
-                (flycheck-add-mode 'javascript-eslint 'web-mode)
-                (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))))
+  :hook ((web-mode . seanmacs/setup-tide)
+         (web-mode . seanmacs/use-node-modules-eslint))
+  :bind (:map web-mode-map
+              ("C-c C-d" . tide-documentation-at-point)))
 
 (core/local 'web-mode-map
             "rn" 'tide-rename-symbol
@@ -151,11 +162,14 @@
 (use-package elixir-mode
   :straight t
   :defer t
+  :init
+  (defun seanmacs/elixir-format-on-save ()
+    (when (eq major-mode 'elixir-mode)
+      (elixir-format)))
   :config
-  (add-hook 'elixir-mode-hook 'alchemist-mode)
-  (add-hook 'elixir-mode-hook
-            (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
-  (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t))
+  (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t)
+  :hook ((elixir-mode . alchemist-mode)
+         (before-save . seanmacs/elixir-format-on-save)))
 
 (use-package alchemist
   :straight t
@@ -173,8 +187,8 @@
   :straight t
   :defer t
   :config
-  (setq inferior-lisp-program "sbcl")
-  (setq slime-contribs '(slime-fancy)))
+  (setq inferior-lisp-program "sbcl"
+        slime-contribs '(slime-fancy)))
 
 (core/local 'lisp-mode-map
             "o" 'slime)
@@ -230,8 +244,7 @@
 
 (use-package elisp-mode
   ;; built-in
-  :defer t
-  :config)
+  :defer t)
 
 (core/local 'emacs-lisp-mode-map
             "o" 'ielm)
