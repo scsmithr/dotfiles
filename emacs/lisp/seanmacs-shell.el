@@ -17,6 +17,13 @@
   :commands (shrink-path-prompt shrink-path-dirs))
 
 (use-package eshell
+  ;; built-in
+  :init
+  (defun seanmacs/add-eshell-aliases ()
+    ;; Shell command aliases. I'd rather not keep track of the eshell
+    ;; aliases file.
+    (dolist (alias '(("cargo" "cargo --color=always $*")))
+      (add-to-list 'eshell-command-aliases-list alias)))
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."
@@ -125,6 +132,11 @@
         (seanmacs/eshell-find-subdirectory-recursive (projectile-project-root))
       (user-error "Not in project")))
 
+  (setq eshell-history-size 1000
+        eshell-cmpl-cycle-completions nil
+        eshell-prompt-function #'eshell-default-prompt
+        eshell-prompt-regexp "^.* > ")
+
   (add-hook 'eshell-mode-hook
             (lambda ()
               ;; Needs to be ran inside the hook since eshell-mode-map is
@@ -135,17 +147,7 @@
               (local-set-key (kbd "C-c d") 'eshell/find-subdirectory-pwd)
               (local-set-key (kbd "C-c p") 'eshell/find-subdirectory-project)))
 
-  ;; Shell command aliases. I'd rather not keep track of the eshell
-  ;; aliases file.
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              (dolist (alias '(("cargo" "cargo --color=always $*")))
-                (add-to-list 'eshell-command-aliases-list alias))))
-
-  (setq eshell-history-size 1000
-        eshell-cmpl-cycle-completions nil
-        eshell-prompt-function #'eshell-default-prompt
-        eshell-prompt-regexp "^.* > "))
+  :hook ((eshell-mode . seanmacs/add-eshell-aliases)))
 
 (use-package shell
   :config)

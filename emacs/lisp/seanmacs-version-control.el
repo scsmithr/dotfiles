@@ -14,9 +14,7 @@
 
 (use-package magit
   :straight t
-  :defer t
-  :config
-  (setq magit-completing-read-function 'magit-ido-completing-read))
+  :defer t)
 
 (use-package forge
   :straight t

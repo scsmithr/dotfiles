@@ -176,7 +176,8 @@
 (use-package projectile
   :straight t
   :config
-  (setq projectile-require-project-root nil)
+  (setq projectile-completion-system 'default
+        projectile-require-project-root nil)
   (projectile-mode +1))
 
 (use-package ripgrep
@@ -200,30 +201,22 @@
   :config
   (which-key-mode 1))
 
-(use-package ido-vertical-mode
+(use-package selectrum
   :straight t
-  :init
-  (setq ido-enable-flex-matching t
-        ido-vertical-define-keys 'C-n-and-C-p-only
-        ido-vertical-indicator " >")
   :config
-  (ido-mode 1)
-  (ido-vertical-mode 1))
+  (setq selectrum-count-style 'current/matches
+        selectrum-fix-minibuffer-height t)
+  (selectrum-mode +1))
 
-(use-package flx-ido
+(use-package prescient
   :straight t
-  :after ido-vertical-mode
   :config
-  (setq ido-use-faces nil)
-  :init
-  (ido-everywhere 1)
-  (flx-ido-mode 1))
+  (setq prescient-filter-method '(literal regexp initialism fuzzy)))
 
-(use-package ido-completing-read+
+(use-package selectrum-prescient
   :straight t
-  :after ido
   :config
-  (ido-ubiquitous-mode 1))
+  (selectrum-prescient-mode))
 
 (use-package imenu
   ;; built-in
