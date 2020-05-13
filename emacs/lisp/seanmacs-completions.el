@@ -9,16 +9,19 @@
   :straight t
   :config
   (setq company-minimum-prefix-length 1
-        company-idle-delay 0.2)
-  (define-key company-active-map (kbd "<tab>") #'company-complete)
+        company-idle-delay 0.2
+        company-tooltip-align-annotations t
+        company-show-numbers t)
   (setq company-backends (delete 'company-dabbrev company-backends))
-  :init
-  (add-hook 'after-init-hook 'global-company-mode))
+  (global-company-mode +1)
+  :bind (:map company-active-map
+              ("<tab>" . company-complete-selection)))
+
 
 (use-package company-posframe
   :straight t
   :if window-system
-  :init
+  :config
   (setq company-frontends '(company-posframe-frontend)
         company-posframe-show-indicator nil
         company-posframe-show-metadata nil

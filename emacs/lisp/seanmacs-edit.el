@@ -187,10 +187,11 @@
 (use-package flycheck
   :straight t
   :config
-  (global-flycheck-mode)
-  (fset 'flycheck-command-map flycheck-command-map)
-  (setq flycheck-check-syntax-automatically '(mode-enabled save)
-        flycheck-indication-mode 'right-fringe))
+(setq flycheck-check-syntax-automatically '(mode-enabled save)
+      flycheck-indication-mode 'right-fringe
+      flycheck-display-errors-delay 0.2)
+(fset 'flycheck-command-map flycheck-command-map)
+  (global-flycheck-mode))
 
 (use-package yasnippet
   :straight t
