@@ -6,21 +6,22 @@
 ;;; Code:
 
 (core/leader
-   "a e" 'mu4e)
+ "a e" 'mu4e)
 
 (use-package mu4e
   :commands (mu4e)
-  :init
+  :config
+  (core/local 'mu4e-headers-mode-map
+              "r" 'mu4e-update-index
+              "u" 'mu4e-update-mail-and-index)
+
   ;; General configuration with mbsync.
   (setq user-full-name "Sean Smith"
         mu4e-maildir "~/.mail"
         mu4e-attachment-dir "~/.mail/.attachments"
         mu4e-get-mail-command "mbsync -a"
         mu4e-change-filenames-when-moving t)
-  :config
-  (core/local 'mu4e-headers-mode-map
-              "r" 'mu4e-update-index
-              "u" 'mu4e-update-mail-and-index)
+
 
   ;; Gmail specific things.
   ;; This is mostly taken from Doom emacs.

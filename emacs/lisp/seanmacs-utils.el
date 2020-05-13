@@ -22,14 +22,14 @@
 
 (use-package dired
   :init
- (core/leader
+  (core/leader
    "dd" 'dired
    "df" 'find-file)
   :config
-  (add-hook 'dired-mode-hook 'diredfl-mode)
   (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
   (advice-add 'dired-up-directory :around #'seanmacs/run-and-bury)
-  (advice-add 'dired-find-file :around #'seanmacs/run-and-bury))
+  (advice-add 'dired-find-file :around #'seanmacs/run-and-bury)
+  :hook ((dired-mode . diredfl-mode)))
 
 (use-package diredfl
   :straight t

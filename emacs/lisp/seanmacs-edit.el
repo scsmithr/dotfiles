@@ -87,7 +87,7 @@
                            trailing
                            tabs
                            spaces))
-  (add-hook 'prog-mode-hook 'whitespace-mode))
+  :hook ((prog-mode . whitespace-mode)))
 
 (defvar seanmacs/ibuffer-filter-group-order nil
   "Forced order for ibuffer's filter groups.")
@@ -95,9 +95,14 @@
 (use-package ibuffer
   ;; built-in
   :init
+  (defun seanmacs/ibuffer-switch-to-saved-filter-groups ()
+    (ibuffer-switch-to-saved-filter-groups "seanmacs"))
+
+  (defun seanmacs/ibuffer-jump-to-last-buffer ()
+    (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
+  :config
   (core/leader
    "ob" 'ibuffer)
-  :config
   (setq ibuffer-read-only-char ?R)
   (setq ibuffer-formats
         '((mark modified read-only
@@ -135,16 +140,6 @@
 
   (advice-add 'ibuffer-generate-filter-groups :filter-return #'seanmacs/ibuffer-order-filter-groups)
 
-  (defun seanmacs/ibuffer-switch-to-saved-filter-groups ()
-    (ibuffer-switch-to-saved-filter-groups "seanmacs"))
-
-  (add-hook 'ibuffer-mode-hook #'seanmacs/ibuffer-switch-to-saved-filter-groups)
-
-  (defun seanmacs/ibuffer-jump-to-last-buffer ()
-    (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
-
-  (add-hook 'ibuffer-hook #'seanmacs/ibuffer-jump-to-last-buffer)
-
   (define-ibuffer-column size-h
     (:name "Size"
            :inline t
@@ -166,23 +161,24 @@
               "si")))
     (file-size-human-readable (buffer-size) "si"))
 
-  (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury))
+  (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury)
+
+  :hook ((ibuffer-mode . seanmacs/ibuffer-switch-to-saved-filter-groups)
+         (ibuffer . seanmacs/ibuffer-jump-to-last-buffer)))
 
 (use-package dtrt-indent
   :straight t
-  :init
-  (setq dtrt-indent-min-quality 65.0)
-  (setq dtrt-indent-min-hard-tab-superiority 180.0)
   :config
+  (setq dtrt-indent-min-quality 65.0
+        dtrt-indent-min-hard-tab-superiority 180.0)
   (add-to-list 'dtrt-indent-hook-mapping-list
                '(web-mode javascript web-mode-code-indent-offset))
   (dtrt-indent-global-mode 1))
 
 (use-package projectile
   :straight t
-  :init
-  (setq projectile-require-project-root nil)
   :config
+  (setq projectile-require-project-root nil)
   (projectile-mode +1)
   (core/leader
    "p" 'projectile-command-map))
@@ -206,7 +202,7 @@
 
 (use-package which-key
   :straight t
-  :init
+  :config
   (which-key-mode 1))
 
 (use-package ido-vertical-mode

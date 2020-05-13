@@ -24,7 +24,7 @@
 (use-package forge
   :straight t
   :after magit
-  :init
+  :config
   (setq forge-pull-notifications nil))
 
 (use-package evil-magit
@@ -35,7 +35,7 @@
   :straight t
   :config
   (global-diff-hl-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)))
 
 (provide 'seanmacs-version-control)
 ;;; seanmacs-version-control.el ends here
