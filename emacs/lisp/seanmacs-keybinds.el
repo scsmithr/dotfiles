@@ -25,7 +25,76 @@
 
 (defalias 'core/leader 'core/set-leader-keys)
 
-(defun evil-window-next-skip-dired-sidebar ()
+;; Applications
+(core/leader
+ "a e" 'mu4e
+ "a d" 'docker
+ "a g s" 'gcloud-instance-shell
+ "a g e" 'gcloud-instance-eshell
+ "a k" 'kube)
+
+;; Dired/file management
+(core/leader
+ "d d" 'dired
+ "d p" 'seanmacs/window-dired-project-left
+ "d f" 'find-file)
+
+;; Org
+(core/leader
+ "x x" 'org-capture
+ "x l" 'org-agenda-list
+ "x s" 'org-search-view)
+
+;; Magit
+(core/leader
+ "g g" 'magit-status
+ "g f" 'magit-file-dispatch)
+
+;; Shell
+(core/leader
+ "s s" 'eshell
+ "s n" 'eshell-new
+ "s p" 'projectile-run-eshell)
+
+;; Window management
+(core/leader
+ "w w" 'seanmacs/split-window-right
+ "w h" 'seanmacs/split-window-below
+ "w H" 'shrink-window-horizontally
+ "w L" 'enlarge-window-horizontally
+ "w K" 'shrink-window
+ "w J" 'enlarge-window
+ "w =" 'balance-windows
+ "w u" 'winner-undo
+ "w p" 'seanmacs/use-some-window
+ "." 'repeat)
+
+;; Buffer management
+(core/leader
+ "b r" 'seanmacs/rename-buffer-special
+ "b v" 'revert-buffer
+ "b k" 'kill-this-buffer
+ "b i" 'seanmacs/indent-buffer)
+
+;; Other
+(core/leader
+ "o b" 'ibuffer
+ "o s" 'imenu)
+
+;; Projectile
+(core/leader
+   "p" 'projectile-command-map)
+
+;; Flycheck
+(core/leader
+   "f" 'flycheck-command-map)
+
+;; Xref
+(core/leader
+   "r a" 'xref-find-apropos
+   "r r" 'xref-find-references)
+
+(defun seanmacs/evil-window-next-skip-dired-sidebar ()
   "Move the cursor to next window in cyclic order, skipping dired sidebar buffers."
   (interactive)
   (select-window (next-window))
@@ -49,10 +118,10 @@
   (evil-update-insert-state-bindings "\C-p" t)
   ;; Overwrite the default next window commands with one that skips dired
   ;; sidebar.
-  (define-key evil-window-map "C-w" #'evil-window-next-skip-dired-sidebar)
-  (define-key evil-window-map "w" #'evil-window-next-skip-dired-sidebar)
-  (define-key evil-motion-state-map (kbd "C-w w") #'evil-window-next-skip-dired-sidebar)
-  (define-key evil-motion-state-map (kbd "C-w C-w") #'evil-window-next-skip-dired-sidebar))
+  (define-key evil-window-map "C-w" #'seanmacs/evil-window-next-skip-dired-sidebar)
+  (define-key evil-window-map "w" #'seanmacs/evil-window-next-skip-dired-sidebar)
+  (define-key evil-motion-state-map (kbd "C-w w") #'seanmacs/evil-window-next-skip-dired-sidebar)
+  (define-key evil-motion-state-map (kbd "C-w C-w") #'seanmacs/evil-window-next-skip-dired-sidebar))
 
 (use-package evil-commentary
   :straight t

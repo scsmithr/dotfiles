@@ -8,10 +8,7 @@
 (use-package docker
   :straight t
   :defer t
-  :commands (docker)
-  :init
-  (core/leader
-   "ad" 'docker))
+  :commands (docker))
 
 (use-package docker-tramp
   :straight t
@@ -21,10 +18,6 @@
   :straight t)
 
 (use-package dired
-  :init
-  (core/leader
-   "dd" 'dired
-   "df" 'find-file)
   :config
   (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
   (advice-add 'dired-up-directory :around #'seanmacs/run-and-bury)
@@ -42,17 +35,10 @@
   :config)
 
 (use-package gcloud
-  :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el")
-  :init
-  (core/leader
-   "ags" 'gcloud-instance-shell
-   "age" 'gcloud-instance-eshell))
+  :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
 
 (use-package kube
-  :straight (kube :type git :host github :repo "scsmithr/kube.el")
-  :init
-  (core/leader
-   "ak" 'kube))
+  :straight (kube :type git :host github :repo "scsmithr/kube.el"))
 
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

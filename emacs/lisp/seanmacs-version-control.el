@@ -16,11 +16,7 @@
   :straight t
   :defer t
   :config
-  (setq magit-completing-read-function 'magit-ido-completing-read)
-  :init
-  (core/leader
-   "gg" 'magit-status
-   "gf" 'magit-file-dispatch))
+  (setq magit-completing-read-function 'magit-ido-completing-read))
 
 (use-package forge
   :straight t

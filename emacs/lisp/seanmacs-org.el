@@ -5,11 +5,6 @@
 
 ;;; Code:
 
-(core/leader
- "x x" 'org-capture
- "x l" 'org-agenda-list
- "x s" 'org-search-view)
-
 (use-package org
   :defer t
   :config
@@ -35,11 +30,13 @@
            :empty-lines 1)))
 
   (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
+        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED"))))
 
-  (after! org-agenda
-          (define-key org-agenda-mode-map "j" 'evil-next-line)
-          (define-key org-agenda-mode-map "k" 'evil-previous-line)))
+(use-package org-agenda
+  :defer t
+  :bind (:map org-agenda-mode-map
+              ("j" . evil-next-line)
+              ("k" . evil-previous-line)))
 
 (use-package ob
   ;; built-in

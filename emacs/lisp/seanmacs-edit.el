@@ -101,8 +101,6 @@
   (defun seanmacs/ibuffer-jump-to-last-buffer ()
     (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
   :config
-  (core/leader
-   "ob" 'ibuffer)
   (setq ibuffer-read-only-char ?R)
   (setq ibuffer-formats
         '((mark modified read-only
@@ -179,9 +177,7 @@
   :straight t
   :config
   (setq projectile-require-project-root nil)
-  (projectile-mode +1)
-  (core/leader
-   "p" 'projectile-command-map))
+  (projectile-mode +1))
 
 (use-package ripgrep
   :straight t
@@ -190,9 +186,8 @@
 (use-package flycheck
   :straight t
   :config
-  (core/leader
-   "f" flycheck-command-map)
   (global-flycheck-mode)
+  (fset 'flycheck-command-map flycheck-command-map)
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe))
 
@@ -232,16 +227,11 @@
 
 (use-package imenu
   ;; built-in
-  :config
-  (core/leader
-   "os" 'imenu))
+  :config)
 
 (use-package xref
   ;; built-in
-  :config
-  (core/leader
-   "ra" 'xref-find-apropos
-   "rr" 'xref-find-references))
+  :config)
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

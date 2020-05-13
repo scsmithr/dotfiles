@@ -17,11 +17,6 @@
   :commands (shrink-path-prompt shrink-path-dirs))
 
 (use-package eshell
-  :init
-  (core/leader
-   "ss" 'eshell
-   "sn" 'eshell-new
-   "sp" 'projectile-run-eshell)
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."

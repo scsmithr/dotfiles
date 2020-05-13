@@ -5,19 +5,6 @@
 
 ;;; Code:
 
-(core/leader
- "ww" 'seanmacs/split-window-right
- "wh" 'seanmacs/split-window-below
- "wH" 'shrink-window-horizontally
- "wL" 'enlarge-window-horizontally
- "wK" 'shrink-window
- "wJ" 'enlarge-window
- "w=" 'balance-windows
- "wp" 'seanmacs/use-some-window
- "." 'repeat
-
- "dp" 'seanmacs/window-dired-project-left)
-
 (defun seanmacs/split-window-right ()
   "Split window to the right, selecting it."
   (interactive)
@@ -51,11 +38,21 @@
       (rename-buffer buf-name)
       (setq-local window-size-fixed 'width))))
 
+(defun seanmacs/rename-buffer-special (newname)
+  "Rename buffer to NEWNAME, wrapping NEWNAME in '*' characters when original name has them."
+  (interactive (list (read-string "Rename buffer (to new name): ")))
+  (let ((newname (if (string-prefix-p "*" (buffer-name))
+                     (format "*%s*" newname)
+                   newname)))
+    (rename-buffer newname t)))
+
+(defun seanmacs/indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 (use-package winner
   ;; built-in
   :config
-  (core/leader
-   "wu" 'winner-undo)
   (winner-mode 1))
 
 (use-package window

@@ -5,9 +5,6 @@
 
 ;;; Code:
 
-(core/leader
- "a e" 'mu4e)
-
 (use-package mu4e
   :commands (mu4e)
   :config

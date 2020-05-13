@@ -45,19 +45,6 @@
 ;; Ensure use-package is here.
 (straight-use-package 'use-package)
 
-(defmacro after! (target &rest body)
-  "Load BODY after TARGET."
-  `(with-eval-after-load ',target ,@body))
-
-(defun set-evil-initial-state (modes state)
-  "Set the initialize STATE of MODES using `evil-set-initial-state'."
-  (declare (indent defun))
-  (after! evil
-          (if (listp modes)
-              (dolist (mode modes)
-                (evil-set-initial-state mode state))
-            (evil-set-initial-state modes state))))
-
 (defun seanmacs/run-and-bury (fn &rest args)
   "Run FN with ARGS then bury the buffer."
   (let ((buf (buffer-name)))
@@ -68,9 +55,6 @@
   :load-path "lisp"
   :config
   (core/init-leader))
-
-(use-package seanmacs-funcs
-  :load-path "lisp")
 
 (use-package seanmacs-theme
   :load-path "lisp")
