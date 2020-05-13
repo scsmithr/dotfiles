@@ -11,10 +11,6 @@
 (use-package mu4e
   :commands (mu4e)
   :config
-  (core/local 'mu4e-headers-mode-map
-              "r" 'mu4e-update-index
-              "u" 'mu4e-update-mail-and-index)
-
   ;; General configuration with mbsync.
   (setq user-full-name "Sean Smith"
         mu4e-maildir "~/.mail"
@@ -97,7 +93,10 @@
                        (smtpmail-smtp-server . "smtp.gmail.com")
                        (smtpmail-smtp-service . 25)
                        (user-mail-address . "sean@coder.com"))
-                     t))
+                     t)
+  :bind (:map mu4e-headers-mode-map
+              ("C-c u" . mu4e-update-mail-and-index)
+              ("C-c r" . mu4e-update-index)))
 
 (provide 'seanmacs-email)
 ;;; seanmacs-email.el ends here

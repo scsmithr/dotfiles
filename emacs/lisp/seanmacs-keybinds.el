@@ -11,9 +11,6 @@
 (defvar core-leader-key "SPC"
   "Leader key.")
 
-(defvar core-local-leader-key "m"
-  "Local leader key for major mode keybinds.")
-
 (defun core/init-leader ()
   "Initialize the leader map."
   (progn
@@ -27,15 +24,6 @@
     (setq key (pop bindings) def (pop bindings))))
 
 (defalias 'core/leader 'core/set-leader-keys)
-
-(defun core/set-local-leader-keys (map key def &rest bindings)
-  "Set mode specific keybinds."
-  (while key
-    (evil-collection-define-key 'normal map
-      (kbd (format "%s %s%s" core-leader-key core-local-leader-key key)) def)
-    (setq key (pop bindings) def (pop bindings))))
-
-(defalias 'core/local 'core/set-local-leader-keys)
 
 (defun evil-window-next-skip-dired-sidebar ()
   "Move the cursor to next window in cyclic order, skipping dired sidebar buffers."
@@ -75,14 +63,14 @@
 (use-package evil-collection
   :straight t
   :after evil
-  :init
+  :config
   (setq evil-collection-key-blacklist
         (list core-leader-key))
-  :config
   (evil-collection-init))
 
 (use-package evil-surround
   :straight t
+  :after evil
   :config (global-evil-surround-mode 1))
 
 (provide 'seanmacs-keybinds)

@@ -31,10 +31,8 @@
   :hook ((go-mode . lsp)
          (before-save . seanmacs/gofmt-before-save))
   :bind(:map go-mode-map
-             ("C-c C-d" . lsp-describe-thing-at-point)))
-
-(core/local 'go-mode-map
-            "rn" 'lsp-rename)
+             ("C-c C-d" . lsp-describe-thing-at-point)
+             ("C-c r r" . lsp-rename)))
 
 ;; Haskell
 
@@ -46,17 +44,11 @@
         haskell-mode-stylish-haskell-path "brittany")
   :hook ((haskell-mode . interactive-haskell-mode)))
 
-(core/local 'haskell-mode-map
-            "o" 'run-haskell)
-
 ;; Octave
 
 (use-package octave
   :defer t
   :mode ("\\.m\\'" . octave-mode))
-
-(core/local 'octave-mode-map
-            "o" 'run-octave)
 
 ;; Rust
 
@@ -69,14 +61,12 @@
   :hook ((rust-mode . lsp)
          (rust-mode . cargo-minor-mode))
   :bind(:map rust-mode-map
-             ("C-c C-d" . lsp-describe-thing-at-point)))
+             ("C-c C-d" . lsp-describe-thing-at-point)
+             ("C-c r r" . lsp-rename)))
 
 (use-package cargo
   :straight t
   :defer t)
-
-(core/local 'rust-mode-map
-            "rn" 'lsp-rename)
 
 ;; Python
 
@@ -85,8 +75,9 @@
   :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
-  (add-hook 'elpy-mode-hook (lambda ()
-                              (highlight-indentation-mode -1))))
+  (defun seanmacs/disable-highlight-indentation ()
+    (highlight-indentation-mode -1))
+  :hook ((elpy-mode . seanmacs/disable-highlight-indentation)))
 
 ;; Typescript
 
@@ -151,11 +142,9 @@ dir. Return nil otherwise."
   :hook ((web-mode . seanmacs/setup-tide)
          (web-mode . seanmacs/use-node-modules-eslint))
   :bind (:map web-mode-map
-              ("C-c C-d" . tide-documentation-at-point)))
-
-(core/local 'web-mode-map
-            "rn" 'tide-rename-symbol
-            "rf" 'tide-rename-file)
+              ("C-c C-d" . tide-documentation-at-point)
+              ("C-c r r" . tide-rename-symbol)
+              ("C-c r f" . tide-rename-file)))
 
 ;; Elixir
 
@@ -190,9 +179,6 @@ dir. Return nil otherwise."
   (setq inferior-lisp-program "sbcl"
         slime-contribs '(slime-fancy)))
 
-(core/local 'lisp-mode-map
-            "o" 'slime)
-
 ;; Scheme
 
 (use-package geiser
@@ -210,9 +196,6 @@ dir. Return nil otherwise."
   ;; errors/warnings with the @code_warntype macro.
   (setq inferior-julia-args "--color=yes")
   (evil-set-initial-state 'ess-help-mode 'motion))
-
-(core/local 'ess-julia-mode-map
-            "o" 'julia)
 
 ;; Clojure
 
@@ -245,9 +228,6 @@ dir. Return nil otherwise."
 (use-package elisp-mode
   ;; built-in
   :defer t)
-
-(core/local 'emacs-lisp-mode-map
-            "o" 'ielm)
 
 ;; C/C++
 

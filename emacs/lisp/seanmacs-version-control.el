@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package ediff
+  ;; built-in
   :init
   (setq-default ediff-split-window-function #'split-window-horizontally
                 ediff-merge-split-window-function #'split-window-horizontally
