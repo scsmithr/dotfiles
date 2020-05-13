@@ -227,7 +227,14 @@ dir. Return nil otherwise."
 
 (use-package elisp-mode
   ;; built-in
-  :defer t)
+  :defer t
+  :init
+  (defun seanmacs/elisp-describe-symbol-at-point ()
+    (interactive)
+    (let ((sym (symbol-at-point)))
+      (describe-symbol sym)))
+  :bind (:map emacs-lisp-mode-map
+              ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)))
 
 ;; C/C++
 
