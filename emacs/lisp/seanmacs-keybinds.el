@@ -94,6 +94,10 @@
    "r a" 'xref-find-apropos
    "r r" 'xref-find-references)
 
+;; Help
+(core/leader
+ "h w" 'which-key-show-major-mode)
+
 (defun seanmacs/evil-window-next-skip-dired-sidebar ()
   "Move the cursor to next window in cyclic order, skipping dired sidebar buffers."
   (interactive)
