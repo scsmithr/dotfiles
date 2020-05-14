@@ -71,7 +71,7 @@
            (seanmacs/display-buffer-in-side-window-select)
            (window-height . 0.25)
            (side . bottom)
-           (slot . 0))
+           (slot . 1))
           ;; bottom side window
           ("\\*\
 \\(Completions\
@@ -80,6 +80,7 @@
 \\|lsp-help\
 \\|tide-documentation\
 \\|company-documentation\
+\\|Gofmt Errors\
 \\).*"
            (display-buffer-in-side-window)
            (window-height . 0.25)
