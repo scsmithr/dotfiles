@@ -114,6 +114,7 @@
         ibuffer-show-empty-filter-groups nil
         ibuffer-saved-filter-groups
         '(("seanmacs"
+           ("async" (name . "\*Async"))
            ("shell" (or
                      (mode . eshell-mode)
                      (mode . term-mode)
@@ -121,7 +122,6 @@
            ("dired" (mode . dired-mode))
            ("scratch" (name . "\*scratch"))
            ("special" (name . "\*"))
-           ("sidebar" (mode . dired-sidebar-mode))
            ("magit" (name . "magit")))))
 
   (setq seanmacs/ibuffer-filter-group-order '("Default" "shell" "special"))

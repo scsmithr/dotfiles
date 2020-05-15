@@ -5,12 +5,30 @@
 
 ;;; Code:
 
-(defun async-shell-buffer (program &rest args)
+(defun seanmacs/async-shell-buffer (&rest args)
   "Run PROGRAM with ARGS async."
   (interactive)
-  (let* ((command (string-join (append (list program) args) " "))
-         (output-buffer (concat "*" command "*")))
-    (async-shell-command command output-buffer)))
+  (let* ((command (mapconcat #'(lambda (a)
+                                 (if (numberp a)
+                                     (number-to-string a)
+                                   a))
+                             args " "))
+         (buf-name (concat "*Async: " command "*")))
+    (async-shell-command command buf-name)))
+
+(defun seanmacs/listify-env-vars (env val &rest rest)
+  (let ((list '()))
+    (while env
+      (let ((s (format "%s=%s" env val)))
+        (push s list))
+      (setq env (pop rest) val (pop rest)))
+    list))
+
+(defun seanmacs/append-process-environment (env val &rest rest)
+  (append
+   (apply 'seanmacs/listify-env-vars env val rest)
+   process-environment
+   '()))
 
 (use-package shrink-path
   :straight t
@@ -64,7 +82,7 @@
     (eshell "new"))
 
   (defalias 'eshell/ff 'find-file-other-window)
-  (defalias 'eshell/async 'async-shell-buffer)
+  (defalias 'eshell/async 'seanmacs/async-shell-buffer)
 
   (defun eshell/d (&optional path)
     (dired-other-window (or path ".")))
