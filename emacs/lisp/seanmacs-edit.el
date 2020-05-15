@@ -178,6 +178,12 @@
 
 (use-package projectile
   :straight t
+  :init
+  (defun seanmacs/projectile-find-name-dired-wildcard (file)
+    (interactive "sFind-name (filename wildcard): ")
+    (let ((dir (or (projectile-project-root) default-directory))
+          (pattern (format "*%s*" file)))
+      (find-name-dired dir pattern)))
   :config
   (setq projectile-completion-system 'default
         projectile-require-project-root nil)
