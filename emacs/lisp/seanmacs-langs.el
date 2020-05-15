@@ -123,7 +123,6 @@ dir. Return nil otherwise."
       (tide-hl-identifier-mode +1)
       (prettier-js-mode)
       (evil-add-command-properties #'tide-jump-to-definition :jump t)
-      ;; Eslint doesn't work...
       (flycheck-add-mode 'javascript-eslint 'web-mode)
       (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
   :config

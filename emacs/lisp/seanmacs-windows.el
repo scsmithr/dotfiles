@@ -81,6 +81,7 @@
 \\|tide-documentation\
 \\|company-documentation\
 \\|Gofmt Errors\
+\\|prettier errors\
 \\).*"
            (display-buffer-in-side-window)
            (window-height . 0.25)
