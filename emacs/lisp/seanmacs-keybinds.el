@@ -115,7 +115,8 @@
         evil-split-window-below t
         evil-shift-round nil
         evil-want-C-u-scroll t
-        evil-want-keybinding nil)
+        evil-want-keybinding nil
+        evil-inhibit-esc t)
   :config
   (evil-mode)
   (evil-update-insert-state-bindings "\C-n" t)
