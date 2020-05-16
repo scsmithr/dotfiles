@@ -278,8 +278,9 @@ dir. Return nil otherwise."
   :straight t
   :defer t
   :config
-  (setq lean-memory-limit 8192
-        lean-extra-arguments '("-D class.instance_max_depth=1000")))
+  (setq lean-memory-limit 16384
+        lean-extra-arguments '("-D class.instance_max_depth=1000"))
+  (evil-add-command-properties #'lean-find-definition :jump t))
 
 (use-package company-lean
   :straight t
