@@ -64,6 +64,7 @@
           ("\\*\
 \\(Flycheck\
 \\|ripgrep-search\
+\\|grep\
 \\|docker\
 \\|kube\
 \\|xref\
