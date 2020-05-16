@@ -62,7 +62,7 @@
   (setq display-buffer-alist
         '(;; selecting bottom side window
           ("\\*\
-\\(Flycheck\
+\\(Flycheck errors\
 \\|ripgrep-search\
 \\|grep\
 \\|docker\
@@ -76,8 +76,10 @@
           ;; bottom side window
           ("\\*\
 \\(Completions\
+\\|Flycheck error messages\
 \\|Ido Completions\
 \\|Help\
+\\|Warnings\
 \\|lsp-help\
 \\|tide-documentation\
 \\|company-documentation\
