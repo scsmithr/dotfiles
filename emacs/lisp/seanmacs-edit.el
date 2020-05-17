@@ -211,6 +211,11 @@
   :config
   (which-key-mode 1))
 
+(use-package flimenu
+  :straight t
+  :config
+  (flimenu-global-mode))
+
 (use-package selectrum
   :straight t
   :config
@@ -221,7 +226,7 @@
 (use-package prescient
   :straight t
   :config
-  (setq prescient-filter-method '(literal regexp initialism fuzzy)))
+  (setq prescient-filter-method '(literal initialism fuzzy)))
 
 (use-package selectrum-prescient
   :straight t
