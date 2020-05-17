@@ -29,6 +29,11 @@
 (use-package dired-subtree
   :straight t)
 
+(use-package dired-open
+  :straight t
+  :config
+  (setq dired-open-extensions '(("pdf" . "zathura"))))
+
 (use-package help
   :config)
 
