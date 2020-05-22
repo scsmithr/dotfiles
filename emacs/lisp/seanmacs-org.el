@@ -8,8 +8,8 @@
 (use-package org
   :defer t
   :config
-  (setq org-default-notes-file "~/notes/refile.org"
-        org-agenda-files (list "~/notes/")
+  (setq org-default-notes-file "~/syncthing/notes/refile.org"
+        org-agenda-files (list "~/syncthing/notes/")
         org-agenda-restore-windows-after-quit t
         org-agenda-span 'fortnight
         org-agenda-window-setup 'current-window
