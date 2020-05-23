@@ -5,13 +5,10 @@ xrdb ~/.Xresources
 
 case $HOSTNAME in
     "system22")
-        dpi work
-        if [ -f ~/.icm/Y2XND_LQ156D1.icm ]; then
-            xcalib ~/.icm/Y2XND_LQ156D1.icm
-        fi
+        dpi monitor
         ;;
     "system7")
-        dpi work
+        dpi monitor
         ;;
 esac
 
