@@ -81,11 +81,11 @@
     (interactive)
     (eshell "new"))
 
-  (defalias 'eshell/ff 'find-file-other-window)
+  (defalias 'eshell/ff 'find-file)
   (defalias 'eshell/async 'seanmacs/async-shell-buffer)
 
   (defun eshell/d (&optional path)
-    (dired-other-window (or path ".")))
+    (dired (or path ".")))
 
   (defun eshell/mkcd (path)
     (let ((args (list "-p" path)))
