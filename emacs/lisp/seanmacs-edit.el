@@ -226,7 +226,7 @@
 (use-package prescient
   :straight t
   :config
-  (setq prescient-filter-method '(literal initialism fuzzy)))
+  (setq prescient-filter-method '(fuzzy literal initialism)))
 
 (use-package selectrum-prescient
   :straight t
