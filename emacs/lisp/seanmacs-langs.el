@@ -42,6 +42,9 @@
   :config
   (setq haskell-stylish-on-save t
         haskell-mode-stylish-haskell-path "brittany")
+  (evil-add-command-properties #'haskell-mode-jump-to-def :jump t)
+  (evil-collection-define-key 'normal 'haskell-mode-map
+    "gd" 'haskell-mode-jump-to-def)
   :hook ((haskell-mode . interactive-haskell-mode)))
 
 ;; Octave
@@ -280,17 +283,9 @@ dir. Return nil otherwise."
   :config
   (setq lean-memory-limit 16384
         lean-extra-arguments '("-D class.instance_max_depth=1000"))
-  (evil-add-command-properties #'lean-find-definition :jump t))
-
-(use-package company-lean
-  :straight t
-  :after lean-mode)
-
-;; Coq
-
-(use-package proof-general
-  :straight t
-  :defer t)
+  (evil-add-command-properties #'lean-find-definition :jump t)
+  (evil-collection-define-key 'normal 'lean-mode-map
+    "gd" 'lean-find-definition))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
