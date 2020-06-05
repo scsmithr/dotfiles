@@ -35,7 +35,7 @@
 
 ;; Dired/file management
 (core/leader
- "d d" 'dired
+ "d d" 'dired-jump
  "d p" 'seanmacs/window-dired-project-left
  "d f" 'find-file)
 
