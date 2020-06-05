@@ -29,6 +29,11 @@
 (use-package dired-subtree
   :straight t)
 
+(use-package dired-narrow
+  :straight t
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map "/" 'dired-narrow))
+
 (use-package dired-open
   :straight t
   :config
