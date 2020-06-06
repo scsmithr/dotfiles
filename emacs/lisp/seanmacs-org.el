@@ -20,6 +20,8 @@
         org-blank-before-new-entry (quote ((heading . always) (plain-list-item . always)))
         org-enforce-todo-dependencies t)
 
+  (plist-put org-format-latex-options :scale 1.4)
+
   (setq org-capture-templates
         `(
           ("n" "Note" entry (file+headline "" "Notes")
