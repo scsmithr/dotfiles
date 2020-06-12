@@ -199,8 +199,8 @@ muted = "#828282"
 foreground = "#ababb4"
 primary = "#e8e8e8"
 urgent = "#8b3800"
-myFocusedBorderColor = "#93a4a6"
-myUnfocusedBorderColor = "#c6d3d3"
+myFocusedBorderColor = "#637476"
+myUnfocusedBorderColor = "#a3b4b6"
 
 -- config vars
 myBorderWidth = 1
