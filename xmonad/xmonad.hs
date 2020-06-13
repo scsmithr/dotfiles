@@ -205,4 +205,4 @@ myUnfocusedBorderColor = "#a3b4b6"
 -- config vars
 myBorderWidth = 1
 myModMask = mod4Mask
-myWorkspaces = ["def", "email", "web", "dev"]
+myWorkspaces = ["def", "email", "web", "dev", "misc"]
