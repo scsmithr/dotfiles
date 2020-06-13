@@ -1,6 +1,5 @@
 (("ESS" . "2e7d36dc9b500ce21c5cb8534ea573669f93ee0b")
  ("Highlight-Indentation-for-Emacs" . "d03803f2c06749c430443a3d24e039cbafc9c58f")
- ("PG" . "1ef1286c43d4d099b3b017069ed09c261eb8b6ca")
  ("a.el" . "18966975db7110d0aac726be95b593e2fc3d44ed")
  ("alchemist.el" . "6f99367511ae209f8fe2c990779764bbb4ccb6ed")
  ("annalist.el" . "134fa3f0fb91a636a1c005c483516d4b64905a6d")

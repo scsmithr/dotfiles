@@ -25,9 +25,10 @@
     (when (eq major-mode 'go-mode)
       (gofmt)))
   :config
-  (evil-add-command-properties #'godef-jump :jump t)
   (setq gofmt-command "goimports"
         gofmt-args '("-local=go.coder.com"))
+  (evil-collection-define-key 'normal 'go-mode-map
+    "gd" 'lsp-find-definition)
   :hook ((go-mode . lsp)
          (before-save . seanmacs/gofmt-before-save))
   :bind(:map go-mode-map
