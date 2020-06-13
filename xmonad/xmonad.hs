@@ -59,13 +59,15 @@ promptConf = def { position            = Bottom
 
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
   Map.fromList
-    $  [ ((modMask, xK_Return), spawn myTerminal)
-       , ((modMask, xK_p)     , shellPrompt promptConf)
-       , ((modMask, xK_b)     , spawn myBrowser)
-       , ((modMask, xK_v)     , spawn myEditor)
-       , ((modMask, xK_q)     , spawn "lock")
-       , ( (modMask .|. shiftMask, xK_q)
-         , spawn "lock suspend"
+    $  [ ((modMask, xK_Return)         , spawn myTerminal)
+       , ((modMask, xK_p)              , shellPrompt promptConf)
+       , ((modMask, xK_b)              , spawn myBrowser)
+       , ((modMask, xK_v)              , spawn myEditor)
+       , ((modMask, xK_q)              , spawn "lock")
+       , ((modMask .|. shiftMask, xK_q), spawn "lock suspend")
+       , ((modMask, xK_x), spawn "if type xmonad; then xmonad --restart; fi")
+       , ( (modMask .|. shiftMask, xK_x)
+         , io (exitWith ExitSuccess)
          )
 
      -- switch layouts
