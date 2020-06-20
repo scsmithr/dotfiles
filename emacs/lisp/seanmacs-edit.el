@@ -187,6 +187,13 @@
   :config
   (setq projectile-completion-system 'default
         projectile-require-project-root nil)
+
+  ;; Register project for purescript.
+  (projectile-register-project-type 'purs '("spago.dhall")
+                                    :compile "spago build"
+                                    :test "spago test"
+                                    :run "spago run")
+
   (projectile-mode +1))
 
 (use-package ripgrep

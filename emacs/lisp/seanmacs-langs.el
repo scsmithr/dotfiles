@@ -288,5 +288,30 @@ dir. Return nil otherwise."
   (evil-collection-define-key 'normal 'lean-mode-map
     "gd" 'lean-find-definition))
 
+;; Purescript
+
+(use-package purescript-mode
+  :straight t
+  :defer t
+  :config
+  (evil-add-command-properties #'psc-ide-goto-definition :jump t)
+  (evil-collection-define-key 'normal 'purescript-mode-map
+    "gd" 'psc-ide-goto-definition)
+  :bind(:map purescript-mode-map
+             ("C-c C-r r" . psci)
+             ("C-c C-r l" . psci/load-current-file!)
+             ("C-c C-r m" . psci/load-module!))
+  :hook ((purescript-mode . turn-on-purescript-indentation)
+         (purescript-mode . psc-ide-mode)))
+
+(use-package psc-ide
+  :straight t
+  :defer t)
+
+(use-package psci
+  :straight t
+  :defer t
+  :commands (psci psci/load-module! psci/load-current-file!))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
