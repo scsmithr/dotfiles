@@ -43,9 +43,6 @@ ln -sv $DIR/alacritty/alacritty.yml ~/.config/alacritty
 # zathura
 ln -sv $DIR/zathura/zathurarc ~/.config/zathura
 
-# readline
-ln -sv $DIR/readline/inputrc ~/.inputrc
-
 # fonts
 mkdir -p ~/.config/fontconfig
 ln -sv $DIR/fontconfig/fonts.conf ~/.config/fontconfig

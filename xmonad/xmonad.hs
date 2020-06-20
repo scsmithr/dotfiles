@@ -169,6 +169,8 @@ myLayoutHook = uniformSpacing
 myManageHook = composeAll
   [ className =? "mpv" --> doCenterFloat
   , className =? "feh" --> doCenterFloat
+  , className =? "Ristretto" --> doCenterFloat
+  , className =? "Thunar" --> doCenterFloat
   , isDialog =? True --> doCenterFloat
   ]
 
