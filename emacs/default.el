@@ -73,6 +73,7 @@
  ("purescript-mode" . "820597daabbc9b906456f9941723bfb60e1c0ae4")
  ("pyvenv" . "861998b6d157ae73b829f02a5a6c8a9118310831")
  ("queue" . "52206c0f78afc0dfb9a287cb928c1e725103336d")
+ ("reformatter.el" . "dc6278a6b1e3565604346ac41a6ffc3cbab04031")
  ("restclient.el" . "e8ca809ace13549a1ddffb4e4aaa5d5fce750f3d")
  ("ripgrep.el" . "40e871dcc4519a70981e9f28acea304692a60978")
  ("rust-mode" . "d0f3f45cc4fe1c5b72466253f051294d275a4b64")

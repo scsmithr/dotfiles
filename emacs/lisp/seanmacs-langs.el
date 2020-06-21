@@ -290,9 +290,15 @@ dir. Return nil otherwise."
 
 ;; Purescript
 
+(defvar seanmacs/purescript-formatter "purty")
+
 (use-package purescript-mode
   :straight t
   :defer t
+  :init
+  (reformatter-define purescript-format
+    :program seanmacs/purescript-formatter
+    :args '("-"))
   :config
   (evil-add-command-properties #'psc-ide-goto-definition :jump t)
   (evil-collection-define-key 'normal 'purescript-mode-map
@@ -302,7 +308,8 @@ dir. Return nil otherwise."
              ("C-c C-r l" . psci/load-current-file!)
              ("C-c C-r m" . psci/load-module!))
   :hook ((purescript-mode . turn-on-purescript-indentation)
-         (purescript-mode . psc-ide-mode)))
+         (purescript-mode . psc-ide-mode)
+         (purescript-mode . purescript-format-on-save-mode)))
 
 (use-package psc-ide
   :straight t

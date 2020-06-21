@@ -5,6 +5,10 @@
 
 ;;; Code:
 
+;; Quickly generate lang formatters.
+(use-package reformatter
+  :straight t)
+
 (use-package docker
   :straight t
   :defer t
