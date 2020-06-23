@@ -53,13 +53,13 @@
 
 (define (format-battery)
   (if (battery?)
-    (let* ((status (battery-status))
-           (icon (cond ((eq? status 'discharging) " -")
-                       ((eq? status 'charging) " +")
-                       (else "")))
-           (s (format #f "~A%~A" (battery-percent) icon)))
-      (format-section "bat" s))
-    ""))
+      (let* ((status (battery-status))
+             (icon (cond ((eq? status 'discharging) " -")
+                         ((eq? status 'charging) " +")
+                         (else "")))
+             (s (format #f "~A%~A" (battery-percent) icon)))
+        (format-section "bat" s))
+      ""))
 
 (define (format-volume)
   (let* ((mute-str (if (mute?) " (mute)" ""))
@@ -70,13 +70,15 @@
   (format-section "wifi" (essid)))
 
 (define (format-status)
-  (string-trim-both
-   (string-join
-    (list
-     (format-wifi)
-     (format-volume)
-     (format-battery))
-    "  ")))
+  (string-append
+   (string-trim-both
+    (string-join
+     (list
+      (format-wifi)
+      (format-volume)
+      (format-battery))
+     "    "))
+  "  "))
 
 (define (print-loop)
   (while #t

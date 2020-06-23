@@ -1,9 +1,9 @@
 Config {
     font = "xft:Fira Sans:medium:size=10:antialias=true",
-    bgColor = "#26272d",
+    bgColor = "#46474d",
     fgColor = "#ababb4",
     border = BottomB,
-    borderColor = "#000000",
+    borderColor = "#26272d",
     borderWidth = 1,
     position = Top,
     allDesktops = False,
@@ -20,5 +20,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %StdinReader% }  %date%  { %status%  "
+    template = " %StdinReader% }  %date%  { %status% "
 }

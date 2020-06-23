@@ -47,12 +47,12 @@ import qualified Data.Map.Strict               as StrictMap
 promptConf = def { position            = Bottom
                  , font                = "xft:Fira Sans Medium-10"
                  , height              = 44
-                 , bgColor             = light
-                 , fgColor             = muted
-                 , bgHLight            = light
-                 , fgHLight            = dark
+                 , bgColor             = dark
+                 , fgColor             = foreground
+                 , bgHLight            = dark
+                 , fgHLight            = light
                  , promptBorderWidth   = myBorderWidth
-                 , borderColor         = myUnfocusedBorderColor
+                 , borderColor         = myPromptBorderColor
                  , maxComplRows        = Just 3
                  , showCompletionOnTab = True
                  }
@@ -143,7 +143,7 @@ stringifyLayout l | t "Tall" l     = fmt "tall"
   fmt s = "[" ++ s ++ "]"
 
 myLogHook h = do
-  let fmt fg bg = D.pad . D.xmobarColor fg bg
+  let fmt fg bg = D.pad . D.pad . D.xmobarColor fg bg
   D.dynamicLogWithPP D.xmobarPP { D.ppCurrent = fmt primary ""
                                 , D.ppHidden  = fmt muted ""
                                 , D.ppVisible = fmt foreground ""
@@ -197,14 +197,15 @@ myTerminal = "terminal"
 myBrowser = "firefox"
 
 -- colors
-dark = "#26272d"
+dark = "#46474d"
 light = "#fcfcfc"
 muted = "#828282"
 foreground = "#ababb4"
 primary = "#e8e8e8"
 urgent = "#8b3800"
-myFocusedBorderColor = "#637476"
-myUnfocusedBorderColor = "#a3b4b6"
+myFocusedBorderColor = "#46474d"
+myUnfocusedBorderColor = "#a6a7ad"
+myPromptBorderColor = "#26272d"
 
 -- config vars
 myBorderWidth = 1

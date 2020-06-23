@@ -308,8 +308,7 @@ dir. Return nil otherwise."
              ("C-c C-r l" . psci/load-current-file!)
              ("C-c C-r m" . psci/load-module!))
   :hook ((purescript-mode . turn-on-purescript-indentation)
-         (purescript-mode . psc-ide-mode)
-         (purescript-mode . purescript-format-on-save-mode)))
+         (purescript-mode . psc-ide-mode)))
 
 (use-package psc-ide
   :straight t
