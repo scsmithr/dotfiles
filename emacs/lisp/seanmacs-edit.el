@@ -172,8 +172,6 @@
   :config
   (setq dtrt-indent-min-quality 65.0
         dtrt-indent-min-hard-tab-superiority 180.0)
-  (add-to-list 'dtrt-indent-hook-mapping-list
-               '(web-mode javascript web-mode-code-indent-offset))
   (dtrt-indent-global-mode 1))
 
 (use-package projectile
