@@ -40,7 +40,14 @@
   (defun seanmacs/add-eshell-aliases ()
     ;; Shell command aliases. I'd rather not keep track of the eshell
     ;; aliases file.
-    (dolist (alias '(("cargo" "cargo --color=always $*")))
+    (dolist (alias '(("cargo" "cargo --color=always $*")
+                     ;; kubectl
+                     ("kgp" "kubectl get pods $*")
+                     ("kgs" "kubectl get service $*")
+                     ("kgn" "kubectl get namespace $*")
+                     ("kdp" "kubectl delete pod $*")
+                     ("ksn" "kubectl config set-context --current --namespace=$1")
+                     ("kl" "kubectl logs $* --all-containers")))
       (add-to-list 'eshell-command-aliases-list alias)))
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
