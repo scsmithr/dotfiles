@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package org
-  :defer t
+  :straight t
   :config
   (setq org-default-notes-file "~/syncthing/notes/refile.org"
         org-agenda-files (list "~/syncthing/notes/")
@@ -16,9 +16,15 @@
         org-refile-targets '((org-agenda-files :maxlevel . 3))
         org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
+        org-startup-with-inline-images t
         org-hide-leading-stars t
         org-blank-before-new-entry (quote ((heading . always) (plain-list-item . always)))
-        org-enforce-todo-dependencies t)
+        org-enforce-todo-dependencies t
+        org-imenu-depth 9
+        org-outline-path-complete-in-steps nil
+        org-refile-use-outline-path t
+        org-confirm-babel-evaluate nil
+        org-fontify-done-headline nil)
 
   (plist-put org-format-latex-options :scale 1.4)
 
@@ -32,7 +38,9 @@
            :empty-lines 1)))
 
   (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED"))))
+        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
+  :bind (:map org-mode-map
+              ("C-c t" . org-toggle-narrow-to-subtree)))
 
 (use-package org-agenda
   :defer t
@@ -45,6 +53,7 @@
   :after org
   :config
   (require 'ob-http)
+  (require 'ob-async)
   (require 'gnuplot)
 
   (org-babel-do-load-languages
@@ -58,14 +67,19 @@
      (http       . t)
      (gnuplot    . t)
      (calc       . t)
+     (sql        . t)
      (python     . t)))
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images))
+  :hook ((org-babel-after-execute . org-display-inline-images)))
 
 (use-package ob-http
   :straight t
   :defer t)
 
 (use-package gnuplot
+  :straight t
+  :defer t)
+
+(use-package ob-async
   :straight t
   :defer t)
 
