@@ -1,7 +1,0 @@
-#!/bin/bash
-
-redshift -x
-if [ "$#" -eq 1 ]; then
-    redshift -O "$1"
-    exit 0
-fi
