@@ -9,11 +9,8 @@
   :straight t
   :config
   (setq org-default-notes-file "~/syncthing/notes/refile.org"
-        org-agenda-files (list "~/syncthing/notes/")
-        org-agenda-restore-windows-after-quit t
-        org-agenda-span 'fortnight
-        org-agenda-window-setup 'current-window
         org-refile-targets '((org-agenda-files :maxlevel . 3))
+        org-refile-use-outline-path t
         org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
         org-startup-with-inline-images t
@@ -22,9 +19,10 @@
         org-enforce-todo-dependencies t
         org-imenu-depth 9
         org-outline-path-complete-in-steps nil
-        org-refile-use-outline-path t
         org-confirm-babel-evaluate nil
-        org-fontify-done-headline nil)
+        org-fontify-done-headline nil
+        org-hide-emphasis-markers t
+        org-src-window-setup 'current-window)
 
   (plist-put org-format-latex-options :scale 1.4)
 
@@ -44,17 +42,19 @@
 
 (use-package org-agenda
   :defer t
+  :config
+  (setq org-agenda-files (list "~/syncthing/notes/")
+        org-agenda-restore-windows-after-quit t
+        org-agenda-span 'fortnight
+        org-agenda-window-setup 'current-window)
   :bind (:map org-agenda-mode-map
               ("j" . evil-next-line)
               ("k" . evil-previous-line)))
 
 (use-package ob
   ;; built-in
-  :after org
+  :after (org ob-http gnuplot ob-async)
   :config
-  (require 'ob-http)
-  (require 'ob-async)
-  (require 'gnuplot)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -72,16 +72,13 @@
   :hook ((org-babel-after-execute . org-display-inline-images)))
 
 (use-package ob-http
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package gnuplot
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package ob-async
-  :straight t
-  :defer t)
+  :straight t)
 
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here

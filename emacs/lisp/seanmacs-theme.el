@@ -15,7 +15,7 @@
 (let ((default-monospace "Fira Mono"))
   (set-frame-font (font-spec :family default-monospace))
   (face-attr 'default :font default-monospace :height 110))
-(face-attr 'variable-pitch :family "Fira Sans" :height 110)
+(face-attr 'variable-pitch :weight 'light :family "Fira Sans" :height 110)
 
 (use-package modus-operandi-theme
   :straight (modus-operandi-theme :type git :host github :repo "scsmithr/modus-themes")
