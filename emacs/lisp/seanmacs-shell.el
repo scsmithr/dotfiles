@@ -47,6 +47,7 @@
                      ("kgn" "kubectl get namespace $*")
                      ("kdp" "kubectl delete pod $*")
                      ("ksn" "kubectl config set-context --current --namespace=$1")
+                     ("kcn" "kubectl config view --minify --output 'jsonpath={..namespace}'; echo")
                      ("kl" "kubectl logs $* --all-containers")))
       (add-to-list 'eshell-command-aliases-list alias)))
   :config
