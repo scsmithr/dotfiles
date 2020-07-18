@@ -34,9 +34,13 @@
   :straight t
   :commands (shrink-path-prompt shrink-path-dirs))
 
+(defvar seanmacs/eshell-append-history-on-command t
+  "Whether or not eshell should write to the history file before each command.")
+
 (use-package eshell
   ;; built-in
   :init
+
   (defun seanmacs/add-eshell-aliases ()
     ;; Shell command aliases. I'd rather not keep track of the eshell
     ;; aliases file.
@@ -50,6 +54,16 @@
                      ("kcn" "kubectl config view --minify --output 'jsonpath={..namespace}'; echo")
                      ("kl" "kubectl logs $* --all-containers")))
       (add-to-list 'eshell-command-aliases-list alias)))
+
+  (defun seanmacs/eshell-append-history ()
+    "Append the most recent command in eshell's history ring to history file."
+    (when (and eshell-history-ring
+               seanmacs/eshell-append-history-on-command)
+      (let ((newest-cmd-ring (make-ring 1)))
+        (ring-insert newest-cmd-ring (car (ring-elements eshell-history-ring)))
+        (let ((eshell-history-ring newest-cmd-ring))
+          (eshell-write-history eshell-history-file-name t)))))
+
   :config
   (defface eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."
@@ -159,6 +173,7 @@
       (user-error "Not in project")))
 
   (setq eshell-history-size 1000
+        eshell-save-history-on-exit nil ;; This is handled elsewhere.
         eshell-cmpl-cycle-completions nil
         eshell-prompt-function #'eshell-default-prompt
         eshell-prompt-regexp "^.* > ")
@@ -173,7 +188,8 @@
               (local-set-key (kbd "C-c d") 'eshell/find-subdirectory-pwd)
               (local-set-key (kbd "C-c p") 'eshell/find-subdirectory-project)))
 
-  :hook ((eshell-mode . seanmacs/add-eshell-aliases)))
+  :hook ((eshell-mode . seanmacs/add-eshell-aliases)
+         (eshell-pre-command . seanmacs/eshell-append-history)))
 
 (use-package shell
   :config)

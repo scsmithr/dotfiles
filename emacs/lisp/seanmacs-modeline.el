@@ -104,7 +104,8 @@ indicator in the modeline."
 
 (defun modeline-segment-dir ()
   "Display shortened working directory."
-  (shrink-path-dirs default-directory))
+  (when default-directory
+    (shrink-path-dirs default-directory)))
 
 (defun modeline-segment-position ()
   "Displays the current cursor position in the modeline."
