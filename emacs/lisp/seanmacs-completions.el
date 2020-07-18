@@ -17,7 +17,6 @@
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)))
 
-
 (use-package company-posframe
   :straight t
   :if window-system
