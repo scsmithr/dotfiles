@@ -193,6 +193,10 @@ dir. Return nil otherwise."
 
 ;; Julia
 
+(use-package julia-mode
+  :straight t
+  :defer t)
+
 (use-package ess
   :straight t
   :mode ("\\.jl\\'" . ess-julia-mode)

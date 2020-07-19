@@ -51,7 +51,7 @@
  ("julia-emacs" . "b5f5983d2b232c8bba4c5eff75cccdb787c19d98")
  ("kube.el" . "6807b76532ec6deebb60cdc2e93281a1c40ca865")
  ("lean-mode" . "6b4377686128d5c2fb55d8fe61b92a9991d40fbd")
- ("let-alist" . "ef3c02fa292b6e32769945bbbfb7f2e5ac574b64")
+ ("let-alist" . "b299c78897cc307f9d5521927376fbd06a26f123")
  ("lsp-mode" . "3f749aff69367c349248bef68e33cee4a7eb0daf")
  ("lsp-ui" . "1f3e9700395f4fae024ca45ca64c8d70e99b39d2")
  ("macrostep" . "424e3734a1ee526a1bd7b5c3cd1d3ef19d184267")
@@ -97,4 +97,4 @@
  ("with-editor" . "7c512887c6d69864fb600d32fb92857c51babcff")
  ("yaml-mode" . "34648f2502f52f4744d62758fa381fa35db1da49")
  ("yasnippet" . "5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6"))
-:alpha
+:beta

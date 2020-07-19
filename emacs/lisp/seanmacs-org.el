@@ -21,7 +21,7 @@
         org-outline-path-complete-in-steps nil
         org-confirm-babel-evaluate nil
         org-fontify-done-headline nil
-        org-hide-emphasis-markers t
+        org-hide-emphasis-markers nil
         org-src-window-setup 'current-window)
 
   (plist-put org-format-latex-options :scale 1.4)
