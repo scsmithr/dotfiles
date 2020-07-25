@@ -244,6 +244,8 @@ dir. Return nil otherwise."
     (let ((sym (symbol-at-point)))
       (describe-symbol sym)))
   :bind (:map emacs-lisp-mode-map
+              ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)
+              :map lisp-interaction-mode-map
               ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)))
 
 ;; C/C++
