@@ -40,6 +40,7 @@
   (setq modus-operandi-theme-override-colors-alist
         '(("fg-main" . "#26272d")
           ("bg-main" . "#fcfcfc")
+          ("fg-alt" . "#808080")
           ("bg-region" . "#dfdfdf")
           ("fg-whitespace" . "#dadada")
           ("bg-whitespace" . "#fcfcfc")))
