@@ -136,6 +136,12 @@
     (evil-insert 1)
     (apply 'insert args))
 
+  (defun eshell/ss ()
+    "Insert the previous command prepended with 'sudo'."
+    (let* ((cmd (nth 1 (ring-elements eshell-history-ring)))
+           (sudo (format "sudo %s" cmd)))
+      (seanmacs/eshell-insert sudo)))
+
   (defun eshell/read-history ()
     (interactive)
     (eshell-read-history)
