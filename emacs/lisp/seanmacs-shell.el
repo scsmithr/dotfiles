@@ -119,6 +119,12 @@
         (cd (projectile-project-root))
       (user-error "Not in project")))
 
+  (defun eshell/clear ()
+    "Clear the eshell buffer."
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (eshell-send-input)))
+
   (defun seanmacs/eshell-insert (&rest args)
     (goto-char (point-max))
     ;; Only reset prompt if there's already some input.
@@ -132,47 +138,14 @@
 
   (defun eshell/read-history ()
     (interactive)
+    (eshell-read-history)
     (seanmacs/eshell-insert (completing-read
                              "History: "
                              (mapcar #'string-trim
                                      (delete-dups
                                       (ring-elements eshell-history-ring))))))
 
-  (defun eshell/clear ()
-    "Clear the eshell buffer."
-    (let ((inhibit-read-only t))
-      (erase-buffer)
-      (eshell-send-input)))
-
-  (defun seanmacs/eshell-find-subdirectory-recursive (dir)
-    (let* ((contents (directory-files-recursively dir ".*" t))
-           (find-directories (mapcar (lambda (x)
-                                       (when (file-directory-p x)
-                                         (abbreviate-file-name x)))
-                                     contents))
-           (subdirs (delete nil find-directories))
-           (cands (cl-remove-if (lambda (x)
-                                  (or
-                                   (string-match-p "\\\\_target" x)
-                                   (string-match-p "\\vendor" x)
-                                   (string-match-p "\\node_modules" x)
-                                   (string-match-p "\\.git" x)))
-                                subdirs))
-           (selection (completing-read "Find sub-directory: " cands nil t)))
-      (seanmacs/eshell-insert selection)
-      (eshell-send-input)))
-
-  (defun eshell/find-subdirectory-pwd ()
-    (interactive)
-    (seanmacs/eshell-find-subdirectory-recursive (eshell/pwd)))
-
-  (defun eshell/find-subdirectory-project ()
-    (interactive)
-    (if (projectile-project-p)
-        (seanmacs/eshell-find-subdirectory-recursive (projectile-project-root))
-      (user-error "Not in project")))
-
-  (setq eshell-history-size 1000
+  (setq eshell-history-size 10000
         eshell-save-history-on-exit nil ;; This is handled elsewhere.
         eshell-cmpl-cycle-completions nil
         eshell-prompt-function #'eshell-default-prompt
@@ -184,9 +157,7 @@
               ;; buffer local.
               ;;
               ;; See https://github.com/noctuid/general.el/issues/80
-              (local-set-key (kbd "C-c h") 'eshell/read-history)
-              (local-set-key (kbd "C-c d") 'eshell/find-subdirectory-pwd)
-              (local-set-key (kbd "C-c p") 'eshell/find-subdirectory-project)))
+              (local-set-key (kbd "C-c h") 'eshell/read-history)))
 
   :hook ((eshell-mode . seanmacs/add-eshell-aliases)
          (eshell-pre-command . seanmacs/eshell-append-history)))
