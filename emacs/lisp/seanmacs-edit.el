@@ -226,6 +226,8 @@
   :config
   (setq selectrum-count-style 'current/matches
         selectrum-fix-minibuffer-height t)
+  ;; Disable since selectrum ordering doesn't match what emacs suggests.
+  (setq suggest-key-bindings nil)
   (selectrum-mode +1))
 
 (use-package prescient

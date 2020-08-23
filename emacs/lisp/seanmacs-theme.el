@@ -54,13 +54,28 @@
 
       (custom-theme-set-faces
        'modus-operandi
+       ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,fg-whitespace))))
        `(whitespace-indentation ((t (:foreground ,fg-whitespace))))
        `(whitespace-line ((t (:background ,bg-dim))))
        `(whitespace-newline ((t (:foreground ,fg-whitespace))))
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
-       `(flycheck-error-list-highlight ((t (:background ,bg-hl-line :extend t))))
+       ;; Extend highlights
+       `(mu4e-header-highlight-face ((t (:inherit modus-theme-hl-line :extend t))))
+       `(flycheck-error-list-highlight ((t (:inherit modus-theme-hl-line :extend t))))
+       ;; Company (mostly matches opinionated completions theming)
+       `(company-tooltip-selection ((t (
+                                        :inherit (bold modus-theme-nuanced-magenta)
+                                        :foreground ,magenta))))
+       `(company-tooltip-common-selection ((t (
+                                               :inherit (bold modus-theme-nuanced-blue)
+                                               :foreground ,blue))))
+       `(company-tooltip-common ((t (
+                                     :inherit (bold modus-theme-nuanced-blue)
+                                     :foreground ,blue))))
+       `(company-scrollbar-fg ((t (:background ,fg-alt))))
+       ;; Eshell
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))))
 
   (add-hook 'seanmacs/after-load-theme-hook 'seanmacs/customize-modus-operandi)
