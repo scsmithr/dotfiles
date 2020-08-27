@@ -13,6 +13,8 @@
         company-tooltip-align-annotations t
         company-show-numbers t)
   (setq company-backends (delete 'company-dabbrev company-backends))
+  ;; Disable company for some modes (built in capf works better).
+  (setq company-global-modes '(not eshell-mode))
   (global-company-mode +1)
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)))
