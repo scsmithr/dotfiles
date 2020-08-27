@@ -136,12 +136,6 @@
     (evil-insert 1)
     (apply 'insert args))
 
-  (defun eshell/ss ()
-    "Insert the previous command prepended with 'sudo'."
-    (let* ((cmd (nth 1 (ring-elements eshell-history-ring)))
-           (sudo (format "sudo %s" cmd)))
-      (seanmacs/eshell-insert sudo)))
-
   (defun eshell/read-history ()
     (interactive)
     (eshell-read-history)
@@ -164,6 +158,9 @@
               ;;
               ;; See https://github.com/noctuid/general.el/issues/80
               (local-set-key (kbd "C-c h") 'eshell/read-history)))
+
+  ;; Expand !<n> and !!
+  (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
   :hook ((eshell-mode . seanmacs/add-eshell-aliases)
          (eshell-pre-command . seanmacs/eshell-append-history)))
