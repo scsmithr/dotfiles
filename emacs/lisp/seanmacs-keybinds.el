@@ -11,22 +11,22 @@
 (defvar core-leader-key "SPC"
   "Leader key.")
 
-(defun core/init-leader ()
+(defun seanmacs/init-leader ()
   "Initialize the leader map."
   (progn
     (define-key evil-normal-state-map (kbd core-leader-key) core-leader-map)
     (define-key evil-visual-state-map (kbd core-leader-key) core-leader-map)))
 
-(defun core/set-leader-keys (key def &rest bindings)
+(defun seanmacs/set-leader-keys (key def &rest bindings)
   "Set global keybinds on the leader map."
   (while key
     (define-key core-leader-map (kbd key) def)
     (setq key (pop bindings) def (pop bindings))))
 
-(defalias 'core/leader 'core/set-leader-keys)
+(defalias 'seanmacs/leader 'seanmacs/set-leader-keys)
 
 ;; Applications
-(core/leader
+(seanmacs/leader
  "a e" 'mu4e
  "a d" 'docker
  "a g s" 'gcloud-instance-shell
@@ -34,30 +34,30 @@
  "a k" 'kube)
 
 ;; Dired/file management
-(core/leader
+(seanmacs/leader
  "d d" 'dired-jump
  "d p" 'seanmacs/window-dired-project-left
  "d f" 'find-file)
 
 ;; Org
-(core/leader
+(seanmacs/leader
  "x x" 'org-capture
  "x l" 'org-agenda-list
  "x s" 'org-search-view)
 
 ;; Magit
-(core/leader
+(seanmacs/leader
  "g g" 'magit-status
  "g f" 'magit-file-dispatch)
 
 ;; Shell
-(core/leader
+(seanmacs/leader
  "s s" 'eshell
  "s n" 'eshell-new
  "s p" 'projectile-run-eshell)
 
 ;; Window management
-(core/leader
+(seanmacs/leader
  "w w" 'seanmacs/split-window-right
  "w h" 'seanmacs/split-window-below
  "w H" 'shrink-window-horizontally
@@ -70,32 +70,32 @@
  "." 'repeat)
 
 ;; Buffer management
-(core/leader
+(seanmacs/leader
  "b r" 'seanmacs/rename-buffer-special
  "b v" 'revert-buffer
  "b k" 'kill-this-buffer
  "b i" 'seanmacs/indent-buffer)
 
 ;; Other
-(core/leader
+(seanmacs/leader
  "o b" 'ibuffer
  "o s" 'imenu)
 
 ;; Projectile
-(core/leader
-   "p" 'projectile-command-map)
+(seanmacs/leader
+ "p" 'projectile-command-map)
 
 ;; Flycheck
-(core/leader
-   "f" 'flycheck-command-map)
+(seanmacs/leader
+ "f" 'flycheck-command-map)
 
 ;; Xref
-(core/leader
-   "r a" 'xref-find-apropos
-   "r r" 'xref-find-references)
+(seanmacs/leader
+ "r a" 'xref-find-apropos
+ "r r" 'xref-find-references)
 
 ;; Help
-(core/leader
+(seanmacs/leader
  "h w" 'which-key-show-major-mode)
 
 (defun seanmacs/evil-window-next-skip-dired-sidebar ()

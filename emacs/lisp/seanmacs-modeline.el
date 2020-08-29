@@ -136,12 +136,12 @@ indicator in the modeline."
     (list mode-line-process)))
 
 ;;;###autoload
-(define-minor-mode modeline-mode
+(define-minor-mode seanmacs/modeline-mode
   "Toggle modeline on or off."
   :group 'modeline
   :global t
   :lighter nil
-  (if modeline-mode
+  (if seanmacs/modeline-mode
       (progn
 
         ;; Setup flycheck hooks

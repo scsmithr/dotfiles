@@ -15,19 +15,6 @@
 (setq gc-cons-threshold 20000000)
 (setq read-process-output-max (* 1024 1024))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
 ;; Get straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -51,44 +38,24 @@
     (apply fn args)
     (bury-buffer buf)))
 
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
+
 (use-package seanmacs-keybinds
-  :load-path "lisp"
   :config
-  (core/init-leader))
+  (seanmacs/init-leader))
 
-(use-package seanmacs-theme
-  :load-path "lisp")
-
-(use-package seanmacs-windows
-  :load-path "lisp")
-
-(use-package seanmacs-edit
-  :load-path "lisp")
-
-(use-package seanmacs-completions
-  :load-path "lisp")
-
-(use-package seanmacs-utils
-  :load-path "lisp")
-
-(use-package seanmacs-version-control
-  :load-path "lisp")
-
-(use-package seanmacs-org
-  :load-path "lisp")
-
+(use-package seanmacs-theme)
+(use-package seanmacs-windows)
+(use-package seanmacs-edit)
+(use-package seanmacs-completions)
+(use-package seanmacs-utils)
+(use-package seanmacs-version-control)
+(use-package seanmacs-org)
 (use-package seanmacs-modeline
-  :load-path "lisp"
   :config
-  (modeline-mode))
-
-(use-package seanmacs-langs
-  :load-path "lisp")
-
-(use-package seanmacs-shell
-  :load-path "lisp")
-
-(use-package seanmacs-email
-  :load-path "lisp")
+  (seanmacs/modeline-mode))
+(use-package seanmacs-langs)
+(use-package seanmacs-shell)
+(use-package seanmacs-email)
 
 ;;; init.el ends here
