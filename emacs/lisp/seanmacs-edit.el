@@ -80,6 +80,9 @@
 ;; Don't wrap lines
 (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
+;; Allow narrowing to region
+(put 'narrow-to-region 'disabled nil)
+
 (use-package whitespace
   :config
   (setq whitespace-line-column 80)
@@ -122,7 +125,10 @@
            ("dired" (mode . dired-mode))
            ("scratch" (name . "\*scratch"))
            ("special" (name . "\*"))
-           ("magit" (name . "magit")))))
+           ("version control" (or
+                               (name . "magit")
+                               (mode . diff-mode)
+                               (mode . github-review-mode))))))
 
   (setq seanmacs/ibuffer-filter-group-order '("Default" "shell" "special"))
 

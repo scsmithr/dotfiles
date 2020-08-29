@@ -31,6 +31,7 @@
   :config
 
   (setq modus-operandi-theme-distinct-org-blocks t
+        modus-operandi-theme-diffs 'desaturated
         modus-operandi-theme-section-headings t
         modus-operandi-theme-rainbow-headings t
         modus-operandi-theme-org-blocks 'greyscale
