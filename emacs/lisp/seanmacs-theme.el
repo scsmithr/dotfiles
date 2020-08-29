@@ -65,16 +65,8 @@
        `(mu4e-header-highlight-face ((t (:inherit modus-theme-hl-line :extend t))))
        `(flycheck-error-list-highlight ((t (:inherit modus-theme-hl-line :extend t))))
        ;; Company (mostly matches opinionated completions theming)
-       `(company-tooltip-selection ((t (
-                                        :inherit (bold modus-theme-nuanced-magenta)
-                                        :foreground ,magenta))))
-       `(company-tooltip-common-selection ((t (
-                                               :inherit (bold modus-theme-nuanced-blue)
-                                               :foreground ,blue))))
-       `(company-tooltip-common ((t (
-                                     :inherit (bold modus-theme-nuanced-blue)
-                                     :foreground ,blue))))
-       `(company-scrollbar-fg ((t (:background ,fg-alt))))
+       `(company-preview ((t (:inherit (modus-theme-nuanced-magenta) :foreground ,magenta))))
+       `(company-preview-common ((t (:inherit (modus-theme-nuanced-blue) :foreground ,blue))))
        ;; Eshell
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))))
 

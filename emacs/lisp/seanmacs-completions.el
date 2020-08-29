@@ -9,24 +9,13 @@
   :straight t
   :config
   (setq company-minimum-prefix-length 1
-        company-idle-delay 0.2
-        company-tooltip-align-annotations t
-        company-show-numbers t)
+        company-idle-delay 0.2)
   (setq company-backends (delete 'company-dabbrev company-backends))
-  ;; Disable company for some modes (built in capf works better).
-  (setq company-global-modes '(not eshell-mode shell-mode))
+  (setq company-frontends '(company-preview-frontend))
+  (setq tab-always-indent 'complete)
   :hook ((after-init . global-company-mode))
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)))
-
-(use-package company-posframe
-  :straight t
-  :after company
-  :config
-  (setq company-frontends '(company-posframe-frontend)
-        company-posframe-show-indicator nil
-        company-posframe-show-metadata nil
-        company-posframe-quickhelp-delay nil))
 
 (use-package lsp-mode
   :straight t
