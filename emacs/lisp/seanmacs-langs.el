@@ -195,17 +195,12 @@ dir. Return nil otherwise."
 
 (use-package julia-mode
   :straight t
-  :defer t)
-
-(use-package ess
-  :straight t
-  :mode ("\\.jl\\'" . ess-julia-mode)
   :defer t
-  :config
-  ;; Force usage of colors, looks prettier and helps with spotting
-  ;; errors/warnings with the @code_warntype macro.
-  (setq inferior-julia-args "--color=yes")
-  (evil-set-initial-state 'ess-help-mode 'motion))
+  :hook ((julia-mode . julia-repl-mode)))
+
+(use-package julia-repl
+  :straight t
+  :defer t)
 
 ;; Clojure
 
