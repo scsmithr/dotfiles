@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+(setq inhibit-x-resources t)
+
 ;; Hide some things.
 ;; Do this first so that I never see the menu bar.
 (menu-bar-mode -1)
@@ -43,7 +45,6 @@
 (use-package seanmacs-keybinds
   :config
   (seanmacs/init-leader))
-
 (use-package seanmacs-theme)
 (use-package seanmacs-windows)
 (use-package seanmacs-edit)

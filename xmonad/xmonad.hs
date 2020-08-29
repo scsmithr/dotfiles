@@ -192,7 +192,7 @@ myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks def
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
 -- programs
-myEditor = "emacs"
+myEditor = "editor -c"
 myTerminal = "terminal"
 myBrowser = "firefox"
 

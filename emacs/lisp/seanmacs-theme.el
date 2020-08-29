@@ -12,10 +12,9 @@
   (apply #'face-spec-reset-face face nil))
 
 ;; Default font
-(let ((default-monospace "Fira Mono"))
-  (set-frame-font (font-spec :family default-monospace))
-  (face-attr 'default :font default-monospace :height 110))
-(face-attr 'variable-pitch :weight 'light :family "Fira Sans" :height 110)
+(let ((default-monospace "Fira Mono-11"))
+  (add-to-list 'default-frame-alist `(font . ,default-monospace)))
+(face-attr 'variable-pitch :weight 'light :family "Fira Sans-11")
 
 (defvar seanmacs/after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")

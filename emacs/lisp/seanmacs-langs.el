@@ -200,7 +200,9 @@ dir. Return nil otherwise."
 
 (use-package julia-repl
   :straight t
-  :defer t)
+  :defer t
+  :config
+  (evil-add-command-properties #'julia-repl-edit :jump t))
 
 ;; Clojure
 

@@ -4,7 +4,7 @@
 [commit]
     gpgsign = true
 [core]
-    editor = nvim
+	editor = editor
 	excludesfile = /home/sean/.gitignore
     hooksPath = nohooks
 [url "git@github.com:"]
