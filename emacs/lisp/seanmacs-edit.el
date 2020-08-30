@@ -79,6 +79,9 @@
 ;; Allow narrowing to region
 (put 'narrow-to-region 'disabled nil)
 
+;; Allow erasing entire buffer
+(put 'erase-buffer 'disabled nil)
+
 (use-package whitespace
   :config
   (setq whitespace-line-column 80)
