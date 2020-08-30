@@ -5,10 +5,6 @@
 
 ;;; Code:
 
-(setq inhibit-startup-message t
-      use-dialog-box nil
-      inihibit-startup-echo-area-message t)
-
 ;; Highlight parenthesis
 (show-paren-mode 1)
 
@@ -221,39 +217,6 @@
   :straight t
   :config
   (which-key-mode 1))
-
-(use-package flimenu
-  :straight t
-  :config
-  (flimenu-global-mode))
-
-(use-package selectrum
-  :straight t
-  :config
-  (setq selectrum-count-style 'current/matches
-        selectrum-fix-minibuffer-height t)
-  ;; Disable since selectrum ordering doesn't match what emacs suggests.
-  (setq suggest-key-bindings nil)
-  (selectrum-mode +1))
-
-(use-package prescient
-  :straight t
-  :config
-  (setq prescient-filter-method '(literal initialism regexp fuzzy)
-        prescient-sort-length-enable nil))
-
-(use-package selectrum-prescient
-  :straight t
-  :config
-  (selectrum-prescient-mode))
-
-(use-package imenu
-  ;; built-in
-  :config)
-
-(use-package xref
-  ;; built-in
-  :config)
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

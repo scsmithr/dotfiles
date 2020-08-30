@@ -11,24 +11,22 @@
 (defun reset-face (face)
   (apply #'face-spec-reset-face face nil))
 
-;; Default font
-(let ((default-monospace "Fira Mono-11"))
-  (add-to-list 'default-frame-alist `(font . ,default-monospace)))
+;; Set fonts.
+(add-to-list 'default-frame-alist `(font . "Fira Mono-11"))
 (face-attr 'variable-pitch :weight 'light :family "Fira Sans-11")
 
-(defvar seanmacs/after-load-theme-hook nil
+(defvar seanmacs/load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
 
-(defun seanmacs/run-after-load-theme-hook (&rest _)
-  "Run after `seanmacs/after-load-theme-hook'."
-  (run-hooks 'seanmacs/after-load-theme-hook))
+(defun seanmacs/run-load-theme-hook (&rest _)
+  "Run after `seanmacs/load-theme-hook'."
+  (run-hooks 'seanmacs/load-theme-hook))
 
-(advice-add #'load-theme :after #'seanmacs/run-after-load-theme-hook)
+(advice-add #'load-theme :after #'seanmacs/run-load-theme-hook)
 
 (use-package modus-operandi-theme
   :straight t
   :config
-
   (setq modus-operandi-theme-distinct-org-blocks t
         modus-operandi-theme-diffs 'desaturated
         modus-operandi-theme-section-headings t
@@ -38,10 +36,10 @@
         modus-operandi-theme-completions 'opinionated)
 
   (setq modus-operandi-theme-override-colors-alist
-        '(("fg-main" . "#26272d")
-          ("bg-main" . "#fcfcfc")
-          ("fg-alt" . "#808080")
-          ("bg-region" . "#dfdfdf")
+        '(("fg-main"       . "#26272d")
+          ("bg-main"       . "#fcfcfc")
+          ("fg-alt"        . "#808080")
+          ("bg-region"     . "#dfdfdf")
           ("fg-whitespace" . "#dadada")
           ("bg-whitespace" . "#fcfcfc")))
 
@@ -70,7 +68,7 @@
        ;; Eshell
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))))
 
-  (add-hook 'seanmacs/after-load-theme-hook 'seanmacs/customize-modus-operandi)
+  (add-hook 'seanmacs/load-theme-hook 'seanmacs/customize-modus-operandi)
   (load-theme 'modus-operandi t))
 
 (provide 'seanmacs-theme)

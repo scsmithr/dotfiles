@@ -17,6 +17,39 @@
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)))
 
+(use-package flimenu
+  :straight t
+  :config
+  (flimenu-global-mode))
+
+(use-package selectrum
+  :straight t
+  :config
+  (setq selectrum-count-style 'current/matches
+        selectrum-fix-minibuffer-height t)
+  ;; Disable since selectrum ordering doesn't match what emacs suggests.
+  (setq suggest-key-bindings nil)
+  (selectrum-mode +1))
+
+(use-package prescient
+  :straight t
+  :config
+  (setq prescient-filter-method '(literal initialism regexp fuzzy)
+        prescient-sort-length-enable nil))
+
+(use-package selectrum-prescient
+  :straight t
+  :config
+  (selectrum-prescient-mode))
+
+(use-package imenu
+  ;; built-in
+  :config)
+
+(use-package xref
+  ;; built-in
+  :config)
+
 (use-package lsp-mode
   :straight t
   :commands lsp

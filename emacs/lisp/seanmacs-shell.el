@@ -17,6 +17,7 @@
     (async-shell-command command buf-name)))
 
 (defun seanmacs/listify-env-vars (env val &rest rest)
+  "Create a list of environment variables and values suitable to use in the shell."
   (let ((list '()))
     (while env
       (let ((s (format "%s=%s" env val)))
@@ -25,6 +26,7 @@
     list))
 
 (defun seanmacs/append-process-environment (env val &rest rest)
+  "Append environment variables to the current environment."
   (append
    (apply 'seanmacs/listify-env-vars env val rest)
    process-environment
@@ -40,7 +42,6 @@
 (use-package eshell
   ;; built-in
   :init
-
   (defun seanmacs/add-eshell-aliases ()
     ;; Shell command aliases. I'd rather not keep track of the eshell
     ;; aliases file.
