@@ -201,8 +201,20 @@ dir. Return nil otherwise."
 (use-package julia-repl
   :straight t
   :defer t
+  :init
+  (defun seanmacs/julia-repl-apropos (search)
+    "Send apropos query to repl."
+    (interactive (list (read-string "Apropos: ")))
+    (julia-repl--send-string (format "apropos(\"%s\")" search)))
   :config
-  (evil-add-command-properties #'julia-repl-edit :jump t))
+  (evil-add-command-properties #'julia-repl-edit :jump t)
+  ;; Remove original doc keybind.
+  (define-key julia-repl-mode-map (kbd "C-c C-d") nil)
+  :bind (:map julia-repl-mode-map
+              ("C-c C-d C-d" . julia-repl-doc)
+              ("C-c C-d d" . julia-repl-doc)
+              ("C-c C-d C-a" . seanmacs/julia-repl-apropos)
+              ("C-c C-d a" . seanmacs/julia-repl-apropos)))
 
 ;; Clojure
 
