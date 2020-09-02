@@ -33,6 +33,7 @@
  ("f.el" . "1814209e2ff43cf2e6d38c4cd476218915f550fb")
  ("flimenu" . "f110bc77415a7594742f3b12551571c4069c9157")
  ("flycheck" . "c02cd773dded0215f9417ec04dfe8dabda63ef43")
+ ("flycheck-golangci-lint" . "8e446c68311048f0b87febf8ef0379e29d358851")
  ("forge" . "639ce512096ae27abbcbac425ced711c4ce572d7")
  ("gcloud.el" . "3d459f2a803a30a5d1f0e1dbc80b0d9c4d590562")
  ("geiser" . "adc5c4ab5ff33cf94cb3fcd892bb9503b5fa2aa2")

@@ -5,15 +5,6 @@
 
 ;;; Code:
 
-;; General keymap rules:
-;; All mode specific keymaps live under the local leader prefix.
-;;
-;; 'o' - Open repl
-;;
-;; 'r' - Rename prefix
-;; 'rn' - Rename symbol
-;; 'rf' - Rename file
-
 ;; Go
 
 (use-package go-mode
@@ -34,6 +25,17 @@
   :bind(:map go-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
              ("C-c r r" . lsp-rename)))
+
+(use-package flycheck-golangci-lint
+  :straight t
+  :defer t
+  :config
+  (setq flycheck-golangci-lint-tests t
+        flycheck-golangci-lint-fast t)
+
+  (with-eval-after-load 'lsp-mode
+    (flycheck-add-next-checker 'lsp 'golangci-lint 'append))
+  :hook ((go-mode . flycheck-golangci-lint-setup)))
 
 ;; Haskell
 
