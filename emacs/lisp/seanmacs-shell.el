@@ -164,7 +164,10 @@
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
   :hook ((eshell-mode . seanmacs/add-eshell-aliases)
-         (eshell-pre-command . seanmacs/eshell-append-history)))
+         (eshell-pre-command . seanmacs/eshell-append-history))
+  :bind (:map eshell-mode-map
+              ;; Defaulted to `eshell-complete-lisp-symbol'.
+              ("M-<tab>" . completion-at-point)))
 
 (use-package shell
   :config)
