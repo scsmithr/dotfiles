@@ -36,12 +36,14 @@
         modus-operandi-theme-completions 'opinionated)
 
   (setq modus-operandi-theme-override-colors-alist
-        '(("fg-main"       . "#26272d")
-          ("bg-main"       . "#fcfcfc")
-          ("fg-alt"        . "#808080")
-          ("bg-region"     . "#dfdfdf")
-          ("fg-whitespace" . "#dadada")
-          ("bg-whitespace" . "#fcfcfc")))
+        '(("fg-main"                 . "#26272d")
+          ("bg-main"                 . "#fcfcfc")
+          ("fg-alt"                  . "#808080")
+          ("bg-region"               . "#dfdfdf")
+          ("fg-whitespace"           . "#dadada")
+          ("bg-whitespace"           . "#fcfcfc")
+          ("fg-window-divider-inner" . "#dadada")
+          ("fg-window-divider-outer" . "#aaaaaa")))
 
   (defun seanmacs/customize-modus-operandi ()
     (modus-operandi-theme-with-color-variables
@@ -59,6 +61,18 @@
        `(whitespace-newline ((t (:foreground ,fg-whitespace))))
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
+       ;; Fringe
+       `(fringe ((t (,@(modus-operandi-theme-fringe bg-inactive bg-active)
+                     :foreground ,fg-alt))))
+       ;; Modeline
+       `(mode-line ((t (
+                        :background ,bg-active
+                        :foreground ,fg-active
+                        :box ,(modus-operandi-theme-modeline-box bg-active fg-window-divider-outer t)))))
+       `(mode-line-inactive ((t (
+                                 :background ,bg-inactive
+                                 :foreground ,fg-inactive
+                                 :box ,(modus-operandi-theme-modeline-box bg-inactive fg-window-divider-inner t)))))
        ;; Extend highlights
        `(mu4e-header-highlight-face ((t (:inherit modus-theme-hl-line :extend t))))
        `(flycheck-error-list-highlight ((t (:inherit modus-theme-hl-line :extend t))))
