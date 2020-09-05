@@ -5,36 +5,37 @@
 
 ;;; Code:
 
-(defgroup modeline nil
+(defgroup seanmacs/modeline nil
   "A minimal modeline configuration inspired by doom-modeline."
   :group 'modeline)
 
-(defface modeline-status-mode
+(defface seanmacs/modeline-status-mode
   `((t (:inherit (font-lock-keyword-face))))
   "Face used for mode indicators in the modeline."
-  :group 'modeline)
+  :group 'seanmacs/modeline)
 
-(defface modeline-status-vc
+(defface seanmacs/modeline-status-vc
   `((t (:inherit (font-lock-builtin-face))))
   "Face used for vc indicators in the modeline."
-  :group 'modeline)
+  :group 'seanmacs/modeline)
 
-(defface modeline-status-success
+(defface seanmacs/modeline-status-success
   `((t (:inherit (success))))
   "Face used for success status indicators in the modeline."
-  :group 'modeline)
+  :group 'seanmacs/modeline)
 
-(defface modeline-status-warning
+(defface seanmacs/modeline-status-warning
   '((t (:inherit (warning))))
   "Face for warning status indicators in the modeline."
-  :group 'modeline)
+  :group 'seanmacs/modeline)
 
-(defface modeline-status-error
+(defface seanmacs/modeline-status-error
   '((t (:inherit (error))))
   "Face for error stauts indicators in the modeline."
-  :group 'modeline)
+  :group 'seanmacs/modeline)
 
-(defun modeline-format (left right)
+(defun seanmacs/modeline-format (left right)
+  "Format the modeling, aligning LEFT and RIGHT."
   (let ((reserve (length right)))
     (when (and (display-graphic-p) (eq 'right (get-scroll-bar-mode)))
       (setq reserve (- reserve 3)))
@@ -46,29 +47,28 @@
      right)))
 
 ;; Window update function
-(defvar-local modeline--current-window (frame-selected-window))
-(defun modeline--update-selected-window (&rest _)
-  "Update the `modeline--current-window' variable."
+(defvar-local seanmacs/modeline-current-window (frame-selected-window))
+(defun seanmacs/modeline-update-selected-window (&rest _)
+  "Update the `seanmacs/modeline-current-window' variable."
   (when (frame-selected-window)
     (let ((win (frame-selected-window)))
       (unless (minibuffer-window-active-p win)
-        (setq modeline--current-window win)))))
+        (setq seanmacs/modeline-current-window win)))))
 
 ;; VC update function
-(defvar-local modeline--vc-text nil)
-(defun modeline--update-vc-segment (&rest _)
-  "Update `modeline--vc-text' against the current VCS state."
-  (setq modeline--vc-text
+(defvar-local seanmacs/modeline-vc-text nil)
+(defun seanmacs/modeline-update-vc-segment (&rest _)
+  "Update `seanmacs/modeline-vc-text' against the current VCS state."
+  (setq seanmacs/modeline-vc-text
         (when (and vc-mode buffer-file-name)
-          (let ((backend (vc-backend buffer-file-name))
-                (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
+          (let ((backend (vc-backend buffer-file-name)))
             (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))))))
 
 ;; Flycheck update function
-(defvar-local modeline--flycheck-text nil)
-(defun modeline--update-flycheck-segment (&optional status)
-  "Update `modeline--flycheck-text' against the reported flycheck STATUS."
-  (setq modeline--flycheck-text
+(defvar-local seanmacs/modeline-flycheck-text nil)
+(defun seanmacs/modeline-update-flycheck-segment (&optional status)
+  "Update `seanmacs/modeline-flycheck-text' against the reported flycheck STATUS."
+  (setq seanmacs/modeline-flycheck-text
         (pcase status
           (`finished (let-alist (flycheck-count-errors flycheck-current-errors)
                        (let ((error (or .error 0))
@@ -76,20 +76,20 @@
                              (info (or .info 0)))
                          (format "%s/%s/%s "
                                  (if (> error 0)
-                                     (propertize (number-to-string error) 'face 'modeline-status-error)
+                                     (propertize (number-to-string error) 'face 'seanmacs/modeline-status-error)
                                    (number-to-string error))
                                  (if (> warning 0)
-                                     (propertize (number-to-string warning) 'face 'modeline-status-warning)
+                                     (propertize (number-to-string warning) 'face 'seanmacs/modeline-status-warning)
                                    (number-to-string warning))
                                  (if (> info 0)
-                                     (propertize (number-to-string info) 'face 'modeline-status-success)
+                                     (propertize (number-to-string info) 'face 'seanmacs/modeline-status-success)
                                    (number-to-string info))))))
           ('running "-/-/- ")
           ('no-checker "")
-          ('errored (propertize "!!! " 'face 'modeline-status-error))
+          ('errored (propertize "!!! " 'face 'seanmacs/modeline-status-error))
           ('interrupted "--- "))))
 
-(defun modeline-segment-modified-or-readonly ()
+(defun seanmacs/modeline-segment-modified-or-readonly ()
   "Displays a color-coded buffer modification or readonly
 indicator in the modeline."
   (cond (buffer-read-only
@@ -98,105 +98,110 @@ indicator in the modeline."
          "U ")
         (t "  ")))
 
-(defun modeline-segment-buffer-name ()
+(defun seanmacs/modeline-segment-buffer-name ()
   "Displays the name of the current buffer in the modeline."
   (propertize "%b " 'face 'mode-line-buffer-id))
 
-(defun modeline-segment-dir ()
+(defun seanmacs/modeline-segment-dir ()
   "Display shortened working directory."
   (when default-directory
     (shrink-path-dirs default-directory)))
 
-(defun modeline-segment-position ()
+(defun seanmacs/modeline-segment-position ()
   "Displays the current cursor position in the modeline."
   (let ((fmt-string " %3l:%2c "))
     fmt-string))
 
-(defun modeline-segment-buffer-percent ()
+(defun seanmacs/modeline-segment-buffer-percent ()
   "Displays the percentage of buffer above current point."
   (let ((fmt-string "%p%% "))
     fmt-string))
 
-(defun modeline-segment-vc ()
+(defun seanmacs/modeline-segment-vc ()
   "Displays color-coded version control information in the modeline."
-  (when modeline--vc-text
-    (propertize modeline--vc-text 'face 'modeline-status-vc)))
+  (when seanmacs/modeline-vc-text
+    (propertize seanmacs/modeline-vc-text 'face 'seanmacs/modeline-status-vc)))
 
-(defun modeline-segment-major-mode ()
+(defun seanmacs/modeline-segment-major-mode ()
   "Displays the current major mode in the modeline."
-  (propertize " %m" 'face 'modeline-status-mode))
+  (propertize " %m" 'face 'seanmacs/modeline-status-mode))
 
-(defun modeline-segment-flycheck ()
+(defun seanmacs/modeline-segment-flycheck ()
   "Displays color-coded flycheck information in the modeline (if available)."
-  modeline--flycheck-text)
+  seanmacs/modeline-flycheck-text)
 
-(defun modeline-segment-process ()
+(defun seanmacs/modeline-segment-process ()
   "Displays the current value of `mode-line-process' in the modeline."
   (when mode-line-process
     (list mode-line-process)))
 
+(defvar seanmacs/modeline-default-modeline nil
+  "Holds the original modeline format.")
+
 ;;;###autoload
 (define-minor-mode seanmacs/modeline-mode
   "Toggle modeline on or off."
-  :group 'modeline
+  :group 'seanmacs/modeline
   :global t
   :lighter nil
   (if seanmacs/modeline-mode
       (progn
+        ;; Store original modeline format.
+        (setq seanmacs/modeline-default-modeline mode-line-format)
 
         ;; Setup flycheck hooks
-        (add-hook 'flycheck-status-changed-functions #'modeline--update-flycheck-segment)
-        (add-hook 'flycheck-mode-hook #'modeline--update-flycheck-segment)
+        (add-hook 'flycheck-status-changed-functions #'seanmacs/modeline-update-flycheck-segment)
+        (add-hook 'flycheck-mode-hook #'seanmacs/modeline-update-flycheck-segment)
 
         ;; Setup VC hooks
-        (add-hook 'find-file-hook #'modeline--update-vc-segment)
-        (add-hook 'after-save-hook #'modeline--update-vc-segment)
-        (advice-add #'vc-refresh-state :after #'modeline--update-vc-segment)
+        (add-hook 'find-file-hook #'seanmacs/modeline-update-vc-segment)
+        (add-hook 'after-save-hook #'seanmacs/modeline-update-vc-segment)
+        (advice-add #'vc-refresh-state :after #'seanmacs/modeline-update-vc-segment)
 
         ;; Setup window update hooks
-        (add-hook 'window-configuration-change-hook #'modeline--update-selected-window)
-        (add-hook 'focus-in-hook #'modeline--update-selected-window)
-        (advice-add #'handle-switch-frame :after #'modeline--update-selected-window)
-        (advice-add #'select-window :after #'modeline--update-selected-window)
+        (add-hook 'window-configuration-change-hook #'seanmacs/modeline-update-selected-window)
+        (add-hook 'focus-in-hook #'seanmacs/modeline-update-selected-window)
+        (advice-add #'handle-switch-frame :after #'seanmacs/modeline-update-selected-window)
+        (advice-add #'select-window :after #'seanmacs/modeline-update-selected-window)
 
         ;; Set the new modeline-format
         (setq-default mode-line-format
                       '((:eval
-                         (modeline-format
+                         (seanmacs/modeline-format
                           ;; Left
                           (format-mode-line
-                           '((:eval (modeline-segment-position))
-                             (:eval (modeline-segment-modified-or-readonly))
-                             (:eval (modeline-segment-dir))
-                             (:eval (modeline-segment-buffer-name))
-                             (:eval (modeline-segment-buffer-percent))))
+                           '((:eval (seanmacs/modeline-segment-position))
+                             (:eval (seanmacs/modeline-segment-modified-or-readonly))
+                             (:eval (seanmacs/modeline-segment-dir))
+                             (:eval (seanmacs/modeline-segment-buffer-name))
+                             (:eval (seanmacs/modeline-segment-buffer-percent))))
 
                           ;; Right
                           (format-mode-line
-                           '((:eval (modeline-segment-flycheck))
-                             (:eval (modeline-segment-vc))
-                             (:eval (modeline-segment-major-mode))
-                             (:eval (modeline-segment-process))
+                           '((:eval (seanmacs/modeline-segment-flycheck))
+                             (:eval (seanmacs/modeline-segment-vc))
+                             (:eval (seanmacs/modeline-segment-major-mode))
+                             (:eval (seanmacs/modeline-segment-process))
                              " ")))))))
     (progn
 
       ;; Remove flycheck hooks
-      (remove-hook 'flycheck-status-changed-functions #'modeline--update-flycheck-segment)
-      (remove-hook 'flycheck-mode-hook #'modeline--update-flycheck-segment)
+      (remove-hook 'flycheck-status-changed-functions #'seanmacs/modeline-update-flycheck-segment)
+      (remove-hook 'flycheck-mode-hook #'seanmacs/modeline-update-flycheck-segment)
 
       ;; Remove VC hooks
-      (remove-hook 'file-find-hook #'modeline--update-vc-segment)
-      (remove-hook 'after-save-hook #'modeline--update-vc-segment)
-      (advice-remove #'vc-refresh-state #'modeline--update-vc-segment)
+      (remove-hook 'file-find-hook #'seanmacs/modeline-update-vc-segment)
+      (remove-hook 'after-save-hook #'seanmacs/modeline-update-vc-segment)
+      (advice-remove #'vc-refresh-state #'seanmacs/modeline-update-vc-segment)
 
       ;; Remove window update hooks
-      (remove-hook 'window-configuration-change-hook #'modeline--update-selected-window)
-      (remove-hook 'focus-in-hook #'modeline--update-selected-window)
-      (advice-remove #'handle-switch-frame #'modeline--update-selected-window)
-      (advice-remove #'select-window #'modeline--update-selected-window)
+      (remove-hook 'window-configuration-change-hook #'seanmacs/modeline-update-selected-window)
+      (remove-hook 'focus-in-hook #'seanmacs/modeline-update-selected-window)
+      (advice-remove #'handle-switch-frame #'seanmacs/modeline-update-selected-window)
+      (advice-remove #'select-window #'seanmacs/modeline-update-selected-window)
 
       ;; Restore the original modeline format
-      (setq-default modeline-format modeline--default-modeline))))
+      (setq-default mode-line-format seanmacs/modeline-default-modeline))))
 
 (provide 'seanmacs-modeline)
 ;;; seanmacs-modeline.el ends here
