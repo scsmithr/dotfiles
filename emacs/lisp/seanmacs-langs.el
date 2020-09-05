@@ -208,10 +208,27 @@ dir. Return nil otherwise."
     "Send apropos query to repl."
     (interactive (list (read-string "Apropos: ")))
     (julia-repl--send-string (format "apropos(\"%s\")" search)))
+
+  (defun seanmacs/flush-empty-lines ()
+    "Delete empty lines after point.
+
+Term mode seems to add a newline after every input in line mode."
+    (interactive)
+    (flush-lines "^$"))
+
+  (defun seanmacs/julia-repl-set-term-scroll ()
+    "Sets term scroll to nil.
+
+This is a workaround to avoid seeing all of the empty lines in
+the repl. (See https://github.com/tpapp/julia-repl/issues/79)"
+    (setq-local term-scroll-show-maximum-output nil))
+
   :config
   (evil-add-command-properties #'julia-repl-edit :jump t)
   ;; Remove original doc keybind.
   (define-key julia-repl-mode-map (kbd "C-c C-d") nil)
+
+  :hook ((julia-repl . seanmacs/julia-repl-set-term-scroll))
   :bind (:map julia-repl-mode-map
               ("C-c C-d C-d" . julia-repl-doc)
               ("C-c C-d d" . julia-repl-doc)
