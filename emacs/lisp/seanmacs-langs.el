@@ -223,6 +223,14 @@ This is a workaround to avoid seeing all of the empty lines in
 the repl. (See https://github.com/tpapp/julia-repl/issues/79)"
     (setq-local term-scroll-show-maximum-output nil))
 
+  (defun seanmacs/julia-send-paragraph ()
+    "Send the current paragraph to Julia REPL."
+    (interactive)
+    (let ((beg (save-excursion (backward-paragraph) (point)))
+          (end (save-excursion (forward-paragraph) (point))))
+      (julia-repl--send-string
+       (buffer-substring-no-properties beg end))))
+
   :config
   (evil-add-command-properties #'julia-repl-edit :jump t)
   ;; Remove original doc keybind.
