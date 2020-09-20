@@ -64,7 +64,7 @@
  ("nix-mode" . "dc298e77b68296fa76b1b80c825de2a6a3ddc969")
  ("ob-async" . "80a30b96a007d419ece12c976a81804ede340311")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
- ("org" . "05fac0b765509b609556455aca003b36d1f92c33")
+ ("org" . "b64ba64febf0e665a7fa0d03988b2cd1cf371e16")
  ("parseclj" . "b34d3e13a249d4b92f1a008cdc1df20a92f866c5")
  ("parseedn" . "92bf875962e62f8c6370b56991d546f122536c6b")
  ("pkg-info" . "76ba7415480687d05a4353b27fea2ae02b8d9d61")

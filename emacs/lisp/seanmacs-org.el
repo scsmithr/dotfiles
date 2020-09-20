@@ -5,26 +5,43 @@
 
 ;;; Code:
 
+(defvar seanmacs/notes-dir "~/syncthing/notes/"
+  "Directory containging all of my notes (including org files).")
+
 (use-package org
   :straight t
   :config
-  (setq org-default-notes-file "~/syncthing/notes/refile.org"
+  (setq org-agenda-files (list seanmacs/notes-dir)
+        org-agenda-restore-windows-after-quit t
+        org-agenda-span 'week
+        org-agenda-window-setup 'current-window)
+
+  ;; Enable basic movement keys in agenda.
+  (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
+
+  (setq org-default-notes-file (concat seanmacs/notes-dir "refile.org")
         org-refile-targets '((org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path t
         org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
         org-startup-with-inline-images t
         org-hide-leading-stars t
+        ;; I prefer having blank lines between subtrees when unfolded, but
+        ;; no blank lines when folded.
         org-blank-before-new-entry (quote ((heading . always) (plain-list-item . always)))
         org-enforce-todo-dependencies t
         org-imenu-depth 9
-        org-outline-path-complete-in-steps nil
-        org-confirm-babel-evaluate nil
+        org-outline-path-complete-in-steps nil ;; Show entire path when refiling.
+        org-confirm-babel-evaluate nil ;; I trust myself.
         org-fontify-done-headline nil
         org-hide-emphasis-markers nil
-        org-src-window-setup 'current-window)
+        org-src-tab-acts-natively t
+        ;; Keep layout, just use different window than current. Useful to see
+        ;; both the org buffer and the source at the same time.
+        org-src-window-setup 'other-window)
 
-  (plist-put org-format-latex-options :scale 1.4)
+  ;; Embedded latex images are a bit small by default.
+  (plist-put org-format-latex-options :scale 1.7)
 
   (setq org-capture-templates
         `(
@@ -40,19 +57,7 @@
   :bind (:map org-mode-map
               ("C-c t" . org-toggle-narrow-to-subtree)))
 
-(use-package org-agenda
-  :defer t
-  :config
-  (setq org-agenda-files (list "~/syncthing/notes/")
-        org-agenda-restore-windows-after-quit t
-        org-agenda-span 'fortnight
-        org-agenda-window-setup 'current-window)
-  :bind (:map org-agenda-mode-map
-              ("j" . evil-next-line)
-              ("k" . evil-previous-line)))
-
 (use-package ob
-  ;; built-in
   :after (org ob-http gnuplot ob-async)
   :config
 
