@@ -204,17 +204,28 @@ dir. Return nil otherwise."
   :straight t
   :defer t
   :init
+  (defvar seanmacs/julia-send-repl-hook nil
+    "Hook to run after sending to julia repl.")
+
+  (defun seanmacs/run-julia-send-repl-hook (&rest _)
+    "Run `seanmacs/julia-send-repl-hook'."
+    (run-hooks 'seanmacs/julia-send-repl-hook))
+
+  (advice-add #'julia-repl--send-string :after #'seanmacs/run-julia-send-repl-hook)
+
   (defun seanmacs/julia-repl-apropos (search)
     "Send apropos query to repl."
     (interactive (list (read-string "Apropos: ")))
     (julia-repl--send-string (format "apropos(\"%s\")" search)))
 
-  (defun seanmacs/flush-empty-lines ()
+  (defun seanmacs/julia-repl-flush-empty-lines ()
     "Delete empty lines after point.
 
 Term mode seems to add a newline after every input in line mode."
     (interactive)
-    (flush-lines "^$"))
+    (let ((inferior-buffer (julia-repl-inferior-buffer)))
+      (with-current-buffer inferior-buffer
+        (flush-lines "^$"))))
 
   (defun seanmacs/julia-repl-set-term-scroll ()
     "Sets term scroll to nil.
@@ -235,6 +246,9 @@ the repl. (See https://github.com/tpapp/julia-repl/issues/79)"
   (evil-add-command-properties #'julia-repl-edit :jump t)
   ;; Remove original doc keybind.
   (define-key julia-repl-mode-map (kbd "C-c C-d") nil)
+
+  ;; Flush empty lines after sending stuff to repl.
+  (add-hook 'seanmacs/julia-send-repl-hook 'seanmacs/julia-repl-flush-empty-lines)
 
   :hook ((julia-repl . seanmacs/julia-repl-set-term-scroll))
   :bind (:map julia-repl-mode-map
