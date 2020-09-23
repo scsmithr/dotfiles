@@ -30,6 +30,7 @@
   (setq modus-operandi-theme-distinct-org-blocks t
         modus-operandi-theme-diffs 'desaturated
         modus-operandi-theme-section-headings nil
+        modus-operandi-theme-scale-headings nil
         modus-operandi-theme-rainbow-headings t
         modus-operandi-theme-org-blocks 'greyscale
         modus-operandi-theme-fringes 'subtle

@@ -40,8 +40,8 @@
         ;; both the org buffer and the source at the same time.
         org-src-window-setup 'other-window)
 
-  ;; Embedded latex images are a bit small by default.
-  (plist-put org-format-latex-options :scale 1.7)
+  (setq org-todo-keywords
+        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
 
   (setq org-capture-templates
         `(
@@ -52,8 +52,14 @@
            (file ,(concat org-template-directory "/task"))
            :empty-lines 1)))
 
-  (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
+  ;; Keep track when I reschedule or complete things.
+  (setq org-log-done 'time
+        org-log-redeadline 'time
+        org-log-reschedule 'time)
+
+  ;; Embedded latex images are a bit small by default.
+  (plist-put org-format-latex-options :scale 1.7)
+
   :bind (:map org-mode-map
               ("C-c t" . org-toggle-narrow-to-subtree)))
 
