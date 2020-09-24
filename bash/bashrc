@@ -21,10 +21,6 @@ export PATH=$PATH:$HOME/.cargo/bin
 
 export PATH=$PATH:$HOME/.elan/bin
 
-# Prefer bins managed by ghcup over system bins. System bins still there for xmonad, I
-# don't want to try to fix that right now.
-export PATH=$HOME/.ghcup/bin:$PATH
-
 alias mm='xmodmap ~/.xmodmap'
 
 alias red="redshift -x && redshift -O"
