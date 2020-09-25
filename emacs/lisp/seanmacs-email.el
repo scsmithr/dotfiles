@@ -1,4 +1,4 @@
-;;; orgmode.el --- Email -*- lexical-binding: t; -*-
+;;; seanmacs-email.el --- Email -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Email configuration.
@@ -12,24 +12,29 @@
   (setq user-full-name "Sean Smith"
         mu4e-maildir "~/.mail"
         mu4e-attachment-dir "~/.mail/.attachments"
-        mu4e-get-mail-command "mbsync -a"
         mu4e-change-filenames-when-moving t)
 
+  (setq mu4e-get-mail-command "true" ;; Mail already retrieved by systemd unit.
+        mu4e-update-interval (* 60 15)) ;; Reindex every 15 minutes.
+
+  ;; Prefer plaintext.
+  (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
 
   ;; Gmail specific things.
   ;; This is mostly taken from Doom emacs.
   (setq mu4e-sent-messages-behavior 'delete
         mu4e-index-cleanup nil
-        mu4e-index-lazy-check t
-        mu4e-compose-format-flowed t
-        fill-flowed-display-column 72)
+        mu4e-index-lazy-check t)
+
+  (setq mu4e-completing-read-function 'completing-read)
 
   (setq mu4e-use-fancy-chars nil
+        mu4e-headers-thread-blank-prefix '("  " . " ")
         mu4e-headers-thread-child-prefix '("|>" . " ")
-        mu4e-headers-thread-last-child-prefix '("|>" . " ")
+        mu4e-headers-thread-last-child-prefix '("->" . " ")
         mu4e-headers-thread-connection-prefix '("| " . " ")
-        mu4e-headers-thread-orphan-prefix '("| " . " ")
-        mu4e-headers-thread-single-orphan-prefix '("|>" . " ")
+        mu4e-headers-thread-orphan-prefix '("|>" . " ")
+        mu4e-headers-thread-single-orphan-prefix '("->" . " ")
         mu4e-headers-thread-duplicate-prefix '("=" . " "))
 
   (setq smtpmail-stream-type 'starttls
@@ -38,7 +43,32 @@
   (setq message-kill-buffer-on-exit t)
 
   (setq mu4e-maildir-shortcuts '(("/personal/INBOX" . ?p)
-                                 ("/work/INBOX" . ?w)))
+                                 ("/work/INBOX"     . ?w)))
+
+  (setq mu4e-bookmarks
+        '(("flag:unread AND NOT flag:trashed" "Unread messages"  ?u)
+          ("date:today..now"                  "Today's messages" ?t)
+          ("subject:cdr or from:coder.com"    "Coder messages"   ?c)))
+
+  ;; Remove mailing list, add account.
+  (setq mu4e-headers-fields
+        '((:account    . 10)
+          (:human-date . 12)
+          (:flags      . 4)
+          (:from       . 22)
+          (:subject    . nil)))
+
+  ;; Add a column to display what email account the email belongs to.
+  ;; Taken from Doom Emacs.
+  (add-to-list 'mu4e-header-info-custom
+               '(:account
+                 :name "Account"
+                 :shortname "Account"
+                 :help "Which account this email belongs to"
+                 :function
+                 (lambda (msg)
+                   (let ((maildir (mu4e-message-field msg :maildir)))
+                     (format "%s" (substring maildir 1 (string-match-p "/" maildir 1)))))))
 
   (defun gmail-fix-flags (mark msg)
     (pcase mark
@@ -91,8 +121,9 @@
                        (smtpmail-smtp-service . 25)
                        (user-mail-address . "sean@coder.com"))
                      t)
+
+  :hook ((mu4e-compose-mode . turn-off-auto-fill))
   :bind (:map mu4e-headers-mode-map
-              ("C-c u" . mu4e-update-mail-and-index)
               ("C-c r" . mu4e-update-index)))
 
 (provide 'seanmacs-email)
