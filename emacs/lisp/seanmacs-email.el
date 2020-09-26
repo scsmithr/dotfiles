@@ -122,7 +122,8 @@
                        (user-mail-address . "sean@coder.com"))
                      t)
 
-  :hook ((mu4e-compose-mode . turn-off-auto-fill))
+  :hook ((mu4e-compose-mode . turn-off-auto-fill)
+         (mu4e-compose-mode . flyspell-mode))
   :bind (:map mu4e-headers-mode-map
               ("C-c r" . mu4e-update-index)))
 

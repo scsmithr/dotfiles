@@ -42,7 +42,9 @@
 ;; Org
 (seanmacs/leader
  "x x" 'org-capture
+ "x a" 'org-agenda
  "x l" 'org-agenda-list
+ "x t" 'org-todo-list
  "x s" 'org-search-view)
 
 ;; Magit

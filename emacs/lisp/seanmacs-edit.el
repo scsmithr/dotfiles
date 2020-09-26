@@ -122,6 +122,7 @@
                      (mode . term-mode)
                      (mode . shell-mode)))
            ("dired" (mode . dired-mode))
+           ("email" (name . "\*mu4e"))
            ("scratch" (name . "\*scratch"))
            ("special" (name . "\*"))
            ("version control" (or
