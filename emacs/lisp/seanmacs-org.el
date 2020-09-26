@@ -13,7 +13,7 @@
   :config
   (setq org-agenda-files (list seanmacs/notes-dir)
         org-agenda-restore-windows-after-quit t
-        org-agenda-span 'week
+        org-agenda-span 3
         org-agenda-window-setup 'current-window)
 
   ;; Enable basic movement keys in agenda.
@@ -43,6 +43,10 @@
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
 
+  (setq org-priority-highest ?A
+        org-priority-lowest ?C
+        org-priority-default ?C)
+
   (setq org-capture-templates
         `(
           ("n" "Note" entry (file+headline "" "Notes")
@@ -60,6 +64,7 @@
   ;; Embedded latex images are a bit small by default.
   (plist-put org-format-latex-options :scale 1.7)
 
+  :hook ((org-capture-mode . evil-insert-state))
   :bind (:map org-mode-map
               ("C-c t" . org-toggle-narrow-to-subtree)))
 
