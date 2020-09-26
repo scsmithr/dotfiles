@@ -64,7 +64,7 @@
               ("C-c t" . org-toggle-narrow-to-subtree)))
 
 (use-package ob
-  :after (org ob-http gnuplot ob-async)
+  :after (org ob-http ob-go gnuplot ob-async)
   :config
 
   (org-babel-do-load-languages
@@ -79,6 +79,7 @@
      (gnuplot    . t)
      (calc       . t)
      (sql        . t)
+     (go         . t)
      (python     . t)))
   :hook ((org-babel-after-execute . org-display-inline-images)))
 
@@ -86,6 +87,9 @@
   :straight t)
 
 (use-package gnuplot
+  :straight t)
+
+(use-package ob-go
   :straight t)
 
 (use-package ob-async
