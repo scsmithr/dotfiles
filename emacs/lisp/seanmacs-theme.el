@@ -13,7 +13,7 @@
 
 ;; Set fonts.
 (add-to-list 'default-frame-alist `(font . "Fira Mono-11"))
-(face-attr 'variable-pitch :weight 'light :family "Fira Sans-11")
+(face-attr 'variable-pitch :weight 'light :family "Fira Sans")
 
 (defvar seanmacs/load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
