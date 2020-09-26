@@ -20,6 +20,19 @@
         gofmt-args '("-local=go.coder.com"))
   (evil-collection-define-key 'normal 'go-mode-map
     "gd" 'lsp-find-definition)
+
+  ;; Running golangci-lint can be slow. Enable on demand.
+  (defun sm/enable-golangci ()
+    "Enable golangci-lint flycheck checker."
+    (interactive)
+    (flycheck-golangci-lint-setup)
+    (flycheck-add-next-checker 'lsp 'golangci-lint 'append))
+
+  (defun sm/disable-golangci ()
+    "Disable golangci-lint flycheck checker."
+    (interactive)
+    (flycheck-remove-next-checker 'lsp 'golangci-lint))
+
   :hook ((go-mode . lsp)
          (before-save . seanmacs/gofmt-before-save))
   :bind(:map go-mode-map
@@ -29,13 +42,10 @@
 (use-package flycheck-golangci-lint
   :straight t
   :defer t
+  :commands flycheck-golangci-lint-setup
   :config
   (setq flycheck-golangci-lint-tests t
-        flycheck-golangci-lint-fast t)
-
-  (with-eval-after-load 'lsp-mode
-    (flycheck-add-next-checker 'lsp 'golangci-lint 'append))
-  :hook ((go-mode . flycheck-golangci-lint-setup)))
+        flycheck-golangci-lint-fast t))
 
 ;; Haskell
 
