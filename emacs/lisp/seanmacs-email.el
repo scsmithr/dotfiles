@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package mu4e
+  ;; Provided by mu system package.
   :commands (mu4e)
   :config
   ;; General configuration with mbsync.
@@ -126,6 +127,10 @@
          (mu4e-compose-mode . flyspell-mode))
   :bind (:map mu4e-headers-mode-map
               ("C-c r" . mu4e-update-index)))
+
+(use-package org-mu4e
+  ;; Provided by mu system package.
+  :after mu4e)
 
 (provide 'seanmacs-email)
 ;;; seanmacs-email.el ends here
