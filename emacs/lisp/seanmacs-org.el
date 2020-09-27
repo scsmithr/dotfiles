@@ -14,7 +14,14 @@
   (setq org-agenda-files (list seanmacs/notes-dir)
         org-agenda-restore-windows-after-quit t
         org-agenda-span 3
-        org-agenda-window-setup 'current-window)
+        org-agenda-window-setup 'current-window
+        ;; Default with 'require-timed' removed. I always want to see the time
+        ;; grid for today.
+        org-agenda-time-grid
+        '((daily today)
+          (800 1000 1200 1400 1600 1800 2000)
+          "......"
+          "----------------"))
 
   ;; Enable basic movement keys in agenda.
   (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
