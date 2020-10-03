@@ -49,7 +49,6 @@
  ("json-reformat" . "8eb6668ed447988aea06467ba8f42e1f2178246f")
  ("json-snatcher" . "c4cecc0a5051bd364373aa499c47a1bb7a5ac51c")
  ("julia-emacs" . "b5f5983d2b232c8bba4c5eff75cccdb787c19d98")
- ("julia-repl" . "d073acb6339e99edf77833f82277afd9a076f16a")
  ("kube.el" . "6807b76532ec6deebb60cdc2e93281a1c40ca865")
  ("lean-mode" . "6b4377686128d5c2fb55d8fe61b92a9991d40fbd")
  ("let-alist" . "b299c78897cc307f9d5521927376fbd06a26f123")

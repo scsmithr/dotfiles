@@ -5,6 +5,41 @@
 
 ;;; Code:
 
+;; Utilities for creating repls using comint.
+
+(defun sm/comint-print-and-send (proc str)
+  "Send STR to PROC.  STR will be echoed after the prompt."
+  (let ((lines (split-string str "\n" nil)))
+    (with-current-buffer (process-buffer proc)
+      (mapcar (lambda (line)
+                (goto-char (process-mark proc))
+                (insert-before-markers (concat line "\n"))
+                (move-marker comint-last-input-end (point))
+                (comint-send-string proc (concat line "\n")))
+              lines))))
+
+(defun sm/comint-send-region (proc beg end)
+  "Send the selected region BEG to END to some PROC."
+  (unless (and beg end)
+    (user-error "No region selected"))
+  (let ((region (buffer-substring-no-properties beg end)))
+    (sm/comint-print-and-send proc region)))
+
+(defun sm/comint-send-line (proc)
+  "Send the current line to PROC."
+  (let ((str (thing-at-point 'line t)))
+    (sm/comint-print-and-send proc (string-trim str))))
+
+(defun sm/comint-send-region-or-line (proc)
+  "Send region if active, send the current line otherwise."
+  (if (use-region-p)
+      (sm/comint-send-region proc (region-beginning) (region-end))
+    (sm/comint-send-line proc)))
+
+(defun sm/comint-send-buffer (proc)
+  "Send the contents of the current buffer to PROC."
+  (sm/comint-send-region proc (point-min) (point-max)))
+
 ;; Go
 
 (use-package go-mode
@@ -188,21 +223,10 @@ dir. Return nil otherwise."
 
     (set (make-local-variable 'comint-prompt-regexp) sm/iex-prompt-regex)
     (set (make-local-variable 'comint-prompt-read-only) t)
-    (set (make-local-variable 'comint-input-sender) 'sm/iex-send))
-
-  (defun sm/iex-send (proc str)
-    "Send STR to PROC."
-    (let ((lines (split-string str "\n" nil)))
-      (with-current-buffer (process-buffer proc)
-        (mapcar (lambda (line)
-                  (goto-char (process-mark proc))
-                  (insert-before-markers (concat line "\n"))
-                  (move-marker comint-last-input-end (point))
-                  (comint-send-string proc (concat line "\n")))
-                lines))))
+    (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send))
 
   (defun sm/iex-start-process ()
-    "Start and iex process with an associated buffer, and enable `sm/iex-mode'."
+    "Start a iex process with an associated buffer, and enable `sm/iex-mode'."
     (setq sm/iex-buffer (make-comint "IEx" sm/iex-name nil "-S" "mix"))
     (with-current-buffer sm/iex-buffer
       (sm/iex-mode)))
@@ -216,24 +240,13 @@ Start a new process if not alive."
           (sm/iex-start-process)
           (get-buffer-process sm/iex-buffer))))
 
-  (defun sm/iex-send-line ()
-    "Send the current line to the iex process."
+  (defun sm/iex-send-region-or-line ()
     (interactive)
-    (let ((str (thing-at-point 'line t)))
-      (sm/iex-send (sm/iex-process) (string-trim str))))
-
-  (defun sm/iex-send-region (beg end)
-    "Send the selected region to the iex process."
-    (interactive (list (point) (mark)))
-    (unless (and beg end)
-      (user-error "No region selected"))
-    (let ((region (buffer-substring-no-properties beg end)))
-      (sm/iex-send (sm/iex-process) region)))
+    (sm/comint-send-region-or-line (sm/iex-process)))
 
   (defun sm/iex-send-buffer ()
-    "Send the entire buffer to the iex process."
     (interactive)
-    (sm/iex-send-region (point-min) (point-max)))
+    (sm/comint-send-buffer (sm/iex-process)))
 
   (defun sm/iex-project-run ()
     "Open an iex buffer for a project."
@@ -252,7 +265,7 @@ Start a new process if not alive."
              ("C-c C-d" . lsp-describe-thing-at-point)
              ("C-c r r" . lsp-rename)
              ("C-c C-l" . sm/iex-send-buffer)
-             ("C-c C-c" . sm/iex-send-line)))
+             ("C-c C-c" . sm/iex-send-region-or-line)))
 
 ;; Protobuf
 
@@ -280,64 +293,82 @@ Start a new process if not alive."
 (use-package julia-mode
   :straight t
   :defer t
-  :hook ((julia-mode . julia-repl-mode)))
-
-(use-package julia-repl
-  :straight t
-  :defer t
   :init
-  (defvar seanmacs/julia-send-repl-hook nil
-    "Hook to run after sending to julia repl.")
 
-  (defun seanmacs/run-julia-send-repl-hook (&rest _)
-    "Run `seanmacs/julia-send-repl-hook'."
-    (run-hooks 'seanmacs/julia-send-repl-hook))
+  (defvar sm/julia-name "julia"
+    "Command to run julia repl.")
 
-  (advice-add #'julia-repl--send-string :after #'seanmacs/run-julia-send-repl-hook)
+  (defvar sm/julia-opts '("--color=yes")
+    "Additional options to pass to julia when starting repl.")
 
-  (defun seanmacs/julia-repl-apropos (search)
+  (defvar sm/julia-prompt-regex "^julia>"
+    "Regex to match julia prompt.")
+
+  (defvar sm/julia-buffer nil
+    "Buffer where julia is running.")
+
+  (define-derived-mode sm/julia-mode comint-mode "Julia"
+    "Major mode for running julia."
+
+    (set (make-local-variable 'comint-prompt-regexp) sm/julia-prompt-regex)
+    (set (make-local-variable 'comint-prompt-read-only) t)
+    (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send))
+
+  (defun sm/julia-start-process ()
+    "Start a julia process and enable `sm/julia-mode'"
+    (setq sm/julia-buffer (apply 'make-comint "Julia" sm/julia-name nil sm/julia-opts))
+    (with-current-buffer sm/julia-buffer
+      (sm/julia-mode)))
+
+  (defun sm/julia-process ()
+    "Return the process associated with the julia buffer.
+Start a new process if not alive."
+    (or (if (buffer-live-p sm/julia-buffer)
+            (get-buffer-process sm/julia-buffer))
+        (progn
+          (sm/julia-start-process)
+          (get-buffer-process sm/julia-buffer))))
+
+  (defun sm/julia-send-region-or-line ()
+    (interactive)
+    (sm/comint-send-region-or-line (sm/julia-process)))
+
+  (defun sm/julia-send-buffer ()
+    (interactive)
+    (sm/comint-send-buffer (sm/julia-process)))
+
+  (defun sm/julia-doc ()
+    (interactive)
+    (let* ((sym (thing-at-point 'symbol t))
+           (str (concat "@doc " sym)))
+      (sm/comint-print-and-send (sm/julia-process) str)))
+
+  (defun sm/julia-edit ()
+    (interactive)
+    ;; TODO: Should be getting expression, but line is close enough for now.
+    (let* ((line (thing-at-point 'line t))
+           (str (concat "@edit " line)))
+      (sm/comint-print-and-send (sm/julia-process) str)))
+
+  (defun sm/julia-apropos (search)
     "Send apropos query to repl."
     (interactive (list (read-string "Apropos: ")))
-    (julia-repl--send-string (format "apropos(\"%s\")" search)))
+    (let ((str (format "apropos(\"%s\")" search)))
+      (sm/comint-print-and-send (sm/julia-process) str)))
 
-  (defun seanmacs/julia-repl-flush-empty-lines ()
-    "Delete empty lines after point.
-
-Term mode seems to add a newline after every input in line mode."
+  (defun sm/julia-project-run ()
+    "Open an julia buffer for a project."
     (interactive)
-    (let ((inferior-buffer (julia-repl-inferior-buffer)))
-      (with-current-buffer inferior-buffer
-        (flush-lines "^$"))))
+    (when-let ((default-directory (projectile-project-root)))
+      (pop-to-buffer (process-buffer (sm/julia-process)))))
 
-  (defun seanmacs/julia-repl-set-term-scroll ()
-    "Sets term scroll to nil.
-
-This is a workaround to avoid seeing all of the empty lines in
-the repl. (See https://github.com/tpapp/julia-repl/issues/79)"
-    (setq-local term-scroll-show-maximum-output nil))
-
-  (defun seanmacs/julia-send-paragraph ()
-    "Send the current paragraph to Julia REPL."
-    (interactive)
-    (let ((beg (save-excursion (backward-paragraph) (point)))
-          (end (save-excursion (forward-paragraph) (point))))
-      (julia-repl--send-string
-       (buffer-substring-no-properties beg end))))
-
-  :config
-  (evil-add-command-properties #'julia-repl-edit :jump t)
-  ;; Remove original doc keybind.
-  (define-key julia-repl-mode-map (kbd "C-c C-d") nil)
-
-  ;; Flush empty lines after sending stuff to repl.
-  (add-hook 'seanmacs/julia-send-repl-hook 'seanmacs/julia-repl-flush-empty-lines)
-
-  :hook ((julia-repl . seanmacs/julia-repl-set-term-scroll))
-  :bind (:map julia-repl-mode-map
-              ("C-c C-d C-d" . julia-repl-doc)
-              ("C-c C-d d" . julia-repl-doc)
-              ("C-c C-d C-a" . seanmacs/julia-repl-apropos)
-              ("C-c C-d a" . seanmacs/julia-repl-apropos)))
+  :bind(:map julia-mode-map
+             ("C-c C-l" . sm/julia-send-buffer)
+             ("C-c C-c" . sm/julia-send-region-or-line)
+             ("C-c C-d d" . sm/julia-doc)
+             ("C-c C-d C-d" . sm/julia-doc)
+             ("C-c C-d a" . sm/julia-apropos)
+             ("C-c C-d C-a" . sm/julia-apropos)))
 
 ;; Clojure
 
