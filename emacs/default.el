@@ -1,6 +1,5 @@
 (("Highlight-Indentation-for-Emacs" . "d03803f2c06749c430443a3d24e039cbafc9c58f")
  ("a.el" . "18966975db7110d0aac726be95b593e2fc3d44ed")
- ("alchemist.el" . "6f99367511ae209f8fe2c990779764bbb4ccb6ed")
  ("annalist.el" . "134fa3f0fb91a636a1c005c483516d4b64905a6d")
  ("cargo.el" . "dc9ff35c2861d524ac4d65020c5320eec71acacf")
  ("cider" . "2a0f25b9414d784fcbef3f97995bc847db794599")

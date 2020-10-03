@@ -190,7 +190,8 @@
       (find-name-dired dir pattern)))
   :config
   (setq projectile-completion-system 'default
-        projectile-require-project-root nil)
+        projectile-require-project-root nil
+        projectile-sort-order 'recently-active)
 
   ;; Register project for purescript.
   (projectile-register-project-type 'purs '("spago.dhall")

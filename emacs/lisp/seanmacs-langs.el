@@ -170,17 +170,89 @@ dir. Return nil otherwise."
   :straight t
   :defer t
   :init
-  (defun seanmacs/elixir-format-on-save ()
+  (defun sm/elixir-format-on-save ()
     (when (eq major-mode 'elixir-mode)
       (elixir-format)))
-  :config
-  (evil-add-command-properties #'alchemist-goto-defintion-at-point :jump t)
-  :hook ((elixir-mode . alchemist-mode)
-         (before-save . seanmacs/elixir-format-on-save)))
 
-(use-package alchemist
-  :straight t
-  :defer t)
+  (defvar sm/iex-name "iex"
+    "Command for iex.")
+
+  (defvar sm/iex-prompt-regex "^\\(iex\\|\\.\\.\\.\\)(.+)>"
+    "Regex to match iex prompt.")
+
+  (defvar sm/iex-buffer nil
+    "Buffer where iex is running.")
+
+  (define-derived-mode sm/iex-mode comint-mode "IEx"
+    "Major mode for running iex."
+
+    (set (make-local-variable 'comint-prompt-regexp) sm/iex-prompt-regex)
+    (set (make-local-variable 'comint-prompt-read-only) t)
+    (set (make-local-variable 'comint-input-sender) 'sm/iex-send))
+
+  (defun sm/iex-send (proc str)
+    "Send STR to PROC."
+    (let ((lines (split-string str "\n" nil)))
+      (with-current-buffer (process-buffer proc)
+        (mapcar (lambda (line)
+                  (goto-char (process-mark proc))
+                  (insert-before-markers (concat line "\n"))
+                  (move-marker comint-last-input-end (point))
+                  (comint-send-string proc (concat line "\n")))
+                lines))))
+
+  (defun sm/iex-start-process ()
+    "Start and iex process with an associated buffer, and enable `sm/iex-mode'."
+    (setq sm/iex-buffer (make-comint "IEx" sm/iex-name nil "-S" "mix"))
+    (with-current-buffer sm/iex-buffer
+      (sm/iex-mode)))
+
+  (defun sm/iex-process ()
+    "Return the process associated with the iex buffer.
+Start a new process if not alive."
+    (or (if (buffer-live-p sm/iex-buffer)
+            (get-buffer-process sm/iex-buffer))
+        (progn
+          (sm/iex-start-process)
+          (get-buffer-process sm/iex-buffer))))
+
+  (defun sm/iex-send-line ()
+    "Send the current line to the iex process."
+    (interactive)
+    (let ((str (thing-at-point 'line t)))
+      (sm/iex-send (sm/iex-process) (string-trim str))))
+
+  (defun sm/iex-send-region (beg end)
+    "Send the selected region to the iex process."
+    (interactive (list (point) (mark)))
+    (unless (and beg end)
+      (user-error "No region selected"))
+    (let ((region (buffer-substring-no-properties beg end)))
+      (sm/iex-send (sm/iex-process) region)))
+
+  (defun sm/iex-send-buffer ()
+    "Send the entire buffer to the iex process."
+    (interactive)
+    (sm/iex-send-region (point-min) (point-max)))
+
+  (defun sm/iex-project-run ()
+    "Open an iex buffer for a project."
+    (interactive)
+    (when-let ((default-directory (projectile-project-root)))
+      (pop-to-buffer (process-buffer (sm/iex-process)))))
+
+  :config
+  (setq lsp-clients-elixir-server-executable "elixir-ls")
+
+  (evil-collection-define-key 'normal 'elixir-mode-map
+    "gd" 'lsp-find-definition)
+  :hook ((elixir-mode . lsp)
+         (before-save . sm/elixir-format-on-save))
+  :bind(:map elixir-mode-map
+             ("C-c C-d" . lsp-describe-thing-at-point)
+             ("C-c r r" . lsp-rename)
+             ("C-c C-l" . sm/iex-send-buffer)
+             ("C-c C-c" . sm/iex-send-line)))
 
 ;; Protobuf
 
