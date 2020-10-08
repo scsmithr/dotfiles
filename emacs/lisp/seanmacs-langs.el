@@ -267,6 +267,18 @@ Start a new process if not alive."
              ("C-c C-l" . sm/iex-send-buffer)
              ("C-c C-c" . sm/iex-send-region-or-line)))
 
+;; Erlang
+
+(use-package erlang
+  :straight t
+  :defer t
+  :config
+  (setq erlang-electric-commands
+        '(erlang-electric-comma
+          erlang-electric-semicolon
+          erlang-electric-gt
+          erlang-electric-newline)))
+
 ;; Protobuf
 
 (use-package protobuf-mode

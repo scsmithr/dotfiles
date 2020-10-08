@@ -64,6 +64,7 @@
  ("ob-go" . "2067ed55f4c1d33a43cb3f6948609d240a8915f5")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
  ("org" . "b64ba64febf0e665a7fa0d03988b2cd1cf371e16")
+ ("otp" . "4d1632c9b0b82a51db6a919ea38aab8afc39a9e9")
  ("parseclj" . "b34d3e13a249d4b92f1a008cdc1df20a92f866c5")
  ("parseedn" . "92bf875962e62f8c6370b56991d546f122536c6b")
  ("pkg-info" . "76ba7415480687d05a4353b27fea2ae02b8d9d61")
