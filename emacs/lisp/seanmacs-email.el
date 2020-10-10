@@ -27,7 +27,8 @@
         mu4e-index-cleanup nil
         mu4e-index-lazy-check t)
 
-  (setq mu4e-completing-read-function 'completing-read)
+  (setq mu4e-completing-read-function 'completing-read
+        mu4e-view-show-addresses t)
 
   (setq mu4e-use-fancy-chars nil
         mu4e-headers-thread-blank-prefix '("  " . " ")
@@ -47,9 +48,15 @@
                                  ("/work/INBOX"     . ?w)))
 
   (setq mu4e-bookmarks
-        '(("flag:unread AND NOT flag:trashed" "Unread messages"  ?u)
-          ("date:today..now"                  "Today's messages" ?t)
-          ("subject:cdr or from:coder.com"    "Coder messages"   ?c)))
+        '(("flag:unread"
+           "Unread messages"
+           ?u)
+          ("date:today..now"
+           "Today's messages"
+           ?t)
+          ("subject:cdr or from:coder.com or from:clubhouse.io"
+           "Coder messages"
+           ?c)))
 
   ;; Remove mailing list, add account.
   (setq mu4e-headers-fields
