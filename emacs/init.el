@@ -45,19 +45,16 @@
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
+(use-package seanmacs-theme)
 (use-package seanmacs-keybinds
   :config
   (seanmacs/init-leader))
-(use-package seanmacs-theme)
 (use-package seanmacs-windows)
 (use-package seanmacs-edit)
 (use-package seanmacs-completions)
 (use-package seanmacs-utils)
 (use-package seanmacs-version-control)
 (use-package seanmacs-org)
-(use-package seanmacs-modeline
-  :config
-  (seanmacs/modeline-mode))
 (use-package seanmacs-langs)
 (use-package seanmacs-shell)
 (use-package seanmacs-email)

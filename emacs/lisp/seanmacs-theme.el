@@ -15,6 +15,23 @@
 (add-to-list 'default-frame-alist `(font . "Fira Mono-11"))
 (face-attr 'variable-pitch :weight 'light :family "Fira Sans")
 
+(use-package moody
+  :straight t
+  :config
+  (setq moody-mode-line-height 28)
+
+  (setq x-underline-at-descent-line t)
+
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode))
+
+(use-package minions
+  :straight t
+  :config
+  (setq minions-direct '(flycheck-mode))
+
+  (minions-mode 1))
+
 (defvar seanmacs/load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
 
@@ -27,14 +44,14 @@
 (use-package modus-operandi-theme
   :straight t
   :config
-  (setq modus-operandi-theme-distinct-org-blocks t
+  (setq modus-operandi-theme-links 'faint
         modus-operandi-theme-diffs 'desaturated
+        modus-operandi-theme-mode-line 'moody
         modus-operandi-theme-section-headings nil
         modus-operandi-theme-scale-headings nil
-        modus-operandi-theme-rainbow-headings t
+        modus-operandi-theme-headings nil
         modus-operandi-theme-org-blocks 'greyscale
-        modus-operandi-theme-fringes 'subtle
-        modus-operandi-theme-completions 'opinionated)
+        modus-operandi-theme-fringes 'subtle)
 
   (setq modus-operandi-theme-override-colors-alist
         '(("fg-main"                 . "#26272d")
@@ -65,19 +82,9 @@
        ;; Fringe
        `(fringe ((t (,@(modus-operandi-theme-fringe bg-inactive bg-active)
                      :foreground ,fg-alt))))
-       ;; Modeline
-       `(mode-line ((t (
-                        :background ,bg-active
-                        :foreground ,fg-active
-                        :box ,(modus-operandi-theme-modeline-box bg-active fg-window-divider-outer t)))))
-       `(mode-line-inactive ((t (
-                                 :background ,bg-inactive
-                                 :foreground ,fg-inactive
-                                 :box ,(modus-operandi-theme-modeline-box bg-inactive fg-window-divider-inner t)))))
        ;; Extend highlights
        `(mu4e-header-highlight-face ((t (:inherit modus-theme-hl-line :extend t))))
-       `(flycheck-error-list-highlight ((t (:inherit modus-theme-hl-line :extend t))))
-       ;; Company (mostly matches opinionated completions theming)
+       ;; Company
        `(company-preview ((t (:inherit (modus-theme-nuanced-magenta) :foreground ,magenta))))
        `(company-preview-common ((t (:inherit (modus-theme-nuanced-blue) :foreground ,blue))))
        ;; Eshell
