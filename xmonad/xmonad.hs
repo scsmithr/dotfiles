@@ -34,6 +34,10 @@ import           XMonad.Actions.PhysicalScreens ( viewScreen
                                                 , sendToScreen
                                                 )
 import           XMonad.Actions.CycleWS         ( toggleWS )
+import           XMonad.Actions.FloatSnap       ( snapMove
+                                                , Direction2D(..)
+                                                )
+import           XMonad.Actions.FloatKeys       ( keysResizeWindow )
 import           XMonad.Util.WorkspaceCompare   ( getSortByIndex )
 import           XMonad.Util.Run                ( spawnPipe
                                                 , hPutStrLn
@@ -102,8 +106,24 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
          )
 
     -- floating layer support
-       , ( (modMask, xK_t)
-         , withFocused $ windows . W.sink
+       , ((modMask, xK_t)    , withFocused $ windows . W.sink)
+       , ((modMask, xK_Left) , withFocused $ snapMove L Nothing)
+       , ((modMask, xK_Right), withFocused $ snapMove R Nothing)
+       , ((modMask, xK_Up)   , withFocused $ snapMove U Nothing)
+       , ( (modMask .|. shiftMask, xK_Right)
+         , withFocused $ keysResizeWindow (20, 0) (0, 0)
+         )
+       , ( (modMask .|. shiftMask, xK_Left)
+         , withFocused $ keysResizeWindow (-20, 0) (0, 0)
+         )
+       , ( (modMask .|. shiftMask, xK_Down)
+         , withFocused $ keysResizeWindow (0, 20) (0, 0)
+         )
+       , ( (modMask .|. shiftMask, xK_Up)
+         , withFocused $ keysResizeWindow (0, -20) (0, 0)
+         )
+       , ( (modMask, xK_Down)
+         , withFocused $ snapMove D Nothing
          )
 
     -- increase or decrease number of windows in the master area
