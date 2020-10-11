@@ -11,6 +11,10 @@
 (use-package org
   :straight t
   :config
+  ;; Workaround for fontlocking extending beyond the text of priority cookies.
+  ;; See: https://gitlab.com/protesilaos/modus-themes/-/issues/95
+  (setq org-priority-regexp ".*?\\(\\[#\\([A-Z0-9]+\\)\\]\\) ?")
+
   (setq org-agenda-files (list seanmacs/notes-dir)
         org-agenda-restore-windows-after-quit t
         org-agenda-span 3
