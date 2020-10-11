@@ -11,6 +11,8 @@ import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
                                                 )
 import           XMonad.Hooks.ManageHelpers     ( doCenterFloat
                                                 , isDialog
+                                                , doSideFloat
+                                                , Side(..)
                                                 )
 import           XMonad.Hooks.UrgencyHook       ( NoUrgencyHook(..)
                                                 , withUrgencyHook
@@ -171,6 +173,7 @@ myManageHook = composeAll
   , className =? "feh" --> doCenterFloat
   , className =? "Ristretto" --> doCenterFloat
   , className =? "Thunar" --> doCenterFloat
+  , className =? "gksqt" --> doSideFloat NE
   , isDialog =? True --> doCenterFloat
   ]
 
