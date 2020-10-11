@@ -16,7 +16,7 @@
         mu4e-change-filenames-when-moving t)
 
   (setq mu4e-get-mail-command "true" ;; Mail already retrieved by systemd unit.
-        mu4e-update-interval (* 60 15)) ;; Reindex every 15 minutes.
+        mu4e-update-interval (* 60 5)) ;; Reindex every 5 minutes.
 
   ;; Prefer plaintext.
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
