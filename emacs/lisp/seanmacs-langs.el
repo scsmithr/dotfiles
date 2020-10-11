@@ -313,9 +313,6 @@ Start a new process if not alive."
   (defvar sm/julia-opts '("--color=yes")
     "Additional options to pass to julia when starting repl.")
 
-  (defvar sm/julia-prompt-regex "^julia>"
-    "Regex to match julia prompt.")
-
   (defvar sm/julia-buffer nil
     "Buffer where julia is running.")
 
@@ -325,7 +322,6 @@ Start a new process if not alive."
   (define-derived-mode sm/julia-mode comint-mode "Julia"
     "Major mode for running julia."
 
-    (set (make-local-variable 'comint-prompt-regexp) sm/julia-prompt-regex)
     (set (make-local-variable 'comint-prompt-read-only) t)
     (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send)
 

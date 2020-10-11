@@ -69,7 +69,7 @@
         lsp-ui-sideline-enable nil
         lsp-ui-imenu-enable nil
         lsp-ui-flycheck-enable t)
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+  :hook ((lsp-mode . lsp-ui-mode)))
 
 (provide 'seanmacs-completions)
 ;;; seanmacs-completions.el ends here
