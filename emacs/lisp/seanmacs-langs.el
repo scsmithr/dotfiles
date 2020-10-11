@@ -369,10 +369,11 @@ Start a new process if not alive."
     (let ((str (format "apropos(\"%s\")" search)))
       (sm/comint-print-and-send (sm/julia-process) str)))
 
-  (defun sm/julia-project-run ()
-    "Open an julia buffer for a project."
+  (defun sm/julia-run ()
+    "Open an julia buffer."
     (interactive)
-    (when-let ((default-directory (projectile-project-root)))
+    (let ((default-directory (or (projectile-project-root)
+                                 default-directory)))
       (pop-to-buffer (process-buffer (sm/julia-process)))))
 
   :bind(:map julia-mode-map
