@@ -319,12 +319,17 @@ Start a new process if not alive."
   (defvar sm/julia-buffer nil
     "Buffer where julia is running.")
 
+  (defvar sm/julia-mode-hook nil
+    "Hook for `sm/julia-mode'.")
+
   (define-derived-mode sm/julia-mode comint-mode "Julia"
     "Major mode for running julia."
 
     (set (make-local-variable 'comint-prompt-regexp) sm/julia-prompt-regex)
     (set (make-local-variable 'comint-prompt-read-only) t)
-    (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send))
+    (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send)
+
+    (run-hooks 'sm/julia-mode-hook))
 
   (defun sm/julia-start-process ()
     "Start a julia process and enable `sm/julia-mode'"
