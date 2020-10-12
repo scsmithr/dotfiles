@@ -118,6 +118,11 @@
         evil-shift-round nil
         evil-want-C-u-scroll t
         evil-want-keybinding nil)
+
+  ;; C-i is the same as tab in the terminal.
+  (unless (display-graphic-p)
+    (setq evil-want-C-i-jump nil))
+
   :config
   (evil-mode)
   (evil-update-insert-state-bindings "\C-n" t)

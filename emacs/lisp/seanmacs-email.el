@@ -27,16 +27,21 @@
         mu4e-index-cleanup nil
         mu4e-index-lazy-check t)
 
+  ;; Seems to properly quote in gmail.
+  (setq message-citation-line-format "\nOn %e %B %Y %R, %f wrote:\n"
+        message-citation-line-function 'message-insert-formatted-citation-line)
+
   (setq mu4e-completing-read-function 'completing-read
-        mu4e-view-show-addresses t)
+        mu4e-view-show-addresses t
+        mu4e-compose-dont-reply-to-self t)
 
   (setq mu4e-use-fancy-chars nil
-        mu4e-headers-thread-blank-prefix '("  " . " ")
-        mu4e-headers-thread-child-prefix '("|>" . " ")
-        mu4e-headers-thread-last-child-prefix '("->" . " ")
-        mu4e-headers-thread-connection-prefix '("| " . " ")
-        mu4e-headers-thread-orphan-prefix '("|>" . " ")
-        mu4e-headers-thread-single-orphan-prefix '("->" . " ")
+        mu4e-headers-thread-blank-prefix '("   " . " ")
+        mu4e-headers-thread-child-prefix '("|->" . " ")
+        mu4e-headers-thread-last-child-prefix '("-->" . " ")
+        mu4e-headers-thread-connection-prefix '("|  " . " ")
+        mu4e-headers-thread-orphan-prefix '("+->" . " ")
+        mu4e-headers-thread-single-orphan-prefix '(" ->" . " ")
         mu4e-headers-thread-duplicate-prefix '("=" . " "))
 
   (setq smtpmail-stream-type 'starttls
@@ -87,7 +92,7 @@
   (add-hook 'mu4e-mark-execute-pre-hook #'gmail-fix-flags)
 
   (defun set-email-account (label letvars &optional default-p)
-    (when-let (address (cdr (assq 'user-email-address letvars)))
+    (when-let (address (cdr (assq 'user-mail-address letvars)))
       (add-to-list 'mu4e-user-mail-address-list address))
     (setq mu4e-contexts
           (cl-loop for context in mu4e-contexts
