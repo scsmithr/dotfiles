@@ -55,7 +55,7 @@
 ;; Shell
 (seanmacs/leader
  "s s" 'eshell
- "s n" 'eshell-new
+ "s n" 'sm/eshell-new
  "s p" 'projectile-run-eshell)
 
 ;; Window management
