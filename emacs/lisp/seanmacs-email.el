@@ -135,10 +135,19 @@
                        (user-mail-address . "sean@coder.com"))
                      t)
 
+  (defun sm/mu4e-fetch-and-index ()
+    "Fetch emails and reindex."
+    (interactive)
+    (let ((buf "*mu4e fetch*")
+          (cmd "mbsync -Va"))
+      (async-shell-command cmd buf)
+      (mu4e-update-index)))
+
   :hook ((mu4e-compose-mode . turn-off-auto-fill)
          (mu4e-compose-mode . flyspell-mode))
   :bind (:map mu4e-headers-mode-map
-              ("C-c r" . mu4e-update-index)))
+              ("C-c r" . mu4e-update-index)
+              ("C-c u" . sm/mu4e-fetch-and-index)))
 
 (use-package org-mu4e
   ;; Provided by mu system package.
