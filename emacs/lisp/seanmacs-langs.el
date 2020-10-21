@@ -108,6 +108,7 @@
   :defer t
   :config
   (setq rust-format-on-save t
+        rust-format-show-buffer nil
         lsp-rust-clippy-preference "on")
   :hook ((rust-mode . lsp)
          (rust-mode . cargo-minor-mode))

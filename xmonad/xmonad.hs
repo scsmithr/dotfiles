@@ -233,4 +233,4 @@ myPromptBorderColor = "#26272d"
 -- config vars
 myBorderWidth = 1
 myModMask = mod4Mask
-myWorkspaces = ["def", "email", "web", "dev", "misc"]
+myWorkspaces = ["def", "web", "dev", "misc"]
