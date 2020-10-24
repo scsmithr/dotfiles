@@ -63,6 +63,19 @@ promptConf = def { position            = Bottom
                  , showCompletionOnTab = True
                  }
 
+centerWindow :: Window -> X ()
+centerWindow win = do
+  (_, W.RationalRect x y w h) <- floatLocation win
+  let newH | h > (23 / 24) = h - (1 / 24)
+           | h < (3 / 4)   = (3 / 4)
+           | otherwise     = h
+  let newW | w > (3 / 4) = (3 / 4)
+           | w < (1 / 2) = (1 / 2)
+           | otherwise   = w
+  windows
+    $ W.float win (W.RationalRect ((1 - newW) / 2) ((1 - newH) / 2) newW newH)
+  return ()
+
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
   Map.fromList
     $  [ ((modMask, xK_Return)         , spawn myTerminal)
@@ -106,6 +119,7 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
          )
 
     -- floating layer support
+       , ((modMask, xK_f)    , withFocused centerWindow)
        , ((modMask, xK_t)    , withFocused $ windows . W.sink)
        , ((modMask, xK_Left) , withFocused $ snapMove L Nothing)
        , ((modMask, xK_Right), withFocused $ snapMove R Nothing)
