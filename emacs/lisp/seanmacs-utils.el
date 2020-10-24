@@ -30,9 +30,6 @@
   :straight t
   :defer t)
 
-(use-package dired-subtree
-  :straight t)
-
 (use-package dired-narrow
   :straight t
   :config

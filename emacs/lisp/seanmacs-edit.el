@@ -191,7 +191,8 @@
   :config
   (setq projectile-completion-system 'default
         projectile-require-project-root nil
-        projectile-sort-order 'recently-active)
+        projectile-sort-order 'recently-active
+        projectile-switch-project-action #'projectile-dired)
 
   ;; Register project for purescript.
   (projectile-register-project-type 'purs '("spago.dhall")
