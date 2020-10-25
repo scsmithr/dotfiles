@@ -25,7 +25,16 @@
         '((daily today)
           (800 1000 1200 1400 1600 1800 2000)
           "......"
-          "----------------"))
+          "----------------")
+        ;; Mostly default prefixes. Removes icon strings, and adds breadcrumbs
+        ;; (%b) to the search view.
+        org-agenda-prefix-format
+        '((agenda . " %-12:c%?-12t% s")
+          (todo . " %-12:c")
+          (tags . " %-12:c")
+          (search . " %-12:c %b"))
+        org-agenda-breadcrumbs-separator " > "
+        org-agenda-search-view-always-boolean t)
 
   ;; Enable basic movement keys in agenda.
   (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
