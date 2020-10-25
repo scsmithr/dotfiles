@@ -14,6 +14,7 @@
  ("docker.el" . "3773112eea3fc99704b5ca50c1e9a3db2cb8e4f3")
  ("dockerfile-mode" . "d31f7685ebc5832d957e25070a930aa42984327d")
  ("dtrt-indent" . "50c440c80e0d15303d8ab543bce4c56e9c2bf407")
+ ("elfeed" . "7b2b6fadaa498fef2ba212a50da4a8afa2a5d305")
  ("elpy" . "03a7517ee48204257ae3ca0aa24a370e283d8790")
  ("emacs-async" . "86aef2c38e7d35e8509b7feeee3e989d825eba91")
  ("emacs-ccls" . "b8e2f4d9b5bed5b5e8b387ac8e43eff723120b80")

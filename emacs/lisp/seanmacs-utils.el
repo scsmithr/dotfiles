@@ -9,6 +9,11 @@
 (use-package reformatter
   :straight t)
 
+(use-package shr
+  ;; builtin
+  :config
+  (setq shr-width 80))
+
 (use-package docker
   :straight t
   :defer t
@@ -17,6 +22,111 @@
 (use-package docker-tramp
   :straight t
   :defer t)
+
+(use-package elfeed
+  :straight t
+  :defer t
+  :init
+
+  (defvar sm/arxiv-number-results 100
+    "Number of results to fetch from Arxiv.")
+
+  (defun sm/arxiv-atom-feed (cat &optional tags)
+    "Create an elfeed arxiv feed for CAT. `arxiv' will be added to TAGS."
+    (let ((url (format "http://export.arxiv.org/api/query?search_query=cat:%s&start=0&max_results=%d&sortBy=submittedDate&sortOrder=descending"
+                       cat
+                       sm/arxiv-number-results)))
+      (append (list url 'arxiv) tags)))
+
+  (defun sm/extract-cat-from-atom-arxiv-feed (title)
+    "Return arxiv category from TITLE or nil if title isn't an atom arxiv query."
+    (nth 1
+         (split-string
+          (nth 0
+               (split-string
+                title
+                "&")) "cat:")))
+
+  (defun sm/elfeed-concat-authors (authors-list)
+    "Given AUTHORS-LIST, list of plists; return string of all authors concatenated."
+    (mapconcat
+     (lambda (author) (plist-get author :name))
+     authors-list ", "))
+
+  (defvar sm/elfeed-search-author-min-width 16
+    "Min width to display author column.")
+
+  (defvar sm/elfeed-search-author-max-width 70
+    "Max width to display author column.")
+
+  (setq elfeed-search-title-max-width 100)
+
+  (defun sm/elfeed-print-entry (entry)
+    "Print ENTRY to the buffer."
+    (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
+           (title (or (elfeed-meta entry :title)
+                      (elfeed-entry-title entry) ""))
+           (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+           (feed (elfeed-entry-feed entry))
+           (feed-title
+            (when feed
+              (let ((title (or (elfeed-meta feed :title)
+                               (elfeed-feed-title feed))))
+                ;; Display category instead of entire query if this an arxiv
+                ;; feed. Display original title otherwise.
+                (or (sm/extract-cat-from-atom-arxiv-feed title)
+                    title))))
+           (entry-authors (sm/elfeed-concat-authors
+                           (elfeed-meta entry :authors)))
+           (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
+           (tags-str (mapconcat
+                      (lambda (s) (propertize s 'face
+                                              'elfeed-search-tag-face))
+                      tags ","))
+           (title-width (- (window-width) 10
+                           elfeed-search-trailing-width))
+           (clamped-title-width (elfeed-clamp
+                                 elfeed-search-title-min-width
+                                 title-width
+                                 elfeed-search-title-max-width))
+           (title-column (elfeed-format-column
+                          title clamped-title-width
+                          :left))
+           (authors-width (- (window-width) 60 clamped-title-width))
+           (authors-column (elfeed-format-column
+                            entry-authors (elfeed-clamp
+                                           sm/elfeed-search-author-min-width
+                                           authors-width
+                                           sm/elfeed-search-author-max-width)
+                            :left)))
+      (insert (propertize date 'face 'elfeed-search-date-face) " ")
+      (insert (propertize title-column
+                          'face title-faces 'kbd-help title) " ")
+      (insert (propertize authors-column
+                          'face 'elfeed-search-date-face
+                          'kbd-help entry-authors) " ")
+      (when feed-title
+        (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
+      (when tags
+        (insert "(" tags-str ")"))))
+
+  :config
+  (setq elfeed-db-directory "~/syncthing/elfeed/db"
+        elfeed-search-print-entry-function #'sm/elfeed-print-entry)
+  (setq elfeed-feeds
+        `(
+          ;; Blogs
+          ("https://lexi-lambda.github.io/feeds/all.rss.xml" blog)
+          ("http://dtrace.org/blogs/feed/" blog)
+          ;; Papers
+          ,(sm/arxiv-atom-feed "cs.LG" '(ai))
+          ,(sm/arxiv-atom-feed "cs.AI" '(ai))
+          ,(sm/arxiv-atom-feed "q-bio.NC")
+          ,(sm/arxiv-atom-feed "q-bio.QM")
+          ))
+
+  ;; Update every 8 hours.
+  (run-at-time nil (* 8 60 60) #'elfeed-update))
 
 (use-package restclient
   :straight t)

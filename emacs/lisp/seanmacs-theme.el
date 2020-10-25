@@ -13,7 +13,7 @@
 
 ;; Set fonts.
 (add-to-list 'default-frame-alist `(font . "Fira Mono-11"))
-(face-attr 'variable-pitch :weight 'light :family "Fira Sans")
+(face-attr 'variable-pitch :weight 'light :family "Fira Sans" :height 130)
 
 (use-package moody
   :straight t
