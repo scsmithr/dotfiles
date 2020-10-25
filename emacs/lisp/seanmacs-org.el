@@ -31,6 +31,7 @@
   (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
 
   (setq org-default-notes-file (concat seanmacs/notes-dir "refile.org")
+        org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
         org-refile-targets '((org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path t
         org-template-directory "~/.emacs.d/org-templates"

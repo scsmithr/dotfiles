@@ -24,7 +24,15 @@
 (use-package dired
   :config
   (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
-  :hook ((dired-mode . diredfl-mode)))
+
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "K" 'dired-kill-subdir
+    (kbd "TAB") 'dired-hide-subdir)
+
+  :hook ((dired-mode . diredfl-mode))
+  :bind(:map dired-mode-map
+             ("C-c C-n" . dired-next-subdir)
+             ("C-c C-p" . dired-prev-subdir)))
 
 (use-package diredfl
   :straight t
