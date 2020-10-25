@@ -110,6 +110,26 @@
       (when tags
         (insert "(" tags-str ")"))))
 
+  (defvar sm/arxiv-download-dir "~/syncthing/arxiv/downloads/"
+    "Download directory for papers from arxiv.")
+
+  (defun sm/download-arxiv-paper (entry)
+    "Download associated arxiv pdf from elfeed ENTRY."
+    (interactive (list elfeed-show-entry))
+    (let* ((link (elfeed-entry-link entry))
+           (pdf-link (replace-regexp-in-string
+                      (regexp-quote "abs")
+                      "pdf"
+                      link
+                      nil
+                      'literal)))
+      (mkdir sm/arxiv-download-dir t)
+      (let* ((name (concat (car (last (split-string link "/")))
+                           ".pdf"))
+             (cmd (format "cd %s && curl --silent -L -o %s %s"
+                          sm/arxiv-download-dir name pdf-link)))
+        (shell-command cmd))))
+
   :config
   (setq elfeed-db-directory "~/syncthing/elfeed/db"
         elfeed-search-print-entry-function #'sm/elfeed-print-entry)
@@ -126,7 +146,10 @@
           ))
 
   ;; Update every 8 hours.
-  (run-at-time nil (* 8 60 60) #'elfeed-update))
+  (run-at-time nil (* 8 60 60) #'elfeed-update)
+
+  :bind(:map elfeed-show-mode-map
+             ("C-c d a" . sm/download-arxiv-paper)))
 
 (use-package restclient
   :straight t)
