@@ -61,7 +61,6 @@
  ("melpa" . "a3422f4918992343fcace1a3024be59a5d2ed8e5")
  ("minions" . "36d39bd25ae58d1359d17f99142520339bea5974")
  ("modus-themes" . "3b668380c2b4f297e1a177ef63e826facf92f22b")
- ("moody" . "f6bebfe6fe51b728ebd013b7084becad23cabad3")
  ("nix-mode" . "dc298e77b68296fa76b1b80c825de2a6a3ddc969")
  ("ob-async" . "80a30b96a007d419ece12c976a81804ede340311")
  ("ob-go" . "2067ed55f4c1d33a43cb3f6948609d240a8915f5")

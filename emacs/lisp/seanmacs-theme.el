@@ -15,16 +15,6 @@
 (add-to-list 'default-frame-alist `(font . "Fira Mono-11"))
 (face-attr 'variable-pitch :weight 'light :family "Fira Sans" :height 130)
 
-(use-package moody
-  :straight t
-  :config
-  (setq moody-mode-line-height 28)
-
-  (setq x-underline-at-descent-line t)
-
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
-
 (use-package minions
   :straight t
   :config
@@ -46,12 +36,13 @@
   :config
   (setq modus-operandi-theme-links 'faint
         modus-operandi-theme-diffs 'desaturated
-        modus-operandi-theme-mode-line 'moody
         modus-operandi-theme-section-headings nil
         modus-operandi-theme-scale-headings nil
         modus-operandi-theme-headings nil
         modus-operandi-theme-org-blocks 'greyscale
         modus-operandi-theme-fringes 'subtle)
+
+  (setq x-underline-at-descent-line t)
 
   (setq modus-operandi-theme-override-colors-alist
         '(("fg-main"                 . "#26272d")
