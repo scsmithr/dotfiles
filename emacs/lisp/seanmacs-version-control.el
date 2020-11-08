@@ -14,7 +14,10 @@
 
 (use-package magit
   :straight t
-  :defer t)
+  :defer t
+  :config
+  (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
+  (setq magit-module-sections-nested nil))
 
 (use-package forge
   :straight t
