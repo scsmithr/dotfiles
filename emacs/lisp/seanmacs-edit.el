@@ -202,9 +202,15 @@
 
   (projectile-mode +1))
 
+(use-package deadgrep
+  :straight t)
+
 (use-package ripgrep
   :straight t
-  :after projectile)
+  :after projectile
+  :config
+  (evil-collection-define-key 'normal 'ripgrep-search-mode-map
+    "q" 'quit-window))
 
 (use-package flycheck
   :straight t

@@ -6,6 +6,7 @@
  ("closql" . "c864c1fadfea4a05fff29cb60891b7a32ac88c78")
  ("company-mode" . "d6df27f1652ae56178ce64b9c1022ec90c850e1a")
  ("dash.el" . "0f238a9a466879ee96e5db0482019453718f342d")
+ ("deadgrep" . "baa352b982bded5fbca1ec9c14fec20e78b2089b")
  ("diff-hl" . "2281a89a3ddc6616073da6f190dda08d23b18ba6")
  ("dired-hacks" . "f49a8bbf95f70671a74a24f7f4de453b2686be46")
  ("diredfl" . "83567d00affce66a4e501563eddd0bd436ac48d0")
