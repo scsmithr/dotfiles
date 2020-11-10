@@ -120,17 +120,6 @@
   :straight t
   :defer t)
 
-;; Python
-
-(use-package elpy
-  :straight t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  (defun seanmacs/disable-highlight-indentation ()
-    (highlight-indentation-mode -1))
-  :hook ((elpy-mode . seanmacs/disable-highlight-indentation)))
-
 ;; Typescript
 
 (defun seanmacs/bin-from-node-modules (bin)
