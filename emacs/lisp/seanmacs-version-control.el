@@ -17,7 +17,8 @@
   :defer t
   :config
   (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
-  (setq magit-module-sections-nested nil))
+  (setq magit-module-sections-nested nil
+        magit-section-visibility-indicator '(magit-fringe-bitmap> . magit-fringe-bitmapv)))
 
 (use-package forge
   :straight t
