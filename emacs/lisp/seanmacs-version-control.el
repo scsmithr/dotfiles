@@ -18,6 +18,7 @@
   :config
   (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
   (setq magit-module-sections-nested nil
+        magit-bury-buffer-function 'magit-mode-quit-window
         magit-section-visibility-indicator '(magit-fringe-bitmap> . magit-fringe-bitmapv)))
 
 (use-package forge
