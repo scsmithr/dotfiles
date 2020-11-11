@@ -200,10 +200,27 @@
                                     :test "spago test"
                                     :run "spago run")
 
+  ;; TODO: Figure out how to use bind-keys macro for this.
+  (define-key projectile-command-map (kbd "s d") #'deadgrep)
+
   (projectile-mode +1))
 
 (use-package deadgrep
-  :straight t)
+  :straight t
+  :config
+  (defun sm/deadgrep-change-search ()
+    "Change deadgrep search term."
+    (interactive)
+    (deadgrep--search-term nil))
+
+  (defun sm/deadgrep-change-dir ()
+    "Change deadgrep current search directory."
+    (interactive)
+    (deadgrep--directory nil))
+
+  (evil-collection-define-key 'normal 'deadgrep-mode-map
+    "s" #'sm/deadgrep-change-search
+    "d" #'sm/deadgrep-change-dir))
 
 (use-package ripgrep
   :straight t
