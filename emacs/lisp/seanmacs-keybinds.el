@@ -31,6 +31,7 @@
  "a d" 'docker
  "a g s" 'gcloud-instance-shell
  "a g e" 'gcloud-instance-eshell
+ "a s" 'deadgrep
  "a k" 'kube)
 
 ;; Dired/file management

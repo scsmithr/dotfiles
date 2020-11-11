@@ -40,6 +40,17 @@
   "Send the contents of the current buffer to PROC."
   (sm/comint-send-region proc (point-min) (point-max)))
 
+;; Keybind utilities for use in lang major modes.
+
+(defun sm/set-goto-def-keybind (mode-map fn)
+  "Add the appropriate goto def FN to MODE-MAP."
+  (sm/set-jump-property fn)
+  (evil-collection-define-key 'normal mode-map "gd" fn))
+
+(defun sm/set-jump-property (fn)
+  "Set jump property for FN."
+  (evil-add-command-properties fn :jump t))
+
 ;; Go
 
 (use-package go-mode
@@ -53,8 +64,7 @@
   :config
   (setq gofmt-command "goimports"
         gofmt-args '("-local=go.coder.com"))
-  (evil-collection-define-key 'normal 'go-mode-map
-    "gd" 'lsp-find-definition)
+  (sm/set-goto-def-keybind 'go-mode-map #'lsp-find-definition)
 
   ;; Running golangci-lint can be slow. Enable on demand.
   (defun sm/enable-golangci ()
@@ -90,9 +100,7 @@
   :config
   (setq haskell-stylish-on-save t
         haskell-mode-stylish-haskell-path "brittany")
-  (evil-add-command-properties #'haskell-mode-jump-to-def :jump t)
-  (evil-collection-define-key 'normal 'haskell-mode-map
-    "gd" 'haskell-mode-jump-to-def)
+  (sm/set-goto-def-keybind 'haskell-mode-map #'haskell-mode-jump-to-def)
   :hook ((haskell-mode . interactive-haskell-mode)))
 
 ;; Octave
@@ -164,7 +172,7 @@ dir. Return nil otherwise."
       (tide-setup)
       (tide-hl-identifier-mode +1)
       (prettier-js-mode)
-      (evil-add-command-properties #'tide-jump-to-definition :jump t)
+      (sm/set-jump-property #'tide-jump-to-definition)
       (flycheck-add-mode 'javascript-eslint 'web-mode)
       (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
 
@@ -247,8 +255,8 @@ Start a new process if not alive."
   :config
   (setq lsp-clients-elixir-server-executable "elixir-ls")
 
-  (evil-collection-define-key 'normal 'elixir-mode-map
-    "gd" 'lsp-find-definition)
+  (sm/set-goto-def-keybind 'elixir-mode-map #'lsp-find-definition)
+
   :hook ((elixir-mode . lsp)
          (before-save . sm/elixir-format-on-save))
   :bind(:map elixir-mode-map
@@ -398,7 +406,7 @@ Start a new process if not alive."
   :straight t
   :defer t
   :config
-  (evil-add-command-properties #'cider-find-var :jump t))
+  (sm/set-jump-property #'cider-find-var))
 
 ;; Emacs lisp
 
@@ -460,9 +468,7 @@ Start a new process if not alive."
   :config
   (setq lean-memory-limit 16384
         lean-extra-arguments '("-D class.instance_max_depth=1000"))
-  (evil-add-command-properties #'lean-find-definition :jump t)
-  (evil-collection-define-key 'normal 'lean-mode-map
-    "gd" 'lean-find-definition))
+  (sm/set-goto-def-keybind 'lean-mode-map #'lean-find-definition))
 
 ;; Purescript
 
@@ -476,9 +482,7 @@ Start a new process if not alive."
     :program seanmacs/purescript-formatter
     :args '("-"))
   :config
-  (evil-add-command-properties #'psc-ide-goto-definition :jump t)
-  (evil-collection-define-key 'normal 'purescript-mode-map
-    "gd" 'psc-ide-goto-definition)
+  (sm/set-goto-def-keybind 'purescript-mode-map #'psc-ide-goto-definition)
   :bind(:map purescript-mode-map
              ("C-c C-r r" . psci)
              ("C-c C-r l" . psci/load-current-file!)
