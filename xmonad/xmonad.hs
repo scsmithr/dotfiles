@@ -245,6 +245,6 @@ myUnfocusedBorderColor = "#a6a7ad"
 myPromptBorderColor = "#26272d"
 
 -- config vars
-myBorderWidth = 1
+myBorderWidth = 2
 myModMask = mod4Mask
 myWorkspaces = ["def", "web", "dev", "misc"]

@@ -28,8 +28,8 @@ Inbox ~/.mail/personal/Inbox
 Channel personal
 Master :personal-remote:
 Slave :personal-local:
-# Include everything
-Patterns *
+# Include everything except some folders that create duplicates
+Patterns * ![Gmail]/Important ![Gmail]/All\ Mail
 # Automatically create missing mailboxes, both locally and on the server
 Create Both
 # Save the synchronization state files in the relevant directory
