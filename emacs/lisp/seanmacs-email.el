@@ -120,7 +120,7 @@
                        (mu4e-refile-folder . "/personal/[Gmail]/All Mail")
                        (smtpmail-smtp-user . "scsmithr@gmail.com")
                        (smtpmail-smtp-server . "smtp.gmail.com")
-                       (smtpmail-smtp-service . 25)
+                       (smtpmail-smtp-service . 587)
                        (user-mail-address . "scsmithr@gmail.com"))
                      t)
 
@@ -131,7 +131,7 @@
                        (mu4e-refile-folder . "/work/[Gmail]/All Mail")
                        (smtpmail-smtp-user . "sean@coder.com")
                        (smtpmail-smtp-server . "smtp.gmail.com")
-                       (smtpmail-smtp-service . 25)
+                       (smtpmail-smtp-service . 587)
                        (user-mail-address . "sean@coder.com"))
                      t)
 
