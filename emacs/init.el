@@ -45,6 +45,7 @@
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
+(use-package seanmacs-libs)
 (use-package seanmacs-theme)
 (use-package seanmacs-keybinds
   :config

@@ -40,12 +40,13 @@
 
   (defun sm/extract-cat-from-atom-arxiv-feed (title)
     "Return arxiv category from TITLE or nil if title isn't an atom arxiv query."
-    (nth 1
-         (split-string
-          (nth 0
-               (split-string
-                title
-                "&")) "cat:")))
+    (when (s-contains-p "arxiv" (s-downcase title))
+      (nth 1
+           (split-string
+            (nth 0
+                 (split-string
+                  title
+                  "&")) "cat:"))))
 
   (defun sm/elfeed-concat-authors (authors-list)
     "Given AUTHORS-LIST, list of plists; return string of all authors concatenated."
