@@ -163,11 +163,11 @@ dir. Return nil otherwise."
          ("\\.tsx?\\'" . web-mode)
          ("\\.jsx\\'" . web-mode))
   :init
-  (defun seanmacs/use-node-modules-eslint ()
+  (defun sm/use-node-modules-eslint ()
     (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
       (setq-local flycheck-javascript-eslint-executable eslint)))
 
-  (defun seanmacs/setup-tide ()
+  (defun sm/setup-tide ()
     (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
       (tide-setup)
       (tide-hl-identifier-mode +1)
@@ -176,7 +176,7 @@ dir. Return nil otherwise."
       (flycheck-add-mode 'javascript-eslint 'web-mode)
       (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
 
-  (defun seanmacs/reset-web-mode-offsets ()
+  (defun sm/reset-web-mode-offsets ()
     (dtrt-indent-adapt) ;; Only runs once per buffer, no harm in calling it here.
     (setq-local web-mode-code-indent-offset standard-indent)
     (setq-local web-mode-css-indent-offset standard-indent)
@@ -189,9 +189,9 @@ dir. Return nil otherwise."
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
         web-mode-enable-auto-indentation nil)
-  :hook ((web-mode . seanmacs/setup-tide)
-         (web-mode . seanmacs/use-node-modules-eslint)
-         (web-mode . seanmacs/reset-web-mode-offsets))
+  :hook ((web-mode . sm/setup-tide)
+         (web-mode . sm/use-node-modules-eslint)
+         (web-mode . sm/reset-web-mode-offsets))
   :bind (:map web-mode-map
               ("C-c C-d" . tide-documentation-at-point)
               ("C-c r r" . tide-rename-symbol)

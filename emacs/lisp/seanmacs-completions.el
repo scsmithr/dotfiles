@@ -58,7 +58,8 @@
         lsp-auto-guess-root t
         lsp-eldoc-render-all nil
         lsp-prefer-capf t
-        lsp-response-timeout 2))
+        lsp-response-timeout 2
+        lsp-modeline-code-actions-segments '(count)))
 
 (use-package lsp-ui
   :straight t

@@ -80,11 +80,13 @@
      "    "))
   "  "))
 
+(define loop-wait 5)
+
 (define (print-loop)
   (while #t
     (display (format-status))
     (newline)
-    (sleep 10)))
+    (sleep loop-wait)))
 
 (define (main args)
   (setvbuf (current-output-port) 'none)

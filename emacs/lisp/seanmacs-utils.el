@@ -139,9 +139,12 @@
           ;; Blogs
           ("https://lexi-lambda.github.io/feeds/all.rss.xml" blog)
           ("http://dtrace.org/blogs/feed/" blog)
+          ("http://www.stochasticlifestyle.com/feed/" blog)
+          ("https://www.stephendiehl.com/feed.rss" blog)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
+          ,(sm/arxiv-atom-feed "cs.DC")
           ,(sm/arxiv-atom-feed "q-bio.NC")
           ,(sm/arxiv-atom-feed "q-bio.QM")
           ))

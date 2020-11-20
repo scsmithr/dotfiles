@@ -36,7 +36,7 @@
 ;; Dired/file management
 (seanmacs/leader
  "d d" 'dired-jump
- "d p" 'seanmacs/window-dired-project-left
+ "d p" 'sm/dired-project-sidebar
  "d f" 'find-file)
 
 ;; Org
@@ -60,23 +60,23 @@
 
 ;; Window management
 (seanmacs/leader
- "w w" 'seanmacs/split-window-right
- "w h" 'seanmacs/split-window-below
+ "w w" 'sm/split-window-right
+ "w h" 'sm/split-window-below
  "w H" 'shrink-window-horizontally
  "w L" 'enlarge-window-horizontally
  "w K" 'shrink-window
  "w J" 'enlarge-window
  "w =" 'balance-windows
  "w u" 'winner-undo
- "w p" 'seanmacs/use-some-window
+ "w p" 'sm/use-some-window
  "." 'repeat)
 
 ;; Buffer management
 (seanmacs/leader
- "b r" 'seanmacs/rename-buffer-special
+ "b r" 'sm/rename-buffer-special
  "b v" 'revert-buffer
  "b k" 'kill-this-buffer
- "b i" 'seanmacs/indent-buffer)
+ "b i" 'sm/indent-buffer)
 
 ;; Other
 (seanmacs/leader
@@ -104,7 +104,7 @@
   "Move the cursor to next window in cyclic order, skipping dired sidebar buffers."
   (interactive)
   (select-window (next-window))
-  (when (string-prefix-p "*Dired Side:" (buffer-name))
+  (when (string-prefix-p "*Dired Project:" (buffer-name))
     (select-window (next-window))))
 
 ;; evil

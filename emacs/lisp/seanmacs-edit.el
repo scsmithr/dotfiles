@@ -82,6 +82,13 @@
 ;; Allow erasing entire buffer
 (put 'erase-buffer 'disabled nil)
 
+(defun sm/sudo-edit ()
+  "Open current file in a new buffer with sudo."
+  (interactive)
+  (let ((file (or buffer-file-name
+                  (read-file-name "File: "))))
+    (find-file (concat "/sudo::" file))))
+
 (use-package whitespace
   :config
   (setq whitespace-line-column 80)
@@ -175,6 +182,12 @@
 
 (use-package dtrt-indent
   :straight t
+  :init
+  (defun sm/dtrt-readapt ()
+    "Readapt dtrt indenting."
+    (interactive)
+    (dtrt-indent-undo)
+    (dtrt-indent-adapt))
   :config
   (setq dtrt-indent-min-quality 65.0
         dtrt-indent-min-hard-tab-superiority 180.0)
