@@ -41,8 +41,10 @@
 (use-package diff-hl
   :straight t
   :config
+  (setq diff-hl-draw-borders nil)
   (global-diff-hl-mode)
-  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)))
+  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
+         (magit-pre-refresh . diff-hl-magit-pre-refresh)))
 
 (provide 'seanmacs-version-control)
 ;;; seanmacs-version-control.el ends here

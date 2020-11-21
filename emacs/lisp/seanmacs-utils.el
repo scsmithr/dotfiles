@@ -137,10 +137,12 @@
   (setq elfeed-feeds
         `(
           ;; Blogs
-          ("https://lexi-lambda.github.io/feeds/all.rss.xml" blog)
-          ("http://dtrace.org/blogs/feed/" blog)
-          ("http://www.stochasticlifestyle.com/feed/" blog)
-          ("https://www.stephendiehl.com/feed.rss" blog)
+          ("https://lexi-lambda.github.io/feeds/all.rss.xml" dev blog)
+          ("http://dtrace.org/blogs/feed/" dev blog)
+          ("http://www.stochasticlifestyle.com/feed/" dev sci blog)
+          ("https://www.stephendiehl.com/feed.rss" dev blog)
+          ("https://blog.cryptographyengineering.com/feed/" crypto blog)
+          ("https://marc-b-reynolds.github.io/feed.xml" dev blog math)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
