@@ -20,6 +20,7 @@
  ("emacs-deferred" . "2239671d94b38d92e9b28d4e12fd79814cfb9c16")
  ("emacs-elixir" . "bd417aa41106536d4377e6f338fb20a8000be095")
  ("emacs-psci" . "95fb5d14033add8fe9c8c6b4379758beb88af1d0")
+ ("emacs-undo-fu" . "c0806c1903c5a0e4c69b6615cdc3366470a9b8ca")
  ("emacs-which-key" . "8f2427a69bc0388ddfb14a10eaf71e589f3b0913")
  ("emacsmirror-mirror" . "817b69d1adfff090d39357d13f48d2b53e83978f")
  ("emacsql" . "6d8cd9366284b5a27268ff4b783e2c34573d5b60")

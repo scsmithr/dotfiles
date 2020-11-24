@@ -107,6 +107,9 @@
   (when (string-prefix-p "*Dired Project:" (buffer-name))
     (select-window (next-window))))
 
+(use-package undo-fu
+  :straight t)
+
 ;; evil
 (use-package evil
   :straight t
@@ -117,7 +120,8 @@
         evil-split-window-below t
         evil-shift-round nil
         evil-want-C-u-scroll t
-        evil-want-keybinding nil)
+        evil-want-keybinding nil
+        evil-undo-system 'undo-fu)
 
   ;; C-i is the same as tab in the terminal.
   (unless (display-graphic-p)
