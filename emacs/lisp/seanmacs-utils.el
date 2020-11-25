@@ -17,7 +17,7 @@
 (use-package docker
   :straight t
   :defer t
-  :commands (docker))
+  :bind (("C-c a d" . docker)))
 
 (use-package docker-tramp
   :straight t
@@ -154,8 +154,9 @@
   ;; Update every 8 hours.
   (run-at-time nil (* 8 60 60) #'elfeed-update)
 
-  :bind(:map elfeed-show-mode-map
-             ("C-c d a" . sm/download-arxiv-paper)))
+  :bind(("C-c a e" . elfeed)
+        :map elfeed-show-mode-map
+        ("C-c d a" . sm/download-arxiv-paper)))
 
 (use-package restclient
   :straight t)
@@ -169,9 +170,10 @@
     (kbd "TAB") 'dired-hide-subdir)
 
   :hook ((dired-mode . diredfl-mode))
-  :bind(:map dired-mode-map
-             ("C-c C-n" . dired-next-subdir)
-             ("C-c C-p" . dired-prev-subdir)))
+  :bind(("C-x d" . dired-jump)
+        :map dired-mode-map
+        ("C-c C-n" . dired-next-subdir)
+        ("C-c C-p" . dired-prev-subdir)))
 
 (use-package diredfl
   :straight t

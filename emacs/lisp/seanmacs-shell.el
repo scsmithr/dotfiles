@@ -141,10 +141,10 @@
     (interactive)
     (eshell-read-history)
     (sm/eshell-insert (completing-read
-                             "History: "
-                             (mapcar #'string-trim
-                                     (delete-dups
-                                      (ring-elements eshell-history-ring))))))
+                       "History: "
+                       (mapcar #'string-trim
+                               (delete-dups
+                                (ring-elements eshell-history-ring))))))
 
   (setq eshell-history-size 10000
         eshell-save-history-on-exit nil ;; This is handled elsewhere.
@@ -165,9 +165,11 @@
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
          (eshell-pre-command . sm/eshell-append-history))
-  :bind (:map eshell-mode-map
-              ;; Defaulted to `eshell-complete-lisp-symbol'.
-              ("M-<tab>" . completion-at-point)))
+  :bind (("C-c s s" . eshell)
+         ("C-c s n" . sm/eshell-new)
+         :map eshell-mode-map
+         ;; Defaulted to `eshell-complete-lisp-symbol'.
+         ("M-<tab>" . completion-at-point)))
 
 (use-package shell
   :config)

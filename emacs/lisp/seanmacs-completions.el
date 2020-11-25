@@ -44,11 +44,12 @@
 
 (use-package imenu
   ;; built-in
-  :config)
+  :bind (("C-c b s" . imenu)))
 
 (use-package xref
   ;; built-in
-  :config)
+  :bind (("C-c r a" . xref-find-apropos)
+         ("C-c r r" . xref-find-references)))
 
 (use-package lsp-mode
   :straight t

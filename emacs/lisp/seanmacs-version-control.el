@@ -19,7 +19,9 @@
   (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
   (setq magit-module-sections-nested nil
         magit-bury-buffer-function 'magit-mode-quit-window
-        magit-section-visibility-indicator '(magit-fringe-bitmap> . magit-fringe-bitmapv)))
+        magit-section-visibility-indicator '(magit-fringe-bitmap> . magit-fringe-bitmapv))
+  :bind (("C-c g g" . magit-status)
+         ("C-c g f" . magit-file-dispatch)))
 
 (use-package forge
   :straight t

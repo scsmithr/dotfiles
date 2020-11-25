@@ -47,9 +47,7 @@
 
 (use-package seanmacs-libs)
 (use-package seanmacs-theme)
-(use-package seanmacs-keybinds
-  :config
-  (seanmacs/init-leader))
+(use-package seanmacs-keybinds)
 (use-package seanmacs-windows)
 (use-package seanmacs-edit)
 (use-package seanmacs-completions)

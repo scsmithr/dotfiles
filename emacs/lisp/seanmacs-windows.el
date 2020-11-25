@@ -5,18 +5,6 @@
 
 ;;; Code:
 
-(defun sm/split-window-right ()
-  "Split window to the right, selecting it."
-  (interactive)
-  (let ((window (split-window-right)))
-    (select-window window)))
-
-(defun sm/split-window-below ()
-  "Split window below current, selecting it."
-  (interactive)
-  (let ((window (split-window-below)))
-    (select-window window)))
-
 (defun sm/dired-project-sidebar ()
   "Open a dired at the root of the current project in the left frame."
   (interactive)
@@ -93,19 +81,15 @@
           ;; always open in same window
           ("\\*\
 \\(shell\\).*"
-           (display-buffer-same-window)))))
+           (display-buffer-same-window))))
+  :bind (("C-c ." . repeat)
+         ("C-c b i" . sm/indent-buffer)
+         ("C-c b r" . sm/rename-buffer-special)))
 
 (defun sm/display-buffer-in-side-window-select (buffer alist)
   "Display BUFFER in side window, selecting it."
   (let ((window (display-buffer-in-side-window buffer alist)))
     (select-window window)))
-
-(defun sm/use-some-window ()
-  (interactive)
-  (let ((buf (current-buffer)))
-    (with-current-buffer buf
-      (delete-window)
-      (display-buffer-use-some-window buf '()))))
 
 (provide 'seanmacs-windows)
 ;;; seanmacs-windows.el ends here

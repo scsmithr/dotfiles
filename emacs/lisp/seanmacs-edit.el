@@ -178,7 +178,8 @@
   (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury)
 
   :hook ((ibuffer-mode . seanmacs/ibuffer-switch-to-saved-filter-groups)
-         (ibuffer . seanmacs/ibuffer-jump-to-last-buffer)))
+         (ibuffer . seanmacs/ibuffer-jump-to-last-buffer))
+  :bind (("C-c b b" . ibuffer)))
 
 (use-package dtrt-indent
   :straight t
@@ -213,10 +214,11 @@
                                     :test "spago test"
                                     :run "spago run")
 
-  ;; TODO: Figure out how to use bind-keys macro for this.
-  (define-key projectile-command-map (kbd "s d") #'deadgrep)
-
-  (projectile-mode +1))
+  (projectile-mode +1)
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :bind (("C-c s p" . projectile-run-eshell)
+         :map projectile-command-map
+         ("s d" . deadgrep)))
 
 (use-package deadgrep
   :straight t
@@ -244,12 +246,14 @@
 
 (use-package flycheck
   :straight t
+  :demand t
   :config
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe
         flycheck-display-errors-delay 0.2)
   (fset 'flycheck-command-map flycheck-command-map)
-  (global-flycheck-mode))
+  (global-flycheck-mode)
+  :bind-keymap ("C-c f" . flycheck-command-map))
 
 (use-package yasnippet
   :straight t

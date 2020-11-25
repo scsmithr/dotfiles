@@ -145,9 +145,10 @@
 
   :hook ((mu4e-compose-mode . turn-off-auto-fill)
          (mu4e-compose-mode . flyspell-mode))
-  :bind (:map mu4e-headers-mode-map
-              ("C-c r" . mu4e-update-index)
-              ("C-c u" . sm/mu4e-fetch-and-index)))
+  :bind (("C-c a m" . mu4e)
+         :map mu4e-headers-mode-map
+         ("C-c C-c r" . mu4e-update-index)
+         ("C-c C-c u" . sm/mu4e-fetch-and-index)))
 
 (use-package org-mu4e
   ;; Provided by mu system package.

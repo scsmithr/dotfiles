@@ -86,8 +86,13 @@
   (plist-put org-format-latex-options :scale 1.7)
 
   :hook ((org-capture-mode . evil-insert-state))
-  :bind (:map org-mode-map
-              ("C-c t" . org-toggle-narrow-to-subtree)))
+  :bind (("C-c o o" . org-capture)
+         ("C-c o a" . org-agenda)
+         ("C-c o l" . org-agenda-list)
+         ("C-c o t" . org-todo-list)
+         ("C-c o s" . org-search-view)
+         :map org-mode-map
+         ("C-c t" . org-toggle-narrow-to-subtree)))
 
 (use-package ob
   :after (org ob-http ob-go gnuplot ob-async)
