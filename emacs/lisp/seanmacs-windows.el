@@ -45,7 +45,6 @@
 
 (use-package window
   ;; built-in
-  :defer t
   :init
   (setq display-buffer-alist
         '(;; selecting bottom side window

@@ -216,9 +216,8 @@
 
   (projectile-mode +1)
   :bind-keymap ("C-c p" . projectile-command-map)
-  :bind (("C-c s p" . projectile-run-eshell)
-         :map projectile-command-map
-         ("s d" . deadgrep)))
+  :bind (:map projectile-command-map
+              ("s d" . deadgrep)))
 
 (use-package deadgrep
   :straight t
