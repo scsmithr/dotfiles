@@ -162,6 +162,7 @@
   :straight t)
 
 (use-package dired
+  ;; built-in
   :config
   (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
 
@@ -190,6 +191,7 @@
   (setq dired-open-extensions '(("pdf" . "zathura"))))
 
 (use-package help
+  ;; built-in
   :config)
 
 (use-package gcloud

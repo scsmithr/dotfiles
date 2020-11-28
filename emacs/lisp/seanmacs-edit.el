@@ -90,6 +90,7 @@
     (find-file (concat "/sudo::" file))))
 
 (use-package whitespace
+  ;; built-in
   :config
   (setq whitespace-line-column 80)
   (setq whitespace-style '(
@@ -101,16 +102,16 @@
                            spaces))
   :hook ((prog-mode . whitespace-mode)))
 
-(defvar seanmacs/ibuffer-filter-group-order nil
+(defvar sm/ibuffer-filter-group-order nil
   "Forced order for ibuffer's filter groups.")
 
 (use-package ibuffer
   ;; built-in
   :init
-  (defun seanmacs/ibuffer-switch-to-saved-filter-groups ()
+  (defun sm/ibuffer-switch-to-saved-filter-groups ()
     (ibuffer-switch-to-saved-filter-groups "seanmacs"))
 
-  (defun seanmacs/ibuffer-jump-to-last-buffer ()
+  (defun sm/ibuffer-jump-to-last-buffer ()
     (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
   :config
   (setq ibuffer-read-only-char ?R)
@@ -137,22 +138,22 @@
                                (mode . diff-mode)
                                (mode . github-review-mode))))))
 
-  (setq seanmacs/ibuffer-filter-group-order '("Default" "shell" "special"))
+  (setq sm/ibuffer-filter-group-order '("Default" "shell" "special"))
 
-  (defun seanmacs/ibuffer-order-filter-groups (groups)
-    "Sort GROUPS using `seanmacs/ibuffer-filter-group-order' and then alphabetically."
+  (defun sm/ibuffer-order-filter-groups (groups)
+    "Sort GROUPS using `sm/ibuffer-filter-group-order' and then alphabetically."
     ;; Note that this sorts in reverse order because ibuffer reverses these
     ;; groups before printing.
     (sort groups
           (lambda (a b)
-            (let ((apos (cl-position (car a) seanmacs/ibuffer-filter-group-order :test 'equal))
-                  (bpos (cl-position (car b) seanmacs/ibuffer-filter-group-order :test 'equal)))
+            (let ((apos (cl-position (car a) sm/ibuffer-filter-group-order :test 'equal))
+                  (bpos (cl-position (car b) sm/ibuffer-filter-group-order :test 'equal)))
               (cond ((and apos bpos) (> apos bpos))
                     (apos nil)
                     (bpos t)
                     (t (string> (car a) (car b))))))))
 
-  (advice-add 'ibuffer-generate-filter-groups :filter-return #'seanmacs/ibuffer-order-filter-groups)
+  (advice-add 'ibuffer-generate-filter-groups :filter-return #'sm/ibuffer-order-filter-groups)
 
   (define-ibuffer-column size-h
     (:name "Size"
@@ -175,10 +176,12 @@
               "si")))
     (file-size-human-readable (buffer-size) "si"))
 
-  (advice-add 'ibuffer-visit-buffer :around #'seanmacs/run-and-bury)
+  ;; Allows me to use ':b' to quickly jump to the buffer I was at before opening
+  ;; ibuffer.
+  (advice-add 'ibuffer-visit-buffer :around #'sm/run-and-bury)
 
-  :hook ((ibuffer-mode . seanmacs/ibuffer-switch-to-saved-filter-groups)
-         (ibuffer . seanmacs/ibuffer-jump-to-last-buffer))
+  :hook ((ibuffer-mode . sm/ibuffer-switch-to-saved-filter-groups)
+         (ibuffer . sm/ibuffer-jump-to-last-buffer))
   :bind (("C-c b b" . ibuffer)))
 
 (use-package dtrt-indent
@@ -196,12 +199,6 @@
 
 (use-package projectile
   :straight t
-  :init
-  (defun seanmacs/projectile-find-name-dired-wildcard (file)
-    (interactive "sFind-name (filename wildcard): ")
-    (let ((dir (or (projectile-project-root) default-directory))
-          (pattern (format "*%s*" file)))
-      (find-name-dired dir pattern)))
   :config
   (setq projectile-completion-system 'default
         projectile-require-project-root nil
@@ -221,6 +218,7 @@
 
 (use-package deadgrep
   :straight t
+  :after projectile
   :config
   (defun sm/deadgrep-change-search ()
     "Change deadgrep search term."

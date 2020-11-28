@@ -6,7 +6,14 @@
 
 ;;; Code:
 
+;; Useful string utilities, e.g. 's-contains-p'.
 (use-package s :straight t)
+
+(defun sm/run-and-bury (fn &rest args)
+  "Run FN with ARGS then bury the buffer."
+  (let ((buf (buffer-name)))
+    (apply fn args)
+    (bury-buffer buf)))
 
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here

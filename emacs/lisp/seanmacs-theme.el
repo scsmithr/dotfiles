@@ -22,14 +22,14 @@
 
   (minions-mode 1))
 
-(defvar seanmacs/load-theme-hook nil
+(defvar sm/load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
 
-(defun seanmacs/run-load-theme-hook (&rest _)
-  "Run after `seanmacs/load-theme-hook'."
-  (run-hooks 'seanmacs/load-theme-hook))
+(defun sm/run-load-theme-hook (&rest _)
+  "Run after `sm/load-theme-hook'."
+  (run-hooks 'sm/load-theme-hook))
 
-(advice-add #'load-theme :after #'seanmacs/run-load-theme-hook)
+(advice-add #'load-theme :after #'sm/run-load-theme-hook)
 
 (use-package modus-operandi-theme
   :straight t
@@ -54,7 +54,7 @@
           ("fg-window-divider-inner" . "#dadada")
           ("fg-window-divider-outer" . "#aaaaaa")))
 
-  (defun seanmacs/customize-modus-operandi ()
+  (defun sm/customize-modus-operandi ()
     (modus-operandi-theme-with-color-variables
       (face-attr 'success :foreground green :weight 'normal)
       (face-attr 'warning :foreground yellow :weight 'normal)
@@ -81,7 +81,7 @@
        ;; Eshell
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))))
 
-  (add-hook 'seanmacs/load-theme-hook 'seanmacs/customize-modus-operandi)
+  (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
 
 (provide 'seanmacs-theme)

@@ -37,12 +37,6 @@
 ;; Ensure use-package is here.
 (straight-use-package 'use-package)
 
-(defun seanmacs/run-and-bury (fn &rest args)
-  "Run FN with ARGS then bury the buffer."
-  (let ((buf (buffer-name)))
-    (apply fn args)
-    (bury-buffer buf)))
-
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 (use-package seanmacs-libs)
