@@ -170,6 +170,16 @@
     "K" 'dired-kill-subdir
     (kbd "TAB") 'dired-hide-subdir)
 
+  (defun sm/dired-with-current-directory (orig-fn &rest args)
+    "Set `default-directory' to dired's current dir if in dired mode."
+    (if (eq major-mode 'dired-mode)
+        (let ((default-directory (dired-current-directory)))
+          (apply orig-fn args))
+      (apply orig-fn args)))
+
+  ;; Make find-file subdir aware.
+  (advice-add 'find-file-read-args :around 'sm/dired-with-current-directory)
+
   :hook ((dired-mode . diredfl-mode))
   :bind(("C-x d" . dired-jump)
         :map dired-mode-map
