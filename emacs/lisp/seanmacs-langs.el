@@ -33,7 +33,9 @@
 (defun sm/comint-send-region-or-line (proc)
   "Send region if active, send the current line otherwise."
   (if (use-region-p)
-      (sm/comint-send-region proc (region-beginning) (region-end))
+      (progn
+        (sm/comint-send-region proc (region-beginning) (region-end))
+        (deactivate-mark))
     (sm/comint-send-line proc)))
 
 (defun sm/comint-send-buffer (proc)
