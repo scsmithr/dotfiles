@@ -350,6 +350,13 @@ Start a new process if not alive."
     (interactive)
     (sm/comint-send-buffer (sm/julia-process)))
 
+  (defun sm/julia-send-function ()
+    (interactive)
+    (save-excursion
+      ;; TODO: Handle empty lines in function body.
+      (mark-defun)
+      (sm/julia-send-region-or-line)))
+
   (defun sm/julia-doc ()
     (interactive)
     (let* ((sym (thing-at-point 'symbol t))
@@ -369,6 +376,17 @@ Start a new process if not alive."
     (let ((str (format "apropos(\"%s\")" search)))
       (sm/comint-print-and-send (sm/julia-process) str)))
 
+  (defun sm/julia-activate-project ()
+    "Activate the julia project if available."
+    (interactive)
+    (let* ((project-file "Project.toml")
+           (dir (locate-dominating-file "." project-file)))
+      (if dir
+          (let* ((path (expand-file-name (concat dir project-file)))
+                 (cmd (format "using Pkg; Pkg.activate(\"%s\")" path)))
+            (sm/comint-print-and-send (sm/julia-process) cmd))
+        (message "Not in Julia project"))))
+
   (defun sm/julia-run ()
     "Open an julia buffer."
     (interactive)
@@ -376,9 +394,17 @@ Start a new process if not alive."
                                  default-directory)))
       (pop-to-buffer (process-buffer (sm/julia-process)))))
 
-  :bind(:map julia-mode-map
+  :bind(:map sm/julia-mode-map
+             ("C-c C-k" . comint-send-eof)
+             ("C-c C-d d" . sm/julia-doc)
+             ("C-c C-d C-d" . sm/julia-doc)
+             ("C-c C-d a" . sm/julia-apropos)
+             ("C-c C-d C-a" . sm/julia-apropos)
+             :map julia-mode-map
+             ("C-c C-a" . sm/julia-activate-project)
              ("C-c C-l" . sm/julia-send-buffer)
              ("C-c C-c" . sm/julia-send-region-or-line)
+             ("C-c C-p" . sm/julia-send-function)
              ("C-c C-d d" . sm/julia-doc)
              ("C-c C-d C-d" . sm/julia-doc)
              ("C-c C-d a" . sm/julia-apropos)
