@@ -5,4 +5,12 @@ if [ -n "$dpi" ]; then
     export WINIT_HIDPI_FACTOR=$(( dpi / 96.0 ))
 fi
 
-alacritty
+# There's a gl bug preventing alacritty from launching.
+#
+# Error creating GL context; Received multiple errors. Errors:
+# `[NoAvailablePixelFormat, OsError("Couldn\'t setup vsync: expected interval
+# `1` but got `0`")]`
+#
+# Setting vblank_mode seems to fix this. See
+# https://github.com/alacritty/alacritty/issues/4491
+vblank_mode=1 alacritty
