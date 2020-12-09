@@ -84,7 +84,7 @@
          (before-save . seanmacs/gofmt-before-save))
   :bind(:map go-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
-             ("C-c C-r r" . lsp-rename)))
+             ("C-c r r" . lsp-rename)))
 
 (use-package flycheck-golangci-lint
   :straight t
@@ -124,7 +124,7 @@
          (rust-mode . cargo-minor-mode))
   :bind(:map rust-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
-             ("C-c C-r r" . lsp-rename)))
+             ("C-c r r" . lsp-rename)))
 
 (use-package cargo
   :straight t
@@ -196,8 +196,8 @@ dir. Return nil otherwise."
          (web-mode . sm/reset-web-mode-offsets))
   :bind (:map web-mode-map
               ("C-c C-d" . tide-documentation-at-point)
-              ("C-c C-r r" . tide-rename-symbol)
-              ("C-c C-r f" . tide-rename-file)))
+              ("C-c r r" . tide-rename-symbol)
+              ("C-c r f" . tide-rename-file)))
 
 ;; Elixir
 
@@ -263,7 +263,7 @@ Start a new process if not alive."
          (before-save . sm/elixir-format-on-save))
   :bind(:map elixir-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
-             ("C-c C-r r" . lsp-rename)
+             ("C-c r r" . lsp-rename)
              ("C-c C-l" . sm/iex-send-buffer)
              ("C-c C-c" . sm/iex-send-region-or-line)))
 

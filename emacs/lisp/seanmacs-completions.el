@@ -48,8 +48,8 @@
 
 (use-package xref
   ;; built-in
-  :bind (("C-c r a" . xref-find-apropos)
-         ("C-c r r" . xref-find-references)))
+  :bind (("C-c x a" . xref-find-apropos)
+         ("C-c x r" . xref-find-references)))
 
 (use-package lsp-mode
   :straight t
