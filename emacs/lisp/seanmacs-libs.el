@@ -9,6 +9,8 @@
 ;; Useful string utilities, e.g. 's-contains-p'.
 (use-package s :straight t)
 
+(use-package dash :straight t)
+
 (defun sm/run-and-bury (fn &rest args)
   "Run FN with ARGS then bury the buffer."
   (let ((buf (buffer-name)))

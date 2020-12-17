@@ -20,24 +20,31 @@ import           XMonad.Hooks.UrgencyHook       ( NoUrgencyHook(..)
 import           XMonad.Hooks.EwmhDesktops      ( ewmh
                                                 , fullscreenEventHook
                                                 )
+import           XMonad.Layout.BinarySpacePartition
+                                                ( emptyBSP
+                                                , Rotate(..)
+                                                , FocusParent(..)
+                                                , TreeBalance(..)
+                                                , ResizeDirectional(..)
+                                                )
+import           XMonad.Actions.Navigation2D    ( windowSwap
+                                                , windowGo
+                                                , switchLayer
+                                                , Navigation2DConfig(..)
+                                                , sideNavigation
+                                                , withNavigation2DConfig
+                                                , Direction2D(..)
+                                                )
 import           XMonad.Layout.NoBorders        ( Ambiguity(..)
                                                 , lessBorders
-                                                )
-import           XMonad.Layout.ResizableTile    ( ResizableTall(..)
-                                                , MirrorResize(..)
                                                 )
 import           XMonad.Layout.Spacing          ( Border(..)
                                                 , spacingRaw
                                                 )
-import           XMonad.Layout.ThreeColumns     ( ThreeCol(..) )
 import           XMonad.Actions.PhysicalScreens ( viewScreen
                                                 , sendToScreen
                                                 )
 import           XMonad.Actions.CycleWS         ( toggleWS )
-import           XMonad.Actions.FloatSnap       ( snapMove
-                                                , Direction2D(..)
-                                                )
-import           XMonad.Actions.FloatKeys       ( keysResizeWindow )
 import           XMonad.Util.WorkspaceCompare   ( getSortByIndex )
 import           XMonad.Util.Run                ( spawnPipe
                                                 , hPutStrLn
@@ -57,10 +64,10 @@ promptConf = def { position            = Bottom
                  , fgColor             = foreground
                  , bgHLight            = dark
                  , fgHLight            = light
-                 , promptBorderWidth   = myBorderWidth
+                 , promptBorderWidth   = myPromptBorderWidth
                  , borderColor         = myPromptBorderColor
-                 , maxComplRows        = Just 3
-                 , showCompletionOnTab = True
+                 , maxComplRows        = Just 1
+                 , showCompletionOnTab = False
                  }
 
 centerWindow :: Window -> X ()
@@ -78,81 +85,42 @@ centerWindow win = do
 
 myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
   Map.fromList
-    $  [ ((modMask, xK_Return)         , spawn myTerminal)
-       , ((modMask, xK_p)              , shellPrompt promptConf)
-       , ((modMask, xK_b)              , spawn myBrowser)
-       , ((modMask, xK_v)              , spawn myEditor)
-       , ((modMask, xK_q)              , spawn "lock")
-       , ((modMask .|. shiftMask, xK_q), spawn "lock suspend")
+    $  [ ((modMask, xK_Return)             , spawn myTerminal)
+       , ((modMask, xK_p)                  , shellPrompt promptConf)
+       , ((modMask, xK_b)                  , spawn myBrowser)
+       , ((modMask, xK_v)                  , spawn myEditor)
+       , ((modMask, xK_q)                  , spawn "lock")
+       , ((modMask .|. shiftMask, xK_q)    , spawn "lock suspend")
        , ((modMask, xK_x), spawn "if type xmonad; then xmonad --restart; fi")
-       , ( (modMask .|. shiftMask, xK_x)
-         , io (exitWith ExitSuccess)
-         )
-
-     -- switch layouts
-       , ((modMask .|. shiftMask, xK_c), kill)
-       , ((modMask, xK_space)          , sendMessage NextLayout)
-       , ( (modMask .|. shiftMask, xK_space)
-         , setLayout $ XMonad.layoutHook conf
-         )
-
-    -- move focus up or down the window stack
-       , ((modMask, xK_Tab)              , windows W.focusDown)
-       , ((modMask .|. shiftMask, xK_Tab), windows W.focusUp)
-       , ((modMask, xK_j)                , windows W.focusDown)
-       , ((modMask, xK_k)                , windows W.focusUp)
-       , ( (modMask, xK_m)
-         , windows W.focusMaster
-         )
-
-    -- modifying the window order
-       , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster)
-       , ((modMask .|. shiftMask, xK_j)     , windows W.swapDown)
-       , ( (modMask .|. shiftMask, xK_k)
-         , windows W.swapUp
-         )
-
-    -- resizing the master/slave ratio
-       , ((modMask, xK_h), sendMessage Shrink)
-       , ( (modMask, xK_l)
-         , sendMessage Expand
-         )
-
-    -- floating layer support
-       , ((modMask, xK_f)    , withFocused centerWindow)
-       , ((modMask, xK_t)    , withFocused $ windows . W.sink)
-       , ((modMask, xK_Left) , withFocused $ snapMove L Nothing)
-       , ((modMask, xK_Right), withFocused $ snapMove R Nothing)
-       , ((modMask, xK_Up)   , withFocused $ snapMove U Nothing)
-       , ( (modMask .|. shiftMask, xK_Right)
-         , withFocused $ keysResizeWindow (20, 0) (0, 0)
-         )
-       , ( (modMask .|. shiftMask, xK_Left)
-         , withFocused $ keysResizeWindow (-20, 0) (0, 0)
-         )
-       , ( (modMask .|. shiftMask, xK_Down)
-         , withFocused $ keysResizeWindow (0, 20) (0, 0)
-         )
-       , ( (modMask .|. shiftMask, xK_Up)
-         , withFocused $ keysResizeWindow (0, -20) (0, 0)
-         )
-       , ( (modMask, xK_Down)
-         , withFocused $ snapMove D Nothing
-         )
-
-    -- increase or decrease number of windows in the master area
-       , ((modMask, xK_comma), sendMessage (IncMasterN 1))
-       , ( (modMask, xK_period)
-         , sendMessage (IncMasterN (-1))
-         )
-
-     -- quickly jump back to prev workspace
-       , ((modMask, xK_minus), toggleWS)
+       , ((modMask .|. shiftMask, xK_x)    , io (exitWith ExitSuccess))
+       , ((modMask .|. shiftMask, xK_c)    , kill)
+       , ((modMask, xK_space)              , sendMessage NextLayout)
+       , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+       , ((modMask, xK_r)                  , sendMessage $ Rotate)
+       , ((modMask, xK_a)                  , sendMessage $ FocusParent)
+       , ((modMask .|. controlMask, xK_l)  , sendMessage $ ExpandTowards R)
+       , ((modMask .|. controlMask, xK_h)  , sendMessage $ ExpandTowards L)
+       , ((modMask .|. controlMask, xK_j)  , sendMessage $ ExpandTowards D)
+       , ((modMask .|. controlMask, xK_k)  , sendMessage $ ExpandTowards U)
+       , ((modMask, xK_l)                  , windowGo R False)
+       , ((modMask, xK_h)                  , windowGo L False)
+       , ((modMask, xK_k)                  , windowGo U False)
+       , ((modMask, xK_j)                  , windowGo D False)
+       , ((modMask .|. shiftMask, xK_l)    , windowSwap R False)
+       , ((modMask .|. shiftMask, xK_h)    , windowSwap L False)
+       , ((modMask .|. shiftMask, xK_k)    , windowSwap U False)
+       , ((modMask .|. shiftMask, xK_j)    , windowSwap D False)
+       , ((modMask, xK_u)                  , windows W.focusUp)
+       , ((modMask, xK_i)                  , windows W.focusDown)
+       , ((modMask, xK_s)                  , switchLayer)
+       , ((modMask, xK_f)                  , withFocused centerWindow)
+       , ((modMask, xK_t)                  , withFocused $ windows . W.sink)
+       , ((modMask, xK_equal)              , sendMessage Equalize)
+       , ((modMask, xK_minus)              , toggleWS)
        ]
 
-    -- navigate screens based on physical position
     ++ [ ((m .|. modMask, key), f sc)
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..]
+       | (key, sc) <- zip [xK_w, xK_e] [0 ..]
        , (f  , m ) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
        ]
 
@@ -161,7 +129,6 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
        ]
 
-  -- media keys
     ++ [ ((0, xF86XK_MonBrightnessUp)  , spawn "bri laptop up")
        , ((0, xF86XK_MonBrightnessDown), spawn "bri laptop down")
        , ((0, xF86XK_AudioRaiseVolume) , spawn "vol up")
@@ -170,10 +137,9 @@ myWorkspaceKeys conf@(XConfig { XMonad.modMask = modMask }) =
        ]
 
 stringifyLayout :: String -> String
-stringifyLayout l | t "Tall" l     = fmt "tall"
-                  | t "Full" l     = fmt "full"
-                  | t "ThreeCol" l = fmt "col"
-                  | otherwise      = fmt l
+stringifyLayout l | t "BSP" l  = fmt "bsp"
+                  | t "Full" l = fmt "full"
+                  | otherwise  = fmt l
  where
   t = List.isInfixOf
   fmt s = "[" ++ s ++ "]"
@@ -192,39 +158,33 @@ myLogHook h = do
                                 }
 
 myLayoutHook = uniformSpacing
-  $ lessBorders (OnlyScreenFloat) (tiled ||| Full ||| threeCol)
+  $ lessBorders (OnlyScreenFloat) (emptyBSP ||| Full)
  where
-  tiled          = ResizableTall nmaster delta (1 / 2) []
-  threeCol       = ThreeCol nmaster delta (1 / 3)
-  nmaster        = 1
-  delta          = 3 / 100
   gs             = 5
   uniformSpacing = spacingRaw False (border) True (border) True
   border         = Border gs gs gs gs
 
-myManageHook = composeAll
-  [ className =? "mpv" --> doCenterFloat
-  , className =? "feh" --> doCenterFloat
-  , className =? "Ristretto" --> doCenterFloat
-  , className =? "Thunar" --> doCenterFloat
-  , className =? "gksqt" --> doSideFloat NE
-  , isDialog =? True --> doCenterFloat
-  ]
+myManageHook = composeAll [isDialog =? True --> doCenterFloat]
 
-myConfig pipe = withUrgencyHook NoUrgencyHook $ ewmh $ docks def
-  { logHook            = myLogHook pipe
-  , manageHook         = myManageHook
-  , layoutHook         = avoidStruts $ myLayoutHook
-  , handleEventHook    = fullscreenEventHook
-  , focusFollowsMouse  = False
-  , workspaces         = myWorkspaces
-  , terminal           = myTerminal
-  , modMask            = myModMask
-  , keys               = myWorkspaceKeys
-  , borderWidth        = myBorderWidth
-  , normalBorderColor  = myUnfocusedBorderColor
-  , focusedBorderColor = myFocusedBorderColor
-  }
+myNavConf = def { defaultTiledNavigation = sideNavigation }
+
+myConfig pipe =
+  withUrgencyHook NoUrgencyHook
+    $ withNavigation2DConfig myNavConf
+    $ ewmh
+    $ docks def { logHook            = myLogHook pipe
+                , manageHook         = myManageHook
+                , layoutHook         = avoidStruts $ myLayoutHook
+                , handleEventHook    = fullscreenEventHook
+                , focusFollowsMouse  = False
+                , workspaces         = myWorkspaces
+                , terminal           = myTerminal
+                , modMask            = myModMask
+                , keys               = myWorkspaceKeys
+                , borderWidth        = myBorderWidth
+                , normalBorderColor  = myUnfocusedBorderColor
+                , focusedBorderColor = myFocusedBorderColor
+                }
 
 main = xmonad . myConfig =<< spawnPipe "xmobar"
 
@@ -246,5 +206,6 @@ myPromptBorderColor = "#26272d"
 
 -- config vars
 myBorderWidth = 2
+myPromptBorderWidth = 1
 myModMask = mod4Mask
 myWorkspaces = ["def", "web", "dev", "misc"]
