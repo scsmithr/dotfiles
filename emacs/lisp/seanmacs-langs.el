@@ -149,6 +149,19 @@ dir. Return nil otherwise."
   :defer t
   :commands tide-setup)
 
+(defun sm/use-node-modules-eslint ()
+  (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
+    (setq-local flycheck-javascript-eslint-executable eslint)))
+
+(defun sm/setup-tide ()
+  (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
+    (tide-setup)
+    (tide-hl-identifier-mode +1)
+    (prettier-js-mode)
+    (sm/set-jump-property #'tide-jump-to-definition)
+    (flycheck-add-mode 'javascript-eslint 'web-mode)
+    (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
+
 (use-package prettier-js
   :straight t
   :defer t
@@ -158,26 +171,23 @@ dir. Return nil otherwise."
       (setq-local prettier-js-command prettier)))
   :hook ((prettier-js-mode . seanmacs/use-node-modules-prettier)))
 
+(use-package typescript-mode
+  :straight t
+  :defer t
+  :mode "\\.tsx?\\'"
+  :hook ((typescript-mode . sm/setup-tide)
+         (typescript-mode . sm/use-node-modules-eslint))
+  :bind (:map typescript-mode-map
+              ("C-c C-d" . tide-documentation-at-point)
+              ("C-c r r" . tide-rename-symbol)
+              ("C-c r f" . tide-rename-file)))
+
 (use-package web-mode
   :straight t
   :defer t
   :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx?\\'" . web-mode)
          ("\\.jsx\\'" . web-mode))
   :init
-  (defun sm/use-node-modules-eslint ()
-    (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
-      (setq-local flycheck-javascript-eslint-executable eslint)))
-
-  (defun sm/setup-tide ()
-    (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
-      (tide-setup)
-      (tide-hl-identifier-mode +1)
-      (prettier-js-mode)
-      (sm/set-jump-property #'tide-jump-to-definition)
-      (flycheck-add-mode 'javascript-eslint 'web-mode)
-      (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
-
   (defun sm/reset-web-mode-offsets ()
     (dtrt-indent-adapt) ;; Only runs once per buffer, no harm in calling it here.
     (setq-local web-mode-code-indent-offset standard-indent)
@@ -191,13 +201,7 @@ dir. Return nil otherwise."
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
         web-mode-enable-auto-indentation nil)
-  :hook ((web-mode . sm/setup-tide)
-         (web-mode . sm/use-node-modules-eslint)
-         (web-mode . sm/reset-web-mode-offsets))
-  :bind (:map web-mode-map
-              ("C-c C-d" . tide-documentation-at-point)
-              ("C-c r r" . tide-rename-symbol)
-              ("C-c r f" . tide-rename-file)))
+  :hook ((web-mode . sm/reset-web-mode-offsets)))
 
 ;; Elixir
 
