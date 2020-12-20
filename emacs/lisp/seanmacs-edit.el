@@ -46,7 +46,13 @@
 (setq create-lockfiles nil)
 
 ;; Auto insert closing parenthesis, braces, etc
-(electric-pair-mode 1)
+(use-package elec-pair
+  ;; built-in
+  :init
+  ;; Helps a lot with triple quoting.
+  (setq electric-pair-inhibit-predicate #'electric-pair-conservative-inhibit)
+  :config
+  (electric-pair-mode 1))
 
 ;; Folding
 (add-hook 'prog-mode-hook 'hs-minor-mode)
