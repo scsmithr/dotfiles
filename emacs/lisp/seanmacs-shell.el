@@ -65,6 +65,9 @@
         (let ((eshell-history-ring newest-cmd-ring))
           (eshell-write-history eshell-history-file-name t)))))
 
+  (defun sm/eshell-disable-company ()
+    (company-mode -1))
+
   :config
   (defface sm/eshell-prompt-pwd '((t :inherit font-lock-constant-face))
     "Face for current directory."
@@ -164,6 +167,7 @@
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
+         (eshell-mode . sm/eshell-disable-company)
          (eshell-pre-command . sm/eshell-append-history))
   :bind (("C-c s s" . eshell)
          ("C-c s n" . sm/eshell-new)
