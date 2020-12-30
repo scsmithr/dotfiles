@@ -391,6 +391,13 @@ Start a new process if not alive."
             (sm/comint-print-and-send (sm/julia-process) cmd))
         (message "Not in Julia project"))))
 
+  (defun sm/julia-cd (dir)
+    "Change working directory for repl to DIR."
+    (interactive "D")
+    (let ((str (format "cd(\"%s\")" (expand-file-name dir))))
+      (cd dir) ;; Keep default directory in sync with where the repl points.
+      (sm/comint-print-and-send (sm/julia-process) str)))
+
   (defun sm/julia-run ()
     "Open an julia buffer."
     (interactive)

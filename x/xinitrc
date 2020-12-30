@@ -1,5 +1,5 @@
 xsetroot -cursor_name left_ptr
-hsetroot -solid "#78939A"
+hsetroot -solid "#CFCFCF"
 
 xrdb ~/.Xresources
 
