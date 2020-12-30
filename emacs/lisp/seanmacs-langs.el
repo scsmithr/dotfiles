@@ -395,7 +395,9 @@ Start a new process if not alive."
     "Change working directory for repl to DIR."
     (interactive "D")
     (let ((str (format "cd(\"%s\")" (expand-file-name dir))))
-      (cd dir) ;; Keep default directory in sync with where the repl points.
+      ;; Keep default directory in sync with where the repl points.
+      (with-current-buffer (process-buffer (sm/julia-process))
+        (cd dir))
       (sm/comint-print-and-send (sm/julia-process) str)))
 
   (defun sm/julia-run ()
