@@ -23,7 +23,7 @@
   (unless (and beg end)
     (user-error "No region selected"))
   (let ((region (buffer-substring-no-properties beg end)))
-    (sm/comint-print-and-send proc region)))
+    (sm/comint-print-and-send proc (string-trim region))))
 
 (defun sm/comint-send-line (proc)
   "Send the current line to PROC."
