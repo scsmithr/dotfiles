@@ -209,7 +209,10 @@
   (setq projectile-completion-system 'default
         projectile-require-project-root nil
         projectile-sort-order 'recently-active
-        projectile-switch-project-action #'projectile-dired)
+        projectile-switch-project-action #'projectile-dired
+        ;; When you have a mono repo with a ton of submodules, caching helps
+        ;; speed things up...
+        projectile-enable-caching t)
 
   ;; Register project for purescript.
   (projectile-register-project-type 'purs '("spago.dhall")
