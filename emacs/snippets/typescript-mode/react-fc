@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: React functional component boilerplate
+# key: fc
+# --
+interface $1Props {}
+
+/**
+ * $0
+ */
+export const $1: React.FC<$1Props> = ({}) => {
+  return (<div><span>$1</span></div>)
+}
