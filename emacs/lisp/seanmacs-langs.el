@@ -147,20 +147,14 @@ dir. Return nil otherwise."
 (use-package tide
   :straight t
   :defer t
-  :commands tide-setup)
+  :commands tide-setup
+  :config
+  (sm/set-jump-property #'tide-jump-to-definition)
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
 
 (defun sm/use-node-modules-eslint ()
   (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
     (setq-local flycheck-javascript-eslint-executable eslint)))
-
-(defun sm/setup-tide ()
-  (when (string-match-p "tsx?" (file-name-extension buffer-file-name))
-    (tide-setup)
-    (tide-hl-identifier-mode +1)
-    (prettier-js-mode)
-    (sm/set-jump-property #'tide-jump-to-definition)
-    (flycheck-add-mode 'javascript-eslint 'web-mode)
-    (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append)))
 
 (use-package prettier-js
   :straight t
@@ -175,6 +169,13 @@ dir. Return nil otherwise."
   :straight t
   :defer t
   :mode "\\.tsx?\\'"
+  :init
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+
+  (defun sm/setup-tide ()
+    (tide-setup)
+    (tide-hl-identifier-mode +1)
+    (prettier-js-mode))
   :hook ((typescript-mode . sm/setup-tide)
          (typescript-mode . sm/use-node-modules-eslint))
   :bind (:map typescript-mode-map
