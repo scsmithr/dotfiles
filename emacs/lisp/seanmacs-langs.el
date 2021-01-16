@@ -149,8 +149,7 @@ dir. Return nil otherwise."
   :defer t
   :commands tide-setup
   :config
-  (sm/set-jump-property #'tide-jump-to-definition)
-  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
+  (sm/set-jump-property #'tide-jump-to-definition))
 
 (defun sm/use-node-modules-eslint ()
   (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
@@ -176,6 +175,17 @@ dir. Return nil otherwise."
     (tide-setup)
     (tide-hl-identifier-mode +1)
     (prettier-js-mode))
+
+  (defun sm/enable-ts-eslint ()
+    "Enable javascript-esline flycheck checker for typescript."
+    (interactive)
+    (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
+
+  (defun sm/disable-ts-eslint ()
+    "Disable javascript-eslint flycheck checker for typescript."
+    (interactive)
+    (flycheck-remove-next-checker 'typescript-tide 'javascript-eslint))
+
   :hook ((typescript-mode . sm/setup-tide)
          (typescript-mode . sm/use-node-modules-eslint))
   :bind (:map typescript-mode-map
