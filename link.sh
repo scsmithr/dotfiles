@@ -57,3 +57,6 @@ ln -sv $DIR/emacs/* ~/.emacs.d
 mkdir -p ~/.emacs.d/straight/versions/
 ln -sv $DIR/emacs/default.el ~/.emacs.d/straight/versions
 
+# xdg
+mkdir -p ~/.local/share/applications
+ln -sv $DIR/xdg/* ~/.local/share/applications

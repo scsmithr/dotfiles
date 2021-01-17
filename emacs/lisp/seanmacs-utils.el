@@ -198,7 +198,8 @@
 (use-package dired-open
   :straight t
   :config
-  (setq dired-open-extensions '(("pdf" . "zathura"))))
+  (when (eq system-type 'gnu/linux)
+    (setq dired-open-extensions '(("pdf" . "xdg-open")))))
 
 (use-package help
   ;; built-in
