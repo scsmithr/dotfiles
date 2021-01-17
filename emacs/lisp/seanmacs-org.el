@@ -111,7 +111,8 @@
      (calc       . t)
      (sql        . t)
      (go         . t)
-     (python     . t)))
+     (python     . t)
+     (R          . t)))
   :hook ((org-babel-after-execute . org-display-inline-images)))
 
 (use-package ob-http
