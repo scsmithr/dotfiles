@@ -434,6 +434,12 @@ Start a new process if not alive."
              ("C-c C-d a" . sm/julia-apropos)
              ("C-c C-d C-a" . sm/julia-apropos)))
 
+;; R
+
+(use-package ess
+  :straight t
+  :defer t)
+
 ;; Clojure
 
 (use-package clojure-mode

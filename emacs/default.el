@@ -1,4 +1,5 @@
-(("a.el" . "d0490619d374fbda20eb5fb6a91dd87b053d01c0")
+(("ESS" . "1c77e93c9f810e95afe75b7f908bbc3aa50e219b")
+ ("a.el" . "d0490619d374fbda20eb5fb6a91dd87b053d01c0")
  ("annalist.el" . "134fa3f0fb91a636a1c005c483516d4b64905a6d")
  ("cargo.el" . "91ccfef6e36ff9e96352a03c4a057b5ee181438d")
  ("cider" . "2a0f25b9414d784fcbef3f97995bc847db794599")
