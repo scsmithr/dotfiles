@@ -36,12 +36,18 @@
   (evil-mode)
   (evil-update-insert-state-bindings "\C-n" t)
   (evil-update-insert-state-bindings "\C-p" t)
+
+  (defun sm/evil-define-window-key (key def)
+    (define-key evil-window-map key def)
+    (define-key evil-motion-state-map (kbd (concat "C-w " key)) def))
+
   ;; Overwrite the default next window commands with one that skips dired
   ;; sidebar.
-  (define-key evil-window-map "C-w" #'seanmacs/evil-window-next-skip-dired-sidebar)
-  (define-key evil-window-map "w" #'seanmacs/evil-window-next-skip-dired-sidebar)
-  (define-key evil-motion-state-map (kbd "C-w w") #'seanmacs/evil-window-next-skip-dired-sidebar)
-  (define-key evil-motion-state-map (kbd "C-w C-w") #'seanmacs/evil-window-next-skip-dired-sidebar))
+  (sm/evil-define-window-key "C-w" #'seanmacs/evil-window-next-skip-dired-sidebar)
+  (sm/evil-define-window-key "w" #'seanmacs/evil-window-next-skip-dired-sidebar)
+
+  (sm/evil-define-window-key "u" #'winner-undo))
+
 
 (use-package evil-commentary
   :straight t
