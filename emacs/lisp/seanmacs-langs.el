@@ -438,7 +438,15 @@ Start a new process if not alive."
 
 (use-package ess
   :straight t
-  :defer t)
+  :defer t
+  :config
+  (setq ess-use-ido nil)
+  ;; Make help buffer more evil like.
+  (evil-set-initial-state 'ess-r-help-mode 'normal)
+  (evil-collection-define-key 'normal 'ess-help-mode-map
+    (kbd "q") 'kill-current-buffer
+    (kbd "]]") 'ess-skip-to-next-section
+    (kbd "[[") 'ess-skip-to-previous-section))
 
 ;; Clojure
 
