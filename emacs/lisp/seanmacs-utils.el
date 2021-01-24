@@ -211,5 +211,8 @@
 (use-package kube
   :straight (kube :type git :host github :repo "scsmithr/kube.el"))
 
+(use-package coder
+  :straight (coder :type git :host github :repo "cdr/coder.el"))
+
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

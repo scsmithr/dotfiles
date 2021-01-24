@@ -5,6 +5,7 @@
  ("cider" . "2a0f25b9414d784fcbef3f97995bc847db794599")
  ("clojure-mode" . "da9f1ec717dac1194404b4a4562dba6bd9a4ee3a")
  ("closql" . "c864c1fadfea4a05fff29cb60891b7a32ac88c78")
+ ("coder.el" . "c45bcad39209bbc45760dc6afac6b163c9fcf2eb")
  ("company-mode" . "d6df27f1652ae56178ce64b9c1022ec90c850e1a")
  ("dash.el" . "0f238a9a466879ee96e5db0482019453718f342d")
  ("deadgrep" . "baa352b982bded5fbca1ec9c14fec20e78b2089b")
