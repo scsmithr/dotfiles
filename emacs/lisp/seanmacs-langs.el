@@ -439,6 +439,10 @@ Start a new process if not alive."
 (use-package ess
   :straight t
   :defer t
+  :init
+  (defun sm/ess-r-comint-vars ()
+    (setq-local comint-scroll-to-bottom-on-output t)
+    (setq-local comint-prompt-read-only t))
   :config
   (setq ess-use-ido nil)
   ;; Make help buffer more evil like.
@@ -446,7 +450,8 @@ Start a new process if not alive."
   (evil-collection-define-key 'normal 'ess-help-mode-map
     (kbd "q") 'kill-current-buffer
     (kbd "]]") 'ess-skip-to-next-section
-    (kbd "[[") 'ess-skip-to-previous-section))
+    (kbd "[[") 'ess-skip-to-previous-section)
+  :hook ((inferior-ess-r-mode . sm/ess-r-comint-vars)))
 
 ;; Clojure
 
