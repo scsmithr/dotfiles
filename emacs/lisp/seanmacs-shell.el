@@ -32,6 +32,9 @@
    process-environment
    '()))
 
+(defun sm/disable-company ()
+    (company-mode -1))
+
 (use-package shrink-path
   :straight t
   :commands (shrink-path-prompt shrink-path-dirs))
@@ -64,9 +67,6 @@
         (ring-insert newest-cmd-ring (car (ring-elements eshell-history-ring)))
         (let ((eshell-history-ring newest-cmd-ring))
           (eshell-write-history eshell-history-file-name t)))))
-
-  (defun sm/eshell-disable-company ()
-    (company-mode -1))
 
   :config
   (defface sm/eshell-prompt-pwd '((t :inherit font-lock-constant-face))
@@ -167,7 +167,7 @@
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
-         (eshell-mode . sm/eshell-disable-company)
+         (eshell-mode . sm/disable-company)
          (eshell-pre-command . sm/eshell-append-history))
   :bind (("C-c s s" . eshell)
          ("C-c s n" . sm/eshell-new)
@@ -176,7 +176,9 @@
          ("M-<tab>" . completion-at-point)))
 
 (use-package shell
-  :config)
+  ;; built-in
+  :config
+  :hook ((shell-mode . sm/disable-company)))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here
