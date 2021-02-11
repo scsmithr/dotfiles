@@ -65,7 +65,7 @@
       (gofmt)))
   :config
   (setq gofmt-command "goimports"
-        gofmt-args '("-local=go.coder.com"))
+        gofmt-args '("-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
   (sm/set-goto-def-keybind 'go-mode-map #'lsp-find-definition)
 
   ;; Running golangci-lint can be slow. Enable on demand.
