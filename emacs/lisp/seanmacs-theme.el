@@ -70,9 +70,6 @@
        `(whitespace-newline ((t (:foreground ,fg-whitespace))))
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
-       ;; Fringe
-       `(fringe ((t (,@(modus-operandi-theme-fringe bg-inactive bg-active)
-                     :foreground ,fg-alt))))
        ;; Extend highlights
        `(mu4e-header-highlight-face ((t (:inherit modus-theme-hl-line :extend t))))
        ;; Company
