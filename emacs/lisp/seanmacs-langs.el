@@ -263,6 +263,22 @@ Start a new process if not alive."
     (interactive)
     (sm/comint-send-buffer (sm/iex-process)))
 
+  (defun sm/iex-recompile-project ()
+    (interactive)
+    (sm/comint-print-and-send (sm/iex-process) "recompile"))
+
+  (defun sm/elixir-current-module ()
+    (save-excursion
+      (save-match-data
+        (re-search-backward "defmodule \\([A-Z][A-Za-z0-9\._]+\\)\s+" nil t)
+        (match-string 1))))
+
+  (defun sm/iex-recompile-current-module ()
+    (interactive)
+    (let* ((module (sm/elixir-current-module))
+           (str (format "r %s" module)))
+      (sm/comint-print-and-send (sm/iex-process) str)))
+
   (defun sm/iex-project-run ()
     "Open an iex buffer for a project."
     (interactive)
@@ -279,7 +295,8 @@ Start a new process if not alive."
   :bind(:map elixir-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
              ("C-c r r" . lsp-rename)
-             ("C-c C-l" . sm/iex-send-buffer)
+             ("C-c C-r" . sm/iex-recompile-project)
+             ("C-c C-l" . sm/iex-recompile-current-module)
              ("C-c C-c" . sm/iex-send-region-or-line)))
 
 ;; Erlang
