@@ -279,6 +279,12 @@ Start a new process if not alive."
            (str (format "r %s" module)))
       (sm/comint-print-and-send (sm/iex-process) str)))
 
+  (defun sm/iex-alias-current-module ()
+    (interactive)
+    (let* ((module (sm/elixir-current-module))
+           (str (format "alias %s" module)))
+      (sm/comint-print-and-send (sm/iex-process) str)))
+
   (defun sm/iex-project-run ()
     "Open an iex buffer for a project."
     (interactive)
