@@ -120,7 +120,7 @@
 
   (defun eshell/pd ()
     (if (projectile-project-p)
-        (cd (projectile-project-root))
+        (eshell/cd (projectile-project-root))
       (user-error "Not in project")))
 
   (defun eshell/clear ()
