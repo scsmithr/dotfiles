@@ -35,7 +35,8 @@
   :straight t
   :config
   (setq prescient-filter-method '(literal regexp initialism fuzzy)
-        prescient-sort-length-enable nil))
+        prescient-sort-length-enable nil)
+  (prescient-persist-mode))
 
 (use-package selectrum-prescient
   :straight t
