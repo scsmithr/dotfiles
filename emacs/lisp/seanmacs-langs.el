@@ -384,9 +384,11 @@ Start a new process if not alive."
     (interactive)
     (sm/comint-send-region-or-line (sm/julia-process)))
 
-  (defun sm/julia-send-buffer ()
+  (defun sm/julia-include-buffer ()
     (interactive)
-    (sm/comint-send-buffer (sm/julia-process)))
+    (if-let ((path (buffer-file-name)))
+        (let ((str (format "include(\"%s\")" path)))
+          (sm/comint-print-and-send (sm/julia-process) str))))
 
   (defun sm/julia-send-function ()
     (interactive)
@@ -449,7 +451,7 @@ Start a new process if not alive."
              ("C-c C-d C-a" . sm/julia-apropos)
              :map julia-mode-map
              ("C-c C-a" . sm/julia-activate-project)
-             ("C-c C-l" . sm/julia-send-buffer)
+             ("C-c C-l" . sm/julia-include-buffer)
              ("C-c C-c" . sm/julia-send-region-or-line)
              ("C-c C-p" . sm/julia-send-function)
              ("C-c C-d d" . sm/julia-doc)
