@@ -36,10 +36,6 @@
   :defer t
   :commands (github-review-start github-review-forge-pr-at-point))
 
-(use-package evil-magit
-  :straight t
-  :after magit)
-
 (use-package diff-hl
   :straight t
   :config

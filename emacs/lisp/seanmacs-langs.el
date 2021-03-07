@@ -595,5 +595,9 @@ Start a new process if not alive."
   :defer t
   :commands (psci psci/load-module! psci/load-current-file!))
 
+(use-package agda2-mode
+  :straight t
+  :defer t)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

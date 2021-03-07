@@ -25,7 +25,7 @@
 (use-package selectrum
   :straight t
   :config
-  (setq selectrum-count-style 'current/matches
+  (setq selectrum-fix-vertical-window-height t
         selectrum-fix-minibuffer-height t)
   ;; Disable since selectrum ordering doesn't match what emacs suggests.
   (setq suggest-key-bindings nil)

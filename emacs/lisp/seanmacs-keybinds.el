@@ -59,6 +59,7 @@
   :straight t
   :after evil
   :config
+  (setq evil-collection-company-use-tng nil) ;; Compat with company 0.9.13
   (evil-collection-init))
 
 (use-package evil-surround
