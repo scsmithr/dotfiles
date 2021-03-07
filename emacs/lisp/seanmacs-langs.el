@@ -597,7 +597,17 @@ Start a new process if not alive."
 
 (use-package agda2-mode
   :straight t
-  :defer t)
+  :defer t
+  :init
+  (setq agda2-version "2.6.1.2")
+
+  (defun sm/set-input-agda ()
+    (require 'agda-input)
+    (set-input-method "Agda"))
+  :config
+  (setq agda2-highlight-face-groups 'default-faces)
+  :hook ((agda2-mode . sm/set-input-agda)
+         (agda2-mode . whitespace-turn-off)))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
