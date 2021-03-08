@@ -13,6 +13,9 @@
   (setq company-backends (delete 'company-dabbrev company-backends))
   (setq company-frontends '(company-preview-frontend))
   (setq tab-always-indent 'complete)
+
+  (unbind-key [return] company-active-map)
+  (unbind-key (kbd "RET") company-active-map)
   :hook ((after-init . global-company-mode))
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)))
