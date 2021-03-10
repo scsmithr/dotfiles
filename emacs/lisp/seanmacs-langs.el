@@ -605,6 +605,8 @@ Start a new process if not alive."
     (require 'agda-input)
     (set-input-method "Agda"))
   :config
+  (sm/set-goto-def-keybind 'agda2-mode-map #'agda2-goto-definition-keyboard)
+
   (setq agda2-highlight-face-groups 'default-faces)
   :hook ((agda2-mode . sm/set-input-agda)
          (agda2-mode . whitespace-turn-off)))
