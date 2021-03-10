@@ -92,7 +92,6 @@
  ("spinner" . "61f59fab44d22cd5add61a1baf3f0b88a5d829d7")
  ("straight.el" . "e1390a933b6f5a15079d6dec91eac97a17aad10c")
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
- ("tide" . "7f7334b42a40dd3093b830e887c36cdb4ef40858")
  ("transient" . "1e090b0cd4ea58c9fb5e807e4ebd7bdb9a7b66ba")
  ("treepy.el" . "3ac940e97f3d03e48ca9d7fcd74916a9b01c72f3")
  ("typescript.el" . "1043025d42602d560949955410d3afa2562130ee")

@@ -241,7 +241,8 @@
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
     "s" #'sm/deadgrep-change-search
-    "d" #'sm/deadgrep-change-dir))
+    "d" #'sm/deadgrep-change-dir
+    "e" #'deadgrep-edit-mode))
 
 (use-package ripgrep
   :straight t

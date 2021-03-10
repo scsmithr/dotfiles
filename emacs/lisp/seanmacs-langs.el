@@ -144,13 +144,6 @@ dir. Return nil otherwise."
     (when (and path (file-executable-p path))
       path)))
 
-(use-package tide
-  :straight t
-  :defer t
-  :commands tide-setup
-  :config
-  (sm/set-jump-property #'tide-jump-to-definition))
-
 (defun sm/use-node-modules-eslint ()
   (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
     (setq-local flycheck-javascript-eslint-executable eslint)))
@@ -171,11 +164,6 @@ dir. Return nil otherwise."
   :init
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
 
-  (defun sm/setup-tide ()
-    (tide-setup)
-    (tide-hl-identifier-mode +1)
-    (prettier-js-mode))
-
   (defun sm/enable-ts-eslint ()
     "Enable javascript-esline flycheck checker for typescript."
     (interactive)
@@ -186,12 +174,15 @@ dir. Return nil otherwise."
     (interactive)
     (flycheck-remove-next-checker 'typescript-tide 'javascript-eslint))
 
-  :hook ((typescript-mode . sm/setup-tide)
+  :config
+  (sm/set-goto-def-keybind 'typescript-mode-map #'lsp-find-definition)
+
+  :hook ((typescript-mode . lsp)
+         (typescript-mode . prettier-js-mode)
          (typescript-mode . sm/use-node-modules-eslint))
   :bind (:map typescript-mode-map
-              ("C-c C-d" . tide-documentation-at-point)
-              ("C-c r r" . tide-rename-symbol)
-              ("C-c r f" . tide-rename-file)))
+              ("C-c C-d" . lsp-describe-thing-at-point)
+              ("C-c r r" . lsp-rename)))
 
 (use-package web-mode
   :straight t
