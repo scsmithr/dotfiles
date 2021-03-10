@@ -167,12 +167,12 @@ dir. Return nil otherwise."
   (defun sm/enable-ts-eslint ()
     "Enable javascript-esline flycheck checker for typescript."
     (interactive)
-    (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
+    (flycheck-add-next-checker 'lsp 'javascript-eslint))
 
   (defun sm/disable-ts-eslint ()
     "Disable javascript-eslint flycheck checker for typescript."
     (interactive)
-    (flycheck-remove-next-checker 'typescript-tide 'javascript-eslint))
+    (flycheck-remove-next-checker 'lsp 'javascript-eslint))
 
   :config
   (sm/set-goto-def-keybind 'typescript-mode-map #'lsp-find-definition)
