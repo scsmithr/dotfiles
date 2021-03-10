@@ -5,27 +5,6 @@
 
 ;;; Code:
 
-(defun sm/dired-project-sidebar ()
-  "Open a dired at the root of the current project in the left frame."
-  (interactive)
-  (let* ((root (projectile-project-root))
-         (dir (if root root default-directory))
-         (buf-name (format "*Dired Project:%s*" dir))
-         (buf (if (get-buffer buf-name)
-                  (get-buffer buf-name)
-                (dired-noselect dir))))
-    (sm/display-buffer-in-side-window-select
-     buf `((side . left)
-           (slot . -1)
-           (window-width . 25)
-           (window-parameters . ((mode-line-format . (" "
-                                                      mode-line-buffer-identification))))))
-    (with-current-buffer buf
-      (dired-unadvertise dir)
-      (dired-hide-details-mode 1)
-      (rename-buffer buf-name)
-      (setq-local window-size-fixed 'width))))
-
 (defun sm/rename-buffer-special (newname)
   "Rename buffer to NEWNAME, wrapping NEWNAME in '*' characters when original name has them."
   (interactive (list (read-string "Rename buffer (to new name): ")))
