@@ -29,7 +29,7 @@
   :straight t
   :config
   (setq selectrum-fix-vertical-window-height t
-        selectrum-fix-minibuffer-height t)
+        selectrum-count-style 'current/matches)
   ;; Disable since selectrum ordering doesn't match what emacs suggests.
   (setq suggest-key-bindings nil)
   (selectrum-mode +1))
