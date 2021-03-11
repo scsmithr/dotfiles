@@ -5,17 +5,6 @@
 
 ;;; Code:
 
-(defun seanmacs/async-shell-buffer (&rest args)
-  "Run PROGRAM with ARGS async."
-  (interactive)
-  (let* ((command (mapconcat #'(lambda (a)
-                                 (if (numberp a)
-                                     (number-to-string a)
-                                   a))
-                             args " "))
-         (buf-name (concat "*Async: " command "*")))
-    (async-shell-command command buf-name)))
-
 (defun seanmacs/listify-env-vars (env val &rest rest)
   "Create a list of environment variables and values suitable to use in the shell."
   (let ((list '()))
@@ -108,7 +97,6 @@
     (eshell "new"))
 
   (defalias 'eshell/ff 'find-file)
-  (defalias 'eshell/async 'seanmacs/async-shell-buffer)
 
   (defun eshell/d (&optional path)
     (dired (or path ".")))

@@ -29,8 +29,6 @@
         '(;; selecting bottom side window
           ("\\*\
 \\(Flycheck errors\
-\\|ripgrep-search\
-\\|grep\
 \\|docker\
 \\|kube\
 \\|xref\
@@ -47,7 +45,6 @@
 \\|Help\
 \\|Warnings\
 \\|lsp-help\
-\\|tide-documentation\
 \\|company-documentation\
 \\|Gofmt Errors\
 \\|prettier errors\
