@@ -34,7 +34,11 @@
           (tags . " %-12:c")
           (search . " %-12:c %b"))
         org-agenda-breadcrumbs-separator " > "
-        org-agenda-search-view-always-boolean t)
+        org-agenda-search-view-always-boolean t
+        org-show-context-detail '((agenda . lineage)
+                                  (bookmark-jump . lineage)
+                                  (isearch . lineage)
+                                  (default . ancestors)))
 
   ;; Enable basic movement keys in agenda.
   (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
