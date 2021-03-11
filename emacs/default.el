@@ -66,7 +66,6 @@
  ("modus-themes" . "b020592e1a96d6e00d7d03faf9c293ec6081d49c")
  ("nix-mode" . "0023fc5b100ec0c939ffe699d1a7d1afcf1f417a")
  ("ob-async" . "de1cd6c93242a4cb8773bbe115b7be3d4dd6b97e")
- ("ob-go" . "2067ed55f4c1d33a43cb3f6948609d240a8915f5")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
  ("org" . "4d463ee4baf8a7ce8b7c633149a9452bc70ef557")
  ("otp" . "b8cc6444878959dff71f55e10637d27e7106dfb7")
