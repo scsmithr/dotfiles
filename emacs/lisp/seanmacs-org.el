@@ -54,6 +54,7 @@
         org-imenu-depth 9
         org-outline-path-complete-in-steps nil ;; Show entire path when refiling.
         org-confirm-babel-evaluate nil ;; I trust myself.
+        org-catch-invisible-edits 'show-and-error ;; I don't trust myself.
         org-fontify-done-headline nil
         org-hide-emphasis-markers nil
         org-src-tab-acts-natively t
@@ -95,7 +96,7 @@
          ("C-c t" . org-toggle-narrow-to-subtree)))
 
 (use-package ob
-  :after (org ob-http ob-go gnuplot ob-async)
+  :after (org ob-http gnuplot ob-async)
   :config
 
   (setq org-plantuml-exec-mode 'plantuml)
@@ -103,16 +104,13 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell      . t)
-     (js         . t)
      (emacs-lisp . t)
      (lisp       . t)
-     (haskell    . t)
      (sql        . t)
      (http       . t)
      (gnuplot    . t)
      (calc       . t)
      (sql        . t)
-     (go         . t)
      (python     . t)
      (R          . t)
      (plantuml   . t)))
@@ -122,9 +120,6 @@
   :straight t)
 
 (use-package gnuplot
-  :straight t)
-
-(use-package ob-go
   :straight t)
 
 (use-package ob-async
