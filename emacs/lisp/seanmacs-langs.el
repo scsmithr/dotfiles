@@ -602,5 +602,11 @@ Start a new process if not alive."
   :hook ((agda2-mode . sm/set-input-agda)
          (agda2-mode . whitespace-turn-off)))
 
+(use-package plantuml-mode
+  :straight t
+  :defer t
+  :config
+  (setq plantuml-default-exec-mode 'executable))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

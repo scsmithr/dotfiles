@@ -73,6 +73,7 @@
  ("parseclj" . "eff941126859bc9e949eae5cd6c2592e731629f2")
  ("parseedn" . "90cfe3df51b96f85e346f336c0a0ee6bf7fee508")
  ("pkg-info" . "76ba7415480687d05a4353b27fea2ae02b8d9d61")
+ ("plantuml-mode" . "ea45a13707abd2a70df183f1aec6447197fc9ccc")
  ("prescient.el" . "b6da466e552a710a9362c73a3c1c265984de9790")
  ("prettier-emacs" . "e9b73e81d3e1642aec682195f127a42dfb0b5774")
  ("projectile" . "f3f8a6505d50ca0f03f7deef99a1c8aa3bcd9e58")

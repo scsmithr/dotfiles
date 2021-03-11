@@ -98,6 +98,8 @@
   :after (org ob-http ob-go gnuplot ob-async)
   :config
 
+  (setq org-plantuml-exec-mode 'plantuml)
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell      . t)
@@ -112,7 +114,8 @@
      (sql        . t)
      (go         . t)
      (python     . t)
-     (R          . t)))
+     (R          . t)
+     (plantuml   . t)))
   :hook ((org-babel-after-execute . org-display-inline-images)))
 
 (use-package ob-http
