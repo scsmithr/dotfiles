@@ -51,6 +51,7 @@
         ;; I prefer having blank lines between subtrees when unfolded, but
         ;; no blank lines when folded.
         org-blank-before-new-entry (quote ((heading . always) (plain-list-item . always)))
+        org-cycle-separator-lines 0 ;; Never show blank lines.
         org-enforce-todo-dependencies t
         org-imenu-depth 9
         org-outline-path-complete-in-steps nil ;; Show entire path when refiling.

@@ -205,6 +205,14 @@
   ;; built-in
   :config)
 
+(use-package compile
+  ;; built-in
+  :init
+  (require 'ansi-color)
+  (defun sm/colorize-compile-buffer ()
+    (ansi-color-apply-on-region compilation-filter-start (point)))
+  :hook ((compilation-filter . sm/colorize-compile-buffer)))
+
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
 
