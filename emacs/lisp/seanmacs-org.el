@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(defvar seanmacs/notes-dir "~/syncthing/notes/"
+(defvar sm/notes-dir "~/syncthing/notes/"
   "Directory containging all of my notes (including org files).")
 
 (use-package org
@@ -15,32 +15,10 @@
   ;; See: https://gitlab.com/protesilaos/modus-themes/-/issues/95
   (setq org-priority-regexp ".*?\\(\\[#\\([A-Z0-9]+\\)\\]\\) ?")
 
-  (setq org-agenda-files (list seanmacs/notes-dir)
-        org-agenda-restore-windows-after-quit t
-        org-agenda-span 3
-        org-agenda-window-setup 'current-window
-        ;; Default with 'require-timed' removed. I always want to see the time
-        ;; grid for today.
-        org-agenda-time-grid
-        '((daily today)
-          (800 1000 1200 1400 1600 1800 2000)
-          "......"
-          "----------------")
-        ;; Mostly default prefixes. Removes icon strings, and adds breadcrumbs
-        ;; (%b) to the search view.
-        org-agenda-prefix-format
-        '((agenda . " %-12:c%?-12t% s")
-          (todo . " %-12:c")
-          (tags . " %-12:c")
-          (search . " %-12:c %b"))
-        org-agenda-breadcrumbs-separator " > "
-        org-agenda-search-view-always-boolean t
-        org-show-context-detail '((default . lineage)))
-
   ;; Enable basic movement keys in agenda.
   (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
 
-  (setq org-default-notes-file (concat seanmacs/notes-dir "refile.org")
+  (setq org-default-notes-file (concat sm/notes-dir "refile.org")
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
         org-refile-targets '((org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path t
@@ -64,8 +42,51 @@
         ;; both the org buffer and the source at the same time.
         org-src-window-setup 'other-window)
 
+  (setq org-use-fast-todo-selection 'expert
+        org-fast-tag-selection-single-key 'expert)
+
   (setq org-todo-keywords
-        '((sequence "TODO" "IN-PROGRESS" "|" "DONE" "CANCELED")))
+        '((sequence "TODO(t)" "NEXT(n)" "HOLD(h)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+
+  (setq org-agenda-custom-commands
+        '(("d" "Day overview"
+           ((agenda ""
+                    ((org-agenda-span 'day)))
+            (todo "IN-PROGRESS"
+                  ((org-agenda-overriding-header "In progress")
+                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Up next")
+                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+            (tags "CLOSED>=\"<today>\""
+                  ((org-agenda-overriding-header "Completed Today")))))
+          ("r" "Refile overview"
+           ((tags-todo "refile"
+                       ((org-agenda-overriding-header "Refile")
+                        (org-agenda-prefix-format "%i %-12:c [%-5e] ")))))))
+
+  (setq org-agenda-files (list sm/notes-dir)
+        org-agenda-restore-windows-after-quit t
+        org-agenda-span 'fortnight
+        org-agenda-window-setup 'current-window
+        ;; Default with 'require-timed' removed. I always want to see the time
+        ;; grid for today.
+        org-agenda-time-grid
+        '((daily today)
+          (800 1000 1200 1400 1600 1800 2000)
+          "......"
+          "----------------")
+        org-agenda-current-time-string "** now **"
+        ;; Mostly default prefixes. Removes icon strings, and adds breadcrumbs
+        ;; (%b) to the search view.
+        org-agenda-prefix-format
+        '((agenda . " %-12:c%?-12t% s")
+          (todo . " %-12:c")
+          (tags . " %-12:c")
+          (search . " %-12:c %b"))
+        org-agenda-breadcrumbs-separator " > "
+        org-agenda-search-view-always-boolean t
+        org-show-context-detail '((default . lineage)))
 
   (setq org-priority-highest ?A
         org-priority-lowest ?C
@@ -73,6 +94,9 @@
 
   (setq org-capture-templates
         `(
+          ("a" "Annotate" entry (file+headline "" "Notes")
+           (file ,(concat org-template-directory "/annotate"))
+           :empty-lines 1)
           ("n" "Note" entry (file+headline "" "Notes")
            (file ,(concat org-template-directory "/note"))
            :empty-lines 1)
@@ -88,12 +112,20 @@
   ;; Embedded latex images are a bit small by default.
   (plist-put org-format-latex-options :scale 1.7)
 
+  (defun sm/save-agenda-buffers ()
+    "Save all org agenda files."
+    (interactive)
+    (save-some-buffers t (lambda ()
+                           (when (and (string-equal major-mode "org-mode")
+                                      (string-prefix-p (expand-file-name sm/notes-dir)
+                                                       (buffer-file-name)))
+                             t))))
+
+  (advice-add 'org-refile :after (lambda (&rest _) (sm/save-agenda-buffers)))
+
   :hook ((org-capture-mode . evil-insert-state))
-  :bind (("C-c o o" . org-capture)
-         ("C-c o a" . org-agenda)
-         ("C-c o l" . org-agenda-list)
-         ("C-c o t" . org-todo-list)
-         ("C-c o s" . org-search-view)
+  :bind (("C-c c" . org-capture)
+         ("C-c o" . org-agenda)
          :map org-mode-map
          ("C-c t" . org-toggle-narrow-to-subtree)))
 
