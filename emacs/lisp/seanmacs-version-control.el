@@ -27,14 +27,7 @@
   :straight t
   :after magit
   :config
-  (setq forge-pull-notifications nil)
-  (transient-append-suffix 'forge-dispatch "c u"
-    '("c r" "review pull request" github-review-forge-pr-at-point)))
-
-(use-package github-review
-  :straight t
-  :defer t
-  :commands (github-review-start github-review-forge-pr-at-point))
+  (setq forge-pull-notifications nil))
 
 (use-package diff-hl
   :straight t
