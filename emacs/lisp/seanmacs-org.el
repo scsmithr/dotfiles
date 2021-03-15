@@ -40,7 +40,8 @@
         org-src-tab-acts-natively t
         ;; Keep layout, just use different window than current. Useful to see
         ;; both the org buffer and the source at the same time.
-        org-src-window-setup 'other-window)
+        org-src-window-setup 'other-window
+        org-log-into-drawer t)
 
   (setq org-use-fast-todo-selection 'expert
         org-fast-tag-selection-single-key 'expert)
