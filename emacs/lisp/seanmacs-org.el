@@ -64,6 +64,11 @@
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
             (tags "CLOSED>=\"<today>\""
                   ((org-agenda-overriding-header "Completed Today")))))
+          ("u" "Unscheduled"
+           ((todo ""
+                  ((org-agenda-overriding-header "Unscheduled")
+                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")
+                   (org-agenda-todo-ignore-scheduled 'all)))))
           ("r" "Refile overview"
            ((tags-todo "refile"
                        ((org-agenda-overriding-header "Refile")
