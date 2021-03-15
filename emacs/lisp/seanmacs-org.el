@@ -41,7 +41,8 @@
         ;; Keep layout, just use different window than current. Useful to see
         ;; both the org buffer and the source at the same time.
         org-src-window-setup 'other-window
-        org-log-into-drawer t)
+        org-log-into-drawer t
+        org-global-properties '(("Effort_ALL" . "5min 15min 30min 1h 2h 4h 8h 1d")))
 
   (setq org-use-fast-todo-selection 'expert
         org-fast-tag-selection-single-key 'expert)
