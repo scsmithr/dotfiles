@@ -54,8 +54,7 @@
         '(("d" "Day overview"
            ((agenda ""
                     ((org-agenda-span 'day)
-                     (org-agenda-skip-function
-                      '(org-agenda-skip-entry-if 'deadline))))
+                     (org-deadline-warning-days 1)))
             (todo "IN-PROGRESS"
                   ((org-agenda-overriding-header "In progress")
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
