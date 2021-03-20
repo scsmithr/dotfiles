@@ -64,7 +64,11 @@
         lsp-eldoc-render-all nil
         lsp-prefer-capf t
         lsp-response-timeout 2
-        lsp-modeline-code-actions-segments '(count)))
+        lsp-modeline-code-actions-segments '(count))
+
+  ;; Don't show lightbulb icon in modeline. There's a variable to set this in an
+  ;; upcoming version.
+  (advice-add 'lsp-modeline--code-actions-icon :filter-return (lambda (_) "")))
 
 (use-package lsp-ui
   :straight t
