@@ -18,6 +18,7 @@
         evil-split-window-below t
         evil-shift-round nil
         evil-want-C-u-scroll t
+        evil-want-fine-undo t
         evil-want-keybinding nil
         evil-undo-system 'undo-fu)
 
