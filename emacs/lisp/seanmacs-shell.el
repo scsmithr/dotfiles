@@ -88,7 +88,7 @@
               (unless (file-remote-p default-directory)
                 (propertize (sm/eshell-current-git-branch)
                             'face 'sm/eshell-prompt-git-branch))
-              (propertize " >" 'face (if (zerop eshell-last-command-status) 'success 'error))
+              (propertize " $" 'face (if (zerop eshell-last-command-status) 'success 'error))
               ;; Needed for the input text to not have prompt face.
               (propertize " " 'face 'default))))
 
@@ -141,7 +141,7 @@
         eshell-save-history-on-exit nil ;; This is handled elsewhere.
         eshell-cmpl-cycle-completions nil
         eshell-prompt-function #'sm/eshell-default-prompt
-        eshell-prompt-regexp "^.* > ")
+        eshell-prompt-regexp "^.* \\$ ")
 
   (add-hook 'eshell-mode-hook
             (lambda ()
