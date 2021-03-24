@@ -101,7 +101,7 @@
   :defer t
   :config
   (setq haskell-stylish-on-save t
-        haskell-mode-stylish-haskell-path "brittany")
+        haskell-mode-stylish-haskell-path "ormolu")
   (sm/set-goto-def-keybind 'haskell-mode-map #'haskell-mode-jump-to-def)
   :hook ((haskell-mode . interactive-haskell-mode)))
 
