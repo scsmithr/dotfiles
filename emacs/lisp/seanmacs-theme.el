@@ -41,10 +41,7 @@
   (setq x-underline-at-descent-line t)
 
   (setq modus-themes-operandi-color-overrides
-        '((fg-main                 . "#26272d")
-          (bg-main                 . "#fcfcfc")
-          (fg-alt                  . "#808080")
-          (fg-whitespace           . "#dadada")
+        '((fg-whitespace           . "#dadada")
           (bg-whitespace           . "#fcfcfc")
           (fg-window-divider-inner . "#dadada")
           (fg-window-divider-outer . "#aaaaaa")))
@@ -65,8 +62,8 @@
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
        ;; Company
-       `(company-preview ((t (:inherit (modus-theme-nuanced-magenta) :foreground ,magenta))))
-       `(company-preview-common ((t (:inherit (modus-theme-nuanced-blue) :foreground ,blue))))
+       `(company-preview ((t (:background ,bg-hl-line :foreground ,fg-alt))))
+       `(company-preview-common ((t (:background ,bg-hl-line :foreground ,blue))))
        ;; Eshell
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))))
 
