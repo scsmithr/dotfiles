@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: comment (/** ... */)
+# name: block comment (/** ... */)
 # key: /**
 # --
 /**
  * $0
-*/
+ */

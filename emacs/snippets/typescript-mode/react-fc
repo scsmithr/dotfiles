@@ -2,6 +2,8 @@
 # name: React functional component boilerplate
 # key: fc
 # --
+import React from "react"
+
 interface $1Props {}
 
 /**

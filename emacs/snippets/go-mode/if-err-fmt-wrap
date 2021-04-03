@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: if error fmt wrap
+# key: ief
+# --
+if err != nil {
+  return $0 fmt.Errorf("$1: %w", err)
+}
