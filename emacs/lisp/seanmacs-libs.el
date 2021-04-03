@@ -17,6 +17,28 @@
     (apply fn args)
     (bury-buffer buf)))
 
+(defun sm/format-github-url (origin branch filepath beg &optional end)
+  (let* ((repo
+          (thread-last origin
+            (s-chop-suffixes '("/" ".git"))
+            (s-chop-prefixes '("git@github.com:" "https://github.com/"))))
+         (url (format "https://github.com/%s/tree/%s/%s#L%d" repo branch filepath beg)))
+    (if end
+        (concat url (format "-L%d" end))
+      url)))
+
+(defun sm/browse-github-url-at-point (beg end)
+  "Open file at point on github using BEG and END to link to the correct section of code."
+  (interactive (if (use-region-p)
+                   (list (line-number-at-pos (region-beginning))
+                         (line-number-at-pos (region-end)))
+                 (list (line-number-at-pos) nil)))
+  (when (magit-toplevel)
+    (let ((origin (magit-get "remote.origin.url"))
+          (branch (magit-get-current-branch))
+          (filepath (s-chop-prefix (magit-toplevel) (buffer-file-name))))
+      (browse-url (sm/format-github-url origin branch filepath beg end)))))
+
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here
 
