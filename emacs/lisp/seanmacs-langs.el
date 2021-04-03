@@ -101,7 +101,8 @@
   :defer t
   :config
   (setq haskell-stylish-on-save t
-        haskell-mode-stylish-haskell-path "ormolu")
+        haskell-mode-stylish-haskell-path "ormolu"
+        haskell-interactive-popup-errors nil)
   (sm/set-goto-def-keybind 'haskell-mode-map #'haskell-mode-jump-to-def)
   :hook ((haskell-mode . interactive-haskell-mode)))
 
