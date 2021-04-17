@@ -39,6 +39,18 @@
           (filepath (s-chop-prefix (magit-toplevel) (buffer-file-name))))
       (browse-url (sm/format-github-url origin branch filepath beg end)))))
 
+(defun sm/unfill-paragraph ()
+  "Turn a paragraph into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
+(defun sm/unfill-region (beg end)
+  "Unfill a region, joining each text paragraph into a single line."
+  (interactive "*r")
+  (let ((fill-column (point-max)))
+    (fill-region beg end)))
+
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here
 
