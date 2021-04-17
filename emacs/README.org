@@ -6,6 +6,12 @@ Some notes about my emacs configuration.
    
 Email is handled through ~mu4e~ and ~mbsync~.
 
+Initializing mu you can be done via:
+#+BEGIN_SRC
+mu init -m .mail --my-address="email"
+mu index
+#+END_SRC
+
 Example ~.mbsyncrc~:
 #+BEGIN_SRC 
 IMAPAccount personal
@@ -29,7 +35,7 @@ Channel personal
 Master :personal-remote:
 Slave :personal-local:
 # Include everything except some folders that create duplicates
-Patterns * ![Gmail]/Important ![Gmail]/All\ Mail
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
 # Automatically create missing mailboxes, both locally and on the server
 Create Both
 # Save the synchronization state files in the relevant directory

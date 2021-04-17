@@ -11,7 +11,6 @@
   :config
   ;; General configuration with mbsync.
   (setq user-full-name "Sean Smith"
-        mu4e-maildir "~/.mail"
         mu4e-attachment-dir "~/.mail/.attachments"
         mu4e-change-filenames-when-moving t)
 
@@ -28,7 +27,7 @@
         mu4e-index-lazy-check t)
 
   ;; Seems to properly quote in gmail.
-  (setq message-citation-line-format "\nOn %e %B %Y %R, %f wrote:\n"
+  (setq message-citation-line-format "\nOn %a, %B %d, %Y at %I:%M %p %f wrote:\n"
         message-citation-line-function 'message-insert-formatted-citation-line)
 
   (setq mu4e-completing-read-function 'completing-read
@@ -53,15 +52,18 @@
                                  ("/work/INBOX"     . ?w)))
 
   (setq mu4e-bookmarks
-        '(("flag:unread"
-           "Unread messages"
-           ?u)
-          ("date:today..now"
-           "Today's messages"
-           ?t)
-          ("subject:cdr or from:coder.com or from:clubhouse.io"
-           "Coder messages"
-           ?c)))
+        '((:query "flag:unread and date:14d..now"
+           :name "Unread messages"
+           :key ?u)
+          (:query "date:today..now"
+           :name "Today's messages"
+           :key ?t)
+          (:query "subject:cdr or from:coder.com or from:clubhouse.io"
+           :name "Coder messages"
+           :key ?c)
+          (:query "flag:flagged"
+           :name "Flagged messages"
+           :key ?f)))
 
   ;; Remove mailing list, add account.
   (setq mu4e-headers-fields
@@ -83,17 +85,15 @@
                    (let ((maildir (mu4e-message-field msg :maildir)))
                      (format "%s" (substring maildir 1 (string-match-p "/" maildir 1)))))))
 
-  (defun gmail-fix-flags (mark msg)
+  (defun sm/gmail-fix-flags (mark msg)
     (pcase mark
       (`trash  (mu4e-action-retag-message msg "-\\Inbox,+\\Trash,-\\Drafts"))
       (`refile (mu4e-action-retag-message msg "-\\Inbox"))
       (`flag   (mu4e-action-retag-message msg "+\\Starred"))
       (`unflag (mu4e-action-retag-message msg "-\\Starred"))))
-  (add-hook 'mu4e-mark-execute-pre-hook #'gmail-fix-flags)
+  (add-hook 'mu4e-mark-execute-pre-hook #'sm/gmail-fix-flags)
 
-  (defun set-email-account (label letvars &optional default-p)
-    (when-let (address (cdr (assq 'user-mail-address letvars)))
-      (add-to-list 'mu4e-user-mail-address-list address))
+  (defun sm/set-email-account (label letvars &optional default-p)
     (setq mu4e-contexts
           (cl-loop for context in mu4e-contexts
                    unless (string= (mu4e-context-name context) label)
@@ -113,7 +113,7 @@
         (setq-default mu4e-context-current context))
       context))
 
-  (set-email-account "personal"
+  (sm/set-email-account "personal"
                      '((mu4e-sent-folder . "/personal/[Gmail]/Sent Mail")
                        (mu4e-drafts-folder . "/personal/[Gmail]/Drafts")
                        (mu4e-trash-folder . "/personal/[Gmail]/Trash")
@@ -124,7 +124,7 @@
                        (user-mail-address . "scsmithr@gmail.com"))
                      t)
 
-  (set-email-account "work"
+  (sm/set-email-account "work"
                      '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
                        (mu4e-drafts-folder . "/work/[Gmail]/Drafts")
                        (mu4e-trash-folder . "/work/[Gmail]/Trash")
@@ -135,20 +135,9 @@
                        (user-mail-address . "sean@coder.com"))
                      t)
 
-  (defun sm/mu4e-fetch-and-index ()
-    "Fetch emails and reindex."
-    (interactive)
-    (let ((buf "*mu4e fetch*")
-          (cmd "mbsync -Va"))
-      (async-shell-command cmd buf)
-      (mu4e-update-index)))
-
   :hook ((mu4e-compose-mode . turn-off-auto-fill)
          (mu4e-compose-mode . flyspell-mode))
-  :bind (("C-c a m" . mu4e)
-         :map mu4e-headers-mode-map
-         ("C-c C-c r" . mu4e-update-index)
-         ("C-c C-c u" . sm/mu4e-fetch-and-index)))
+  :bind (("C-c a m" . mu4e)))
 
 (use-package org-mu4e
   ;; Provided by mu system package.
