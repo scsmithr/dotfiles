@@ -37,7 +37,7 @@
 (use-package prescient
   :straight t
   :config
-  (setq prescient-filter-method '(literal regexp initialism)
+  (setq prescient-filter-method '(literal regexp initialism fuzzy)
         prescient-sort-length-enable nil
         prescient-sort-full-matches-first t)
   (prescient-persist-mode))
