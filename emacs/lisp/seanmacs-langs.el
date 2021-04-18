@@ -317,12 +317,13 @@ Start a new process if not alive."
 
 ;; Common lisp
 
-(use-package slime
+(use-package sly
   :straight t
   :defer t
   :config
   (setq inferior-lisp-program "sbcl"
-        slime-contribs '(slime-fancy)))
+        sly-contribs '(sly-fancy))
+  (sm/set-jump-property #'sly-edit-definition))
 
 ;; Scheme
 

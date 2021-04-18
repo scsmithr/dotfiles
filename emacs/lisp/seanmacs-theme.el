@@ -67,7 +67,10 @@
        `(company-preview ((t (:background ,bg-hl-line :foreground ,fg-alt))))
        `(company-preview-common ((t (:background ,bg-hl-line :foreground ,blue))))
        ;; Eshell
-       `(eshell-ls-directory ((t (:foreground ,blue-alt)))))))
+       `(eshell-ls-directory ((t (:foreground ,blue-alt)))))
+
+      (with-eval-after-load 'sly-mrepl
+        (face-attr 'sly-mrepl-output-face :foreground cyan))))
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
