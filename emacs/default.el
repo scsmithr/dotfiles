@@ -54,7 +54,7 @@
  ("kube.el" . "6807b76532ec6deebb60cdc2e93281a1c40ca865")
  ("lean-mode" . "5c50338ac149ca5225fc737be291db1f63c45f1d")
  ("let-alist" . "6708ec0b2e6dff80ff5b64698aa009d9070a2ed2")
- ("lsp-mode" . "2bb7ce567898fffaa77ab673150032e17800d1f0")
+ ("lsp-mode" . "5ca68ed5b9295f298fa45e3cc0f4901a7c471c46")
  ("lsp-ui" . "efae00eb6a733d5271cb33e9d92c3d8c2fa98dde")
  ("magit" . "d14c082354c796dd363550a03463e9382b7cfbf6")
  ("markdown-mode" . "ac9ea26b941eef512a3c206375a6404625c229ed")
