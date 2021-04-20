@@ -144,6 +144,7 @@
           ("https://blog.cryptographyengineering.com/feed/" crypto blog)
           ("https://marc-b-reynolds.github.io/feed.xml" dev blog math)
           ("https://doisinkidney.com/rss.xml" math dev blog)
+          ("https://buttondown.email/hillelwayne/rss" math dev newsletter)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
