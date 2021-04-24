@@ -74,7 +74,7 @@
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))
 
       (with-eval-after-load 'sly-mrepl
-        (face-attr 'sly-mrepl-output-face :foreground cyan))))
+        (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))))
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
