@@ -68,7 +68,7 @@
         lsp-modeline-code-actions-segments '(count)
         lsp-file-watch-threshold nil
         lsp-headerline-breadcrumb-enable nil
-        lsp-progress-prefix "*")
+        lsp-progress-prefix "*** ")
 
   ;; Ignore next
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.next\\'"))
