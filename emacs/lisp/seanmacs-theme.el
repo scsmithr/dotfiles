@@ -5,15 +5,19 @@
 
 ;;; Code:
 
-(defun face-attr (face &rest args)
-  (apply #'set-face-attribute face nil args))
-
-(defun reset-face (face)
-  (apply #'face-spec-reset-face face nil))
+(defun sm/setup-fonts (&optional frame)
+  "Setup fonts for FRAME."
+  (when (and frame (display-graphic-p frame))
+    (set-face-attribute 'default nil :family "Fira Mono" :height 110 :weight 'normal)
+    (set-face-attribute 'variable-pitch nil :family "Fira Sans" :height 120 :weight 'light)
+    ;; Mostly for missing unicode.
+    (set-fontset-font "fontset-default" nil (font-spec :name "Fira Code"))
+    (set-fontset-font "fontset-default" nil (font-spec :name "Noto Sans Symbols"))))
 
 ;; Set fonts.
-(add-to-list 'default-frame-alist `(font . "Fira Mono-11"))
-(face-attr 'variable-pitch :weight 'light :family "Fira Sans" :height 130)
+(if (display-graphic-p)
+    (sm/setup-fonts (selected-frame))
+  (add-hook 'after-make-frame-functions #'sm/setup-fonts))
 
 (use-package minions
   :straight t
@@ -50,9 +54,9 @@
 
   (defun sm/customize-modus-operandi ()
     (modus-themes-with-colors
-      (face-attr 'success :foreground green :weight 'normal)
-      (face-attr 'warning :foreground yellow :weight 'normal)
-      (face-attr 'error :foreground red :weight 'normal)
+      (set-face-attribute 'success nil :foreground green :weight 'normal)
+      (set-face-attribute 'warning nil :foreground yellow :weight 'normal)
+      (set-face-attribute 'error nil :foreground red :weight 'normal)
 
       (custom-theme-set-faces
        'modus-operandi
