@@ -66,12 +66,23 @@
         lsp-prefer-capf t
         lsp-response-timeout 2
         lsp-modeline-code-actions-segments '(count)
-        lsp-file-watch-threshold nil
         lsp-headerline-breadcrumb-enable nil
         lsp-progress-prefix "*** ")
 
+  ;; Never warn me about attempting to watch a large directory, but also disable
+  ;; watching altogether. The regexps for ignoring watched directories is a bit
+  ;; hard to control for larger repos with submodules. Also, gopls *will* spam
+  ;; when directories change messages causing emacs to grind to a halt,
+  ;; particularly on git checkouts. I would rather have checkouts be fast, and
+  ;; call `lsp-workspace-restart' if needed.
+  (setq lsp-file-watch-threshold nil
+        lsp-enable-file-watchers nil)
+
+  ;; These changes only matter if file watching is enabled.
   ;; Ignore next
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.next\\'"))
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.next\\'")
+  ;; Ignore go module vendor
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'"))
 
 (use-package lsp-ui
   :straight t
