@@ -69,9 +69,11 @@
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")
                    (org-agenda-todo-ignore-scheduled 'all)))))
           ("r" "Refile overview"
-           ((tags-todo "refile"
-                       ((org-agenda-overriding-header "Refile")
-                        (org-agenda-prefix-format "%i %-12:c [%-5e] ")))))))
+           ((tags-todo "refile+task"
+                       ((org-agenda-overriding-header "Tasks")
+                        (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+            (tags "refile+note+LEVEL=2"
+                  ((org-agenda-overriding-header "Notes")))))))
 
   (setq org-agenda-files (list sm/notes-dir)
         org-agenda-restore-windows-after-quit t
