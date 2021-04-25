@@ -143,7 +143,8 @@
   :after (org ob-http gnuplot ob-async)
   :config
 
-  (setq org-plantuml-exec-mode 'plantuml)
+  (setq org-plantuml-exec-mode 'plantuml
+        org-babel-lisp-eval-fn #'sly-eval)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
