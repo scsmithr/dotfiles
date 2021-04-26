@@ -8,11 +8,16 @@
 (defun sm/setup-fonts (&optional frame)
   "Setup fonts for FRAME."
   (when (and frame (display-graphic-p frame))
+    (message "Setting fonts")
     (set-face-attribute 'default nil :family "Fira Mono" :height 110 :weight 'normal)
     (set-face-attribute 'variable-pitch nil :family "Fira Sans" :height 120 :weight 'light)
     ;; Mostly for missing unicode.
-    (set-fontset-font "fontset-default" nil (font-spec :name "Fira Code"))
-    (set-fontset-font "fontset-default" nil (font-spec :name "Noto Sans Symbols"))))
+    (set-fontset-font t 'unicode (font-spec :name "Fira Mono"))
+    (set-fontset-font t 'unicode (font-spec :name "Fira Code") nil 'append)
+    (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans Mono") nil 'append)
+    (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans") nil 'append)
+    ;; TODO: Handle mathematical scripts
+    ))
 
 ;; Set fonts.
 (if (display-graphic-p)
