@@ -9,6 +9,7 @@
   "Setup fonts for FRAME."
   (when (and frame (display-graphic-p frame))
     (message "Setting fonts")
+    (set-frame-font (font-spec :name "Fira Mono") t t)
     (set-face-attribute 'default nil :family "Fira Mono" :height 110 :weight 'normal)
     (set-face-attribute 'variable-pitch nil :family "Fira Sans" :height 120 :weight 'light)
     ;; Mostly for missing unicode.
