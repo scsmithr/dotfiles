@@ -139,6 +139,13 @@
          :map org-mode-map
          ("C-c t" . org-toggle-narrow-to-subtree)))
 
+(use-package org-crypt
+  :after org
+  :config
+  (setq org-crypt-key "C201D03C1BB3A68E"
+        org-crypt-tag-matcher "encrypt")
+  (org-crypt-use-before-save-magic))
+
 (use-package ob
   :after (org ob-http gnuplot ob-async)
   :config

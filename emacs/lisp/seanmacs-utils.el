@@ -8,7 +8,8 @@
 (use-package epg
   ;; built-in
   :init
-  (setq epg-pinentry-mode 'loopback))
+  (setq auth-sources '("~/.authinfo.gpg" "~/.netrc.gpg")
+        epg-pinentry-mode 'loopback))
 
 ;; Quickly generate lang formatters.
 (use-package reformatter
