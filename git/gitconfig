@@ -1,6 +1,7 @@
 [user]
 	email = scsmithr@gmail.com
 	name = Sean Smith
+	signingkey = BA3E3A399960AD0D
 [commit]
     gpgsign = true
 [core]
