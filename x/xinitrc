@@ -16,7 +16,7 @@ esac
 mm
 
 dbus-update-activation-environment --systemd DISPLAY
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+eval $(ssh-agent -s)
 export SSH_AUTH_SOCK
 
 redshift&

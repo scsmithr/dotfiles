@@ -5,6 +5,11 @@
 
 ;;; Code:
 
+(use-package epg
+  ;; built-in
+  :init
+  (setq epg-pinentry-mode 'loopback))
+
 ;; Quickly generate lang formatters.
 (use-package reformatter
   :straight t)
