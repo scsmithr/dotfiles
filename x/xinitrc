@@ -5,7 +5,7 @@ xrdb ~/.Xresources
 
 case $HOSTNAME in
     "system22")
-        dpi monitor
+        dpi laptop
         ;;
     "system7")
         dpi monitor
