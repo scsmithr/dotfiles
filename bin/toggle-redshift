@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Kill redshift if it's running, start it if it's not.
+
+trap '' HUP
+
+if pgrep -x redshift > /dev/null; then
+    pkill redshift
+    echo "redshift killed"
+else
+    nohup redshift &> /tmp/redshift.nohup.out &
+    echo "redshift started"
+fi
