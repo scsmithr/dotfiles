@@ -60,3 +60,8 @@ ln -sv $DIR/emacs/default.el ~/.emacs.d/straight/versions
 # xdg
 mkdir -p ~/.local/share/applications
 ln -sv $DIR/xdg/* ~/.local/share/applications
+
+# email
+mkdir -p ~/.config/systemd/user
+ln -sv $DIR/mail/mbsync.service ~/.config/systemd/user
+ln -sv $DIR/mail/mbsync.timer ~/.config/systemd/user
