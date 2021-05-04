@@ -69,6 +69,9 @@
         lsp-headerline-breadcrumb-enable nil
         lsp-progress-prefix "*** ")
 
+  ;; Not sure that I want this. Will need to come up with better colors if I do.
+  (setq lsp-diagnostics-attributes nil)
+
   ;; Never warn me about attempting to watch a large directory, but also disable
   ;; watching altogether. The regexps for ignoring watched directories is a bit
   ;; hard to control for larger repos with submodules. Also, gopls *will* spam
