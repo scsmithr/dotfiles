@@ -96,7 +96,7 @@
           (search . " %-12:c %b"))
         org-agenda-breadcrumbs-separator " > "
         org-agenda-search-view-always-boolean t
-        org-show-context-detail '((default . lineage)))
+        org-show-context-detail '((default . canonical)))
 
   (setq org-priority-highest ?A
         org-priority-lowest ?C
