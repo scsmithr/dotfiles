@@ -69,7 +69,7 @@ import XMonad.Util.WorkspaceCompare (getSortByIndex)
 promptConf =
   def
     { position = Bottom,
-      font = "xft:Fira Sans Medium-10",
+      font = "xft:Source Sans Pro:semibold:size=10",
       height = 44,
       bgColor = dark,
       fgColor = foreground,
