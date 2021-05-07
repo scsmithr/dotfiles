@@ -58,7 +58,7 @@
           (eshell-write-history eshell-history-file-name t)))))
 
   :config
-  (defface sm/eshell-prompt-pwd '((t :inherit font-lock-constant-face))
+  (defface sm/eshell-prompt-pwd '((t :inherit eshell-ls-directory))
     "Face for current directory."
     :group 'eshell)
 
@@ -68,6 +68,14 @@
 
   (defface sm/eshell-prompt-git-branch '((t :inherit font-lock-builtin-face))
     "Face for displaying current git branch."
+    :group 'eshell)
+
+  (defface sm/eshell-prompt-success '((t :inherit eshell-prompt))
+    "Face when previous command succeeds."
+    :group 'eshell)
+
+  (defface sm/eshell-prompt-error '((t :inherit error :weight normal))
+    "Face when previous command fails."
     :group 'eshell)
 
   (defun sm/eshell-current-git-branch ()
@@ -88,7 +96,9 @@
               (unless (file-remote-p default-directory)
                 (propertize (sm/eshell-current-git-branch)
                             'face 'sm/eshell-prompt-git-branch))
-              (propertize " $" 'face (if (zerop eshell-last-command-status) 'success 'error))
+              (propertize " $" 'face (if (zerop eshell-last-command-status)
+                                         'sm/eshell-prompt-success
+                                       'sm/eshell-prompt-error))
               ;; Needed for the input text to not have prompt face.
               (propertize " " 'face 'default))))
 

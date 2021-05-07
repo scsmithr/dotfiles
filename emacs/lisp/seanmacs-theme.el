@@ -61,10 +61,6 @@
 
   (defun sm/customize-modus-operandi ()
     (modus-themes-with-colors
-      (set-face-attribute 'success nil :foreground green :weight 'normal)
-      (set-face-attribute 'warning nil :foreground yellow :weight 'normal)
-      (set-face-attribute 'error nil :foreground red :weight 'normal)
-
       (custom-theme-set-faces
        'modus-operandi
        ;; Whitespace
