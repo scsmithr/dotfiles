@@ -1,0 +1,1689 @@
+* Shell and terminal
+
+  Shell and terminal related settings and scripts.
+
+** Alacritty
+
+   Configuration.
+
+   #+BEGIN_SRC yaml :tangle ~/.config/alacritty/alacritty.yml :noweb yes
+     # Configuration for Alacritty, the GPU enhanced terminal emulator
+
+     # Any items in the `env` entry below will be added as
+     # environment variables. Some entries may override variables
+     # set by alacritty it self.
+     env:
+       # TERM env customization.
+       #
+       # If this property is not set, alacritty will set it to xterm-256color.
+       #
+       # Note that some xterm terminfo databases don't declare support for italics.
+       # You can verify this by checking for the presence of `smso` and `sitm` in
+       # `infocmp xterm-256color`.
+       TERM: xterm-256color
+
+     window:
+       # Window dimensions in character columns and lines
+       # Falls back to size specified by window manager if set to 0x0.
+       # (changes require restart)
+       dimensions:
+         columns: 80
+         lines: 24
+
+       # Adds this many blank pixels of padding around the window
+       # Units are physical pixels; this is not DPI aware.
+       # (change requires restart)
+       padding:
+         x: 2
+         y: 2
+  
+       dynamic_padding: true
+
+       # Window decorations
+       # Setting this to false will result in window without borders and title bar.
+       decorations: "none"
+
+     scrolling:
+       # How many lines of scrollback to keep,
+       # '0' will disable scrolling.
+       history: 30000
+
+       # Number of lines the viewport will move for every line
+       # scrolled when scrollback is enabled (history > 0).
+       multiplier: 3
+
+     # When true, bold text is drawn using the bright variant of colors.
+     draw_bold_text_with_bright_colors: true
+
+     # Font configuration (changes require restart)
+     #
+     # Important font attributes like antialiasing, subpixel aa, and hinting can be
+     # controlled through fontconfig. Specifically, the following attributes should
+     # have an effect:
+     #
+     # * hintstyle
+     # * antialias
+     # * lcdfilter
+     # * rgba
+     #
+     # For instance, if you wish to disable subpixel antialiasing, you might set the
+     # rgba property to "none". If you wish to completely disable antialiasing, you
+     # can set antialias to false.
+     #
+     # Please see these resources for more information on how to use fontconfig
+     #
+     # * https://wiki.archlinux.org/index.php/font_configuration#Fontconfig_configuration
+     # * file:///usr/share/doc/fontconfig/fontconfig-user.html
+     font:
+       # The normal (roman) font face to use.
+       normal:
+         family: "<<font-monospace()>>" # should be "Menlo" or something on macOS.
+         # Style can be specified to pick a specific face.
+         style: Normal
+
+       # The bold font face
+       bold:
+         family: "<<font-monospace()>>" # should be "Menlo" or something on macOS.
+         # Style can be specified to pick a specific face.
+         style: Bold
+
+       # The italic font face
+       italic:
+         family: "<<font-monospace()>>" # should be "Menlo" or something on macOS.
+         # Style can be specified to pick a specific face.
+         style: Italic
+
+       # Point size of the font
+       size: 12.0
+
+       # Offset is the extra space around each character. offset.y can be thought of
+       # as modifying the linespacing, and offset.x as modifying the letter spacing.
+       offset:
+         x: 0
+         y: 0
+
+       # Glyph offset determines the locations of the glyphs within their cells with
+       # the default being at the bottom. Increase the x offset to move the glyph to
+       # the right, increase the y offset to move the glyph upward.
+       glyph_offset:
+         x: 0
+         y: 0
+
+       # OS X only: use thin stroke font rendering. Thin strokes are suitable
+       # for retina displays, but for non-retina you probably want this set to
+       # false.
+       use_thin_strokes: true
+
+     # Should display the render timer
+     #render_timer: false
+
+     # Colors
+     colors:
+       # Default colors
+       primary:
+         background: '0xffffff'
+         foreground: '0x26272d'
+
+       # Normal colors
+       normal:
+         black:   '0x23242a'
+         red:     '0xa80000'
+         green:   '0x005200'
+         yellow:  '0x8b3800'
+         blue:    '0x0030a6'
+         magenta: '0x721045'
+         cyan:    '0x005589'
+         white:   '0xe8e8e8'
+
+       # Bright colors
+       bright:
+         black:   '0x828282'
+         red:     '0xa80000'
+         green:   '0x005200'
+         yellow:  '0x8b3800'
+         blue:    '0x0030a6'
+         magenta: '0x721045'
+         cyan:    '0x005589'
+         white:   '0xf8f8f8'
+
+     # Visual Bell
+     #
+     # Any time the BEL code is received, Alacritty "rings" the visual bell. Once
+     # rung, the terminal background will be set to white and transition back to the
+     # default background color. You can control the rate of this transition by
+     # setting the `duration` property (represented in milliseconds). You can also
+     # configure the transition function by setting the `animation` property.
+     #
+     # Possible values for `animation`
+     # `Ease`
+     # `EaseOut`
+     # `EaseOutSine`
+     # `EaseOutQuad`
+     # `EaseOutCubic`
+     # `EaseOutQuart`
+     # `EaseOutQuint`
+     # `EaseOutExpo`
+     # `EaseOutCirc`
+     # `Linear`
+     #
+     # To completely disable the visual bell, set its duration to 0.
+     #
+     bell:
+       animation: EaseOutExpo
+       duration: 0
+
+     # Background opacity
+     background_opacity: 1.0
+
+     # Mouse bindings
+     #
+     # Currently doesn't support modifiers. Both the `mouse` and `action` fields must
+     # be specified.
+     #
+     # Values for `mouse`:
+     # - Middle
+     # - Left
+     # - Right
+     # - Numeric identifier such as `5`
+     #
+     # Values for `action`:
+     # - Paste
+     # - PasteSelection
+     # - Copy (TODO)
+     mouse_bindings:
+       - { mouse: Middle, action: PasteSelection }
+
+     mouse:
+       # Click settings
+       #
+       # The `double_click` and `triple_click` settings control the time
+       # alacritty should wait for accepting multiple clicks as one double
+       # or triple click.
+       double_click: { threshold: 300 }
+       triple_click: { threshold: 300 }
+
+     selection:
+       semantic_escape_chars: ",│`|:\"' ()[]{}<>"
+
+     window.dynamic_title: true
+
+     mouse.hide_when_typing: false
+
+     # Style of the cursor
+     #
+     # Values for 'cursor_style':
+     # - Block
+     # - Underline
+     # - Beam
+     cursor.style: Block
+
+     # Whether the cursor should be a hollow block on window focus loss
+     cursor.unfocused_hollow: true
+
+     # Live config reload (changes require restart)
+     live_config_reload: true
+
+     # Shell
+     #
+     # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
+     # Entries in shell.args are passed unmodified as arguments to the shell.
+     #
+     # shell:
+     #   program: /bin/bash
+     #   args:
+     #     - --login
+
+     # Key bindings
+     #
+     # Each binding is defined as an object with some properties. Most of the
+     # properties are optional. All of the alphabetical keys should have a letter for
+     # the `key` value such as `V`. Function keys are probably what you would expect
+     # as well (F1, F2, ..). The number keys above the main keyboard are encoded as
+     # `Key1`, `Key2`, etc. Keys on the number pad are encoded `Number1`, `Number2`,
+     # etc.  These all match the glutin::VirtualKeyCode variants.
+     #
+     # A list with all available `key` names can be found here:
+     # https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
+     #
+     # Possible values for `mods`
+     # `Command`, `Super` refer to the super/command/windows key
+     # `Control` for the control key
+     # `Shift` for the Shift key
+     # `Alt` and `Option` refer to alt/option
+     #
+     # mods may be combined with a `|`. For example, requiring control and shift
+     # looks like:
+     #
+     # mods: Control|Shift
+     #
+     # The parser is currently quite sensitive to whitespace and capitalization -
+     # capitalization must match exactly, and piped items must not have whitespace
+     # around them.
+     #
+     # Either an `action`, `chars`, or `command` field must be present.
+     #   `action` must be one of the following:
+     #       - `Paste`
+     #       - `PasteSelection`
+     #       - `Copy`
+     #       - `IncreaseFontSize`
+     #       - `DecreaseFontSize`
+     #       - `ResetFontSize`
+     #       - `ScrollPageUp`
+     #       - `ScrollPageDown`
+     #       - `ScrollToTop`
+     #       - `ScrollToBottom`
+     #       - `Quit`
+     #   `chars` writes the specified string every time that binding is activated.
+     #     These should generally be escape sequences, but they can be configured to
+     #     send arbitrary strings of bytes.
+     #   `command` must be a map containing a `program` string, and `args` array of
+     #     strings. For example:
+     #     - { ... , command: { program: "alacritty", args: ["-e", "vttest"] } }
+     #
+     # Want to add a binding (e.g. "PageUp") but are unsure what the X sequence
+     # (e.g. "\x1b[5~") is? Open another terminal (like xterm) without tmux,
+     # then run `showkey -a` to get the sequence associated to a key combination.
+     key_bindings:
+       - { key: V,        mods: Control|Shift,    action: Paste               }
+       - { key: C,        mods: Control|Shift,    action: Copy                }
+       - { key: Paste,                   action: Paste                        }
+       - { key: Copy,                    action: Copy                         }
+       - { key: Q,        mods: Command, action: Quit                         }
+       - { key: W,        mods: Command, action: Quit                         }
+       - { key: Insert,   mods: Shift,   action: PasteSelection               }
+       - { key: Key0,     mods: Control, action: ResetFontSize                }
+       - { key: Equals,   mods: Control, action: IncreaseFontSize             }
+       - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
+       - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
+       - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
+       - { key: End,                     chars: "\x1b[F",   mode: ~AppCursor  }
+       - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
+       - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
+       - { key: PageUp,                  chars: "\x1b[5~"                     }
+       - { key: PageDown, mods: Shift,   chars: "\x1b[6;2~"                   }
+       - { key: PageDown, mods: Control, chars: "\x1b[6;5~"                   }
+       - { key: PageDown,                chars: "\x1b[6~"                     }
+       - { key: Tab,      mods: Shift,   chars: "\x1b[Z"                      }
+       - { key: Back,                    chars: "\x7f"                        }
+       - { key: Back,     mods: Alt,     chars: "\x1b\x7f"                    }
+       - { key: Insert,                  chars: "\x1b[2~"                     }
+       - { key: Delete,                  chars: "\x1b[3~"                     }
+       - { key: Left,     mods: Shift,   chars: "\x1b[1;2D"                   }
+       - { key: Left,     mods: Control, chars: "\x1b[1;5D"                   }
+       - { key: Left,     mods: Alt,     chars: "\x1b[1;3D"                   }
+       - { key: Left,                    chars: "\x1b[D",   mode: ~AppCursor  }
+       - { key: Left,                    chars: "\x1bOD",   mode: AppCursor   }
+       - { key: Right,    mods: Shift,   chars: "\x1b[1;2C"                   }
+       - { key: Right,    mods: Control, chars: "\x1b[1;5C"                   }
+       - { key: Right,    mods: Alt,     chars: "\x1b[1;3C"                   }
+       - { key: Right,                   chars: "\x1b[C",   mode: ~AppCursor  }
+       - { key: Right,                   chars: "\x1bOC",   mode: AppCursor   }
+       - { key: Up,       mods: Shift,   chars: "\x1b[1;2A"                   }
+       - { key: Up,       mods: Control, chars: "\x1b[1;5A"                   }
+       - { key: Up,       mods: Alt,     chars: "\x1b[1;3A"                   }
+       - { key: Up,                      chars: "\x1b[A",   mode: ~AppCursor  }
+       - { key: Up,                      chars: "\x1bOA",   mode: AppCursor   }
+       - { key: Down,     mods: Shift,   chars: "\x1b[1;2B"                   }
+       - { key: Down,     mods: Control, chars: "\x1b[1;5B"                   }
+       - { key: Down,     mods: Alt,     chars: "\x1b[1;3B"                   }
+       - { key: Down,                    chars: "\x1b[B",   mode: ~AppCursor  }
+       - { key: Down,                    chars: "\x1bOB",   mode: AppCursor   }
+       - { key: F1,                      chars: "\x1bOP"                      }
+       - { key: F2,                      chars: "\x1bOQ"                      }
+       - { key: F3,                      chars: "\x1bOR"                      }
+       - { key: F4,                      chars: "\x1bOS"                      }
+       - { key: F5,                      chars: "\x1b[15~"                    }
+       - { key: F6,                      chars: "\x1b[17~"                    }
+       - { key: F7,                      chars: "\x1b[18~"                    }
+       - { key: F8,                      chars: "\x1b[19~"                    }
+       - { key: F9,                      chars: "\x1b[20~"                    }
+       - { key: F10,                     chars: "\x1b[21~"                    }
+       - { key: F11,                     chars: "\x1b[23~"                    }
+       - { key: F12,                     chars: "\x1b[24~"                    }
+       - { key: F1,       mods: Shift,   chars: "\x1b[1;2P"                   }
+       - { key: F2,       mods: Shift,   chars: "\x1b[1;2Q"                   }
+       - { key: F3,       mods: Shift,   chars: "\x1b[1;2R"                   }
+       - { key: F4,       mods: Shift,   chars: "\x1b[1;2S"                   }
+       - { key: F5,       mods: Shift,   chars: "\x1b[15;2~"                  }
+       - { key: F6,       mods: Shift,   chars: "\x1b[17;2~"                  }
+       - { key: F7,       mods: Shift,   chars: "\x1b[18;2~"                  }
+       - { key: F8,       mods: Shift,   chars: "\x1b[19;2~"                  }
+       - { key: F9,       mods: Shift,   chars: "\x1b[20;2~"                  }
+       - { key: F10,      mods: Shift,   chars: "\x1b[21;2~"                  }
+       - { key: F11,      mods: Shift,   chars: "\x1b[23;2~"                  }
+       - { key: F12,      mods: Shift,   chars: "\x1b[24;2~"                  }
+       - { key: F1,       mods: Control, chars: "\x1b[1;5P"                   }
+       - { key: F2,       mods: Control, chars: "\x1b[1;5Q"                   }
+       - { key: F3,       mods: Control, chars: "\x1b[1;5R"                   }
+       - { key: F4,       mods: Control, chars: "\x1b[1;5S"                   }
+       - { key: F5,       mods: Control, chars: "\x1b[15;5~"                  }
+       - { key: F6,       mods: Control, chars: "\x1b[17;5~"                  }
+       - { key: F7,       mods: Control, chars: "\x1b[18;5~"                  }
+       - { key: F8,       mods: Control, chars: "\x1b[19;5~"                  }
+       - { key: F9,       mods: Control, chars: "\x1b[20;5~"                  }
+       - { key: F10,      mods: Control, chars: "\x1b[21;5~"                  }
+       - { key: F11,      mods: Control, chars: "\x1b[23;5~"                  }
+       - { key: F12,      mods: Control, chars: "\x1b[24;5~"                  }
+       - { key: F1,       mods: Alt,     chars: "\x1b[1;6P"                   }
+       - { key: F2,       mods: Alt,     chars: "\x1b[1;6Q"                   }
+       - { key: F3,       mods: Alt,     chars: "\x1b[1;6R"                   }
+       - { key: F4,       mods: Alt,     chars: "\x1b[1;6S"                   }
+       - { key: F5,       mods: Alt,     chars: "\x1b[15;6~"                  }
+       - { key: F6,       mods: Alt,     chars: "\x1b[17;6~"                  }
+       - { key: F7,       mods: Alt,     chars: "\x1b[18;6~"                  }
+       - { key: F8,       mods: Alt,     chars: "\x1b[19;6~"                  }
+       - { key: F9,       mods: Alt,     chars: "\x1b[20;6~"                  }
+       - { key: F10,      mods: Alt,     chars: "\x1b[21;6~"                  }
+       - { key: F11,      mods: Alt,     chars: "\x1b[23;6~"                  }
+       - { key: F12,      mods: Alt,     chars: "\x1b[24;6~"                  }
+       - { key: F1,       mods: Super,   chars: "\x1b[1;3P"                   }
+       - { key: F2,       mods: Super,   chars: "\x1b[1;3Q"                   }
+       - { key: F3,       mods: Super,   chars: "\x1b[1;3R"                   }
+       - { key: F4,       mods: Super,   chars: "\x1b[1;3S"                   }
+       - { key: F5,       mods: Super,   chars: "\x1b[15;3~"                  }
+       - { key: F6,       mods: Super,   chars: "\x1b[17;3~"                  }
+       - { key: F7,       mods: Super,   chars: "\x1b[18;3~"                  }
+       - { key: F8,       mods: Super,   chars: "\x1b[19;3~"                  }
+       - { key: F9,       mods: Super,   chars: "\x1b[20;3~"                  }
+       - { key: F10,      mods: Super,   chars: "\x1b[21;3~"                  }
+       - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                  }
+       - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                  }
+   #+END_SRC
+
+   Wrapper around alacritty. Sets appropriate dpi as reported by X.
+
+   Requires setting zsh shebang since it needs fp division.
+    
+   #+BEGIN_SRC bash :tangle ~/.bin/terminal :shebang "#!/usr/bin/env zsh"
+     dpi=$(xrdb -query | grep "Xft.dpi" | awk '{print $2}')
+     if [ -n "$dpi" ]; then
+         export WINIT_HIDPI_FACTOR=$(( dpi / 96.0 ))
+     fi
+
+     # There's a gl bug preventing alacritty from launching.
+     #
+     # Error creating GL context; Received multiple errors. Errors:
+     # `[NoAvailablePixelFormat, OsError("Couldn\'t setup vsync: expected interval
+     # `1` but got `0`")]`
+     #
+     # Setting vblank_mode seems to fix this. See
+     # https://github.com/alacritty/alacritty/issues/4491
+     vblank_mode=1 alacritty
+   #+END_SRC
+
+** Misc Scripts
+   :PROPERTIES:
+   :header-args:bash: :shebang "#!/usr/bin/env bash"
+   :END:
+
+   Set of useful scripts.
+
+*** bri 
+
+    Set screen brightness. Mostly used for my laptop. i2c used to work with my
+    monitor(s), but I haven't tried it recently, so might be broken.
+   
+    #+BEGIN_SRC bash :tangle ~/.bin/bri
+      mon_current() {
+          local outstr
+          outstr=$(ddcutil getvcp 10)
+          local nums
+          nums=$(echo -e "$outstr" | sed -e 's/[^0-9]/ /g' -e 's/^ *//g' -e 's/ *$//g' | tr -s ' ')
+          echo "$nums" | cut -d " " -f 3
+      }
+
+      num_displays() {
+          ddcutil detect | grep "Display" -c
+      }
+
+      case $1 in
+          "monitor")
+          case $2 in
+              "up")
+              amount="${3:-2}"
+              curr=$(mon_current)
+              for i in $(num_displays); do
+                  ddcutil setvcp 10 $(( curr + amount )) --display "$i"
+              done
+              ;;
+              "down")
+              amount="${3:-2}"
+              curr=$(mon_current)
+              for i in $(num_displays); do
+                  ddcutil setvcp 10 $(( curr - amount )) --display "$i"
+              done
+              ;;
+              "set")
+              : "${3?"Usage: $0 monitor set PERCENT"}"
+              if [ -n "$4" ]; then
+                  ddcutil setvcp 10 "$3" --display "$4"
+              else
+                  for i in $(num_displays); do
+                      ddcutil setvcp 10 "$3" --display "$i"
+                  done
+              fi
+              ;;
+          esac
+          ;;
+          "laptop")
+          case $2 in
+              "up")
+              amount="${3:-2}"
+              xbacklight -inc "$amount" -fps 60
+              ;;
+              "down")
+              amount="${3:-2}"
+              xbacklight -dec "$amount" -fps 60
+              ;;
+              "set")
+              : "${3?"Usage: $0 laptop set PERCENT"}"
+              xbacklight -set "$3" -fps 60
+              ;;
+          esac
+          ;;
+      esac
+    #+END_SRC
+
+*** dpi
+
+    Set dpi for my commonly used systems.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/dpi
+      laptop_dpi=216
+      monitor_dpi=116
+
+      function set_dpi() {
+         echo "Xft.dpi: $1" | xrdb -merge
+         echo "*dpi: $1" | xrdb -merge
+      }
+
+      if [ "$#" -eq 1 ]; then
+         case $1 in
+             "laptop")
+                 set_dpi $laptop_dpi
+                 ;;
+             "monitor")
+                 set_dpi $monitor_dpi
+                 ;;
+             ,*)
+                 set_dpi "$1"
+                 ;;
+         esac
+      else
+          print "Invalid number of arguments"
+      fi
+    #+END_SRC
+
+*** editor
+
+    Start the emacs daemon if it's not already started, and open a client to it.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/editor
+      emacsclient -a '' "$@"
+    #+END_SRC
+
+*** essid
+
+    Get currently connected ssid.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/essid
+      ssid=$((iwgetid || echo "no wifi") | cut -d\" -f2)
+      echo $ssid
+    #+END_SRC
+
+    #+RESULTS:
+    : Lan Before Time
+
+*** lock
+
+    Lock or suspend.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/lock
+      case $1 in
+          "suspend")
+              systemctl suspend
+              ;;
+          ,*)
+              xset s activate
+              ;;
+      esac
+    #+END_SRC
+    
+*** mm
+    
+    Configuration for setting caps lock to be left control.
+    
+    #+BEGIN_SRC conf :tangle ~/.xmodmap
+      remove Lock = Caps_Lock
+      keysym Caps_Lock = Control_L
+      add Control = Control_L
+    #+END_SRC
+    
+    Script for setting the above configuration, and setting left control to send
+    escape on press. Left control will continue to send left control when held
+    down.
+    
+    This needs to be ran after suspend (sometimes twice for whatever reason).
+    
+    #+BEGIN_SRC bash :tangle ~/.bin/mm
+      xmodmap ~/.xmodmap
+      xcape -e 'Control_L=Escape'
+    #+END_SRC
+    
+*** network
+
+    Start up network related stuff.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/network
+      set -ex
+
+      if [ -z "$1" ]; then
+          echo "Missing network name"
+          exit 1
+      fi
+
+      # For whatever reason, not setting this interface down will cause netctl to fail
+      # on this machine.
+      if [ "$HOSTNAME" == "system7" ]; then
+          sudo ip link set wlo1 down
+      fi
+
+      # Connect to selected network.
+      sudo netctl start "$1"
+
+      # Cache passphrase so mbsync can use it.
+      echo "hello" | gpg -e --recipient scsmithr@gmail.com | gpg -d
+
+      # Periodically refresh emails.
+      systemctl start --user mbsync.timer
+    #+END_SRC
+    
+*** notify
+
+    Notify after a process has completed.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/notify
+      if [ "$1" = "critical" ] ||
+             [ "$1" = "normal" ] ||
+             [ "$1" = "low" ]; then
+          opt="-u $1"
+          shift
+      fi
+      "$@"
+      if [ -n "$DISPLAY" ]; then
+          notify-send "Process Completed" "$*" $opt
+      fi
+      tput bel
+    #+END_SRC
+    
+*** screenshot
+    
+    Take a screenshot and save it to =~/Pictures/screenshots=. The screenshot will
+    be put into the clipboard.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/screenshot
+      set -e
+
+      file=screenshot_$(date -Iseconds).png
+
+      maim --select --hidecursor | tee ~/Pictures/screenshots/$file | xclip -selection clipboard -t image/png
+      notify-send "Screenshot taken" "$file"
+    #+END_SRC
+
+*** toggle-redshift
+    
+    Kill redshift if it's running, start it if it's not.
+    
+    #+BEGIN_SRC bash :tangle ~/.bin/toggle-redshift
+      trap '' HUP
+
+      if pgrep -x redshift > /dev/null; then
+          pkill redshift
+          echo "redshift killed"
+      else
+          nohup redshift &> /tmp/redshift.nohup.out &
+          echo "redshift started"
+      fi
+    #+END_SRC
+
+*** vol
+
+    Helper for setting and getting volume. Uses =pamixer=.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/vol
+      case $1 in
+          "up")
+              pamixer -u; pamixer -i 5
+              ;;
+          "down")
+              pamixer -u; pamixer -d 5
+              ;;
+          "mute")
+              pamixer -t
+              ;;
+          "get")
+              pamixer --get-volume
+              ;;
+      esac
+    #+END_SRC
+
+** Bashrc
+   :PROPERTIES:
+   :header-args:bash: :tangle ~/.bashrc
+   :END:
+
+   If not running interactively, don't do anything
+
+   #+BEGIN_SRC bash
+     [[ $- != *i* ]] && return
+   #+END_SRC
+     
+   Include scripts tangled from [[Scripts]].
+
+   #+BEGIN_SRC bash
+     export PATH=$PATH:$HOME/.bin/
+   #+END_SRC
+
+   Set editor to script tangled from [[editor]].
+
+   #+BEGIN_SRC bash
+     export EDITOR=editor
+   #+END_SRC
+   
+   Go related settings. Using a non-standard go path, and avoiding using the
+   default go proxy. Occasionally hitting the source directly fails (e.g. for
+   some of Google's sources), and unsetting =GOPROXY= is required.
+
+   #+BEGIN_SRC bash
+     export GOPATH=$HOME/.go
+     export PATH=$PATH:$HOME/.go/bin
+     export GOPROXY=direct
+   #+END_SRC
+
+   Get the number of threads by counting occurrences of "processor" in cpu info.
+
+   #+name: num-threads
+   #+BEGIN_SRC bash :tangle no
+     grep -c ^processor /proc/cpuinfo
+   #+END_SRC
+
+   #+RESULTS:
+   : 16
+
+   Set number of threads for julia to the number of threads counted by the
+   machine tangling this file.
+
+   #+BEGIN_SRC bash :noweb yes
+     export JULIA_NUM_THREADS=<<num-threads()>>
+   #+END_SRC
+   
+   Include cargo binaries in path.
+
+   #+BEGIN_SRC bash
+     export PATH=$PATH:$HOME/.cargo/bin
+   #+END_SRC
+   
+   Include [[https://github.com/leanprover/elan][elan]] binaries in path.
+
+   #+BEGIN_SRC bash
+     export PATH=$PATH:$HOME/.elan/bin
+   #+END_SRC
+
+   I like colors in my =ls= output.
+
+   #+BEGIN_SRC bash
+     alias ls='ls --color=auto'
+   #+END_SRC
+     
+   Set prompt.
+     
+   #+BEGIN_SRC bash
+     PS1='[\u@\h \W]\$ '
+   #+END_SRC
+
+* Fonts
+
+  List of fonts to be used elsewhere.
+
+  #+name: font-serif
+  #+BEGIN_SRC sh
+    echo "Source Serif Pro"
+  #+END_SRC
+
+  #+RESULTS: font-serif
+  : Source Serif Pro
+
+  #+name: font-sans-serif
+  #+BEGIN_SRC sh
+    echo "Source Sans Pro"
+  #+END_SRC
+
+  #+RESULTS: font-sans-serif
+  : Source Sans Pro
+
+  #+name: font-monospace
+  #+BEGIN_SRC sh
+    echo "Triplicate A"
+  #+END_SRC
+
+  #+RESULTS: font-monospace
+  : Triplicate A
+
+** Font config
+
+   #+BEGIN_SRC nxml :tangle ~/.config/fontconfig/fonts.conf :noweb yes
+     <?xml version="1.0"?>
+     <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+     <fontconfig>
+         <match target="pattern">
+             <test qual="any" name="family"><string>serif</string></test>
+             <edit name="family" mode="assign" binding="same"><string><<font-serif()>></string></edit>
+         </match>
+         <match target="pattern">
+             <test qual="any" name="family"><string>sans-serif</string></test>
+             <edit name="family" mode="assign" binding="same"><string><<font-sans-serif()>></string></edit>
+         </match>
+         <match target="pattern">
+             <test qual="any" name="family"><string>monospace</string></test>
+             <edit name="family" mode="assign" binding="same"><string><<font-monospace()>></string></edit>
+         </match>
+
+         <match target="pattern">
+             <edit name="hintstyle" mode="append"><const>hintnone</const></edit>
+         </match>
+     </fontconfig>
+   #+END_SRC
+
+* Window manager
+
+  Combo of xmonad and xmobar.
+
+** Xmonad
+
+   Config.
+
+   #+BEGIN_SRC haskell :tangle ~/.xmonad/xmonad.hs
+     import qualified Data.List as List
+     import qualified Data.Map as Map
+     import qualified Data.Map.Strict as StrictMap
+     import Graphics.X11.ExtraTypes.XF86
+     import System.Exit
+       ( ExitCode (ExitSuccess),
+         exitWith,
+       )
+     import XMonad
+     import XMonad.Actions.CycleWS (toggleWS)
+     import XMonad.Actions.Navigation2D
+       ( Direction2D (..),
+         Navigation2DConfig (..),
+         sideNavigation,
+         switchLayer,
+         windowGo,
+         windowSwap,
+         withNavigation2DConfig,
+       )
+     import XMonad.Actions.PhysicalScreens
+       ( sendToScreen,
+         viewScreen,
+       )
+     import qualified XMonad.Hooks.DynamicLog as D
+     import XMonad.Hooks.EwmhDesktops
+       ( ewmh,
+         fullscreenEventHook,
+       )
+     import XMonad.Hooks.ManageDocks
+       ( ToggleStruts (..),
+         avoidStruts,
+         docks,
+       )
+     import XMonad.Hooks.ManageHelpers
+       ( Side (..),
+         doCenterFloat,
+         doSideFloat,
+         isDialog,
+       )
+     import XMonad.Hooks.UrgencyHook
+       ( NoUrgencyHook (..),
+         withUrgencyHook,
+       )
+     import XMonad.Layout.BinarySpacePartition
+       ( FocusParent (..),
+         ResizeDirectional (..),
+         Rotate (..),
+         TreeBalance (..),
+         emptyBSP,
+       )
+     import XMonad.Layout.NoBorders
+       ( Ambiguity (..),
+         lessBorders,
+       )
+     import XMonad.Layout.Spacing
+       ( Border (..),
+         spacingRaw,
+       )
+     import XMonad.Prompt
+     import XMonad.Prompt.Shell
+     import qualified XMonad.StackSet as W
+     import XMonad.Util.Run
+       ( hPutStrLn,
+         runProcessWithInput,
+         spawnPipe,
+       )
+     import XMonad.Util.WorkspaceCompare (getSortByIndex)
+
+     promptConf =
+       def
+         { position = Bottom,
+           font = "xft:Source Sans Pro:semibold:size=11",
+           height = 44,
+           bgColor = dark,
+           fgColor = foreground,
+           bgHLight = dark,
+           fgHLight = light,
+           promptBorderWidth = myPromptBorderWidth,
+           borderColor = myPromptBorderColor,
+           maxComplRows = Just 1,
+           showCompletionOnTab = False
+         }
+
+     centerWindow :: Window -> X ()
+     centerWindow win = do
+       (_, W.RationalRect x y w h) <- floatLocation win
+       let newH
+             | h > (23 / 24) = h - (1 / 24)
+             | h < (3 / 4) = (3 / 4)
+             | otherwise = h
+       let newW
+             | w > (3 / 4) = (3 / 4)
+             | w < (1 / 2) = (1 / 2)
+             | otherwise = w
+       windows $
+         W.float win (W.RationalRect ((1 - newW) / 2) ((1 - newH) / 2) newW newH)
+       return ()
+
+     myWorkspaceKeys conf@(XConfig {XMonad.modMask = modMask}) =
+       Map.fromList $
+         [ ((modMask, xK_Return), spawn myTerminal),
+           ((modMask, xK_p), shellPrompt promptConf),
+           ((modMask, xK_b), spawn myBrowser),
+           ((modMask, xK_v), spawn myEditor),
+           ((modMask, xK_q), spawn "lock"),
+           ((modMask .|. shiftMask, xK_q), spawn "lock suspend"),
+           ((modMask, xK_x), spawn "if type xmonad; then xmonad --restart; fi"),
+           ((modMask .|. shiftMask, xK_x), io (exitWith ExitSuccess)),
+           ((modMask .|. shiftMask, xK_c), kill),
+           ((modMask, xK_space), sendMessage NextLayout),
+           ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf),
+           ((modMask, xK_r), sendMessage $ Rotate),
+           ((modMask, xK_a), sendMessage $ FocusParent),
+           ((modMask .|. controlMask, xK_l), sendMessage $ ExpandTowards R),
+           ((modMask .|. controlMask, xK_h), sendMessage $ ExpandTowards L),
+           ((modMask .|. controlMask, xK_j), sendMessage $ ExpandTowards D),
+           ((modMask .|. controlMask, xK_k), sendMessage $ ExpandTowards U),
+           ((modMask, xK_l), windowGo R False),
+           ((modMask, xK_h), windowGo L False),
+           ((modMask, xK_k), windowGo U False),
+           ((modMask, xK_j), windowGo D False),
+           ((modMask .|. shiftMask, xK_l), windowSwap R False),
+           ((modMask .|. shiftMask, xK_h), windowSwap L False),
+           ((modMask .|. shiftMask, xK_k), windowSwap U False),
+           ((modMask .|. shiftMask, xK_j), windowSwap D False),
+           ((modMask, xK_u), windows W.focusUp),
+           ((modMask, xK_i), windows W.focusDown),
+           ((modMask, xK_s), switchLayer),
+           ((modMask, xK_f), withFocused centerWindow),
+           ((modMask, xK_t), withFocused $ windows . W.sink),
+           ((modMask, xK_equal), sendMessage Equalize),
+           ((modMask, xK_minus), toggleWS)
+         ]
+           ++ [ ((m .|. modMask, key), f sc)
+                | (key, sc) <- zip [xK_w, xK_e] [0 ..],
+                  (f, m) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
+              ]
+           ++ [ ((m .|. modMask, k), windows $ f i)
+                | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
+                  (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+              ]
+           ++ [ ((0, xF86XK_MonBrightnessUp), spawn "bri laptop up"),
+                ((0, xF86XK_MonBrightnessDown), spawn "bri laptop down"),
+                ((0, xF86XK_AudioRaiseVolume), spawn "vol up"),
+                ((0, xF86XK_AudioLowerVolume), spawn "vol down"),
+                ((0, xF86XK_AudioMute), spawn "vol mute")
+              ]
+
+     stringifyLayout :: String -> String
+     stringifyLayout l
+       | t "BSP" l = fmt "bsp"
+       | t "Full" l = fmt "full"
+       | otherwise = fmt l
+       where
+         t = List.isInfixOf
+         fmt s = "[" ++ s ++ "]"
+
+     myLogHook h = do
+       let fmt fg bg = D.pad . D.pad . D.xmobarColor fg bg
+       D.dynamicLogWithPP
+         D.xmobarPP
+           { D.ppCurrent = fmt primary "",
+             D.ppHidden = fmt muted "",
+             D.ppVisible = fmt foreground "",
+             D.ppUrgent = fmt urgent "",
+             D.ppLayout = fmt muted "" . stringifyLayout,
+             D.ppTitle = const "",
+             D.ppSep = " ",
+             D.ppSort = getSortByIndex,
+             D.ppOutput = hPutStrLn h
+           }
+
+     myLayoutHook =
+       uniformSpacing $
+         lessBorders (OnlyScreenFloat) (emptyBSP ||| Full)
+       where
+         gs = 5
+         uniformSpacing = spacingRaw False (border) True (border) True
+         border = Border gs gs gs gs
+
+     myManageHook = composeAll [isDialog =? True --> doCenterFloat]
+
+     myNavConf = def {defaultTiledNavigation = sideNavigation}
+
+     myConfig pipe =
+       withUrgencyHook NoUrgencyHook $
+         withNavigation2DConfig myNavConf $
+           ewmh $
+             docks
+               def
+                 { logHook = myLogHook pipe,
+                   manageHook = myManageHook,
+                   layoutHook = avoidStruts $ myLayoutHook,
+                   handleEventHook = fullscreenEventHook,
+                   focusFollowsMouse = False,
+                   workspaces = myWorkspaces,
+                   terminal = myTerminal,
+                   modMask = myModMask,
+                   keys = myWorkspaceKeys,
+                   borderWidth = myBorderWidth,
+                   normalBorderColor = myUnfocusedBorderColor,
+                   focusedBorderColor = myFocusedBorderColor
+                 }
+
+     main = xmonad . myConfig =<< spawnPipe "xmobar"
+
+     -- programs
+     myEditor = "editor -c"
+
+     myTerminal = "terminal"
+
+     myBrowser = "firefox"
+
+     -- colors
+     dark = "#46474d"
+
+     light = "#fcfcfc"
+
+     muted = "#828282"
+
+     foreground = "#ababb4"
+
+     primary = "#e8e8e8"
+
+     urgent = "#8b3800"
+
+     myFocusedBorderColor = "#46474d"
+
+     myUnfocusedBorderColor = "#a6a7ad"
+
+     myPromptBorderColor = "#26272d"
+
+     -- config vars
+     myBorderWidth = 2
+
+     myPromptBorderWidth = 1
+
+     myModMask = mod4Mask
+
+     myWorkspaces = ["def", "web", "dev", "misc"]
+
+   #+END_SRC
+
+   Recompile and reload xmonad.
+
+   #+BEGIN_SRC bash :results value
+     xmonad --recompile && xmonad --restart
+   #+END_SRC
+
+   #+RESULTS:
+   : 0
+
+** Xmobar
+
+   #+BEGIN_SRC haskell :tangle ~/.xmobarrc
+     Config {
+         font = "",
+         bgColor = "#46474d",
+         fgColor = "#ababb4",
+         border = BottomB,
+         borderColor = "#26272d",
+         borderWidth = 1,
+         position = Top,
+         allDesktops = False,
+         lowerOnStart = True,
+         hideOnStart = False,
+         persistent = True,
+
+         commands = [
+             Run Date "%a, %b %d %I:%M%P" "date" 10,
+
+             Run CommandReader "~/dotfiles/status/status.scm" "status",
+
+             Run StdinReader
+         ],
+         sepChar = "%",
+         alignSep = "}{",
+         template = " %StdinReader% }  %date%  { %status% "
+     }
+   #+END_SRC
+
+** Status bar
+
+   TODO
+
+* Git
+
+  Global git configurations.
+
+  #+BEGIN_SRC conf :tangle ~/.gitconfig
+    [user]
+        email = scsmithr@gmail.com
+        name = Sean Smith
+        signingkey = BA3E3A399960AD0D
+    [commit]
+        gpgsign = true
+    [core]
+        editor = editor
+        excludesfile = /home/sean/.gitignore
+        hooksPath = nohooks
+    [url "git@github.com:"]
+        insteadOf = https://github.com/
+    [url "git@gh.coder-internal.com:"]
+        insteadOf = https://git.coder-internal.com/
+    [url "git@gh.coder-internal.com:"]
+        insteadOf = https://gh.coder-internal.com/
+    [filter "lfs"]
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
+    [http]
+        cookiefile = /home/sean/.gitcookies
+    [alias]
+        wta = "!f() { git worktree add worktree/$1; }; f"
+        wtr = "!f() { git worktree remove worktree/$1; }; f"
+        wtl = worktree list
+    [github]
+        user = scsmithr
+  #+END_SRC
+
+  #+BEGIN_SRC conf :tangle ~/.gitignore
+    worktree/
+    vendor/
+    node_modules/
+    .log/
+  #+END_SRC
+
+* X
+
+** Redshift
+
+   #+BEGIN_SRC conf :tangle ~/.config/redshift/redshift.conf
+     [redshift]
+     ; Set the day and night screen temperatures
+     temp-day=6500
+     temp-night=2500
+
+     ; Enable/Disable a smooth transition between day and night
+     ; 0 will cause a direct change from day to night screen temperature.
+     ; 1 will gradually increase or decrease the screen temperature
+     transition=1
+
+     dawn-time=8:00-11:30
+     dusk-time=17:30-22:00
+
+     ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
+     ; type 'redshift -l list' to see possible values
+     ; The location provider settings are in a different section.
+     location-provider=manual
+
+     ; Configuration of the location-provider:
+     ; type 'redshift -l PROVIDER:help' to see the settings
+     ; e.g. 'redshift -l manual:help'
+     [manual]
+     lat=30.2
+     lon=-97.4
+   #+END_SRC
+
+** Xinit
+
+   #+BEGIN_SRC sh :tangle ~/.xinitrc :noweb yes
+     xsetroot -cursor_name left_ptr
+     hsetroot -solid "#CFCFCF"
+
+     xrdb ~/.Xresources
+
+     case $HOSTNAME in
+         "system22")
+             dpi laptop
+             ;;
+         "system7")
+             dpi monitor
+             ;;
+     esac
+
+     # Change caplock to left control
+     mm
+
+     dbus-update-activation-environment --systemd DISPLAY
+     eval $(ssh-agent -s)
+     export SSH_AUTH_SOCK
+
+     redshift&
+     dunst&
+
+     # Set up lockscreen
+     xset s 300 5 # Lock after 5 minutes
+     export XSECURELOCK_PASSWORD_PROMPT=time
+     export XSECURELOCK_FONT="<<font-sans-serif()>>"
+     xss-lock -l -- xsecurelock&
+
+     exec xmonad
+   #+END_SRC
+
+** Xresources
+
+   #+BEGIN_SRC conf ~/.Xresources
+     Xcursor.size: 32
+
+     #define S_base03        #002b36
+     #define S_base02        #073642
+     #define S_base01        #586e75
+     #define S_base00        #26272d
+     #define S_base0         #839496
+     #define S_base1         #93a1a1
+     #define S_base2         #eee8d5
+     #define S_base3         #ffffff
+
+     ,*background:            S_base3
+     ,*foreground:            S_base00
+     ,*fadeColor:             S_base3
+     ,*cursorColor:           S_base01
+     ,*pointerColorBackground:S_base1
+     ,*pointerColorForeground:S_base01
+
+     #define S_yellow        #b58900
+     #define S_orange        #cb4b16
+     #define S_red           #dc322f
+     #define S_magenta       #d33682
+     #define S_violet        #6c71c4
+     #define S_blue          #268bd2
+     #define S_cyan          #2aa198
+     #define S_green         #859900
+
+     !! black dark/light
+     ,*color0:                S_base02
+     ,*color8:                S_base03
+
+     !! red dark/light
+     ,*color1:                S_red
+     ,*color9:                S_red
+
+     !! green dark/light
+     ,*color2:                S_green
+     ,*color10:               S_green
+
+     !! yellow dark/light
+     ,*color3:                S_yellow
+     ,*color11:               S_yellow
+
+     !! blue dark/light
+     ,*color4:                S_blue
+     ,*color12:               S_blue
+
+     !! magenta dark/light
+     ,*color5:                S_magenta
+     ,*color13:               S_magenta
+
+     !! cyan dark/light
+     ,*color6:                S_cyan
+     ,*color14:               S_cyan
+
+     !! white dark/light
+     ,*color7:                S_base2
+     ,*color15: S_base3
+
+     Xft.Hinting: 0
+     Xft.Antialias: 1
+     Xft.HintStyle: "hintnone"
+   #+END_SRC
+
+* Notifications
+
+  Notifications are provided by dunst.
+
+  #+BEGIN_SRC conf :tangle ~/.config/dunst/dunstrc :noweb yes
+    [global]
+        ### Display ###
+
+        # Which monitor should the notifications be displayed on.
+        monitor = 0
+
+        # Display notification on focused monitor.  Possible modes are:
+        #   mouse: follow mouse pointer
+        #   keyboard: follow window with keyboard focus
+        #   none: don't follow anything
+        #
+        # "keyboard" needs a window manager that exports the
+        # _NET_ACTIVE_WINDOW property.
+        # This should be the case for almost all modern window managers.
+        #
+        # If this option is set to mouse or keyboard, the monitor option
+        # will be ignored.
+        follow = none
+
+        # The geometry of the window:
+        #   [{width}]x{height}[+/-{x}+/-{y}]
+        # The geometry of the message window.
+        # The height is measured in number of notifications everything else
+        # in pixels.  If the width is omitted but the height is given
+        # ("-geometry x2"), the message window expands over the whole screen
+        # (dmenu-like).  If width is 0, the window expands to the longest
+        # message displayed.  A positive x is measured from the left, a
+        # negative from the right side of the screen.  Y is measured from
+        # the top and down respectively.
+        # The width can be negative.  In this case the actual width is the
+        # screen width minus the width defined in within the geometry option.
+        geometry = "520x3-8+42"
+
+        # Show how many messages are currently hidden (because of geometry).
+        indicate_hidden = yes
+
+        # Shrink window if it's smaller than the width.  Will be ignored if
+        # width is 0.
+        shrink = no
+
+        # The transparency of the window.  Range: [0; 100].
+        # This option will only work if a compositing window manager is
+        # present (e.g. xcompmgr, compiz, etc.).
+        transparency = 0
+
+        # The height of the entire notification.  If the height is smaller
+        # than the font height and padding combined, it will be raised
+        # to the font height and padding.
+        notification_height = 0
+
+        # Draw a line of "separator_height" pixel height between two
+        # notifications.
+        # Set to 0 to disable.
+        separator_height = 1
+
+        # Padding between text and separator.
+        padding = 8
+
+        # Horizontal padding.
+        horizontal_padding = 8
+
+        # Defines width in pixels of frame around the notification window.
+        # Set to 0 to disable.
+        frame_width = 1
+
+        # Defines color of the frame around the notification window.
+        frame_color = "#26272d"
+
+        # Define a color for the separator.
+        # possible values are:
+        #  * auto: dunst tries to find a color fitting to the background;
+        #  * foreground: use the same color as the foreground;
+        #  * frame: use the same color as the frame;
+        #  * anything else will be interpreted as a X color.
+        separator_color = frame
+
+        # Sort messages by urgency.
+        sort = yes
+
+        # Don't remove messages, if the user is idle (no mouse or keyboard input)
+        # for longer than idle_threshold seconds.
+        # Set to 0 to disable.
+        # Transient notifications ignore this setting.
+        idle_threshold = 120
+
+        ### Text ###
+
+        font = <<font-sans-serif()>> 11
+
+        # The spacing between lines.  If the height is smaller than the
+        # font height, it will get raised to the font height.
+        line_height = 0
+
+        # Possible values are:
+        # full: Allow a small subset of html markup in notifications:
+        #        <b>bold</b>
+        #        <i>italic</i>
+        #        <s>strikethrough</s>
+        #        <u>underline</u>
+        #
+        #        For a complete reference see
+        #        <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
+        #
+        # strip: This setting is provided for compatibility with some broken
+        #        clients that send markup even though it's not enabled on the
+        #        server. Dunst will try to strip the markup but the parsing is
+        #        simplistic so using this option outside of matching rules for
+        #        specific applications *IS GREATLY DISCOURAGED*.
+        #
+        # no:    Disable markup parsing, incoming notifications will be treated as
+        #        plain text. Dunst will not advertise that it has the body-markup
+        #        capability if this is set as a global setting.
+        #
+        # It's important to note that markup inside the format option will be parsed
+        # regardless of what this is set to.
+        markup = full
+
+        # The format of the message.  Possible variables are:
+        #   %a  appname
+        #   %s  summary
+        #   %b  body
+        #   %i  iconname (including its path)
+        #   %I  iconname (without its path)
+        #   %p  progress value if set ([  0%] to [100%]) or nothing
+        #   %n  progress value if set without any extra characters
+        #   %%  Literal %
+        # Markup is allowed
+        format = "%s - %b"
+
+        # Alignment of message text.
+        # Possible values are "left", "center" and "right".
+        alignment = left
+
+        # Show age of message if message is older than show_age_threshold
+        # seconds.
+        # Set to -1 to disable.
+        show_age_threshold = -1
+
+        # Split notifications into multiple lines if they don't fit into
+        # geometry.
+        word_wrap = no
+
+        # When word_wrap is set to no, specify where to ellipsize long lines.
+        # Possible values are "start", "middle" and "end".
+        ellipsize = end
+
+        # Ignore newlines '\n' in notifications.
+        ignore_newline = yes
+
+        # Merge multiple notifications with the same content
+        stack_duplicates = true
+
+        # Hide the count of merged notifications with the same content
+        hide_duplicate_count = false
+
+        # Display indicators for URLs (U) and actions (A).
+        show_indicators = no
+
+        ### Icons ###
+
+        # Align icons left/right/off
+        icon_position = off
+
+        # Scale larger icons down to this size, set to 0 to disable
+        max_icon_size = 32
+
+        # Paths to default icons.
+        icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+
+        ### History ###
+
+        # Should a notification popped up from history be sticky or timeout
+        # as if it would normally do.
+        sticky_history = yes
+
+        # Maximum amount of notifications kept in history
+        history_length = 20
+
+        ### Misc/Advanced ###
+
+        # dmenu path.
+        dmenu = /usr/bin/rofi -show -dmenu -p dunst
+
+        # Browser for opening urls in context menu.
+        browser = /usr/bin/firefox -new-tab
+
+        # Always run rule-defined scripts, even if the notification is suppressed
+        always_run_script = true
+
+        # Define the title of the windows spawned by dunst
+        title = Dunst
+
+        # Define the class of the windows spawned by dunst
+        class = Dunst
+
+        # Print a notification on startup.
+        # This is mainly for error detection, since dbus (re-)starts dunst
+        # automatically after a crash.
+        startup_notification = false
+
+        ### Legacy
+
+        # Use the Xinerama extension instead of RandR for multi-monitor support.
+        # This setting is provided for compatibility with older nVidia drivers that
+        # do not support RandR and using it on systems that support RandR is highly
+        # discouraged.
+        #
+        # By enabling this setting dunst will not be able to detect when a monitor
+        # is connected or disconnected which might break follow mode if the screen
+        # layout changes.
+        force_xinerama = false
+
+    # Experimental features that may or may not work correctly. Do not expect them
+    # to have a consistent behaviour across releases.
+    [experimental]
+        # Calculate the dpi to use on a per-monitor basis.
+        # If this setting is enabled the Xft.dpi value will be ignored and instead
+        # dunst will attempt to calculate an appropriate dpi value for each monitor
+        # using the resolution and physical size. This might be useful in setups
+        # where there are multiple screens with very different dpi values.
+        per_monitor_dpi = false
+
+    [shortcuts]
+
+        # Shortcuts are specified as [modifier+][modifier+]...key
+        # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
+        # "mod3" and "mod4" (windows-key).
+        # Xev might be helpful to find names for keys.
+
+        # Close notification.
+        close = ctrl+space
+
+        # Close all notifications.
+        close_all = ctrl+shift+space
+
+        # Redisplay last message(s).
+        # On the US keyboard layout "grave" is normally above TAB and left
+        # of "1". Make sure this key actually exists on your keyboard layout,
+        # e.g. check output of 'xmodmap -pke'
+        history = ctrl+grave
+
+        # Context menu.
+        context = ctrl+shift+period
+
+    [urgency_low]
+        # IMPORTANT: colors have to be defined in quotation marks.
+        # Otherwise the "#" and following would be interpreted as a comment.
+        background = "#46474d"
+        foreground = "#ababb4"
+        timeout = 10
+        # Icon for notifications with low urgency, uncomment to enable
+        #icon = /path/to/icon
+
+    [urgency_normal]
+        background = "#46474d"
+        foreground = "#ababb4"
+        timeout = 10
+        # Icon for notifications with normal urgency, uncomment to enable
+        #icon = /path/to/icon
+
+    [urgency_critical]
+        background = "#46474d"
+        foreground = "#ababb4"
+        timeout = 0
+        # Icon for notifications with critical urgency, uncomment to enable
+        #icon = /path/to/icon
+
+    # Every section that isn't one of the above is interpreted as a rules to
+    # override settings for certain messages.
+    # Messages can be matched by "appname", "summary", "body", "icon", "category",
+    # "msg_urgency" and you can override the "timeout", "urgency", "foreground",
+    # "background", "new_icon" and "format".
+    # Shell-like globbing will get expanded.
+    #
+    # SCRIPTING
+    # You can specify a script that gets run when the rule matches by
+    # setting the "script" option.
+    # The script will be called as follows:
+    #   script appname summary body icon urgency
+    # where urgency can be "LOW", "NORMAL" or "CRITICAL".
+    #
+    # NOTE: if you don't want a notification to be displayed, set the format
+    # to "".
+    # NOTE: It might be helpful to run dunst -print in a terminal in order
+    # to find fitting options for rules.
+
+    #[espeak]
+    #    summary = "*"
+    #    script = dunst_espeak.sh
+
+    #[script-test]
+    #    summary = "*script*"
+    #    script = dunst_test.sh
+
+    #[ignore]
+    #    # This notification will not be displayed
+    #    summary = "foobar"
+    #    format = ""
+
+    #[history-ignore]
+    #    # This notification will not be saved in history
+    #    summary = "foobar"
+    #    history_ignore = yes
+
+    #[signed_on]
+    #    appname = Pidgin
+    #    summary = "*signed on*"
+    #    urgency = low
+    #
+    #[signed_off]
+    #    appname = Pidgin
+    #    summary = *signed off*
+    #    urgency = low
+    #
+    #[says]
+    #    appname = Pidgin
+    #    summary = *says*
+    #    urgency = critical
+    #
+    #[twitter]
+    #    appname = Pidgin
+    #    summary = *twitter.com*
+    #    urgency = normal
+    #
+    # vim: ft=cfg
+  #+END_SRC
+
+  
+* GTK Settings
+
+** GTK2
+
+   #+BEGIN_SRC conf :tangle ~/.gtkrc-2.0 :noweb yes
+     gtk-icon-theme-name = "Adwaita"
+     gtk-theme-name = "Arc"
+     gtk-font-name = "<<font-sans-serif()>> 11"
+   #+END_SRC
+
+** GTK3
+
+   #+BEGIN_SRC conf :tangle ~/.config/gtk-3.0/settings.ini :noweb yes
+     [Settings]
+     gtk-icon-theme-name = Adwaita
+     gtk-theme-name = Arc
+     gtk-font-name = <<font-sans-serif()>> 11
+   #+END_SRC
+
+* Applications
+
+** Zathura
+
+   PDF reading.
+
+   #+BEGIN_SRC conf :tangle ~/.config/zathura/zathurarc :noweb yes
+     set selection-clipboard clipboard
+     set window-title-home-tilde "true"
+     set statusbar-home-tilde "true"
+     set font                        "<<font-sans-serif()>> 11"
+     set default-fg                  "#26272d"
+     set default-bg                  "#ffffff"
+     set statusbar-bg                "#ffffff"
+     set statusbar-fg                "#26272d"
+     set inputbar-fg                 "#26272d"
+     set inputbar-bg                 "#ffffff"
+     set notification-error-bg       "#AC4142"
+     set notification-error-fg       "#151515"
+     set notification-warning-bg     "#AC4142"
+     set notification-warning-fg     "#151515"
+     set highlight-color             "#F4BF75"
+     set highlight-active-color      "#6A9FB5"
+     set completion-highlight-fg     "#303030"
+     set completion-highlight-bg     "#75B5AA"
+     set completion-bg               "#303030"
+     set completion-fg               "#75B5AA"
+     set notification-bg             "#90A959"
+     set notification-fg             "#151515"
+     set recolor-lightcolor          "#fdf6e3"
+     set recolor-darkcolor           "#556b72"
+     set recolor                     "false"
+     set recolor-keephue             "false"
+   #+END_SRC
+
+** Default applications
+
+   Mostly to make sure PDFs open up in zathura.
+
+   #+BEGIN_SRC conf :tangle ~/.local/share/applications/defaults.list
+     [Default Applications]
+     application/pdf=org.pwmt.zathura.desktop
+   #+END_SRC
+
+* Mail
+
+  Emails are pulled down via mbsync. A systemd unit runs a timer for
+  periodically running mbsync.
+
+  #+BEGIN_SRC conf :tangle ~/.config/systemd/user/mbsync.service
+    [Unit]
+    Description=Mailbox synchronization service
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/mbsync -Va
+  #+END_SRC
+
+  #+BEGIN_SRC conf :tangle ~/.config/systemd/user/mbsync.timer
+    [Unit]
+    Description=Mailbox synchronization timer
+
+    [Timer]
+    OnActiveSec=20
+    OnUnitActiveSec=5m
+    Unit=mbsync.service
+
+    [Install]
+    WantedBy=timers.target
+  #+END_SRC
