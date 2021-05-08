@@ -1097,16 +1097,16 @@
 
 ** Status bar
    :PROPERTIES:
-   :header-args:scheme: :tangle ~/.status/status.scm
-   :header-args:scheme+: :tangle-mode (identity #o755)
-   :header-args:scheme+: :session status :scheme guile
+   :header-args+: :tangle ~/.status/status.scm
+   :header-args+: :tangle-mode (identity #o755)
+   :header-args:scheme: :session status :scheme guile
    :END:
 
    Auto-invoke guile.
 
-   #+BEGIN_SRC sh
+   #+BEGIN_SRC text
      #!/usr/bin/guile \
-         -e main -s
+     -e main -s
      !#
    #+END_SRC
      
