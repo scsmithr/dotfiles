@@ -1099,17 +1099,21 @@
    :PROPERTIES:
    :header-args:scheme: :tangle ~/.status/status.scm
    :header-args:scheme+: :tangle-mode (identity #o755)
+   :header-args:scheme+: :session status :scheme guile
    :END:
 
    Auto-invoke guile.
 
    #+BEGIN_SRC sh
      #!/usr/bin/guile \
-     -e main -s
+         -e main -s
      !#
    #+END_SRC
      
-   #+BEGIN_SRC scheme :session status
+   The actual scheme source for status. =geiser= can be used by evaling the below
+   code block.
+
+   #+BEGIN_SRC scheme
      (use-modules (ice-9 textual-ports))
      (use-modules (ice-9 popen))
 
@@ -1193,9 +1197,9 @@
 
      (define (print-loop)
        (while #t
-              (display (format-status))
-              (newline)
-              (sleep loop-wait)))
+         (display (format-status))
+         (newline)
+         (sleep loop-wait)))
 
      (define (main args)
        (setvbuf (current-output-port) 'none)
@@ -1252,7 +1256,28 @@
 
 ** Redshift
 
-   #+BEGIN_SRC conf :tangle ~/.config/redshift/redshift.conf
+   Retrieve location for machine currently tangling.
+
+   #+name: location
+   #+BEGIN_SRC bash :results none
+     file="/tmp/.location"
+     if [ ! -f "$file" ]; then
+         curl https://location.services.mozilla.com/v1/geolocate?key=geoclue > "$file"
+     fi
+     cat "$file"
+   #+END_SRC
+
+   #+name: location-lat
+   #+BEGIN_SRC bash :noweb yes
+     <<location>> | jq .location.lat
+   #+END_SRC
+
+   #+name: location-long
+   #+BEGIN_SRC bash :noweb yes
+     <<location>> | jq .location.lng
+   #+END_SRC
+
+   #+BEGIN_SRC conf :tangle ~/.config/redshift/redshift.conf :noweb yes
      [redshift]
      ; Set the day and night screen temperatures
      temp-day=6500
@@ -1263,7 +1288,7 @@
      ; 1 will gradually increase or decrease the screen temperature
      transition=1
 
-     dawn-time=8:00-11:30
+     dawn-time=6:00-10:30
      dusk-time=17:30-22:00
 
      ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
@@ -1275,18 +1300,33 @@
      ; type 'redshift -l PROVIDER:help' to see the settings
      ; e.g. 'redshift -l manual:help'
      [manual]
-     lat=30.2
-     lon=-97.4
+     lat=<<location-lat()>>
+     lon=<<location-long()>>
    #+END_SRC
 
 ** Xinit
+   :PROPERTIES:
+   :header-args:sh: :tangle ~/.xinitrc :noweb yes :comments org :padline no
+   :END:
 
-   #+BEGIN_SRC sh :tangle ~/.xinitrc :noweb yes
+   Set proper cursor, otherwise X defaults to an x shaped cursor which looks
+   ugly. This seems to be using the cursor theme provided by Gnome, but I don't
+   really care what it looks like.
+
+   #+BEGIN_SRC sh
      xsetroot -cursor_name left_ptr
+   #+END_SRC
+     
+   Set some colors, load colors/themes from xresources.
+
+   #+BEGIN_SRC sh
      hsetroot -solid "#CFCFCF"
-
      xrdb ~/.Xresources
+   #+END_SRC
 
+   Set initial dpi for my most used computers.
+
+   #+BEGIN_SRC sh
      case $HOSTNAME in
          "system22")
              dpi laptop
@@ -1295,23 +1335,42 @@
              dpi monitor
              ;;
      esac
+   #+END_SRC
 
-     # Change caplock to left control
+   Call script defined in [[mm]] to change caplock related settings.
+
+   #+BEGIN_SRC sh
      mm
+   #+END_SRC
 
+   Set up gpg and ssh agents. Not too sure what the dbus update thing is for, I
+   don't remember why I put it in.
+
+   #+BEGIN_SRC sh
      dbus-update-activation-environment --systemd DISPLAY
      eval $(ssh-agent -s)
      export SSH_AUTH_SOCK
+   #+END_SRC
 
+   Start some background stuff.
+
+   #+BEGIN_SRC sh
      redshift&
      dunst&
+   #+END_SRC
 
-     # Set up lockscreen
+   Set up lock screen, using =xsecurelock=.
+
+   #+BEGIN_SRC sh
      xset s 300 5 # Lock after 5 minutes
      export XSECURELOCK_PASSWORD_PROMPT=time
      export XSECURELOCK_FONT="<<font-sans-serif()>>"
      xss-lock -l -- xsecurelock&
+   #+END_SRC
 
+   Launch =xmonad=.
+
+   #+BEGIN_SRC sh
      exec xmonad
    #+END_SRC
 
@@ -1713,7 +1772,6 @@
     #
     # vim: ft=cfg
   #+END_SRC
-
   
 * GTK Settings
 
