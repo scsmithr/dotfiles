@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: Eslint disable next line exhaustive deps
+# --
+// eslint-disable-next-line react-hooks/exhaustive-deps

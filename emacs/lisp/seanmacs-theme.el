@@ -49,7 +49,8 @@
 
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
-        modus-themes-region 'bg-only)
+        modus-themes-region 'bg-only
+        modus-themes-diffs 'bg-only)
 
   (setq x-underline-at-descent-line t)
 

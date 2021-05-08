@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: Eslint disable next line sort type union/intersection members
+# --
+// eslint-disable-next-line @typescript-eslint/sort-type-union-intersection-members
