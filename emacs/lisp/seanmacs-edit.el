@@ -138,7 +138,8 @@
            ("dired" (mode . dired-mode))
            ("email" (name . "\*mu4e"))
            ("scratch" (name . "\*scratch"))
-           ("special" (name . "\*"))
+           ("special" (or (name . "\*")
+                          (mode . geiser-repl-mode)))
            ("version control" (or
                                (name . "magit")
                                (mode . diff-mode)

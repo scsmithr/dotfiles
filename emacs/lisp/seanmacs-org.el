@@ -158,6 +158,7 @@
    '((shell      . t)
      (emacs-lisp . t)
      (lisp       . t)
+     (scheme     . t)
      (sql        . t)
      (http       . t)
      (gnuplot    . t)

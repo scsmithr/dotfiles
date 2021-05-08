@@ -329,6 +329,16 @@ Start a new process if not alive."
 
 (use-package geiser
   :straight t
+  :defer t
+  :config
+  (setq geiser-default-implementation 'guile))
+
+(use-package geiser-guile
+  :straight t
+  :defer t)
+
+(use-package geiser-racket
+  :straight t
   :defer t)
 
 ;; Julia
