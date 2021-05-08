@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-file=screenshot_$(date -Iseconds).png
-
-maim --select --hidecursor | tee ~/Pictures/screenshots/$file | xclip -selection clipboard -t image/png
-notify-send "Screenshot taken" "$file"

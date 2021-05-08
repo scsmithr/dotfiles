@@ -1,4 +1,11 @@
+#+STARTUP: content
+#+PROPERTY: header-args+ :mkdirp yes
+
 * Shell and terminal
+
+  #+BEGIN_SRC shell :tangle ~/test/test/hello.sh
+    echo "hi"
+  #+END_SRC
 
   Shell and terminal related settings and scripts.
 
@@ -669,7 +676,7 @@
 
 ** Bashrc
    :PROPERTIES:
-   :header-args:bash: :tangle ~/.bashrc
+   :header-args:bash: :tangle ~/.bashrc :comments noweb
    :END:
 
    If not running interactively, don't do anything
@@ -1200,7 +1207,7 @@
 
 ** Xresources
 
-   #+BEGIN_SRC conf ~/.Xresources
+   #+BEGIN_SRC conf :tangle ~/.Xresources
      Xcursor.size: 32
 
      #define S_base03        #002b36
