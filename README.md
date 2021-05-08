@@ -2,6 +2,12 @@
 
 Repository for easy syncing of my dotfiles.
 
-## Getting started
+## Emacs
 
-After cloning the repo, cd into the dotfiles directory and run the link.sh script. This script does not overwrite existing files.
+Running `link.sh` will symlink emacs files to `~/.emacs.d`.
+
+## Everything else
+
+Configuration for everything else lives in
+[dotfiles.org](./dotfiles.org). Tangling will export all files to where they
+expect to be found.
