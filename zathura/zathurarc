@@ -1,7 +1,7 @@
 set selection-clipboard clipboard
 set window-title-home-tilde "true"
 set statusbar-home-tilde "true"
-set font                        "Fira Sans 10"
+set font                        "Source Sans Pro 11"
 set default-fg                  "#26272d"
 set default-bg                  "#ffffff"
 set statusbar-bg                "#ffffff"
