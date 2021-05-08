@@ -120,7 +120,7 @@
         org-log-reschedule 'time)
 
   ;; Embedded latex images are a bit small by default.
-  (plist-put org-format-latex-options :scale 1.7)
+  (plist-put org-format-latex-options :scale 1.4)
 
   (defun sm/save-agenda-buffers ()
     "Save all org agenda files."

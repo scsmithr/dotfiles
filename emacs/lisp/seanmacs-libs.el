@@ -60,18 +60,25 @@ If no region selected, colorize the entire buffer."
 (defvar sm/password-auth-sources '("~/syncthing/passwords.gpg")
   "Where to store passwords.")
 
-(defun sm/generate-password (&optional symbols?)
+(defvar sm/password-use-symbols nil
+  "Whether or not to include symbols in the generated password.")
+
+(defvar sm/password-remove-after nil
+  "Time in seconds before the password is removed from the kill ring.
+If set to nil, some default duration will be used.")
+
+(defun sm/generate-password ()
   "Generate a random password."
   (interactive)
-  (if symbols?
+  (if sm/password-use-symbols
       (shell-command-to-string "cat /dev/urandom | tr -dc 'a-zA-Z0-9-_!@#$%^&*()_+{}|:<>?=' | head -c 28")
     (shell-command-to-string "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 28")))
 
-(defun sm/password-insert-killring (pass &optional remove-after)
-  "Put PASS in kill ring, removing it after REMOVE-AFTER or 15 seconds."
+(defun sm/password-insert-killring (pass)
+  "Put PASS in kill ring, removing it after `sm/password-remove-after' or 15 seconds."
   (run-with-timer
-   (or remove-after 15) nil #'(lambda ()
-                                (message "Password removed")
+   (or sm/password-remove-after 15) nil #'(lambda ()
+                                (message "Password removed from kill ring")
                                 (kill-new "" t)))
   (kill-new pass))
 

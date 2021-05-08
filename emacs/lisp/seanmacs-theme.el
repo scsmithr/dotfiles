@@ -48,7 +48,7 @@
   (fringe-mode '(10 . 10))
 
   (setq modus-themes-fringes 'subtle
-        modus-themes-org-blocks 'greyscale
+        modus-themes-org-blocks 'gray-background
         modus-themes-region 'bg-only)
 
   (setq x-underline-at-descent-line t)
