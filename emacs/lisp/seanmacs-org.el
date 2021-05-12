@@ -122,16 +122,8 @@
   ;; Embedded latex images are a bit small by default.
   (plist-put org-format-latex-options :scale 1.4)
 
-  (defun sm/save-agenda-buffers ()
-    "Save all org agenda files."
-    (interactive)
-    (save-some-buffers t (lambda ()
-                           (when (and (string-equal major-mode "org-mode")
-                                      (string-prefix-p (expand-file-name sm/notes-dir)
-                                                       (buffer-file-name)))
-                             t))))
-
-  (advice-add 'org-refile :after (lambda (&rest _) (sm/save-agenda-buffers)))
+  ;; Auto-save after refiling.
+  (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
 
   :hook ((org-capture-mode . evil-insert-state))
   :bind (("C-c c" . org-capture)
