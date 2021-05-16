@@ -20,7 +20,8 @@
 
   (setq org-default-notes-file (concat sm/notes-dir "refile.org")
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
-        org-refile-targets '((org-agenda-files :maxlevel . 3))
+        org-refile-targets '((nil :maxlevel . 3)
+                             (org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path t
         org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
