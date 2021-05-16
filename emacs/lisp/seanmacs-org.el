@@ -128,9 +128,7 @@
 
   :hook ((org-capture-mode . evil-insert-state))
   :bind (("C-c c" . org-capture)
-         ("C-c o" . org-agenda)
-         :map org-mode-map
-         ("C-c t" . org-toggle-narrow-to-subtree)))
+         ("C-c o" . org-agenda)))
 
 (use-package org-crypt
   :after org
