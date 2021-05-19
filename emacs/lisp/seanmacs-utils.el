@@ -165,9 +165,6 @@
           ,(sm/arxiv-atom-feed "q-bio.QM")
           ))
 
-  ;; Update every 8 hours.
-  (run-at-time nil (* 8 60 60) #'elfeed-update)
-
   :bind(("C-c a e" . elfeed)
         :map elfeed-show-mode-map
         ("C-c d a" . sm/download-arxiv-paper)))
