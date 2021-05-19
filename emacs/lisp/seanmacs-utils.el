@@ -11,6 +11,12 @@
   (setq auth-sources '("~/.authinfo.gpg" "~/.netrc.gpg")
         epg-pinentry-mode 'loopback))
 
+(use-package tabulated-list
+  ;; built-in
+  :init
+  (setq tabulated-list-gui-sort-indicator-asc ?↓
+        tabulated-list-gui-sort-indicator-desc ?↑))
+
 ;; Quickly generate lang formatters.
 (use-package reformatter
   :straight t)
