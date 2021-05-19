@@ -5,7 +5,16 @@
 
 ;;; Code:
 
-(defun seanmacs/listify-env-vars (env val &rest rest)
+(defun sm/compile (command &optional buf-name)
+  "Run COMMAND in a compilation buffer named BUF-NAME.
+
+If BUF-NAME is nil, the command will be used to name the buffer."
+  (interactive (list (compilation-read-command "")))
+  (let ((compilation-buffer-name-function
+         #'(lambda (_mode) (or buf-name (format "*Async: %s*" command)))))
+    (compile command)))
+
+(defun sm/listify-env-vars (env val &rest rest)
   "Create a list of environment variables and values suitable to use in the shell."
   (let ((list '()))
     (while env
@@ -14,15 +23,15 @@
       (setq env (pop rest) val (pop rest)))
     list))
 
-(defun seanmacs/append-process-environment (env val &rest rest)
+(defun sm/append-process-environment (env val &rest rest)
   "Append environment variables to the current environment."
   (append
-   (apply 'seanmacs/listify-env-vars env val rest)
+   (apply 'sm/listify-env-vars env val rest)
    process-environment
    '()))
 
 (defun sm/disable-company ()
-    (company-mode -1))
+  (company-mode -1))
 
 (use-package shrink-path
   :straight t
