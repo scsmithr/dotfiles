@@ -70,6 +70,8 @@
   (advice-add 'lsp--message :around #'sm/lsp-wrap-message)
 
   :config
+  (sm/warn-fn-not-bound 'lsp--message)
+
   (setq lsp-prefer-flymake nil
         lsp-auto-guess-root t
         lsp-eldoc-render-all nil

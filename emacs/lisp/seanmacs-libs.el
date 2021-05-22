@@ -120,6 +120,13 @@ some time."
         (funcall (plist-get (car src) :save-function))
         (sm/password-insert-killring password)))))
 
+;; Misc
+
+(defun sm/warn-fn-not-bound (fn-symbol)
+  "Warn if FN-SYMBOL is void."
+  (when (not (fboundp fn-symbol))
+    (message "WARN: %s is void!" fn-symbol)))
+
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here
 
