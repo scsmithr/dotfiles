@@ -131,11 +131,13 @@
         ibuffer-saved-filter-groups
         '(("seanmacs"
            ("async" (name . "\*Async"))
+           ("compile" (mode . compilation-mode))
            ("shell" (or
                      (mode . eshell-mode)
                      (mode . term-mode)
                      (mode . shell-mode)))
-           ("dired" (mode . dired-mode))
+           ("dired" (or (mode . dired-mode)
+                        (mode . image-dired-thumbnail-mode)))
            ("email" (name . "\*mu4e"))
            ("scratch" (name . "\*scratch"))
            ("special" (or (name . "\*")

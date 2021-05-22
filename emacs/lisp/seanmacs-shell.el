@@ -11,7 +11,7 @@
 If BUF-NAME is nil, the command will be used to name the buffer."
   (interactive (list (compilation-read-command "")))
   (let ((compilation-buffer-name-function
-         #'(lambda (_mode) (or buf-name (format "*Async: %s*" command)))))
+         #'(lambda (_mode) (or buf-name (format "*Compile: %s*" command)))))
     (compile command)))
 
 (defun sm/listify-env-vars (env val &rest rest)
