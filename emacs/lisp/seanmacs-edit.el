@@ -45,8 +45,18 @@
 ;; #Don't #create #lock #files
 (setq create-lockfiles nil)
 
-;; Having the echo area automatically expand is annoying.
-(setq message-truncate-lines t)
+(use-package eldoc
+  ;; built-in
+  :init
+  (defvar sm/eldoc-truncate-messages nil
+    "Should messages printed by eldoc be truncated.")
+
+  (defun sm/eldoc-minibuffer-message (format-string &rest args)
+    "Truncates messages printed by `eldoc-minibuffer-message'."
+    (let ((message-truncate-lines sm/eldoc-truncate-messages))
+      (apply 'eldoc-minibuffer-message format-string args)))
+
+  (setq eldoc-message-function #'sm/eldoc-minibuffer-message))
 
 ;; Auto insert closing parenthesis, braces, etc
 (use-package elec-pair

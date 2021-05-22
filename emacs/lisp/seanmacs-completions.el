@@ -59,6 +59,16 @@
 (use-package lsp-mode
   :straight t
   :commands lsp
+  :init
+  (defvar sm/lsp-truncate-messages t
+    "Should messages printed by lsp be truncated.")
+
+  (defun sm/lsp-wrap-message (orig-fn &rest args)
+    (let ((message-truncate-lines sm/lsp-truncate-messages))
+      (apply orig-fn args)))
+
+  (advice-add 'lsp--message :around #'sm/lsp-wrap-message)
+
   :config
   (setq lsp-prefer-flymake nil
         lsp-auto-guess-root t
