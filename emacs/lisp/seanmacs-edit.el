@@ -45,6 +45,9 @@
 ;; #Don't #create #lock #files
 (setq create-lockfiles nil)
 
+;; Having the echo area automatically expand is annoying.
+(setq message-truncate-lines t)
+
 ;; Auto insert closing parenthesis, braces, etc
 (use-package elec-pair
   ;; built-in
