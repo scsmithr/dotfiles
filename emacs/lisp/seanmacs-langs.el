@@ -53,6 +53,7 @@
   "Set jump property for FN."
   (evil-add-command-properties fn :jump t))
 
+
 ;; Go
 
 (use-package go-mode
@@ -94,6 +95,7 @@
   (setq flycheck-golangci-lint-tests t
         flycheck-golangci-lint-fast t))
 
+
 ;; Haskell
 
 (use-package haskell-mode
@@ -106,12 +108,14 @@
   (sm/set-goto-def-keybind 'haskell-mode-map #'haskell-mode-jump-to-def)
   :hook ((haskell-mode . interactive-haskell-mode)))
 
+
 ;; Octave
 
 (use-package octave
   :defer t
   :mode ("\\.m\\'" . octave-mode))
 
+
 ;; Rust
 
 (use-package rust-mode
@@ -131,7 +135,8 @@
   :straight t
   :defer t)
 
-;; Typescript
+
+;; Typescript/ web stuff
 
 (defun seanmacs/bin-from-node-modules (bin)
   "Return the full path if BIN exists in dominating node modules
@@ -206,6 +211,7 @@ dir. Return nil otherwise."
         web-mode-enable-auto-indentation nil)
   :hook ((web-mode . sm/reset-web-mode-offsets)))
 
+
 ;; Elixir
 
 (use-package elixir-mode
@@ -297,6 +303,7 @@ Start a new process if not alive."
              ("C-c C-l" . sm/iex-recompile-current-module)
              ("C-c C-c" . sm/iex-send-region-or-line)))
 
+
 ;; Erlang
 
 (use-package erlang
@@ -309,12 +316,14 @@ Start a new process if not alive."
           erlang-electric-gt
           erlang-electric-newline)))
 
+
 ;; Protobuf
 
 (use-package protobuf-mode
   :straight t
   :defer t)
 
+
 ;; Common lisp
 
 (use-package sly
@@ -325,6 +334,7 @@ Start a new process if not alive."
         sly-contribs '(sly-fancy))
   (sm/set-jump-property #'sly-edit-definition))
 
+
 ;; Scheme
 
 (use-package geiser
@@ -341,6 +351,7 @@ Start a new process if not alive."
   :straight t
   :defer t)
 
+
 ;; Julia
 
 (use-package julia-mode
@@ -462,6 +473,7 @@ Start a new process if not alive."
              ("C-c C-d a" . sm/julia-apropos)
              ("C-c C-d C-a" . sm/julia-apropos)))
 
+
 ;; R
 
 (use-package ess
@@ -481,6 +493,7 @@ Start a new process if not alive."
     (kbd "[[") 'ess-skip-to-previous-section)
   :hook ((inferior-ess-r-mode . sm/ess-r-comint-vars)))
 
+
 ;; Clojure
 
 (use-package clojure-mode
@@ -507,6 +520,7 @@ Start a new process if not alive."
   :config
   (sm/set-jump-property #'cider-find-var))
 
+
 ;; Emacs lisp
 
 (use-package elisp-mode
@@ -522,6 +536,7 @@ Start a new process if not alive."
               :map lisp-interaction-mode-map
               ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)))
 
+
 ;; C/C++
 
 (use-package ccls
@@ -532,12 +547,14 @@ Start a new process if not alive."
            (require 'ccls)
            (lsp))))
 
+
 ;; Yaml
 
 (use-package yaml-mode
   :straight t
   :defer t)
 
+
 ;; Markdown
 
 (use-package markdown-mode
@@ -547,18 +564,21 @@ Start a new process if not alive."
   (evil-collection-define-key 'normal 'markdown-mode-map
     (kbd "TAB") 'markdown-cycle))
 
+
 ;; Dockerfile
 
 (use-package dockerfile-mode
   :straight t
   :defer t)
 
+
 ;; Nix
 
 (use-package nix-mode
   :straight t
   :defer t)
 
+
 ;; Lean
 
 (use-package lean-mode
@@ -569,6 +589,7 @@ Start a new process if not alive."
         lean-extra-arguments '("-D class.instance_max_depth=1000"))
   (sm/set-goto-def-keybind 'lean-mode-map #'lean-find-definition))
 
+
 ;; Purescript
 
 (defvar seanmacs/purescript-formatter "purty")
@@ -598,6 +619,9 @@ Start a new process if not alive."
   :defer t
   :commands (psci psci/load-module! psci/load-current-file!))
 
+
+;; Agda
+
 (use-package agda2-mode
   :straight t
   :defer t
@@ -613,6 +637,9 @@ Start a new process if not alive."
   (setq agda2-highlight-face-groups 'default-faces)
   :hook ((agda2-mode . sm/set-input-agda)
          (agda2-mode . whitespace-turn-off)))
+
+
+;; Plantuml
 
 (use-package plantuml-mode
   :straight t

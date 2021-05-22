@@ -84,6 +84,8 @@
 
 ;; Allow narrowing to region
 (put 'narrow-to-region 'disabled nil)
+;; Allow narrowing to page
+(put 'narrow-to-page 'disabled nil)
 
 ;; Allow erasing entire buffer
 (put 'erase-buffer 'disabled nil)
