@@ -158,6 +158,7 @@
           ("https://doisinkidney.com/rss.xml" math dev blog)
           ("https://buttondown.email/hillelwayne/rss" math dev newsletter)
           ("http://www.philipzucker.com/feed.xml" dev blog)
+          ("https://terrytao.wordpress.com/feed" math blog)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
