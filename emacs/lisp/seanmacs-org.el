@@ -8,6 +8,9 @@
 (defvar sm/notes-dir "~/syncthing/notes/"
   "Directory containging all of my notes (including org files).")
 
+(defvar sm/org-capture-templates-dir "~/.emacs.d/org-templates"
+  "Directory containing capture templates.")
+
 (use-package org
   :straight t
   :config
@@ -19,7 +22,6 @@
         org-refile-targets '((nil :maxlevel . 3)
                              (org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path t
-        org-template-directory "~/.emacs.d/org-templates"
         org-startup-folded nil
         org-startup-with-inline-images t
         org-hide-leading-stars t
@@ -102,13 +104,13 @@
   (setq org-capture-templates
         `(
           ("a" "Annotate" entry (file+headline "" "Notes")
-           (file ,(concat org-template-directory "/annotate"))
+           (file ,(concat sm/org-capture-templates-dir "/annotate"))
            :empty-lines 1)
           ("n" "Note" entry (file+headline "" "Notes")
-           (file ,(concat org-template-directory "/note"))
+           (file ,(concat sm/org-capture-templates-dir "/note"))
            :empty-lines 1)
           ("t" "Task" entry (file+headline "" "Tasks")
-           (file ,(concat org-template-directory "/task"))
+           (file ,(concat sm/org-capture-templates-dir "/task"))
            :empty-lines 1)))
 
   ;; Keep track when I reschedule or complete things.
@@ -135,9 +137,7 @@
   (org-crypt-use-before-save-magic))
 
 (use-package ob
-  :after (org ob-http gnuplot ob-async)
   :config
-
   (setq org-plantuml-exec-mode 'plantuml
         org-babel-lisp-eval-fn #'sly-eval)
 
@@ -158,13 +158,16 @@
   :hook ((org-babel-after-execute . org-display-inline-images)))
 
 (use-package ob-http
-  :straight t)
+  :straight t
+  :after ob)
 
 (use-package gnuplot
-  :straight t)
+  :straight t
+  :after ob)
 
 (use-package ob-async
-  :straight t)
+  :straight t
+  :after ob)
 
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here
