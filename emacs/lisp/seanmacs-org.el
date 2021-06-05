@@ -124,7 +124,8 @@
 
   :hook ((org-capture-mode . evil-insert-state))
   :bind (("C-c c" . org-capture)
-         ("C-c o" . org-agenda)))
+         ("C-c o" . org-agenda)
+         ("C-c l" . org-store-link)))
 
 (use-package org-crypt
   :after org
