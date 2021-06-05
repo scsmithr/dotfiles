@@ -1723,7 +1723,7 @@
     :PROPERTIES:
     :header-args+: :tangle ~/.status/status.scm
     :header-args+: :tangle-mode (identity #o755)
-    :header-args:scheme: :session status :scheme guile
+    :header-args:scheme: :session * status * :scheme guile
     :END:
 
     Auto-invoke guile.
