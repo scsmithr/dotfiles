@@ -371,9 +371,16 @@ Start a new process if not alive."
   (defvar sm/julia-mode-hook nil
     "Hook for `sm/julia-mode'.")
 
-  (define-derived-mode sm/julia-mode comint-mode "Julia"
-    "Major mode for running julia."
+  (defvar sm/julia-mode-map
+    (let ((map (nconc (make-sparse-keymap) comint-mode-map)))
+      (define-key map (kbd "TAB") 'julia-latexsub-or-indent)
+      map)
+    "Mode map for `sm/julia-mode'.")
 
+  (define-derived-mode sm/julia-mode comint-mode "Julia"
+    "Major mode for running julia.
+
+\\{sm/julia-mode-map}"
     (set (make-local-variable 'comint-prompt-read-only) t)
     (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send)
 
