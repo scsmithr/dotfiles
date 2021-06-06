@@ -404,12 +404,47 @@ Start a new process if not alive."
         (let ((str (format "include(\"%s\")" path)))
           (sm/comint-print-and-send (sm/julia-process) str))))
 
+  (defun sm/julia-end-of-defun ()
+    "Move point to the end of the current function.
+Return nil if point is not in a function, otherwise point.
+
+This is the same as `julia-end-of-defun', except for an empty
+line check to prevent stopping at blank lines."
+    (interactive)
+    (let ((beg-defun-indent))
+      (when (or (julia-looking-at-beginning-of-defun)
+                (julia-beginning-of-defun 1)
+                (julia-beginning-of-defun -1))
+        (beginning-of-line)
+        (if (looking-at-p julia-function-assignment-regex)
+            ;; f(x) = ...
+            (progn
+              ;; skip any dangling lines
+              (while (and (forward-line)
+                          (not (eobp))
+                          (or (julia-indent-hanging)
+                              ;; dangling closing paren
+                              (and (eq 'paren (julia-syntax-context-type))
+                                   (search-forward ")"))))))
+          ;; otherwise skip forward to matching indentation (not in string/comment)
+          (setq beg-defun-indent (current-indentation))
+          (while (and (not (eobp))
+                      (forward-line 1)
+                      (or (forward-comment 5) ;; Skip empty lines.
+                          (julia-syntax-comment-or-string-p)
+                          (> (current-indentation) beg-defun-indent)))))
+        (end-of-line)
+        (point))))
+
   (defun sm/julia-send-function ()
     (interactive)
     (save-excursion
-      ;; TODO: Handle empty lines in function body.
-      (mark-defun)
-      (sm/julia-send-region-or-line)))
+      (let ((beg (progn (julia-beginning-of-defun)
+                        (point))))
+        (set-mark beg)
+        (sm/julia-end-of-defun)
+        (goto-char (point))
+        (sm/julia-send-region-or-line))))
 
   (defun sm/julia-doc ()
     (interactive)
@@ -451,7 +486,7 @@ Start a new process if not alive."
       (sm/comint-print-and-send (sm/julia-process) str)))
 
   (defun sm/julia-run ()
-    "Open an julia buffer."
+    "Open a julia buffer."
     (interactive)
     (let ((default-directory (or (projectile-project-root)
                                  default-directory)))
@@ -464,6 +499,7 @@ Start a new process if not alive."
              ("C-c C-d a" . sm/julia-apropos)
              ("C-c C-d C-a" . sm/julia-apropos)
              :map julia-mode-map
+             ("C-c C-z" . sm/julia-run)
              ("C-c C-a" . sm/julia-activate-project)
              ("C-c C-l" . sm/julia-include-buffer)
              ("C-c C-c" . sm/julia-send-region-or-line)
