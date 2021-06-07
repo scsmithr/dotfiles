@@ -24,11 +24,15 @@ If BUF-NAME is nil, the command will be used to name the buffer."
     list))
 
 (defun sm/append-process-environment (env val &rest rest)
-  "Append environment variables to the current environment."
-  (append
-   (apply 'sm/listify-env-vars env val rest)
-   process-environment
-   '()))
+  (append (apply 'sm/listify-env-vars env val rest) process-environment '()))
+
+(use-package compile
+  ;; built-in
+  :init
+  (require 'ansi-color)
+  (defun sm/colorize-compile-buffer ()
+    (ansi-color-apply-on-region compilation-filter-start (point)))
+  :hook ((compilation-filter . sm/colorize-compile-buffer)))
 
 (defun sm/disable-company ()
   (company-mode -1))
