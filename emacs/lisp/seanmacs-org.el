@@ -47,7 +47,7 @@
         org-fast-tag-selection-single-key 'expert)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "HOLD(h)" "IN-PROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+        '((sequence "TODO(t)" "NEXT(n)" "BLOCKED(b)" "IN-PROGRESS(i)" "|" "DELEGATED(e)" "DONE(d)" "CANCELED(c)")))
 
   (setq org-agenda-custom-commands
         '(("d" "Day overview"
@@ -67,6 +67,9 @@
                   ((org-agenda-overriding-header "Unscheduled")
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")
                    (org-agenda-todo-ignore-scheduled 'all)))))
+          ("b" "Blocked"
+           ((todo "BLOCKED"
+                  ((org-agenda-overriding-header "Blocked")))))
           ("r" "Refile overview"
            ((tags-todo "refile+task"
                        ((org-agenda-overriding-header "Tasks")
