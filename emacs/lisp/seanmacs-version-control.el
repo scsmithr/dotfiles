@@ -38,6 +38,15 @@
   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
          (magit-pre-refresh . diff-hl-magit-pre-refresh)))
 
+(use-package git-link
+  :straight t
+  :init
+  (defun sm/browse-git-link ()
+    "Browse `git-link' at point."
+    (interactive)
+    (let ((git-link-open-in-browser t))
+      (call-interactively 'git-link))))
+
 (provide 'seanmacs-version-control)
 ;;; seanmacs-version-control.el ends here
 

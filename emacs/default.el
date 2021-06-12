@@ -41,6 +41,7 @@
  ("gcloud.el" . "3d459f2a803a30a5d1f0e1dbc80b0d9c4d590562")
  ("geiser" . "4099dce8f5f17cce8f292cdf0bc1bf2e5cb6975c")
  ("ghub" . "ea24efe80c3f8e0c15eb6fa2a3ba91a854366354")
+ ("git-link" . "0d2fd02c160cf2a09ca4b5b4ffa544833df5afed")
  ("gnu-elpa-mirror" . "b806155cfcdee67b8d5bfca610dc19f556399d55")
  ("gnuplot" . "116cad8e09024223f97e81b0a4503cef20de9bf5")
  ("go-mode.el" . "49a538028e63dbe20f428c52d91f09b70b564626")
