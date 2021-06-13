@@ -14,7 +14,7 @@
     (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 120 :weight 'normal)
     ;; Mostly for missing unicode.
     (set-fontset-font t 'unicode (font-spec :name "Triplicate A"))
-    (set-fontset-font t 'unicode (font-spec :name "Latin Modern Math") nil 'append)
+    (set-fontset-font t 'unicode (font-spec :name "JuliaMono" :weight 'light) nil 'append)
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans") nil 'append)))
 
 ;; Set fonts.
