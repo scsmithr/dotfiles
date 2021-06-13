@@ -168,6 +168,8 @@
           ))
 
   :bind(("C-c a e" . elfeed)
+        :map elfeed-search-mode-map
+        ("C-c C-u" . elfeed-update)
         :map elfeed-show-mode-map
         ("C-c d a" . sm/download-arxiv-paper)))
 
