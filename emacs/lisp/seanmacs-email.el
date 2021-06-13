@@ -9,21 +9,18 @@
   ;; Provided by mu system package.
   :commands (mu4e)
   :config
-  ;; General configuration with mbsync.
   (setq user-full-name "Sean Smith"
-        mu4e-attachment-dir "~/.mail/.attachments"
-        mu4e-change-filenames-when-moving t)
+        mu4e-attachment-dir "~/.mail/.attachments")
 
-  (setq mu4e-get-mail-command "mbsync -a")
+  ;; General configuration with mbsync.
+  (setq mu4e-get-mail-command "mbsync -a"
+        mu4e-change-filenames-when-moving t)
 
   ;; Prefer plaintext.
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
 
   ;; Gmail specific things.
-  ;; This is mostly taken from Doom emacs.
-  (setq mu4e-sent-messages-behavior 'delete
-        mu4e-index-cleanup nil
-        mu4e-index-lazy-check t)
+  (setq mu4e-sent-messages-behavior 'delete)
 
   ;; Seems to properly quote in gmail.
   (setq message-citation-line-format "\nOn %a, %B %d, %Y at %I:%M %p %f wrote:\n"
