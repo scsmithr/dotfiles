@@ -593,12 +593,6 @@
 
       # Connect to selected network.
       sudo netctl start "$1"
-
-      # Cache passphrase so mbsync can use it.
-      echo "hello" | gpg -e --recipient scsmithr@gmail.com | gpg -d
-
-      # Periodically refresh emails.
-      systemctl start --user mbsync.timer
     #+END_SRC
     
 *** notify
@@ -1901,29 +1895,3 @@
      application/pdf=org.pwmt.zathura.desktop
    #+END_SRC
 
-* Mail
-
-  Emails are pulled down via mbsync. A systemd unit runs a timer for
-  periodically running mbsync.
-
-  #+BEGIN_SRC conf :tangle ~/.config/systemd/user/mbsync.service
-    [Unit]
-    Description=Mailbox synchronization service
-
-    [Service]
-    Type=oneshot
-    ExecStart=/usr/bin/mbsync -Va
-  #+END_SRC
-
-  #+BEGIN_SRC conf :tangle ~/.config/systemd/user/mbsync.timer
-    [Unit]
-    Description=Mailbox synchronization timer
-
-    [Timer]
-    OnActiveSec=20
-    OnUnitActiveSec=5m
-    Unit=mbsync.service
-
-    [Install]
-    WantedBy=timers.target
-  #+END_SRC

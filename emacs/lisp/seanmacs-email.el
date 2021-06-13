@@ -14,8 +14,7 @@
         mu4e-attachment-dir "~/.mail/.attachments"
         mu4e-change-filenames-when-moving t)
 
-  (setq mu4e-get-mail-command "true" ;; Mail already retrieved by systemd unit.
-        mu4e-update-interval (* 60 5)) ;; Reindex every 5 minutes.
+  (setq mu4e-get-mail-command "mbsync -a")
 
   ;; Prefer plaintext.
   (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
@@ -93,7 +92,7 @@
       (`unflag (mu4e-action-retag-message msg "-\\Starred"))))
   (add-hook 'mu4e-mark-execute-pre-hook #'sm/gmail-fix-flags)
 
-  (defun sm/set-email-account (label letvars &optional default-p)
+  (defun sm/set-email-account (label letvars)
     (setq mu4e-contexts
           (cl-loop for context in mu4e-contexts
                    unless (string= (mu4e-context-name context) label)
@@ -109,8 +108,6 @@
                                          (mu4e-message-field msg :maildir))))
                     :vars letvars)))
       (push context mu4e-contexts)
-      (when default-p
-        (setq-default mu4e-context-current context))
       context))
 
   (sm/set-email-account "personal"
@@ -121,8 +118,7 @@
                        (smtpmail-smtp-user . "scsmithr@gmail.com")
                        (smtpmail-smtp-server . "smtp.gmail.com")
                        (smtpmail-smtp-service . 587)
-                       (user-mail-address . "scsmithr@gmail.com"))
-                     t)
+                       (user-mail-address . "scsmithr@gmail.com")))
 
   (sm/set-email-account "work"
                      '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
@@ -132,8 +128,7 @@
                        (smtpmail-smtp-user . "sean@coder.com")
                        (smtpmail-smtp-server . "smtp.gmail.com")
                        (smtpmail-smtp-service . 587)
-                       (user-mail-address . "sean@coder.com"))
-                     t)
+                       (user-mail-address . "sean@coder.com")))
 
   :hook ((mu4e-compose-mode . turn-off-auto-fill)
          (mu4e-compose-mode . flyspell-mode))
