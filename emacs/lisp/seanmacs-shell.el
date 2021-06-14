@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+(require 'subr-x)
+
 (defun sm/compile (command &optional buf-name)
   "Run COMMAND in a compilation buffer named BUF-NAME.
 
@@ -39,7 +41,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 
 (use-package shrink-path
   :straight t
-  :commands (shrink-path-prompt shrink-path-dirs))
+  :commands (shrink-path-prompt))
 
 (defvar sm/eshell-append-history-on-command t
   "Whether or not eshell should write to the history file before each command.")
@@ -99,12 +101,22 @@ If BUF-NAME is nil, the command will be used to name the buffer."
           (format " %s" (substring branch 2))
         "")))
 
+  (defun sm/shrink-path-prompt (path)
+    "Shrink PATH, preserving tramp related strings."
+    (let ((s (split-string path "\:" t)))
+      (cond ((eq (length s) 3) ;; method, host, path
+             (let* ((tramp-info (butlast s))
+                    (dir (shrink-path-prompt (car (last s))))
+                    (base (string-join `(,@tramp-info ,(car dir)) ":")))
+               (cons base (cdr dir))))
+            (t (shrink-path-prompt path)))))
+
   (defun sm/eshell-default-prompt ()
     "Generate the prompt string for eshell.  Use for `eshell-prompt-function'."
-    (let ((base/dir (shrink-path-prompt default-directory)))
-      (concat (propertize (car base/dir)
+    (let ((shrunk-dir (sm/shrink-path-prompt default-directory)))
+      (concat (propertize (car shrunk-dir)
                           'face 'sm/eshell-prompt-short-pwd)
-              (propertize (cdr base/dir)
+              (propertize (cdr shrunk-dir)
                           'face 'sm/eshell-prompt-pwd)
               (propertize (sm/eshell-current-git-branch)
                           'face 'sm/eshell-prompt-git-branch)

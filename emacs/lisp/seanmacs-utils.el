@@ -225,6 +225,11 @@
   :config
   (setq tramp-remote-path '(tramp-own-remote-path "/usr/bin" "/bin")))
 
+(use-package tramp
+  ;; built-in
+  :config
+  (setq tramp-verbose 3))
+
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
 
