@@ -97,7 +97,40 @@
   ;; Ignore next
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.next\\'")
   ;; Ignore go module vendor
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'"))
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'")
+
+  ;; Additional lsp clients (mostly for working with tramp).
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-tramp-connection
+                                     (lambda () (cons lsp-go-gopls-server-path lsp-go-gopls-server-args)))
+                    :major-modes '(go-mode go-dot-mod-mode)
+                    :language-id "go"
+                    :priority 0
+                    :server-id 'gopls-remote
+                    :completion-in-comments? t
+                    :remote? t
+                    :library-folders-fn #'lsp-go--library-default-directories
+                    :after-open-fn (lambda ()
+                                     ;; https://github.com/golang/tools/commit/b2d8b0336
+                                     (setq-local lsp-completion-filter-on-incomplete nil))))
+
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-tramp-connection (lambda ()
+                                                            `(,(lsp-package-path 'typescript-language-server)
+                                                              "--tsserver-path"
+                                                              ,(lsp-package-path 'typescript)
+                                                              ,@lsp-clients-typescript-server-args)))
+                    :activation-fn 'lsp-typescript-javascript-tsx-jsx-activate-p
+                    :priority -2
+                    :completion-in-comments? t
+                    :remote? t
+                    :initialization-options (lambda ()
+                                              (list :plugins lsp-clients-typescript-plugins
+                                                    :logVerbosity lsp-clients-typescript-log-verbosity
+                                                    :tsServerPath (lsp-package-path 'typescript)))
+                    :ignore-messages '("readFile .*? requested by TypeScript but content not available")
+                    :server-id 'ts-ls-remote
+                    :request-handlers (ht ("_typescript.rename" #'lsp-javascript--rename)))))
 
 (use-package lsp-ui
   :straight t

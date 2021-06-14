@@ -230,7 +230,9 @@
         projectile-switch-project-action #'projectile-dired
         ;; When you have a mono repo with a ton of submodules, caching helps
         ;; speed things up...
-        projectile-enable-caching t)
+        projectile-enable-caching t
+        ;; Projectile lighter is hidden.
+        projectile-dynamic-mode-line nil)
 
   ;; Register project for purescript.
   (projectile-register-project-type 'purs '("spago.dhall")

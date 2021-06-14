@@ -106,9 +106,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
                           'face 'sm/eshell-prompt-short-pwd)
               (propertize (cdr base/dir)
                           'face 'sm/eshell-prompt-pwd)
-              (unless (file-remote-p default-directory)
-                (propertize (sm/eshell-current-git-branch)
-                            'face 'sm/eshell-prompt-git-branch))
+              (propertize (sm/eshell-current-git-branch)
+                          'face 'sm/eshell-prompt-git-branch)
               (propertize " $" 'face (if (zerop eshell-last-command-status)
                                          'sm/eshell-prompt-success
                                        'sm/eshell-prompt-error))
