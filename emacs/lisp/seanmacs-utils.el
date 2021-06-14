@@ -223,7 +223,10 @@
 (use-package tramp-sh
   ;; built-in
   :config
-  (setq tramp-remote-path '(tramp-own-remote-path "/usr/bin" "/bin")))
+  (setq tramp-remote-path '(tramp-own-remote-path "/usr/bin" "/bin")
+        tramp-ssh-controlmaster-options (concat "-o ControlMaster=auto "
+                                                "-o ControlPath='tramp.%%C' "
+                                                "-o ControlPersist=yes")))
 
 (use-package tramp
   ;; built-in
