@@ -593,11 +593,6 @@
 
       # Connect to selected network.
       sudo netctl start "$1"
-
-      # Start up ssh proxy.
-      if [ "$HOSTNAME" == "system7" ]; then
-          systemctl start ssh-proxy.service --user
-      fi
     #+END_SRC
     
 *** notify
