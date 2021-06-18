@@ -40,12 +40,16 @@
 
 (use-package git-link
   :straight t
+  :demand t
   :init
   (defun sm/browse-git-link ()
     "Browse `git-link' at point."
     (interactive)
     (let ((git-link-open-in-browser t))
-      (call-interactively 'git-link))))
+      (call-interactively 'git-link)))
+  :config
+  (setq git-link-use-commit t)
+  :bind (("C-c g o" . sm/browse-git-link)))
 
 (provide 'seanmacs-version-control)
 ;;; seanmacs-version-control.el ends here
