@@ -351,6 +351,21 @@ Start a new process if not alive."
   :straight t
   :defer t)
 
+(use-package geiser-chez
+  :straight t
+  :defer t)
+
+(use-package geiser-mit
+  :straight t
+  :defer t)
+
+(use-package geiser-chicken
+  :straight t
+  :defer t
+  :init
+  (setq flycheck-scheme-chicken-executable "chicken-csc"
+        geiser-chicken-binary "chicken-csi"))
+
 
 ;; Julia
 
