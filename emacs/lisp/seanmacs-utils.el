@@ -126,16 +126,17 @@
   (defvar sm/arxiv-download-dir "~/syncthing/arxiv/downloads/"
     "Download directory for papers from arxiv.")
 
-  (defun sm/download-arxiv-paper (entry)
-    "Download associated arxiv pdf from elfeed ENTRY."
-    (interactive (list elfeed-show-entry))
-    (let* ((link (elfeed-entry-link entry))
-           (pdf-link (replace-regexp-in-string
-                      (regexp-quote "abs")
-                      "pdf"
-                      link
-                      nil
-                      'literal)))
+  (defun sm/download-arxiv-paper (link)
+    "Download associated arxiv pdf from arxiv LINK.
+
+If current buffer is an elfeed entry, use the link from the
+entry. Otherwise prompt for an arxiv link."
+    (interactive (list (or (and elfeed-show-entry
+                                (elfeed-entry-link elfeed-show-entry))
+                           (read-string "Arxiv link: "))))
+    (let* ((pdf-link (replace-regexp-in-string
+                      (regexp-quote "abs") "pdf" link nil 'literal)))
+      (message (format "Downloading %s" pdf-link))
       (mkdir sm/arxiv-download-dir t)
       (let* ((name (concat (car (last (split-string link "/")))
                            ".pdf"))
