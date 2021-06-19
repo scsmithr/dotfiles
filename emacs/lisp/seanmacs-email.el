@@ -31,12 +31,12 @@
         mu4e-compose-dont-reply-to-self t)
 
   (setq mu4e-use-fancy-chars nil
-        mu4e-headers-thread-blank-prefix '("   " . " ")
-        mu4e-headers-thread-child-prefix '("|->" . " ")
-        mu4e-headers-thread-last-child-prefix '("-->" . " ")
-        mu4e-headers-thread-connection-prefix '("|  " . " ")
-        mu4e-headers-thread-orphan-prefix '("+->" . " ")
-        mu4e-headers-thread-single-orphan-prefix '(" ->" . " ")
+        mu4e-headers-thread-blank-prefix '("  " . " ")
+        mu4e-headers-thread-child-prefix '(">>" . " ")
+        mu4e-headers-thread-last-child-prefix '("->" . " ")
+        mu4e-headers-thread-connection-prefix '("| " . " ")
+        mu4e-headers-thread-orphan-prefix '("> " . " ")
+        mu4e-headers-thread-single-orphan-prefix '("> " . " ")
         mu4e-headers-thread-duplicate-prefix '("=" . " "))
 
   (setq smtpmail-stream-type 'starttls
