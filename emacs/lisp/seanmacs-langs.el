@@ -494,7 +494,7 @@ line check to prevent stopping at blank lines."
            (dir (locate-dominating-file "." project-file)))
       (if dir
           (let* ((path (expand-file-name (concat dir project-file)))
-                 (cmd (format "using Pkg; Pkg.activate(\"%s\")" path)))
+                 (cmd (format "using Pkg; Pkg.activate(\"%s\")" (sm/path-localname path))))
             (sm/comint-print-and-send (sm/julia-process) cmd))
         (message "Not in Julia project"))))
 
