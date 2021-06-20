@@ -6,6 +6,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 ;; Useful string utilities, e.g. 's-contains-p'.
 (use-package s :straight t)
 
@@ -97,6 +99,40 @@ some time."
       (let ((src (auth-source-search :host host :user user :secret password :create t)))
         (funcall (plist-get (car src) :save-function))
         (sm/password-insert-killring password)))))
+
+;; Tramp and filepath helpers
+
+(cl-defstruct sm/filepath
+  path (tramp-method nil) (tramp-host nil))
+
+(defun sm/parse-filepath (path)
+  "Parse a PATH into a `sm/filepath'."
+  (let ((ss (split-string path "\:" t)))
+    (cond ((eq (length ss) 3) ;; This is a tramp path: method, host, path
+           (let* ((tramp-info (butlast ss))
+                  (tramp-method (string-trim (car tramp-info) "/"))
+                  (tramp-host (car (cdr tramp-info)))
+                  (trimmed-path (car (last ss))))
+             (make-sm/filepath :path trimmed-path
+                               :tramp-method tramp-method
+                               :tramp-host tramp-host)))
+          (t (make-sm/filepath :path path)))))
+
+;; Testing helpers
+
+(defvar sm/test-root "~/dotfiles/emacs/test/"
+  "Directory containing test files.")
+
+(defun sm/load-tests ()
+  "Load test files from `sm/test-root'."
+  (interactive)
+  (mapcar #'load-file (directory-files sm/test-root t ".el$")))
+
+(defun sm/run-all-tests ()
+  "Load and run all tests."
+  (interactive)
+  (sm/load-tests)
+  (ert t))
 
 ;; Misc
 
