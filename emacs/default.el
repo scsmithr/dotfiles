@@ -93,7 +93,7 @@
  ("shrink-path.el" . "c14882c8599aec79a6e8ef2d06454254bb3e1e41")
  ("sly" . "5966d68727898fa6130fb6bb02208f70aa8d5ce3")
  ("spinner" . "e19f3cfc0646c0e23c10c22df219fcf427054621")
- ("straight.el" . "e1390a933b6f5a15079d6dec91eac97a17aad10c")
+ ("straight.el" . "1e27b0590df77a5d478970ca58fd6606971692f5")
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
  ("transient" . "b47e9d7d769437e279628d801a95c173c4ff26b4")
  ("treepy.el" . "3ac940e97f3d03e48ca9d7fcd74916a9b01c72f3")
