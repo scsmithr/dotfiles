@@ -12,3 +12,8 @@
                                    :tramp-method "ssh"
                                    :tramp-host "user@host"))))
 
+(ert-deftest sm/filepath-tramp-p ()
+  (should-not (sm/filepath-tramp-p (sm/parse-filepath "/home/sean/dotfiles")))
+  (should (sm/filepath-tramp-p (sm/parse-filepath "/ssh:user@host:/home/sean/dotfiles")))
+  (should-not (sm/filepath-tramp-p "/home/sean/dotfiles"))
+  (should (sm/filepath-tramp-p "/ssh:user@host:/home/sean/dotfiles")))

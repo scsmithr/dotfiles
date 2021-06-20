@@ -423,7 +423,8 @@ Start a new process if not alive."
   (defun sm/julia-include-buffer ()
     (interactive)
     (if-let ((path (buffer-file-name)))
-        (let ((str (format "include(\"%s\")" path)))
+        (let* ((fp (sm/parse-filepath path))
+               (str (format "include(\"%s\")" (sm/filepath-path fp)))) ;; Don't include tramp info.
           (sm/comint-print-and-send (sm/julia-process) str))))
 
   (defun sm/julia-end-of-defun ()
@@ -501,7 +502,8 @@ line check to prevent stopping at blank lines."
   (defun sm/julia-cd (dir)
     "Change working directory for repl to DIR."
     (interactive "D")
-    (let ((str (format "cd(\"%s\")" (expand-file-name dir))))
+    (let* ((fp (sm/parse-filepath (expand-file-name dir)))
+           (str (format "cd(\"%s\")" (sm/filepath-path fp)))) ;; Don't include tramp info.
       ;; Keep default directory in sync with where the repl points.
       (with-current-buffer (process-buffer (sm/julia-process))
         (cd dir))

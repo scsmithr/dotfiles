@@ -58,8 +58,8 @@ If set to nil, some default duration will be used.")
   "Put PASS in kill ring, removing it after `sm/password-remove-after' or 15 seconds."
   (run-with-timer
    (or sm/password-remove-after 15) nil #'(lambda ()
-                                (message "Password removed from kill ring")
-                                (kill-new "" t)))
+                                            (message "Password removed from kill ring")
+                                            (kill-new "" t)))
   (kill-new pass))
 
 (defun sm/password-yank ()
@@ -117,6 +117,19 @@ some time."
                                :tramp-method tramp-method
                                :tramp-host tramp-host)))
           (t (make-sm/filepath :path path)))))
+
+(defun sm/filepath-tramp-p (path)
+  "Is PATH a tramp path?
+
+If PATH is not already an `sm/filepath', it will be parsed as one
+if it's a string."
+  (or (and (sm/filepath-p path)
+           (sm/filepath-tramp-method path)
+           (sm/filepath-tramp-host path)
+           t)
+      ;; If not already an sm/filepath, try parsing and check again.
+      (and (stringp path)
+           (sm/filepath-tramp-p (sm/parse-filepath path)))))
 
 ;; Testing helpers
 
