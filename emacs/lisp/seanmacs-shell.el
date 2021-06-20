@@ -46,6 +46,22 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 (defvar sm/eshell-append-history-on-command t
   "Whether or not eshell should write to the history file before each command.")
 
+(defun sm/shrink-path-prompt (path)
+  "Shrink PATH, preserving tramp related strings."
+  (if (file-remote-p path)
+      (let* ((tramp-file (tramp-dissect-file-name path))
+             (method (tramp-file-name-method tramp-file))
+             (user (tramp-file-name-user tramp-file))
+             (host (tramp-file-name-host tramp-file))
+             (localname (tramp-file-name-localname tramp-file))
+             (shrunk (shrink-path-prompt localname))
+             (prompt-host (if user
+                              (string-join `(,user ,host) "@")
+                            host))
+             (prompt-base (string-join `(,method ,prompt-host ,(car shrunk)) ":")))
+        (cons prompt-base (cdr shrunk)))
+    (shrink-path-prompt path)))
+
 (use-package eshell
   ;; built-in
   :init
@@ -100,16 +116,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
       (if (not (eq branch nil))
           (format " %s" (substring branch 2))
         "")))
-
-  (defun sm/shrink-path-prompt (path)
-    "Shrink PATH, preserving tramp related strings."
-    (let ((s (split-string path "\:" t)))
-      (cond ((eq (length s) 3) ;; method, host, path
-             (let* ((tramp-info (butlast s))
-                    (dir (shrink-path-prompt (car (last s))))
-                    (base (string-join `(,@tramp-info ,(car dir)) ":")))
-               (cons base (cdr dir))))
-            (t (shrink-path-prompt path)))))
 
   (defun sm/eshell-default-prompt ()
     "Generate the prompt string for eshell.  Use for `eshell-prompt-function'."

@@ -102,34 +102,11 @@ some time."
 
 ;; Tramp and filepath helpers
 
-(cl-defstruct sm/filepath
-  path (tramp-method nil) (tramp-host nil))
-
-(defun sm/parse-filepath (path)
-  "Parse a PATH into a `sm/filepath'."
-  (let ((ss (split-string path "\:" t)))
-    (cond ((eq (length ss) 3) ;; This is a tramp path: method, host, path
-           (let* ((tramp-info (butlast ss))
-                  (tramp-method (string-trim (car tramp-info) "/"))
-                  (tramp-host (car (cdr tramp-info)))
-                  (trimmed-path (car (last ss))))
-             (make-sm/filepath :path trimmed-path
-                               :tramp-method tramp-method
-                               :tramp-host tramp-host)))
-          (t (make-sm/filepath :path path)))))
-
-(defun sm/filepath-tramp-p (path)
-  "Is PATH a tramp path?
-
-If PATH is not already an `sm/filepath', it will be parsed as one
-if it's a string."
-  (or (and (sm/filepath-p path)
-           (sm/filepath-tramp-method path)
-           (sm/filepath-tramp-host path)
-           t)
-      ;; If not already an sm/filepath, try parsing and check again.
-      (and (stringp path)
-           (sm/filepath-tramp-p (sm/parse-filepath path)))))
+(defun sm/path-localname (path)
+  "Return the localname of PATH if it's a remote file, or just PATH otherwise."
+  (if (file-remote-p path)
+      (tramp-file-name-localname (tramp-dissect-file-name path))
+    path))
 
 ;; Testing helpers
 
