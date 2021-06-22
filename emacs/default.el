@@ -60,7 +60,6 @@
  ("lean-mode" . "5c50338ac149ca5225fc737be291db1f63c45f1d")
  ("let-alist" . "6708ec0b2e6dff80ff5b64698aa009d9070a2ed2")
  ("lsp-mode" . "5ca68ed5b9295f298fa45e3cc0f4901a7c471c46")
- ("lsp-ui" . "efae00eb6a733d5271cb33e9d92c3d8c2fa98dde")
  ("magit" . "f592e367d7602106d6f8f8349148bd31a94ba231")
  ("markdown-mode" . "1c7d29d52986b2cb153b5f643167ea49417de469")
  ("melpa" . "00d26e91412c9132287ea0019afc29abfc4fb171")

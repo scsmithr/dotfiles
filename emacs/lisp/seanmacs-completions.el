@@ -132,16 +132,5 @@
                     :server-id 'ts-ls-remote
                     :request-handlers (ht ("_typescript.rename" #'lsp-javascript--rename)))))
 
-(use-package lsp-ui
-  :straight t
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-enable nil
-        lsp-ui-peek-enable nil
-        lsp-ui-sideline-enable nil
-        lsp-ui-imenu-enable nil
-        lsp-ui-flycheck-enable t)
-  :hook ((lsp-mode . lsp-ui-mode)))
-
 (provide 'seanmacs-completions)
 ;;; seanmacs-completions.el ends here
