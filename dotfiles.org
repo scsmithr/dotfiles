@@ -492,7 +492,7 @@
     Set dpi for my commonly used systems.
 
     #+BEGIN_SRC bash :tangle ~/.bin/dpi
-      laptop_dpi=216
+      laptop_dpi=222
       monitor_dpi=116
 
       function set_dpi() {
