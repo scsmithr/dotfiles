@@ -51,5 +51,6 @@
 (use-package seanmacs-langs)
 (use-package seanmacs-shell)
 (use-package seanmacs-email)
+(use-package seanmacs-password)
 
 ;;; init.el ends here
