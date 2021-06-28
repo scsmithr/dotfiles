@@ -760,7 +760,7 @@
 
   #+name: font-monospace
   #+BEGIN_SRC sh
-    echo "Triplicate A"
+    echo "Fira Code"
   #+END_SRC
 
   #+RESULTS: font-monospace

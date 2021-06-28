@@ -10,10 +10,11 @@
   (when (and frame (display-graphic-p frame))
     (message "Setting fonts")
     (set-frame-font (font-spec :name "Triplicate A") t t)
-    (set-face-attribute 'default nil :family "Triplicate A" :height 120 :weight 'normal)
-    (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 120 :weight 'normal)
-    ;; Mostly for missing unicode.
-    (set-fontset-font t 'unicode (font-spec :name "Triplicate A"))
+    (set-face-attribute 'default nil :family "Fira Code" :height 110 :weight 'normal)
+    (set-face-attribute 'bold nil :family "Fira Code" :height 110 :weight 'semi-bold)
+    (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 130 :weight 'normal)
+    ;; Unicode fallbacks.
+    (set-fontset-font t 'unicode (font-spec :name "Fira Code"))
     (set-fontset-font t 'unicode (font-spec :name "JuliaMono" :weight 'light) nil 'append)
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans") nil 'append)))
 
@@ -76,7 +77,9 @@
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))
 
       (with-eval-after-load 'sly-mrepl
-        (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))))
+        (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))
+      (with-eval-after-load 'sly
+        (set-face-attribute 'sly-mode-line nil :weight 'normal))))
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
