@@ -9,9 +9,8 @@
   "Setup fonts for FRAME."
   (when (and frame (display-graphic-p frame))
     (message "Setting fonts")
-    (set-frame-font (font-spec :name "Triplicate A") t t)
+    (set-frame-font (font-spec :name "Fira Code") t t)
     (set-face-attribute 'default nil :family "Fira Code" :height 110 :weight 'normal)
-    (set-face-attribute 'bold nil :family "Fira Code" :height 110 :weight 'semi-bold)
     (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 130 :weight 'normal)
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "Fira Code"))
@@ -77,9 +76,7 @@
        `(eshell-ls-directory ((t (:foreground ,blue-alt)))))
 
       (with-eval-after-load 'sly-mrepl
-        (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))
-      (with-eval-after-load 'sly
-        (set-face-attribute 'sly-mode-line nil :weight 'normal))))
+        (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))))
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
