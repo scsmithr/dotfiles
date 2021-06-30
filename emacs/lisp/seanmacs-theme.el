@@ -9,11 +9,12 @@
   "Setup fonts for FRAME."
   (when (and frame (display-graphic-p frame))
     (message "Setting fonts")
-    (set-frame-font (font-spec :name "Fira Code") t t)
-    (set-face-attribute 'default nil :family "Fira Code" :height 110 :weight 'normal)
+    (set-frame-font (font-spec :name "Fira Mono") t t)
+    (set-face-attribute 'default nil :family "Fira Mono" :height 110 :weight 'normal)
     (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 130 :weight 'normal)
     ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "Fira Code"))
+    (set-fontset-font t 'unicode (font-spec :name "Fira Mono"))
+    (set-fontset-font t 'unicode (font-spec :name "Fira Code") nil 'append)
     (set-fontset-font t 'unicode (font-spec :name "JuliaMono" :weight 'light) nil 'append)
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans") nil 'append)))
 

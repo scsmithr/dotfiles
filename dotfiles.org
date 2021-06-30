@@ -760,7 +760,7 @@
 
   #+name: font-monospace
   #+BEGIN_SRC sh
-    echo "Fira Code"
+    echo "Fira Mono"
   #+END_SRC
 
   #+RESULTS: font-monospace
