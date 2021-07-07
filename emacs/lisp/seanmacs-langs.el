@@ -399,6 +399,11 @@ Start a new process if not alive."
     (set (make-local-variable 'comint-prompt-read-only) t)
     (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send)
 
+    ;; The default value of `electric-pair-default-skip-self' doesn't seem to
+    ;; work well with this derived comint. I end up with an extra closing
+    ;; parenthesis instead of getting a balanced pair when typing '()' verbatim.
+    (set (make-local-variable 'electric-pair-skip-self) t)
+
     (run-hooks 'sm/julia-mode-hook))
 
   (defun sm/julia-start-process ()
