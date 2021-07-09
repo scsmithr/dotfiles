@@ -223,6 +223,7 @@
 
 (use-package projectile
   :straight t
+  :demand t
   :config
   (setq projectile-completion-system 'default
         projectile-require-project-root nil
