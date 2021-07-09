@@ -503,13 +503,14 @@ line check to prevent stopping at blank lines."
       (sm/comint-print-and-send (sm/julia-process) str)))
 
   (defun sm/julia-activate-project ()
-    "Activate the julia project if available."
+    "Activate and instantiate the julia project if available."
     (interactive)
     (let* ((project-file "Project.toml")
            (dir (locate-dominating-file "." project-file)))
       (if dir
           (let* ((path (expand-file-name (concat dir project-file)))
-                 (cmd (format "using Pkg; Pkg.activate(\"%s\")" (sm/path-localname path))))
+                 (cmd (format "using Pkg; Pkg.activate(\"%s\"); Pkg.instantiate()"
+                              (sm/path-localname path))))
             (sm/comint-print-and-send (sm/julia-process) cmd))
         (message "Not in Julia project"))))
 
