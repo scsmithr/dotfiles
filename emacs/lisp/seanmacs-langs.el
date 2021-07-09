@@ -486,6 +486,16 @@ line check to prevent stopping at blank lines."
            (str (concat "@edit " line)))
       (sm/comint-print-and-send (sm/julia-process) str)))
 
+  (defun sm/julia-macroexpand ()
+    "Expand macro on the current line, or region if selected."
+    (interactive)
+    (let ((thing
+           (if (use-region-p)
+               (buffer-substring (region-beginning) (region-end))
+             ;; As with `sm/julia-edit', "should" be an expression instead.
+             (thing-at-point 'line t))))
+      (sm/comint-print-and-send (sm/julia-process) (concat "@macroexpand " thing))))
+
   (defun sm/julia-apropos (search)
     "Send apropos query to repl."
     (interactive (list (read-string "Apropos: ")))
@@ -534,7 +544,8 @@ line check to prevent stopping at blank lines."
              ("C-c C-d d" . sm/julia-doc)
              ("C-c C-d C-d" . sm/julia-doc)
              ("C-c C-d a" . sm/julia-apropos)
-             ("C-c C-d C-a" . sm/julia-apropos)))
+             ("C-c C-d C-a" . sm/julia-apropos)
+             ("C-c C-m" . sm/julia-macroexpand)))
 
 
 ;; R
