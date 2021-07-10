@@ -13,9 +13,12 @@
                    newname)))
     (rename-buffer newname t)))
 
-(defun sm/indent-buffer ()
-  (interactive)
-  (indent-region (point-min) (point-max)))
+(defun sm/indent-region-or-buffer (start end)
+  "Indent region from START to END, or the entire buffer if no region is selected."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (indent-region start end))
 
 (use-package winner
   ;; built-in
@@ -58,7 +61,7 @@
 \\(shell\\).*"
            (display-buffer-same-window))))
   :bind (("C-c ." . repeat)
-         ("C-c b i" . sm/indent-buffer)
+         ("C-c b i" . sm/indent-region-or-buffer)
          ("C-c b r" . sm/rename-buffer-special)))
 
 (defun sm/display-buffer-in-side-window-select (buffer alist)
