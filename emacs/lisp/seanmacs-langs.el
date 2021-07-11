@@ -517,7 +517,8 @@ line check to prevent stopping at blank lines."
   (defun sm/julia-cd (dir)
     "Change working directory for repl to DIR."
     (interactive "D")
-    (let* ((str (format "cd(\"%s\")" (sm/path-localname dir)))) ;; Don't include tramp info.
+    (let* ((path (expand-file-name (sm/path-localname dir))) ;; Don't include tramp info.
+           (str (format "cd(\"%s\")" path)))
       ;; Keep default directory in sync with where the repl points.
       (with-current-buffer (process-buffer (sm/julia-process))
         (cd dir))
