@@ -61,9 +61,8 @@
   :defer t
   :commands gofmt
   :init
-  (defun seanmacs/gofmt-before-save ()
-    (when (eq major-mode 'go-mode)
-      (gofmt)))
+  (defun sm/set-gofmt-hook ()
+    (add-hook 'before-save-hook #'gofmt nil t))
   :config
   (setq gofmt-command "goimports"
         gofmt-args '("-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
@@ -82,7 +81,7 @@
     (flycheck-remove-next-checker 'lsp 'golangci-lint))
 
   :hook ((go-mode . lsp)
-         (before-save . seanmacs/gofmt-before-save))
+         (go-mode . sm/set-gofmt-hook))
   :bind(:map go-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
              ("C-c r r" . lsp-rename)))
@@ -218,9 +217,8 @@ dir. Return nil otherwise."
   :straight t
   :defer t
   :init
-  (defun sm/elixir-format-on-save ()
-    (when (eq major-mode 'elixir-mode)
-      (elixir-format)))
+  (defun sm/set-elixir-format-hook ()
+    (add-hook 'before-save-hook #'elixir-format nil t))
 
   (defvar sm/iex-name "iex"
     "Command for iex.")
@@ -295,7 +293,7 @@ Start a new process if not alive."
   (sm/set-goto-def-keybind 'elixir-mode-map #'lsp-find-definition)
 
   :hook ((elixir-mode . lsp)
-         (before-save . sm/elixir-format-on-save))
+         (elixir-mode . sm/set-elixir-format-hook))
   :bind(:map elixir-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
              ("C-c r r" . lsp-rename)
