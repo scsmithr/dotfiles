@@ -223,16 +223,12 @@ dir. Return nil otherwise."
   (defvar sm/iex-name "iex"
     "Command for iex.")
 
-  (defvar sm/iex-prompt-regex "^\\(iex\\|\\.\\.\\.\\)(.+)>"
-    "Regex to match iex prompt.")
-
   (defvar sm/iex-buffer nil
     "Buffer where iex is running.")
 
   (define-derived-mode sm/iex-mode comint-mode "IEx"
     "Major mode for running iex."
 
-    (set (make-local-variable 'comint-prompt-regexp) sm/iex-prompt-regex)
     (set (make-local-variable 'comint-prompt-read-only) t)
     (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send))
 
