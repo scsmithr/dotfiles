@@ -7,28 +7,34 @@
 
 ;; Utilities for creating repls using comint.
 
-(defun sm/comint-print-and-send (proc str)
+(defface sm/comint-echo '((t :inherit font-lock-comment-face))
+  "Face for text echoed in the comint buffer.")
+
+(defun sm/comint-echo-and-send (proc str)
   "Send STR to PROC.  STR will be echoed after the prompt."
   (let ((lines (split-string str "\n" nil)))
     (with-current-buffer (process-buffer proc)
-      (mapcar (lambda (line)
-                (goto-char (process-mark proc))
-                (insert-before-markers (concat line "\n"))
-                (move-marker comint-last-input-end (point))
-                (comint-send-string proc (concat line "\n")))
-              lines))))
+      (let ((echo (lambda (s)
+                    (goto-char (process-mark proc))
+                    (insert-before-markers (propertize (concat s "\n")
+                                                       'font-lock-face 'sm/comint-echo))
+                    (move-marker comint-last-input-end (point)))))
+        (mapcar #'(lambda (line)
+                    (funcall echo line)
+                    (comint-send-string proc (concat line "\n")))
+                lines)))))
 
 (defun sm/comint-send-region (proc beg end)
   "Send the selected region BEG to END to some PROC."
   (unless (and beg end)
     (user-error "No region selected"))
   (let ((region (buffer-substring-no-properties beg end)))
-    (sm/comint-print-and-send proc (string-trim region))))
+    (sm/comint-echo-and-send proc (string-trim region))))
 
 (defun sm/comint-send-line (proc)
   "Send the current line to PROC."
   (let ((str (thing-at-point 'line t)))
-    (sm/comint-print-and-send proc (string-trim str))))
+    (sm/comint-echo-and-send proc (string-trim str))))
 
 (defun sm/comint-send-region-or-line (proc)
   "Send region if active, send the current line otherwise."
@@ -230,7 +236,7 @@ dir. Return nil otherwise."
     "Major mode for running iex."
 
     (set (make-local-variable 'comint-prompt-read-only) t)
-    (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send))
+    (set (make-local-variable 'comint-input-sender) 'sm/comint-echo-and-send))
 
   (defun sm/iex-start-process ()
     "Start a iex process with an associated buffer, and enable `sm/iex-mode'."
@@ -257,7 +263,7 @@ Start a new process if not alive."
 
   (defun sm/iex-recompile-project ()
     (interactive)
-    (sm/comint-print-and-send (sm/iex-process) "recompile"))
+    (sm/comint-echo-and-send (sm/iex-process) "recompile"))
 
   (defun sm/elixir-current-module ()
     (save-excursion
@@ -269,13 +275,13 @@ Start a new process if not alive."
     (interactive)
     (let* ((module (sm/elixir-current-module))
            (str (format "r %s" module)))
-      (sm/comint-print-and-send (sm/iex-process) str)))
+      (sm/comint-echo-and-send (sm/iex-process) str)))
 
   (defun sm/iex-alias-current-module ()
     (interactive)
     (let* ((module (sm/elixir-current-module))
            (str (format "alias %s" module)))
-      (sm/comint-print-and-send (sm/iex-process) str)))
+      (sm/comint-echo-and-send (sm/iex-process) str)))
 
   (defun sm/iex-project-run ()
     "Open an iex buffer for a project."
@@ -391,7 +397,7 @@ Start a new process if not alive."
 
 \\{sm/julia-mode-map}"
     (set (make-local-variable 'comint-prompt-read-only) t)
-    (set (make-local-variable 'comint-input-sender) 'sm/comint-print-and-send)
+    (set (make-local-variable 'comint-input-sender) 'sm/comint-echo-and-send)
 
     ;; The default value of `electric-pair-default-skip-self' doesn't seem to
     ;; work well with this derived comint. I end up with an extra closing
@@ -423,7 +429,7 @@ Start a new process if not alive."
     (interactive)
     (if-let ((path (buffer-file-name)))
         (let* ((str (format "include(\"%s\")" (sm/path-localname path)))) ;; Don't include tramp info.
-          (sm/comint-print-and-send (sm/julia-process) str))))
+          (sm/comint-echo-and-send (sm/julia-process) str))))
 
   (defun sm/julia-end-of-defun ()
     "Move point to the end of the current function.
@@ -471,14 +477,14 @@ line check to prevent stopping at blank lines."
     (interactive)
     (let* ((sym (thing-at-point 'symbol t))
            (str (concat "@doc " sym)))
-      (sm/comint-print-and-send (sm/julia-process) str)))
+      (sm/comint-echo-and-send (sm/julia-process) str)))
 
   (defun sm/julia-edit ()
     (interactive)
     ;; TODO: Should be getting expression, but line is close enough for now.
     (let* ((line (thing-at-point 'line t))
            (str (concat "@edit " line)))
-      (sm/comint-print-and-send (sm/julia-process) str)))
+      (sm/comint-echo-and-send (sm/julia-process) str)))
 
   (defun sm/julia-macroexpand ()
     "Expand macro on the current line, or region if selected."
@@ -488,13 +494,13 @@ line check to prevent stopping at blank lines."
                (buffer-substring (region-beginning) (region-end))
              ;; As with `sm/julia-edit', "should" be an expression instead.
              (thing-at-point 'line t))))
-      (sm/comint-print-and-send (sm/julia-process) (concat "@macroexpand " thing))))
+      (sm/comint-echo-and-send (sm/julia-process) (concat "@macroexpand " thing))))
 
   (defun sm/julia-apropos (search)
     "Send apropos query to repl."
     (interactive (list (read-string "Apropos: ")))
     (let ((str (format "apropos(\"%s\")" search)))
-      (sm/comint-print-and-send (sm/julia-process) str)))
+      (sm/comint-echo-and-send (sm/julia-process) str)))
 
   (defun sm/julia-activate-project ()
     "Activate and instantiate the julia project if available."
@@ -505,7 +511,7 @@ line check to prevent stopping at blank lines."
           (let* ((path (expand-file-name (concat dir project-file)))
                  (cmd (format "using Pkg; Pkg.activate(\"%s\"); Pkg.instantiate()"
                               (sm/path-localname path))))
-            (sm/comint-print-and-send (sm/julia-process) cmd))
+            (sm/comint-echo-and-send (sm/julia-process) cmd))
         (message "Not in Julia project"))))
 
   (defun sm/julia-cd (dir)
@@ -516,7 +522,7 @@ line check to prevent stopping at blank lines."
       ;; Keep default directory in sync with where the repl points.
       (with-current-buffer (process-buffer (sm/julia-process))
         (cd dir))
-      (sm/comint-print-and-send (sm/julia-process) str)))
+      (sm/comint-echo-and-send (sm/julia-process) str)))
 
   (defun sm/julia-run ()
     "Open a julia buffer."
