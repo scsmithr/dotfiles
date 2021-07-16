@@ -22,10 +22,6 @@
         evil-want-keybinding nil
         evil-undo-system 'undo-fu)
 
-  ;; C-i is the same as tab in the terminal.
-  (unless (display-graphic-p)
-    (setq evil-want-C-i-jump nil))
-
   :config
   (evil-mode)
   (evil-update-insert-state-bindings "\C-n" t)
@@ -36,7 +32,6 @@
     (define-key evil-motion-state-map (kbd (concat "C-w " key)) def))
 
   (sm/evil-define-window-key "u" #'winner-undo))
-
 
 (use-package evil-commentary
   :straight t
