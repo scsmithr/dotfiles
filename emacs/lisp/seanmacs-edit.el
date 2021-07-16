@@ -155,6 +155,10 @@
                         (mode . image-dired-thumbnail-mode)))
            ("email" (name . "\*mu4e"))
            ("scratch" (name . "\*scratch"))
+           ("search" (or
+                      (mode . deadgrep-mode)
+                      (mode . grep-mode)
+                      (mode . ripgrep-mode)))
            ("special" (or (name . "\*")
                           (mode . geiser-repl-mode)))
            ("version control" (or
@@ -244,11 +248,18 @@
   (projectile-mode +1)
   :bind-keymap ("C-c p" . projectile-command-map)
   :bind (:map projectile-command-map
-              ("s d" . deadgrep)))
+              ("s D" . deadgrep)
+              ("s d" . sm/deadgrep-this-directory)))
 
 (use-package deadgrep
   :straight t
   :after projectile
+  :init
+  (defun sm/deadgrep-this-directory ()
+    "Call deadgrep using `default-directory' as the project root."
+    (interactive)
+    (let ((deadgrep-project-root-function (lambda () default-directory)))
+      (call-interactively 'deadgrep)))
   :config
   (defun sm/deadgrep-change-search ()
     "Change deadgrep search term."
@@ -260,10 +271,31 @@
     (interactive)
     (deadgrep--directory nil))
 
+  (defun sm/deadgrep-visit-or-toggle ()
+    "Vist result in other window, or toggle file results if on a filename."
+    (interactive)
+    (if (and (deadgrep--filename)
+             (not (deadgrep--line-number)))
+        (deadgrep-toggle-file-results)
+      (progn
+        (deadgrep-visit-result-other-window)
+        (recenter-top-bottom))))
+
+  (defun sm/deadgrep-show ()
+    "Display result in other window, keeping the cursor in the deadgrep window."
+    (interactive)
+    (when (and (deadgrep--filename) (deadgrep--line-number))
+      (let ((win (selected-window)))
+        (deadgrep-visit-result-other-window)
+        (recenter-top-bottom)
+        (select-window win))))
+
   (evil-collection-define-key 'normal 'deadgrep-mode-map
     "s" #'sm/deadgrep-change-search
     "d" #'sm/deadgrep-change-dir
-    "e" #'deadgrep-edit-mode))
+    "e" #'deadgrep-edit-mode
+    (kbd "<tab>") #'sm/deadgrep-visit-or-toggle
+    (kbd "SPC") #'sm/deadgrep-show))
 
 (use-package ripgrep
   :straight t
