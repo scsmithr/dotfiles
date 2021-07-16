@@ -73,12 +73,13 @@ If no region selected, colorize the entire buffer."
 
 (defmacro sm/save-window (&rest body)
   "Save active window, execute BODY, then restore the originally active window."
-  `(let ((win (selected-window)))
-     (progn
-       ,@body
-       (sm/recenter)
-       (pulse-momentary-highlight-one-line (point))
-       (select-window win))))
+  (let ((win (gensym)))
+    `(let ((,win (selected-window)))
+       (progn
+         ,@body
+         (sm/recenter)
+         (pulse-momentary-highlight-one-line (point))
+         (select-window ,win)))))
 
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here
