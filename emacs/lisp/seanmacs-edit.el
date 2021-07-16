@@ -288,6 +288,7 @@
       (let ((win (selected-window)))
         (deadgrep-visit-result-other-window)
         (recenter-top-bottom)
+        (pulse-momentary-highlight-one-line (point))
         (select-window win))))
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
