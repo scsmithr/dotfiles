@@ -23,7 +23,27 @@
 (use-package flimenu
   :straight t
   :config
+  (defface sm/flimenu-prefix-face '((t :inherit font-lock-keyword-face))
+    "Face for prefixes in imenu entries.")
+
+  (defun sm/flimenu-format-entry (entry-name &optional prefixes)
+    (if prefixes
+        (let ((prop-prefix (propertize
+                            (concat "[" (string-join prefixes "/") "]")
+                            'face 'sm/flimenu-prefix-face)))
+          (string-join (list prop-prefix entry-name) " "))
+      entry-name))
+
+  (setq flimenu-imenu-separator #'sm/flimenu-format-entry)
+
   (flimenu-global-mode))
+
+(use-package imenu
+  ;; built-in
+  :config
+  (setq imenu-auto-rescan t
+        imenu-space-replacement " ")
+  :bind (("C-c b s" . imenu)))
 
 (use-package selectrum
   :straight t
@@ -46,10 +66,6 @@
   :straight t
   :config
   (selectrum-prescient-mode))
-
-(use-package imenu
-  ;; built-in
-  :bind (("C-c b s" . imenu)))
 
 (use-package xref
   ;; built-in
