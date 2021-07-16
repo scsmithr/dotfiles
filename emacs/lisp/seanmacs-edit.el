@@ -279,17 +279,14 @@
         (deadgrep-toggle-file-results)
       (progn
         (deadgrep-visit-result-other-window)
-        (recenter-top-bottom))))
+        (sm/recenter))))
 
   (defun sm/deadgrep-show ()
     "Display result in other window, keeping the cursor in the deadgrep window."
     (interactive)
     (when (and (deadgrep--filename) (deadgrep--line-number))
-      (let ((win (selected-window)))
-        (deadgrep-visit-result-other-window)
-        (recenter-top-bottom)
-        (pulse-momentary-highlight-one-line (point))
-        (select-window win))))
+      (sm/save-window
+        (deadgrep-visit-result-other-window))))
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
     "s" #'sm/deadgrep-change-search
@@ -313,6 +310,18 @@
         flycheck-indication-mode 'right-fringe
         flycheck-display-errors-delay 0.2)
   (fset 'flycheck-command-map flycheck-command-map)
+
+  (defalias 'sm/flycheck-error-list-goto-error-no-jump 'flycheck-error-list-goto-error)
+  (evil-add-command-properties #'flycheck-error-list-goto-error :jump t)
+
+  (defun sm/flycheck-error-list-show-error ()
+    "Show location of error in the error list."
+    (interactive)
+    (sm/save-window (call-interactively 'sm/flycheck-error-list-goto-error-no-jump)))
+
+  (evil-collection-define-key 'normal 'flycheck-error-list-mode-map
+    (kbd "SPC") #'sm/flycheck-error-list-show-error)
+
   (global-flycheck-mode)
   :bind-keymap ("C-c f" . flycheck-command-map))
 

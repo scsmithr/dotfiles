@@ -66,6 +66,20 @@ If no region selected, colorize the entire buffer."
   (when (not (fboundp fn-symbol))
     (message "WARN: %s is void!" fn-symbol)))
 
+(defun sm/recenter ()
+  "Recenter cursor to the middle of the window."
+  (interactive)
+  (recenter nil))
+
+(defmacro sm/save-window (&rest body)
+  "Save active window, execute BODY, then restore the originally active window."
+  `(let ((win (selected-window)))
+     (progn
+       ,@body
+       (sm/recenter)
+       (pulse-momentary-highlight-one-line (point))
+       (select-window win))))
+
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here
 

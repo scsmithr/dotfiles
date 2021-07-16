@@ -43,6 +43,7 @@
   :config
   (setq imenu-auto-rescan t
         imenu-space-replacement " ")
+  :hook ((imenu-after-jump . sm/recenter))
   :bind (("C-c b s" . imenu)))
 
 (use-package selectrum
