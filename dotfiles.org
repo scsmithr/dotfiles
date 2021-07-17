@@ -805,26 +805,14 @@
     [core]
         editor = editor
         excludesfile = /home/sean/.gitignore
-        hooksPath = nohooks
     [url "git@github.com:"]
         insteadOf = https://github.com/
-    [url "git@gh.coder-internal.com:"]
-        insteadOf = https://git.coder-internal.com/
-    [url "git@gh.coder-internal.com:"]
-        insteadOf = https://gh.coder-internal.com/
-    [filter "lfs"]
-        clean = git-lfs clean -- %f
-        smudge = git-lfs smudge -- %f
-        process = git-lfs filter-process
-        required = true
     [http]
         cookiefile = /home/sean/.gitcookies
-    [alias]
-        wta = "!f() { git worktree add worktree/$1; }; f"
-        wtr = "!f() { git worktree remove worktree/$1; }; f"
-        wtl = worktree list
     [github]
         user = scsmithr
+    [init]
+        defaultBranch = main
   #+END_SRC
 
   #+BEGIN_SRC conf :tangle ~/.gitignore
