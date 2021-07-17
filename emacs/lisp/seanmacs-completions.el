@@ -70,6 +70,16 @@
 
 (use-package xref
   ;; built-in
+  :config
+  (defun sm/xref-show ()
+    "Show xref result under point, keeping cursor in the xref window."
+    (interactive)
+    (sm/save-window
+     (xref-goto-xref)))
+
+  (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map
+    (kbd "SPC") #'sm/xref-show)
+
   :bind (("C-c x a" . xref-find-apropos)
          ("C-c x r" . xref-find-references)))
 
