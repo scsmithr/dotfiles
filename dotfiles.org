@@ -687,14 +687,11 @@
      export EDITOR=editor
    #+END_SRC
    
-   Go related settings. Using a non-standard go path, and avoiding using the
-   default go proxy. Occasionally hitting the source directly fails (e.g. for
-   some of Google's sources), and unsetting =GOPROXY= is required.
+   Go related settings. Using a non-standard go path.
 
    #+BEGIN_SRC bash
      export GOPATH=$HOME/.go
      export PATH=$PATH:$HOME/.go/bin
-     export GOPROXY=direct
    #+END_SRC
 
    Get the number of threads by counting occurrences of "processor" in cpu info.
