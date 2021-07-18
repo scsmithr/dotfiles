@@ -805,8 +805,6 @@
     [core]
         editor = editor
         excludesfile = /home/sean/.gitignore
-    [url "git@github.com:"]
-        insteadOf = https://github.com/
     [http]
         cookiefile = /home/sean/.gitcookies
     [github]
