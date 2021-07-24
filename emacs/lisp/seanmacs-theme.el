@@ -49,7 +49,9 @@
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
         modus-themes-region 'bg-only
-        modus-themes-diffs 'bg-only)
+        modus-themes-diffs 'bg-only
+        modus-themes-org-agenda '((header-block . (no-scale))
+                                  (header-date . (bold-all))))
 
   (setq x-underline-at-descent-line t)
 
@@ -73,8 +75,9 @@
        ;; Company
        `(company-preview ((t (:background ,bg-hl-line :foreground ,fg-alt))))
        `(company-preview-common ((t (:background ,bg-hl-line :foreground ,blue))))
-       ;; Eshell
-       `(eshell-ls-directory ((t (:foreground ,blue-alt)))))
+       ;; Org mode
+       `(org-code ((t :inherit modus-themes-fixed-pitch
+                      :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
 
       (with-eval-after-load 'sly-mrepl
         (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))))
