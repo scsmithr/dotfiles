@@ -283,7 +283,7 @@
     (interactive)
     (when (and (deadgrep--filename) (deadgrep--line-number))
       (sm/save-window
-        (deadgrep-visit-result-other-window))))
+       (deadgrep-visit-result-other-window))))
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
     "s" #'sm/deadgrep-change-search

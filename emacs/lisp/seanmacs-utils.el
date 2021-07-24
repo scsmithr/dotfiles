@@ -182,8 +182,21 @@ entry. Otherwise prompt for an arxiv link."
   :config
   (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
 
+  (defun sm/dired-maybe-insert-subdir (dirnames)
+    "Insert subdirs for all DIRNAMES.
+
+When called interactively, DIRNAMES will be all currently marked
+files in the current dired buffer. If no files are marked, the
+file at point will be used."
+    (interactive (list (dired-get-marked-files)))
+    (dolist (dirname dirnames)
+      (dired-maybe-insert-subdir dirname)))
+
   (evil-collection-define-key 'normal 'dired-mode-map
-    "K" 'dired-kill-subdir
+    "K" #'dired-kill-subdir
+    "I" #'sm/dired-maybe-insert-subdir
+    "]]" #'dired-next-subdir
+    "[[" #'dired-prev-subdir
     (kbd "TAB") 'dired-hide-subdir)
 
   (defun sm/dired-with-current-directory (orig-fn &rest args)
@@ -207,9 +220,7 @@ entry. Otherwise prompt for an arxiv link."
   :defer t)
 
 (use-package dired-narrow
-  :straight t
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map "/" 'dired-narrow))
+  :straight t)
 
 (use-package dired-open
   :straight t

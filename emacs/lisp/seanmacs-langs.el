@@ -7,7 +7,7 @@
 
 ;; Utilities for creating repls using comint.
 
-(defface sm/comint-echo '((t :inherit font-lock-comment-face))
+(defface sm/comint-echo-face '((t :inherit shadow))
   "Face for text echoed in the comint buffer.")
 
 (defun sm/comint-echo-and-send (proc str)
@@ -17,7 +17,7 @@
       (let ((echo (lambda (s)
                     (goto-char (process-mark proc))
                     (insert-before-markers (propertize (concat s "\n")
-                                                       'font-lock-face 'sm/comint-echo))
+                                                       'font-lock-face 'sm/comint-echo-face))
                     (move-marker comint-last-input-end (point)))))
         (mapcar #'(lambda (line)
                     (funcall echo line)

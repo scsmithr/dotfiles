@@ -50,7 +50,8 @@
   :straight t
   :config
   (setq selectrum-fix-vertical-window-height t
-        selectrum-count-style 'current/matches)
+        selectrum-count-style 'current/matches
+        selectrum-max-window-height 10)
   ;; Disable since selectrum ordering doesn't match what emacs suggests.
   (setq suggest-key-bindings nil)
   (selectrum-mode +1))
