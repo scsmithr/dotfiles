@@ -39,28 +39,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 (defun sm/disable-company ()
   (company-mode -1))
 
-(use-package shrink-path
-  :straight t
-  :commands (shrink-path-prompt))
-
 (defvar sm/eshell-append-history-on-command t
   "Whether or not eshell should write to the history file before each command.")
-
-(defun sm/shrink-path-prompt (path)
-  "Shrink PATH, preserving tramp related strings."
-  (if (file-remote-p path)
-      (let* ((tramp-file (tramp-dissect-file-name path))
-             (method (tramp-file-name-method tramp-file))
-             (user (tramp-file-name-user tramp-file))
-             (host (tramp-file-name-host tramp-file))
-             (localname (tramp-file-name-localname tramp-file))
-             (shrunk (shrink-path-prompt localname))
-             (prompt-host (if user
-                              (string-join `(,user ,host) "@")
-                            host))
-             (prompt-base (string-join `(,method ,prompt-host ,(car shrunk)) ":")))
-        (cons prompt-base (cdr shrunk)))
-    (shrink-path-prompt path)))
 
 (use-package eshell
   ;; built-in
@@ -89,49 +69,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
           (eshell-write-history eshell-history-file-name t)))))
 
   :config
-  (defface sm/eshell-prompt-pwd '((t :inherit eshell-ls-directory))
-    "Face for current directory."
-    :group 'eshell)
-
-  (defface sm/eshell-prompt-short-pwd '((t :inherit font-lock-comment-face))
-    "Face for shortened path."
-    :group 'eshell)
-
-  (defface sm/eshell-prompt-git-branch '((t :inherit font-lock-builtin-face))
-    "Face for displaying current git branch."
-    :group 'eshell)
-
-  (defface sm/eshell-prompt-success '((t :inherit eshell-prompt))
-    "Face when previous command succeeds."
-    :group 'eshell)
-
-  (defface sm/eshell-prompt-error '((t :inherit error :weight normal))
-    "Face when previous command fails."
-    :group 'eshell)
-
-  (defun sm/eshell-current-git-branch ()
-    (let ((branch (car (cl-loop for match in (split-string (shell-command-to-string "git branch") "\n")
-                                if (string-match-p "^\*" match)
-                                collect match))))
-      (if (not (eq branch nil))
-          (format " %s" (substring branch 2))
-        "")))
-
-  (defun sm/eshell-default-prompt ()
-    "Generate the prompt string for eshell.  Use for `eshell-prompt-function'."
-    (let ((shrunk-dir (sm/shrink-path-prompt default-directory)))
-      (concat (propertize (car shrunk-dir)
-                          'face 'sm/eshell-prompt-short-pwd)
-              (propertize (cdr shrunk-dir)
-                          'face 'sm/eshell-prompt-pwd)
-              (propertize (sm/eshell-current-git-branch)
-                          'face 'sm/eshell-prompt-git-branch)
-              (propertize " $" 'face (if (zerop eshell-last-command-status)
-                                         'sm/eshell-prompt-success
-                                       'sm/eshell-prompt-error))
-              ;; Needed for the input text to not have prompt face.
-              (propertize " " 'face 'default))))
-
   (defun sm/eshell-new ()
     (interactive)
     (eshell "new"))
@@ -168,7 +105,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
     (evil-insert 1)
     (apply 'insert args))
 
-  (defun eshell/read-history ()
+  (defun eshell/insert-history ()
+    "Prompt for a history item and insert it."
     (interactive)
     (eshell-read-history)
     (sm/eshell-insert (completing-read
@@ -179,29 +117,24 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 
   (setq eshell-history-size 10000
         eshell-save-history-on-exit nil ;; This is handled elsewhere.
-        eshell-cmpl-cycle-completions nil
-        eshell-prompt-function #'sm/eshell-default-prompt
-        eshell-prompt-regexp "^.* \\$ ")
-
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              ;; Needs to be ran inside the hook since eshell-mode-map is
-              ;; buffer local.
-              ;;
-              ;; See https://github.com/noctuid/general.el/issues/80
-              (local-set-key (kbd "C-c h") 'eshell/read-history)))
+        eshell-cmpl-cycle-completions nil)
 
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
+  (defun sm/eshell-set-local-keybinds ()
+    ;; Needs to be ran inside the hook since eshell-mode-map is
+    ;; buffer local.
+    ;;
+    ;; See https://github.com/noctuid/general.el/issues/80
+    (local-set-key (kbd "M-r") 'eshell/insert-history))
+
   :hook ((eshell-mode . sm/add-eshell-aliases)
          (eshell-mode . sm/disable-company)
+         (eshell-mode . sm/eshell-set-local-keybinds)
          (eshell-pre-command . sm/eshell-append-history))
   :bind (("C-c s s" . eshell)
-         ("C-c s n" . sm/eshell-new)
-         :map eshell-mode-map
-         ;; Defaulted to `eshell-complete-lisp-symbol'.
-         ("M-<tab>" . completion-at-point)))
+         ("C-c s n" . sm/eshell-new)))
 
 (use-package shell
   ;; built-in
