@@ -502,17 +502,18 @@ line check to prevent stopping at blank lines."
     (let ((str (format "apropos(\"%s\")" search)))
       (sm/comint-echo-and-send (sm/julia-process) str)))
 
+  (defun sm/julia-project-root ()
+    "Return project root if inside Julia project, NIL otherwise."
+    (locate-dominating-file "." "Project.toml"))
+
   (defun sm/julia-activate-project ()
     "Activate and instantiate the julia project if available."
     (interactive)
-    (let* ((project-file "Project.toml")
-           (dir (locate-dominating-file "." project-file)))
-      (if dir
-          (let* ((path (expand-file-name (concat dir project-file)))
-                 (cmd (format "using Pkg; Pkg.activate(\"%s\"); Pkg.instantiate()"
-                              (sm/path-localname path))))
-            (sm/comint-echo-and-send (sm/julia-process) cmd))
-        (message "Not in Julia project"))))
+    (when-let ((project-root (sm/julia-project-root)))
+      (let* ((path (expand-file-name (concat project-root "Project.toml")))
+             (cmd (format "using Pkg; Pkg.activate(\"%s\"); Pkg.instantiate()"
+                          (sm/path-localname path))))
+        (sm/comint-echo-and-send (sm/julia-process) cmd))))
 
   (defun sm/julia-cd (dir)
     "Change working directory for repl to DIR."
@@ -525,9 +526,13 @@ line check to prevent stopping at blank lines."
       (sm/comint-echo-and-send (sm/julia-process) str)))
 
   (defun sm/julia-run ()
-    "Open a julia buffer."
+    "Open a julia buffer.
+
+Attempt to start the repl in the project root if available.
+Otherwise start the repl in the current directory."
     (interactive)
-    (let ((default-directory (or (projectile-project-root)
+    (let ((default-directory (or (sm/julia-project-root)
+                                 (projectile-project-root)
                                  default-directory)))
       (pop-to-buffer (process-buffer (sm/julia-process)))))
 

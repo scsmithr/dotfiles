@@ -23,11 +23,8 @@
 (setq-default fill-column 80)
 
 ;; Scrolling
-(setq-default scroll-step 1
-              scroll-margin 0
-              scroll-conservatively 101
-              hscroll-margin 0
-              hscroll-step 1)
+(setq-default scroll-conservatively 101
+              hscroll-margin 3)
 
 ;; Mouse scrolling
 (setq mouse-wheel-scroll-amount '(3)
