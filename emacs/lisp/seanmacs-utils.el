@@ -210,7 +210,7 @@ file at point will be used."
   (advice-add 'find-file-read-args :around 'sm/dired-with-current-directory)
 
   :hook ((dired-mode . diredfl-mode))
-  :bind(("C-x d" . dired-jump)
+  :bind (("C-x d" . dired-jump)
         :map dired-mode-map
         ("C-c C-n" . dired-next-subdir)
         ("C-c C-p" . dired-prev-subdir)))
@@ -227,6 +227,36 @@ file at point will be used."
   :config
   (when (eq system-type 'gnu/linux)
     (setq dired-open-extensions '(("pdf" . "xdg-open")))))
+
+(use-package ffap
+  ;; built-in
+  :config
+  (defvar sm/ffap-line-number nil
+    "Variable for storing line number when calling `ffap'.")
+
+  (defun sm/ffap-set-line-number (&rest args)
+    "Set `sm/ffap-line-number' if file at point includes a line number."
+    (let* ((file-name (ffap-string-at-point))
+           (line-number-string (and (string-match ":[0-9]+" file-name)
+                                    (substring file-name (+ 1 (match-beginning 0)) (match-end 0))))
+           (line-number (and line-number-string
+                             (string-to-number line-number-string))))
+      (if line-number
+          (setq sm/ffap-line-number line-number)
+        (setq sm/ffap-line-number nil))))
+
+  (defun sm/ffap-goto-line (&rest args)
+    "Go to line number stored in `sm/ffap-line-number'.
+
+The line number will be reset after this call."
+    (when sm/ffap-line-number
+      (goto-line sm/ffap-line-number)
+      (setq sm/ffap-line-number nil)))
+
+  (advice-add 'find-file-at-point :before 'sm/ffap-set-line-number)
+  (advice-add 'find-file-at-point :after 'sm/ffap-goto-line)
+
+  :bind (("C-x C-f" . ffap)))
 
 (use-package help
   ;; built-in

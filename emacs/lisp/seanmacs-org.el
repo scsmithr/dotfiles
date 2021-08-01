@@ -35,6 +35,7 @@
         org-confirm-babel-evaluate nil ;; I trust myself.
         org-catch-invisible-edits 'show-and-error ;; I don't trust myself.
         org-fontify-done-headline nil
+        org-adapt-indentation t
         org-hide-emphasis-markers nil
         org-src-tab-acts-natively t
         ;; Keep layout, just use different window than current. Useful to see
