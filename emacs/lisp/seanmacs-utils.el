@@ -230,6 +230,18 @@ file at point will be used."
 
 (use-package ffap
   ;; built-in
+  :init
+  (defvar sm/ffap-disable-for-modes
+    '(dired-mode) ;; I use C-x C-f exclusively to create files in dired.
+    "List of major modes where `ffap' should not be used.")
+
+  (defun sm/find-file ()
+    "Dispatch to `find-file' and `ffap' as appropriate."
+    (interactive)
+    (if (member major-mode sm/ffap-disable-for-modes)
+        (call-interactively 'find-file)
+      (call-interactively 'ffap)))
+
   :config
   (defvar sm/ffap-line-number nil
     "Variable for storing line number when calling `ffap'.")
@@ -256,7 +268,7 @@ The line number will be reset after this call."
   (advice-add 'find-file-at-point :before 'sm/ffap-set-line-number)
   (advice-add 'find-file-at-point :after 'sm/ffap-goto-line)
 
-  :bind (("C-x C-f" . ffap)))
+  :bind (("C-x C-f" . sm/find-file)))
 
 (use-package help
   ;; built-in
