@@ -16,6 +16,8 @@
       use-dialog-box nil
       inihibit-startup-echo-area-message t)
 
+(setq initial-scratch-message ";; Not Invented Here\n\n")
+
 ;; GC things
 (setq gc-cons-threshold 20000000)
 (setq read-process-output-max (* 1024 1024))

@@ -117,7 +117,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 
   (setq eshell-history-size 10000
         eshell-save-history-on-exit nil ;; This is handled elsewhere.
-        eshell-cmpl-cycle-completions nil)
+        eshell-cmpl-cycle-completions nil
+        eshell-banner-message "Mistake Not...\n\n")
 
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
