@@ -16,9 +16,6 @@
   (setq mu4e-get-mail-command "mbsync -a"
         mu4e-change-filenames-when-moving t)
 
-  ;; Prefer plaintext.
-  (setq mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum)
-
   ;; Gmail specific things.
   (setq mu4e-sent-messages-behavior 'delete)
 
@@ -134,6 +131,11 @@
 (use-package org-mu4e
   ;; Provided by mu system package.
   :after mu4e)
+
+(use-package mm-decode
+  ;; built-in
+  :config
+  (add-to-list 'mm-discouraged-alternatives "text/html"))
 
 (provide 'seanmacs-email)
 ;;; seanmacs-email.el ends here
