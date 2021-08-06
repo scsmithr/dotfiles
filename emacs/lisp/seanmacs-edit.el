@@ -286,9 +286,9 @@
        (deadgrep-visit-result-other-window))))
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
-    "s" #'sm/deadgrep-change-search
-    "d" #'sm/deadgrep-change-dir
-    "e" #'deadgrep-edit-mode
+    "gs" #'sm/deadgrep-change-search
+    "gd" #'sm/deadgrep-change-dir
+    "ge" #'deadgrep-edit-mode
     (kbd "<tab>") #'sm/deadgrep-visit-or-toggle
     (kbd "SPC") #'sm/deadgrep-show))
 

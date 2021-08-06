@@ -230,43 +230,28 @@ file at point will be used."
 
 (use-package ffap
   ;; built-in
+  :demand t
   :init
   (defvar sm/ffap-disable-for-modes
     '(dired-mode) ;; I use C-x C-f exclusively to create files in dired.
     "List of major modes where `ffap' should not be used.")
 
   (defun sm/find-file ()
-    "Dispatch to `find-file' and `ffap' as appropriate."
+    "Dispatch to `find-file' and `ffap' as appropriate.
+
+If file name under point contains a line number, jump to it after
+opening the file."
     (interactive)
     (if (member major-mode sm/ffap-disable-for-modes)
         (call-interactively 'find-file)
-      (call-interactively 'ffap)))
-
-  :config
-  (defvar sm/ffap-line-number nil
-    "Variable for storing line number when calling `ffap'.")
-
-  (defun sm/ffap-set-line-number (&rest args)
-    "Set `sm/ffap-line-number' if file at point includes a line number."
-    (let* ((file-name (ffap-string-at-point))
-           (line-number-string (and (string-match ":[0-9]+" file-name)
-                                    (substring file-name (+ 1 (match-beginning 0)) (match-end 0))))
-           (line-number (and line-number-string
-                             (string-to-number line-number-string))))
-      (if line-number
-          (setq sm/ffap-line-number line-number)
-        (setq sm/ffap-line-number nil))))
-
-  (defun sm/ffap-goto-line (&rest args)
-    "Go to line number stored in `sm/ffap-line-number'.
-
-The line number will be reset after this call."
-    (when sm/ffap-line-number
-      (goto-line sm/ffap-line-number)
-      (setq sm/ffap-line-number nil)))
-
-  (advice-add 'find-file-at-point :before 'sm/ffap-set-line-number)
-  (advice-add 'find-file-at-point :after 'sm/ffap-goto-line)
+      (let* ((str (ffap-string-at-point))
+             (idx (string-match ":[0-9]+$" str))
+             (file (if idx (substring str 0 idx) str))
+             (line (when (and idx file) (substring str (+ 1 idx)))))
+        (call-interactively 'find-file-at-point)
+        (when line
+          (goto-line (string-to-number line))
+          (recenter nil)))))
 
   :bind (("C-x C-f" . sm/find-file)))
 
