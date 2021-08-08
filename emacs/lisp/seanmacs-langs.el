@@ -86,10 +86,26 @@
     (interactive)
     (flycheck-remove-next-checker 'lsp 'golangci-lint))
 
+  (defun sm/go-toplevel-test ()
+    "Get the name of the current top-level test function."
+    (save-excursion
+      (save-match-data
+        (re-search-backward "func \\(Test[A-Za-z0-9_]+\\)(t \\*testing.T)\s+" nil t)
+        (match-string 1))))
+
+  (defun sm/go-run-test-at-point ()
+    "Run top-level test at point."
+    (interactive)
+    (when-let ((test-name (sm/go-toplevel-test)))
+      (let ((cmd (format "go test -run %s -v" test-name))
+            (buf-name (format "*Test: Go [%s]*" test-name)))
+        (sm/compile cmd buf-name))))
+
   :hook ((go-mode . lsp)
          (go-mode . sm/set-gofmt-hook))
   :bind(:map go-mode-map
              ("C-c C-d" . lsp-describe-thing-at-point)
+             ("C-c C-t" . sm/go-run-test-at-point)
              ("C-c r r" . lsp-rename)))
 
 (use-package flycheck-golangci-lint
