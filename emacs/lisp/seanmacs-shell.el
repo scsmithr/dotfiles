@@ -115,6 +115,16 @@ If BUF-NAME is nil, the command will be used to name the buffer."
                                (delete-dups
                                 (ring-elements eshell-history-ring))))))
 
+  ;; Nearly identical to the default prompt function, but will display last
+  ;; status if non-zero. Satisfies default prompt regex.
+  (defun sm/eshell-prompt-function ()
+    (concat (abbreviate-file-name (eshell/pwd))
+            (unless (zerop eshell-last-command-status)
+              (format " [%s]" eshell-last-command-status))
+            (if (= (user-uid) 0) " # " " $ ")))
+
+  (setq eshell-prompt-function #'sm/eshell-prompt-function)
+
   (setq eshell-history-size 10000
         eshell-save-history-on-exit nil ;; This is handled elsewhere.
         eshell-cmpl-cycle-completions nil

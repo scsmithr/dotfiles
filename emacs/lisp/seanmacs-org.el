@@ -15,6 +15,11 @@
   :straight t
   :config
   ;; Enable basic movement keys in agenda.
+  ;; Previous binds:
+  ;; h - org-agenda-holidays
+  ;; j - org-agenda-goto-date
+  ;; k - org-agenda-capture
+  ;; l - org-agenda-log-mode
   (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
 
   (setq org-default-notes-file (concat sm/notes-dir "refile.org")
