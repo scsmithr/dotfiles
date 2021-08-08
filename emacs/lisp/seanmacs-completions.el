@@ -16,6 +16,12 @@
 
   (unbind-key [return] company-active-map)
   (unbind-key (kbd "RET") company-active-map)
+
+  ;; Occasionally lsp might send a completion that company fails to handle due
+  ;; to indexing. These errors don't impact anything, so limit how much
+  ;; attention they receive.
+  (advice-add 'company-preview-show-at-point :around #'ignore-errors-fn)
+
   :hook ((after-init . global-company-mode))
   :bind (:map company-active-map
               ("<tab>" . company-complete-selection)))
