@@ -14,11 +14,11 @@
   :init
   (setq evil-search-module 'evil-search
         evil-ex-complete-emacs-commands nil
-        evil-vsplit-window-right t
-        evil-split-window-below t
         evil-shift-round nil
         evil-want-C-u-scroll t
-        evil-want-C-i-jump nil ;; C-i and TAB are the same thing in the terminal.
+        ;; C-i and TAB being the same thing messes with some keybinds (e.g. org
+        ;; headline toggle)
+        evil-want-C-i-jump nil
         evil-want-fine-undo t
         evil-want-keybinding nil
         evil-undo-system 'undo-fu)
