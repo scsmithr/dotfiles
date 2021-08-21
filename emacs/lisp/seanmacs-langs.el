@@ -489,27 +489,34 @@ line check to prevent stopping at blank lines."
         (goto-char (point))
         (sm/julia-send-region-or-line))))
 
+  (defun sm/region-string ()
+    "Get region string, or nil if no region is selected."
+    (when (use-region-p)
+      (buffer-substring (region-beginning) (region-end))))
+
   (defun sm/julia-doc ()
     (interactive)
-    (let* ((sym (thing-at-point 'symbol t))
+    (let* ((sym (or (sm/region-string) (thing-at-point 'symbol t)))
            (str (concat "@doc " sym)))
       (sm/comint-echo-and-send (sm/julia-process) str)))
 
   (defun sm/julia-edit ()
     (interactive)
     ;; TODO: Should be getting expression, but line is close enough for now.
-    (let* ((line (thing-at-point 'line t))
+    (let* ((line (or (sm/region-string) (thing-at-point 'line t)))
            (str (concat "@edit " line)))
       (sm/comint-echo-and-send (sm/julia-process) str)))
+
+  (defun sm/julia-methods (sym)
+    "Get methods for a function symbol."
+    (interactive (list (or (sm/region-string) (thing-at-point 'symbol t))))
+    (sm/comint-echo-and-send (sm/julia-process) (format "methods(%s)" sym)))
 
   (defun sm/julia-macroexpand ()
     "Expand macro on the current line, or region if selected."
     (interactive)
-    (let ((thing
-           (if (use-region-p)
-               (buffer-substring (region-beginning) (region-end))
-             ;; As with `sm/julia-edit', "should" be an expression instead.
-             (thing-at-point 'line t))))
+    ;; As with `sm/julia-edit', "should" be an expression instead.
+    (let ((thing (or (sm/region-string) (thing-at-point 'line t))))
       (sm/comint-echo-and-send (sm/julia-process) (concat "@macroexpand " thing))))
 
   (defun sm/julia-apropos (search)
@@ -558,6 +565,8 @@ Otherwise start the repl in the current directory."
              ("C-c C-d C-d" . sm/julia-doc)
              ("C-c C-d a" . sm/julia-apropos)
              ("C-c C-d C-a" . sm/julia-apropos)
+             ("C-c C-d m" . sm/julia-methods)
+             ("C-c C-d C-m" . sm/julia-methods)
              :map julia-mode-map
              ("C-c C-z" . sm/julia-run)
              ("C-c C-a" . sm/julia-activate-project)
@@ -568,7 +577,9 @@ Otherwise start the repl in the current directory."
              ("C-c C-d C-d" . sm/julia-doc)
              ("C-c C-d a" . sm/julia-apropos)
              ("C-c C-d C-a" . sm/julia-apropos)
-             ("C-c C-m" . sm/julia-macroexpand)))
+             ("C-c C-m" . sm/julia-macroexpand)
+             ("C-c C-d m" . sm/julia-methods)
+             ("C-c C-d C-m" . sm/julia-methods)))
 
 
 ;; R
