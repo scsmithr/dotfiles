@@ -160,6 +160,7 @@ entry. Otherwise prompt for an arxiv link."
           ("https://buttondown.email/hillelwayne/rss" math dev newsletter)
           ("http://www.philipzucker.com/feed.xml" dev blog)
           ("https://terrytao.wordpress.com/feed" math blog)
+          ("http://www.math3ma.com/blog/rss.xml" math blog)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
