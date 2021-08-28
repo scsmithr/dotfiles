@@ -741,10 +741,10 @@ Otherwise start the repl in the current directory."
         ;; Assumes "Agda version <version>"
         (nth 2 (split-string out)))))
 
-  (defun sm/set-agda-version()
+  (defun sm/set-agda-version ()
     "Set `agda2-version' to the version of the currently installed Agda bin."
     (interactive)
-    (when-let (ver (sm/current-agda-version))
+    (when-let ((ver (sm/current-agda-version)))
       (message "Setting `agda2-version' to %s" ver)
       (setq agda2-version ver)))
 
