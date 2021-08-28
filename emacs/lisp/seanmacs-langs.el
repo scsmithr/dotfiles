@@ -734,7 +734,19 @@ Otherwise start the repl in the current directory."
   :straight t
   :defer t
   :init
-  (setq agda2-version "2.6.2")
+  (defun sm/current-agda-version ()
+    "Return the version string for Agda."
+    (when-let ((exe (executable-find "agda")))
+      (let ((out (shell-command-to-string (format "%s --version" exe))))
+        ;; Assumes "Agda version <version>"
+        (nth 2 (split-string out)))))
+
+  (defun sm/set-agda-version()
+    "Set `agda2-version' to the version of the currently installed Agda bin."
+    (interactive)
+    (when-let (ver (sm/current-agda-version))
+      (message "Setting `agda2-version' to %s" ver)
+      (setq agda2-version ver)))
 
   (defun sm/set-input-agda ()
     (require 'agda-input)
