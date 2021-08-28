@@ -734,7 +734,7 @@ Otherwise start the repl in the current directory."
   :straight t
   :defer t
   :init
-  (setq agda2-version "2.6.1.3")
+  (setq agda2-version "2.6.2")
 
   (defun sm/set-input-agda ()
     (require 'agda-input)
