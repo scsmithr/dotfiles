@@ -76,8 +76,11 @@
        `(company-preview ((t (:background ,bg-hl-line :foreground ,fg-alt))))
        `(company-preview-common ((t (:background ,bg-hl-line :foreground ,blue))))
        ;; Org mode
-       `(org-code ((t :inherit modus-themes-fixed-pitch
-                      :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
+       `(org-code ((t (:inherit modus-themes-fixed-pitch :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
+       ;; LSP
+       `(lsp-face-highlight-textual ((t (:background ,cyan-nuanced-bg))))
+       `(lsp-face-highlight-read ((t (:background ,cyan-nuanced-bg :underline t))))
+       `(lsp-face-highlight-write ((t (:background ,cyan-nuanced-bg :weight bold)))))
 
       (with-eval-after-load 'sly-mrepl
         (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))))

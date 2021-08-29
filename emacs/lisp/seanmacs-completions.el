@@ -113,7 +113,8 @@
         lsp-response-timeout 2
         lsp-modeline-code-actions-segments '(count)
         lsp-headerline-breadcrumb-enable nil
-        lsp-progress-prefix "*** ")
+        lsp-progress-prefix "LSP :: "
+        lsp-enable-links nil)
 
   ;; Not sure that I want this. Will need to come up with better colors if I do.
   (setq lsp-diagnostics-attributes nil)
