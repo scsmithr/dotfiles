@@ -135,7 +135,7 @@
 (use-package mm-decode
   ;; built-in
   :config
-  (add-to-list 'mm-discouraged-alternatives "text/html"))
+  (setq mm-discouraged-alternatives '("text/html" "text/richtext" "image/.*")))
 
 (provide 'seanmacs-email)
 ;;; seanmacs-email.el ends here
