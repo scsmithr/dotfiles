@@ -90,82 +90,113 @@
   :bind (("C-c x a" . xref-find-apropos)
          ("C-c x r" . xref-find-references)))
 
-(use-package lsp-mode
-  :straight t
-  :commands lsp
-  :init
-  (defvar sm/lsp-truncate-messages t
-    "Should messages printed by lsp be truncated.")
-
-  (defun sm/lsp-wrap-message (orig-fn &rest args)
-    (let ((message-truncate-lines sm/lsp-truncate-messages))
-      (apply orig-fn args)))
-
-  (advice-add 'lsp--message :around #'sm/lsp-wrap-message)
-
+(use-package eldoc
+  ;; built-in, ish. Eglot pulls in development versions.
   :config
-  (sm/warn-fn-not-bound 'lsp--message)
+  (setq eldoc-echo-area-use-multiline-p nil))
 
-  (setq lsp-prefer-flymake nil
-        lsp-auto-guess-root t
-        lsp-eldoc-render-all nil
-        lsp-prefer-capf t
-        lsp-response-timeout 2
-        lsp-modeline-code-actions-segments '(count)
-        lsp-headerline-breadcrumb-enable nil
-        lsp-progress-prefix "LSP :: "
-        lsp-enable-links nil)
+(use-package eglot
+  :straight t
+  :defer t
+  :commands (eglot eglot-ensure)
+  :config
+  ;; Seem to hit this with gopls and vendored deps.
+  (setq max-specpdl-size 16000
+        max-lisp-eval-depth 3200)
 
-  ;; Not sure that I want this. Will need to come up with better colors if I do.
-  (setq lsp-diagnostics-attributes nil)
+  (setq-default eglot-workspace-configuration
+                '((:gopls
+                   (directoryFilters . ["+node_modules"
+                                        "+vendor"]))))
 
-  ;; Never warn me about attempting to watch a large directory, but also disable
-  ;; watching altogether. The regexps for ignoring watched directories is a bit
-  ;; hard to control for larger repos with submodules. Also, gopls *will* spam
-  ;; when directories change messages causing emacs to grind to a halt,
-  ;; particularly on git checkouts. I would rather have checkouts be fast, and
-  ;; call `lsp-workspace-restart' if needed.
-  (setq lsp-file-watch-threshold nil
-        lsp-enable-file-watchers nil)
+  (defvar sm/eglot-help-buffer nil)
 
-  ;; These changes only matter if file watching is enabled.
-  ;; Ignore next
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.next\\'")
-  ;; Ignore go module vendor
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vendor\\'")
+  (mapc #'sm/warn-fn-not-bound '(eglot--dbind
+                                 eglot--current-server-or-lose
+                                 eglot--TextDocumentIdentifier
+                                 eglot--hover-info))
 
-  ;; Additional lsp clients (mostly for working with tramp).
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-tramp-connection
-                                     (lambda () (cons lsp-go-gopls-server-path lsp-go-gopls-server-args)))
-                    :major-modes '(go-mode go-dot-mod-mode)
-                    :language-id "go"
-                    :priority 0
-                    :server-id 'gopls-remote
-                    :completion-in-comments? t
-                    :remote? t
-                    :library-folders-fn #'lsp-go--library-default-directories
-                    :after-open-fn (lambda ()
-                                     ;; https://github.com/golang/tools/commit/b2d8b0336
-                                     (setq-local lsp-completion-filter-on-incomplete nil))))
+  ;; Adapted from Doom Emacs.
+  (defun sm/eglot-lookup-doc ()
+    "Request documentation for the thing at point."
+    (interactive)
+    (eglot--dbind ((Hover) contents range)
+        (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
+                         (eglot--TextDocumentPositionParams))
+      (let ((blurb (and (not (seq-empty-p contents))
+                        (eglot--hover-info contents range)))
+            (hint (thing-at-point 'symbol t)))
+        (if blurb
+            (with-current-buffer
+                (or (and (buffer-live-p sm/eglot-help-buffer)
+                         sm/eglot-help-buffer)
+                    (setq sm/eglot-help-buffer (generate-new-buffer "*eglot-help*")))
+              (with-help-window (current-buffer)
+                (rename-buffer (format "*eglot-help for %s*" hint))
+                (with-current-buffer standard-output (insert blurb))
+                (setq-local nobreak-char-display nil)))
+          (display-local-help))))
+    'deferred)
 
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-tramp-connection (lambda ()
-                                                            `(,(lsp-package-path 'typescript-language-server)
-                                                              "--tsserver-path"
-                                                              ,(lsp-package-path 'typescript)
-                                                              ,@lsp-clients-typescript-server-args)))
-                    :activation-fn 'lsp-typescript-javascript-tsx-jsx-activate-p
-                    :priority -2
-                    :completion-in-comments? t
-                    :remote? t
-                    :initialization-options (lambda ()
-                                              (list :plugins lsp-clients-typescript-plugins
-                                                    :logVerbosity lsp-clients-typescript-log-verbosity
-                                                    :tsServerPath (lsp-package-path 'typescript)))
-                    :ignore-messages '("readFile .*? requested by TypeScript but content not available")
-                    :server-id 'ts-ls-remote
-                    :request-handlers (ht ("_typescript.rename" #'lsp-javascript--rename)))))
+  ;; Below is adapted from Doom Emac's handling of integration eglot diagnostics
+  ;; with flycheck.
+
+  (setq eglot-stay-out-of '(flymake))
+
+  (defvar-local sm/eglot-flycheck-current-errors nil)
+
+  (defun sm/eglot-flycheck-init (checker callback)
+    (eglot-flymake-backend #'sm/eglot-on-diagnostic)
+    (funcall callback 'finished sm/eglot-flycheck-current-errors))
+
+  (mapc #'sm/warn-fn-not-bound '(flymake--diag-buffer
+                                 flymake--diag-beg
+                                 flymake--diag-type
+                                 flymake--diag-text
+                                 flymake--diag-end))
+
+  (defun sm/eglot-flymake-diag-to-flycheck (diag)
+    (with-current-buffer (flymake--diag-buffer diag)
+      (flycheck-error-new-at-pos
+       (flymake--diag-beg diag)
+       (pcase (flymake--diag-type diag)
+         ('eglot-note 'info)
+         ('eglot-warning 'warning)
+         ('eglot-error 'error)
+         (_ (error "Unknown diagnostic type %S" diag)))
+       (flymake--diag-text diag)
+       :end-pos (flymake--diag-end diag)
+       :checker 'eglot
+       :buffer (current-buffer)
+       :filename (buffer-file-name))))
+
+  (defun sm/eglot-on-diagnostic (diags &rest _)
+    (setq sm/eglot-flycheck-current-errors
+          (mapcar #'sm/eglot-flymake-diag-to-flycheck diags))
+    (flycheck-buffer-deferred))
+
+  (defun sm/eglot-flycheck-available-p ()
+    (bound-and-true-p eglot--managed-mode))
+
+  (flycheck-define-generic-checker 'eglot
+    "Report `eglot' diagnostics using `flycheck'."
+    :start #'sm/eglot-flycheck-init
+    :predicate #'sm/eglot-flycheck-available-p
+    :modes '(prog-mode text-mode))
+
+  (push 'eglot flycheck-checkers)
+
+  (defun sm/eglot-flycheck-hook ()
+    (when eglot--managed-mode
+      (flymake-mode -1)
+      (when-let ((current-checker (flycheck-get-checker-for-buffer)))
+        (unless (equal current-checker 'eglot)
+          (flycheck-add-next-checker 'eglot current-checker)))
+      (flycheck-add-mode 'eglot major-mode)
+      (flycheck-mode 1)
+      (flycheck-buffer-deferred)))
+
+  (add-hook 'eglot-managed-mode-hook #'sm/eglot-flycheck-hook))
 
 (provide 'seanmacs-completions)
 ;;; seanmacs-completions.el ends here

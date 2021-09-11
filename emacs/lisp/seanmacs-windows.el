@@ -48,6 +48,7 @@
 \\|Help\
 \\|Warnings\
 \\|lsp-help\
+\\|eglot-help\
 \\|company-documentation\
 \\|Gofmt Errors\
 \\|prettier errors\

@@ -59,6 +59,11 @@
   "Set jump property for FN."
   (evil-add-command-properties fn :jump t))
 
+;; LSP utilities.
+
+(defun sm/set-eglot-checker ()
+  (setq flycheck-checker 'eglot)) ;; Buffer local.
+
 
 ;; Go
 
@@ -79,12 +84,12 @@
     "Enable golangci-lint flycheck checker."
     (interactive)
     (flycheck-golangci-lint-setup)
-    (flycheck-add-next-checker 'lsp 'golangci-lint 'append))
+    (flycheck-add-next-checker 'eglot 'golangci-lint 'append))
 
   (defun sm/disable-golangci ()
     "Disable golangci-lint flycheck checker."
     (interactive)
-    (flycheck-remove-next-checker 'lsp 'golangci-lint))
+    (flycheck-remove-next-checker 'eglot 'golangci-lint))
 
   (defun sm/go-toplevel-test ()
     "Get the name of the current top-level test function."
@@ -101,12 +106,13 @@
             (buf-name (format "*Test: Go [%s]*" test-name)))
         (sm/compile cmd buf-name))))
 
-  :hook ((go-mode . lsp)
-         (go-mode . sm/set-gofmt-hook))
+  :hook ((go-mode . sm/set-gofmt-hook)
+         (go-mode . sm/set-eglot-checker)
+         (go-mode . eglot-ensure))
   :bind(:map go-mode-map
-             ("C-c C-d" . lsp-describe-thing-at-point)
+             ("C-c C-d" . sm/eglot-lookup-doc)
              ("C-c C-t" . sm/go-run-test-at-point)
-             ("C-c r r" . lsp-rename)))
+             ("C-c r r" . eglot-rename)))
 
 (use-package flycheck-golangci-lint
   :straight t
@@ -144,13 +150,13 @@
   :defer t
   :config
   (setq rust-format-on-save t
-        rust-format-show-buffer nil
-        lsp-rust-clippy-preference "on")
-  :hook ((rust-mode . lsp)
-         (rust-mode . cargo-minor-mode))
+        rust-format-show-buffer nil)
+  :hook ((rust-mode . eglot-ensure)
+         (rust-mode . cargo-minor-mode)
+         (rust-mode . sm/set-eglot-checker))
   :bind(:map rust-mode-map
-             ("C-c C-d" . lsp-describe-thing-at-point)
-             ("C-c r r" . lsp-rename)))
+             ("C-c C-d" . sm/eglot-lookup-doc)
+             ("C-c r r" . eglot-rename)))
 
 (use-package cargo
   :straight t
@@ -187,29 +193,34 @@ dir. Return nil otherwise."
 (use-package typescript-mode
   :straight t
   :defer t
-  :mode "\\.tsx?\\'"
+  :mode "\\.ts\\'"
   :init
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
 
   (defun sm/enable-ts-eslint ()
     "Enable javascript-esline flycheck checker for typescript."
     (interactive)
-    (flycheck-add-next-checker 'lsp 'javascript-eslint))
+    (flycheck-add-next-checker 'eglot 'javascript-eslint))
 
   (defun sm/disable-ts-eslint ()
     "Disable javascript-eslint flycheck checker for typescript."
     (interactive)
-    (flycheck-remove-next-checker 'lsp 'javascript-eslint))
+    (flycheck-remove-next-checker 'eglot 'javascript-eslint))
 
   :config
   (sm/set-goto-def-keybind 'typescript-mode-map #'xref-find-definitions)
 
-  :hook ((typescript-mode . lsp)
+  :hook ((typescript-mode . eglot-ensure)
          (typescript-mode . prettier-js-mode)
-         (typescript-mode . sm/use-node-modules-eslint))
+         (typescript-mode . sm/use-node-modules-eslint)
+         (typescript-mode . sm/set-eglot-checker))
   :bind (:map typescript-mode-map
-              ("C-c C-d" . lsp-describe-thing-at-point)
-              ("C-c r r" . lsp-rename)))
+              ("C-c C-d" . sm/eglot-lookup-doc)
+              ("C-c r r" . eglot-rename)))
+
+(define-derived-mode typescriptreact-mode typescript-mode "TSX")
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
 
 (use-package web-mode
   :straight t
@@ -306,15 +317,16 @@ Start a new process if not alive."
       (pop-to-buffer (process-buffer (sm/iex-process)))))
 
   :config
-  (setq lsp-clients-elixir-server-executable "elixir-ls")
+  (add-to-list 'eglot-server-programs '(elixir-mode "elixir-ls"))
 
   (sm/set-goto-def-keybind 'elixir-mode-map #'xref-find-definitions)
 
-  :hook ((elixir-mode . lsp)
-         (elixir-mode . sm/set-elixir-format-hook))
+  :hook ((elixir-mode . eglot-ensure)
+         (elixir-mode . sm/set-elixir-format-hook)
+         (elixir-mode . sm/set-eglot-checker))
   :bind(:map elixir-mode-map
-             ("C-c C-d" . lsp-describe-thing-at-point)
-             ("C-c r r" . lsp-rename)
+             ("C-c C-d" . sm/eglot-lookup-doc)
+             ("C-c r r" . eglot-rename)
              ("C-c C-r" . sm/iex-recompile-project)
              ("C-c C-l" . sm/iex-recompile-current-module)
              ("C-c C-c" . sm/iex-send-region-or-line)))
@@ -643,17 +655,6 @@ Otherwise start the repl in the current directory."
               ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)
               :map lisp-interaction-mode-map
               ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)))
-
-
-;; C/C++
-
-(use-package ccls
-  :straight t
-  :defer t
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda ()
-           (require 'ccls)
-           (lsp))))
 
 
 ;; Yaml
