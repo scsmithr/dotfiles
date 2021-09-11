@@ -77,8 +77,8 @@
 
   (defun sm/gopls-ensure ()
     (setq eglot-workspace-configuration
-          `((gopls . (directoryFilters ,(vector "+node_modules"
-                                                "+vendor")))))
+          `((gopls . (directoryFilters ,(vector "-node_modules"
+                                                "-vendor")))))
     (eglot-ensure))
   :config
   (setq gofmt-command "goimports"
