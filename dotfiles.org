@@ -39,7 +39,7 @@
        padding:
          x: 2
          y: 2
-  
+
        dynamic_padding: true
 
        # Window decorations
@@ -396,7 +396,7 @@
    Wrapper around alacritty. Sets appropriate dpi as reported by X.
 
    Requires setting zsh shebang since it needs fp division.
-    
+
    #+BEGIN_SRC bash :tangle ~/.bin/terminal :shebang "#!/usr/bin/env zsh"
      dpi=$(xrdb -query | grep "Xft.dpi" | awk '{print $2}')
      if [ -n "$dpi" ]; then
@@ -421,11 +421,11 @@
 
    Set of useful scripts.
 
-*** bri 
+*** bri
 
     Set screen brightness. Mostly used for my laptop. i2c used to work with my
     monitor(s), but I haven't tried it recently, so might be broken.
-   
+
     #+BEGIN_SRC bash :tangle ~/.bin/bri
       mon_current() {
           local outstr
@@ -551,28 +551,28 @@
               ;;
       esac
     #+END_SRC
-    
+
 *** mm
-    
+
     Configuration for setting caps lock to be left control.
-    
+
     #+BEGIN_SRC conf :tangle ~/.xmodmap
       remove Lock = Caps_Lock
       keysym Caps_Lock = Control_L
       add Control = Control_L
     #+END_SRC
-    
+
     Script for setting the above configuration, and setting left control to send
     escape on press. Left control will continue to send left control when held
     down.
-    
+
     This needs to be ran after suspend (sometimes twice for whatever reason).
-    
+
     #+BEGIN_SRC bash :tangle ~/.bin/mm
       xmodmap ~/.xmodmap
       xcape -e 'Control_L=Escape'
     #+END_SRC
-    
+
 *** network
 
     Start up network related stuff.
@@ -594,7 +594,7 @@
       # Connect to selected network.
       sudo netctl start "$1"
     #+END_SRC
-    
+
 *** notify
 
     Notify after a process has completed.
@@ -612,9 +612,9 @@
       fi
       tput bel
     #+END_SRC
-    
+
 *** screenshot
-    
+
     Take a screenshot and save it to =~/Pictures/screenshots=. The screenshot will
     be put into the clipboard.
 
@@ -628,9 +628,9 @@
     #+END_SRC
 
 *** toggle-redshift
-    
+
     Kill redshift if it's running, start it if it's not.
-    
+
     #+BEGIN_SRC bash :tangle ~/.bin/toggle-redshift
       trap '' HUP
 
@@ -674,7 +674,7 @@
    #+BEGIN_SRC bash
      [[ $- != *i* ]] && return
    #+END_SRC
-     
+
    Include scripts tangled from [[Scripts]].
 
    #+BEGIN_SRC bash
@@ -686,7 +686,7 @@
    #+BEGIN_SRC bash
      export EDITOR=editor
    #+END_SRC
-   
+
    Go related settings. Using a non-standard go path.
 
    #+BEGIN_SRC bash
@@ -710,13 +710,13 @@
    #+BEGIN_SRC bash :noweb yes
      export JULIA_NUM_THREADS=<<num-threads()>>
    #+END_SRC
-   
+
    Include cargo binaries in path.
 
    #+BEGIN_SRC bash
      export PATH=$PATH:$HOME/.cargo/bin
    #+END_SRC
-   
+
    Include [[https://github.com/leanprover/elan][elan]] binaries in path.
 
    #+BEGIN_SRC bash
@@ -728,9 +728,9 @@
    #+BEGIN_SRC bash
      alias ls='ls --color=auto'
    #+END_SRC
-     
+
    Set prompt.
-     
+
    #+BEGIN_SRC bash
      PS1='[\u@\h \W]\$ '
    #+END_SRC
@@ -949,7 +949,7 @@
    #+BEGIN_SRC sh
      xsetroot -cursor_name left_ptr
    #+END_SRC
-     
+
    Set some colors, load colors/themes from xresources.
 
    #+BEGIN_SRC sh
@@ -1110,7 +1110,7 @@
      # the top and down respectively.
      # The width can be negative.  In this case the actual width is the
      # screen width minus the width defined in within the geometry option.
-     geometry = "520x3-8+42"
+     geometry = "520x3-0-0"
 
      # Show how many messages are currently hidden (because of geometry).
      indicate_hidden = yes
@@ -1405,7 +1405,7 @@
      #
      # vim: ft=cfg
    #+END_SRC
-  
+
 ** Window manager
 
    Combo of xmonad and xmobar.
@@ -1413,7 +1413,7 @@
 *** Xmonad
 
     Window manager configuration. The keybinds have been modified to support a
-    BSP-like layout.
+    reflected tall layout (main window on the right).
 
     #+BEGIN_SRC haskell :tangle ~/.xmonad/xmonad.hs :noweb yes
       import qualified Data.List as List
@@ -1425,16 +1425,6 @@
           exitWith,
         )
       import XMonad
-      import XMonad.Actions.CycleWS (toggleWS)
-      import XMonad.Actions.Navigation2D
-        ( Direction2D (..),
-          Navigation2DConfig (..),
-          sideNavigation,
-          switchLayer,
-          windowGo,
-          windowSwap,
-          withNavigation2DConfig,
-        )
       import XMonad.Actions.PhysicalScreens
         ( sendToScreen,
           viewScreen,
@@ -1459,17 +1449,12 @@
         ( NoUrgencyHook (..),
           withUrgencyHook,
         )
-      import XMonad.Layout.BinarySpacePartition
-        ( FocusParent (..),
-          ResizeDirectional (..),
-          Rotate (..),
-          TreeBalance (..),
-          emptyBSP,
-        )
+      import XMonad.Layout (Full (..), Tall (..))
       import XMonad.Layout.NoBorders
         ( Ambiguity (..),
           lessBorders,
         )
+      import XMonad.Layout.Reflect (reflectHoriz)
       import XMonad.Layout.Spacing
         ( Border (..),
           spacingRaw,
@@ -1487,7 +1472,7 @@
       promptConf =
         def
           { position = Bottom,
-            font = "<<xft-ui-font()>>",
+            font = "xft:Source Sans Pro:semibold:size=10",
             height = 44,
             bgColor = dark,
             fgColor = foreground,
@@ -1523,49 +1508,51 @@
             ((modMask, xK_x), spawn "if type xmonad; then xmonad --restart; fi"),
             ((modMask .|. shiftMask, xK_x), io (exitWith ExitSuccess)),
             ((modMask .|. shiftMask, xK_c), kill),
+            -- Layouts
             ((modMask, xK_space), sendMessage NextLayout),
             ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf),
-            ((modMask, xK_r), sendMessage $ Rotate),
-            ((modMask, xK_a), sendMessage $ FocusParent),
-            ((modMask .|. controlMask, xK_l), sendMessage $ ExpandTowards R),
-            ((modMask .|. controlMask, xK_h), sendMessage $ ExpandTowards L),
-            ((modMask .|. controlMask, xK_j), sendMessage $ ExpandTowards D),
-            ((modMask .|. controlMask, xK_k), sendMessage $ ExpandTowards U),
-            ((modMask, xK_l), windowGo R False),
-            ((modMask, xK_h), windowGo L False),
-            ((modMask, xK_k), windowGo U False),
-            ((modMask, xK_j), windowGo D False),
-            ((modMask .|. shiftMask, xK_l), windowSwap R False),
-            ((modMask .|. shiftMask, xK_h), windowSwap L False),
-            ((modMask .|. shiftMask, xK_k), windowSwap U False),
-            ((modMask .|. shiftMask, xK_j), windowSwap D False),
-            ((modMask, xK_u), windows W.focusUp),
-            ((modMask, xK_i), windows W.focusDown),
-            ((modMask, xK_s), switchLayer),
+            -- Move window focus
+            ((modMask, xK_j), windows W.focusDown),
+            ((modMask, xK_k), windows W.focusUp),
+            ((modMask, xK_m), windows W.focusMaster),
+            -- Modify the window order
+            ((modMask .|. shiftMask, xK_j), windows W.swapDown),
+            ((modMask .|. shiftMask, xK_k), windows W.swapUp),
+            -- Resize windows
+            ((modMask, xK_h), sendMessage Expand),
+            ((modMask, xK_l), sendMessage Shrink),
+            -- Floating layer
+            ((modMask, xK_t), withFocused $ windows . W.sink),
             ((modMask, xK_f), withFocused $ flip centerWindow False),
             ((modMask .|. shiftMask, xK_f), withFocused $ flip centerWindow True),
-            ((modMask, xK_t), withFocused $ windows . W.sink),
-            ((modMask, xK_equal), sendMessage Equalize),
-            ((modMask, xK_minus), toggleWS)
+            -- Increase/decrease windos in master area
+            ((modMask, xK_comma), sendMessage (IncMasterN (-1))),
+            ((modMask, xK_period), sendMessage (IncMasterN 1))
           ]
-            ++ [ ((m .|. modMask, key), f sc)
-                 | (key, sc) <- zip [xK_w, xK_e] [0 ..],
-                   (f, m) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
-               ]
-            ++ [ ((m .|. modMask, k), windows $ f i)
-                 | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
-                   (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
-               ]
-            ++ [ ((0, xF86XK_MonBrightnessUp), spawn "bri laptop up"),
-                 ((0, xF86XK_MonBrightnessDown), spawn "bri laptop down"),
-                 ((0, xF86XK_AudioRaiseVolume), spawn "vol up"),
-                 ((0, xF86XK_AudioLowerVolume), spawn "vol down"),
-                 ((0, xF86XK_AudioMute), spawn "vol mute")
-               ]
+            ++
+            -- Switch screens based on physical position (xrandr).
+            [ ((m .|. modMask, key), f sc)
+              | (key, sc) <- zip [xK_w, xK_e] [0 ..],
+                (f, m) <- [(viewScreen def, 0), (sendToScreen def, shiftMask)]
+            ]
+            ++
+            -- Switch workspaces.
+            [ ((m .|. modMask, k), windows $ f i)
+              | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
+                (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+            ]
+            ++
+            -- Various function keys.
+            [ ((0, xF86XK_MonBrightnessUp), spawn "bri laptop up"),
+              ((0, xF86XK_MonBrightnessDown), spawn "bri laptop down"),
+              ((0, xF86XK_AudioRaiseVolume), spawn "vol up"),
+              ((0, xF86XK_AudioLowerVolume), spawn "vol down"),
+              ((0, xF86XK_AudioMute), spawn "vol mute")
+            ]
 
       stringifyLayout :: String -> String
       stringifyLayout l
-        | t "BSP" l = fmt "bsp"
+        | t "Tall" l = fmt "tall"
         | t "Full" l = fmt "full"
         | otherwise = fmt l
         where
@@ -1589,35 +1576,33 @@
 
       myLayoutHook =
         uniformSpacing $
-          lessBorders (OnlyScreenFloat) (emptyBSP ||| Full)
+          lessBorders (OnlyScreenFloat) (tall ||| Full)
         where
+          tall = reflectHoriz $ Tall 1 (5 / 100) (13 / 20)
           gs = 5
           uniformSpacing = spacingRaw False (border) True (border) True
           border = Border gs gs gs gs
 
       myManageHook = composeAll [isDialog =? True --> doCenterFloat]
 
-      myNavConf = def {defaultTiledNavigation = sideNavigation}
-
       myConfig pipe =
         withUrgencyHook NoUrgencyHook $
-          withNavigation2DConfig myNavConf $
-            ewmh $
-              docks
-                def
-                  { logHook = myLogHook pipe,
-                    manageHook = myManageHook,
-                    layoutHook = avoidStruts $ myLayoutHook,
-                    handleEventHook = fullscreenEventHook,
-                    focusFollowsMouse = False,
-                    workspaces = myWorkspaces,
-                    terminal = myTerminal,
-                    modMask = myModMask,
-                    keys = myWorkspaceKeys,
-                    borderWidth = myBorderWidth,
-                    normalBorderColor = myUnfocusedBorderColor,
-                    focusedBorderColor = myFocusedBorderColor
-                  }
+          ewmh $
+            docks
+              def
+                { logHook = myLogHook pipe,
+                  manageHook = myManageHook,
+                  layoutHook = avoidStruts $ myLayoutHook,
+                  handleEventHook = fullscreenEventHook,
+                  focusFollowsMouse = False,
+                  workspaces = myWorkspaces,
+                  terminal = myTerminal,
+                  modMask = myModMask,
+                  keys = myWorkspaceKeys,
+                  borderWidth = myBorderWidth,
+                  normalBorderColor = myUnfocusedBorderColor,
+                  focusedBorderColor = myFocusedBorderColor
+                }
 
       main = xmonad . myConfig =<< spawnPipe "xmobar"
 
@@ -1655,7 +1640,6 @@
       myModMask = mod4Mask
 
       myWorkspaces = ["def", "web", "dev", "misc"]
-
     #+END_SRC
 
     Recompile and reload xmonad.
@@ -1686,7 +1670,7 @@
           commands = [
               Run Date "%a, %b %d %I:%M%P" "date" 10,
 
-              Run CommandReader "STATUS_SECTION_COLOR=<<ui-fg-muted-color()>> ~/.status/status.scm" "status", 
+              Run CommandReader "STATUS_SECTION_COLOR=<<ui-fg-muted-color()>> ~/.status/status.scm" "status",
 
               Run StdinReader
           ],
@@ -1710,7 +1694,7 @@
       -e main -s
       !#
     #+END_SRC
-     
+
     The actual scheme source for status. =geiser= can be used by evaling the below
     code block.
 
@@ -1877,4 +1861,3 @@
      [Default Applications]
      application/pdf=org.pwmt.zathura.desktop
    #+END_SRC
-

@@ -176,7 +176,7 @@
 
 ;; Typescript/ web stuff
 
-(defun seanmacs/bin-from-node-modules (bin)
+(defun sm/bin-from-node-modules (bin)
   "Return the full path if BIN exists in dominating node modules
 dir. Return nil otherwise."
   (let* ((dir (or (projectile-project-root)
@@ -189,17 +189,17 @@ dir. Return nil otherwise."
       path)))
 
 (defun sm/use-node-modules-eslint ()
-  (when-let ((eslint (seanmacs/bin-from-node-modules "eslint")))
+  (when-let ((eslint (sm/bin-from-node-modules "eslint")))
     (setq-local flycheck-javascript-eslint-executable eslint)))
 
 (use-package prettier-js
   :straight t
   :defer t
   :init
-  (defun seanmacs/use-node-modules-prettier ()
-    (when-let ((prettier (seanmacs/bin-from-node-modules "prettier")))
+  (defun sm/use-node-modules-prettier ()
+    (when-let ((prettier (sm/bin-from-node-modules "prettier")))
       (setq-local prettier-js-command prettier)))
-  :hook ((prettier-js-mode . seanmacs/use-node-modules-prettier)))
+  :hook ((prettier-js-mode . sm/use-node-modules-prettier)))
 
 (use-package typescript-mode
   :straight t
@@ -229,7 +229,15 @@ dir. Return nil otherwise."
               ("C-c C-d" . sm/eglot-lookup-doc)
               ("C-c r r" . eglot-rename)))
 
-(define-derived-mode typescriptreact-mode typescript-mode "TSX")
+(define-derived-mode typescriptreact-mode typescript-mode "TSX"
+  "Convenience mode for differentiating between regular
+Typescript files and TSX files.
+
+Note that `eglot' is able to automatically detect language ID
+from the mode name. The typescript language server uses
+'typescriptreact' as the language ID for tsx files, hence the
+mode name."
+  (flycheck-add-mode 'javascript-eslint 'typescriptreact-mode))
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
 
