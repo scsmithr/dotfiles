@@ -74,6 +74,12 @@
   :init
   (defun sm/set-gofmt-hook ()
     (add-hook 'before-save-hook #'gofmt nil t))
+
+  (defun sm/gopls-ensure ()
+    (setq eglot-workspace-configuration
+          `((gopls . (directoryFilters ,(vector "+node_modules"
+                                                "+vendor")))))
+    (eglot-ensure))
   :config
   (setq gofmt-command "goimports"
         gofmt-args '("-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
@@ -108,7 +114,7 @@
 
   :hook ((go-mode . sm/set-gofmt-hook)
          (go-mode . sm/set-eglot-checker)
-         (go-mode . eglot-ensure))
+         (go-mode . sm/gopls-ensure))
   :bind(:map go-mode-map
              ("C-c C-d" . sm/eglot-lookup-doc)
              ("C-c C-t" . sm/go-run-test-at-point)
@@ -148,12 +154,17 @@
 (use-package rust-mode
   :straight t
   :defer t
+  :init
+  (defun sm/rls-ensure ()
+    (setq eglot-workspace-configuration
+          `((rust . (clippy_preference "on"))))
+    (eglot-ensure))
   :config
   (setq rust-format-on-save t
         rust-format-show-buffer nil)
-  :hook ((rust-mode . eglot-ensure)
-         (rust-mode . cargo-minor-mode)
-         (rust-mode . sm/set-eglot-checker))
+  :hook ((rust-mode . cargo-minor-mode)
+         (rust-mode . sm/set-eglot-checker)
+         (rust-mode . sm/rls-ensure))
   :bind(:map rust-mode-map
              ("C-c C-d" . sm/eglot-lookup-doc)
              ("C-c r r" . eglot-rename)))

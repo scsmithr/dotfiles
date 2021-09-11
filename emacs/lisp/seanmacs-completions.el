@@ -104,11 +104,6 @@
   (setq max-specpdl-size 16000
         max-lisp-eval-depth 3200)
 
-  (setq-default eglot-workspace-configuration
-                '((:gopls
-                   (directoryFilters . ["+node_modules"
-                                        "+vendor"]))))
-
   (defvar sm/eglot-help-buffer nil)
 
   (mapc #'sm/warn-fn-not-bound '(eglot--dbind
@@ -175,19 +170,16 @@
           (mapcar #'sm/eglot-flymake-diag-to-flycheck diags))
     (flycheck-buffer-deferred))
 
-  (defun sm/eglot-flycheck-available-p ()
-    (bound-and-true-p eglot--managed-mode))
-
   (flycheck-define-generic-checker 'eglot
     "Report `eglot' diagnostics using `flycheck'."
     :start #'sm/eglot-flycheck-init
-    :predicate #'sm/eglot-flycheck-available-p
+    :predicate #'eglot-managed-p
     :modes '(prog-mode text-mode))
 
   (push 'eglot flycheck-checkers)
 
   (defun sm/eglot-flycheck-hook ()
-    (when eglot--managed-mode
+    (when (eglot-managed-p)
       (flymake-mode -1)
       (when-let ((current-checker (flycheck-get-checker-for-buffer)))
         (unless (equal current-checker 'eglot)
