@@ -104,6 +104,8 @@
   (setq max-specpdl-size 16000
         max-lisp-eval-depth 3200)
 
+  (setq eglot-send-changes-idle-time 1)
+
   (defvar sm/eglot-help-buffer nil)
 
   (mapc #'sm/warn-fn-not-bound '(eglot--dbind
