@@ -303,9 +303,14 @@
   :straight t
   :demand t
   :config
+  (defun sm/flycheck-display-errors-function (errs)
+    (let ((message-truncate-lines t))
+      (flycheck-display-error-messages errs)))
+
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe
-        flycheck-display-errors-delay 2)
+        flycheck-display-errors-delay 1
+        flycheck-display-errors-function #'sm/flycheck-display-errors-function)
   (fset 'flycheck-command-map flycheck-command-map)
 
   (defalias 'sm/flycheck-error-list-goto-error-no-jump 'flycheck-error-list-goto-error)
