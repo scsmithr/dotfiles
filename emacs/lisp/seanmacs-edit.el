@@ -305,7 +305,7 @@
   :config
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe
-        flycheck-display-errors-delay 0.2)
+        flycheck-display-errors-delay 2)
   (fset 'flycheck-command-map flycheck-command-map)
 
   (defalias 'sm/flycheck-error-list-goto-error-no-jump 'flycheck-error-list-goto-error)
