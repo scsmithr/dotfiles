@@ -162,11 +162,9 @@ entry. Otherwise prompt for an arxiv link."
           ("https://terrytao.wordpress.com/feed" math blog)
           ("http://www.math3ma.com/blog/rss.xml" math blog)
           ;; Papers
-          ,(sm/arxiv-atom-feed "cs.LG" '(ai))
-          ,(sm/arxiv-atom-feed "cs.AI" '(ai))
-          ,(sm/arxiv-atom-feed "cs.DC")
-          ,(sm/arxiv-atom-feed "q-bio.NC")
-          ,(sm/arxiv-atom-feed "q-bio.QM")
+          ,(sm/arxiv-atom-feed "cs.DC" '(cs))
+          ,(sm/arxiv-atom-feed "q-bio.NC" '(bio))
+          ,(sm/arxiv-atom-feed "q-bio.QM" '(bio))
           ))
 
   :bind(("C-c a e" . elfeed)
