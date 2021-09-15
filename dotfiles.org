@@ -1472,7 +1472,7 @@
       promptConf =
         def
           { position = Bottom,
-            font = "xft:Source Sans Pro:semibold:size=10",
+            font = "<<xft-ui-font()>>",
             height = 44,
             bgColor = dark,
             fgColor = foreground,

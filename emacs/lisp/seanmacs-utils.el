@@ -210,22 +210,27 @@ file at point will be used."
 
   :hook ((dired-mode . diredfl-mode))
   :bind (("C-x d" . dired-jump)
-        :map dired-mode-map
-        ("C-c C-n" . dired-next-subdir)
-        ("C-c C-p" . dired-prev-subdir)))
+         :map dired-mode-map
+         ("C-c C-n" . dired-next-subdir)
+         ("C-c C-p" . dired-prev-subdir)))
 
 (use-package diredfl
   :straight t
   :defer t)
 
-(use-package dired-narrow
-  :straight t)
-
-(use-package dired-open
+(use-package pdf-tools
   :straight t
+  :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
-  (when (eq system-type 'gnu/linux)
-    (setq dired-open-extensions '(("pdf" . "xdg-open")))))
+  (defun sm/pdf-outline-show-link ()
+    "Show link in pdf window, keeping focus in the outline."
+    (interactive)
+    (sm/save-window
+     (call-interactively 'pdf-outline-follow-link)))
+
+  (evil-collection-define-key 'normal 'pdf-outline-buffer-mode-map
+    (kbd "<tab>") #'pdf-outline-follow-link
+    (kbd "SPC") #'sm/pdf-outline-show-link))
 
 (use-package ffap
   ;; built-in
