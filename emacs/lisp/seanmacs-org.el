@@ -49,6 +49,13 @@
         org-log-into-drawer t
         org-global-properties '(("Effort_ALL" . "5min 15min 30min 1h 2h 4h 8h 1d")))
 
+  ;; Default except no special pdf handling. This will cause PDFs to open in
+  ;; emacs.
+  (setq org-file-apps '((auto-mode . emacs)
+                        (directory . emacs)
+                        ("\\.mm\\'" . default)
+                        ("\\.x?html?\\'" . default)))
+
   (setq org-use-fast-todo-selection 'expert
         org-fast-tag-selection-single-key 'expert)
 
