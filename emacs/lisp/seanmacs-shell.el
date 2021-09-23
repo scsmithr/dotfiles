@@ -34,6 +34,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   (require 'ansi-color)
   (defun sm/colorize-compile-buffer ()
     (ansi-color-apply-on-region compilation-filter-start (point)))
+
+  (setq compilation-scroll-output 'first-error)
   :hook ((compilation-filter . sm/colorize-compile-buffer)))
 
 (defun sm/disable-company ()
