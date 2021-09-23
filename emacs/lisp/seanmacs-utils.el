@@ -190,6 +190,7 @@ the downloaded paper."
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
           ,(sm/arxiv-atom-feed "cs.DC" '(cs))
+          ,(sm/arxiv-atom-feed "cs.DB" '(cs))
           ,(sm/arxiv-atom-feed "q-bio.NC" '(bio))
           ,(sm/arxiv-atom-feed "q-bio.QM" '(bio))
           ))
