@@ -153,6 +153,7 @@
   (org-crypt-use-before-save-magic))
 
 (use-package ob
+  :after org
   :config
   (setq org-plantuml-exec-mode 'plantuml
         org-babel-lisp-eval-fn #'sly-eval)
