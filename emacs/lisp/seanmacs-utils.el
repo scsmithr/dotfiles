@@ -255,7 +255,7 @@ file at point will be used."
   (defun sm/pdf-outline-show-link ()
     "Show link in pdf window, keeping focus in the outline."
     (interactive)
-    (sm/save-window
+    (sm/save-window-excursion
      (call-interactively 'pdf-outline-follow-link)))
 
   (evil-collection-define-key 'normal 'pdf-outline-buffer-mode-map

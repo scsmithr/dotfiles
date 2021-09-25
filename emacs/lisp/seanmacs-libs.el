@@ -66,18 +66,15 @@ If no region selected, colorize the entire buffer."
   (when (not (fboundp fn-symbol))
     (message "WARN: %s is void!" fn-symbol)))
 
-(defun sm/recenter ()
-  "Recenter cursor to the middle of the window."
-  (interactive)
-  (recenter nil))
+(defmacro sm/save-window-excursion (&rest body)
+  "Save active window, execute BODY, then restore the originally active window.
 
-(defmacro sm/save-window (&rest body)
-  "Save active window, execute BODY, then restore the originally active window."
+Same peculiarities as with `save-window-excursion'."
   (let ((win (gensym)))
     `(let ((,win (selected-window)))
        (progn
          ,@body
-         (sm/recenter)
+         (recenter)
          (pulse-momentary-highlight-one-line (point))
          (select-window ,win)))))
 

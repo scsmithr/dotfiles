@@ -276,13 +276,13 @@
         (deadgrep-toggle-file-results)
       (progn
         (deadgrep-visit-result-other-window)
-        (sm/recenter))))
+        (recenter))))
 
   (defun sm/deadgrep-show ()
     "Display result in other window, keeping the cursor in the deadgrep window."
     (interactive)
     (when (and (deadgrep--filename) (deadgrep--line-number))
-      (sm/save-window
+      (sm/save-window-excursion
        (deadgrep-visit-result-other-window))))
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
@@ -319,7 +319,7 @@
   (defun sm/flycheck-error-list-show-error ()
     "Show location of error in the error list."
     (interactive)
-    (sm/save-window (call-interactively 'sm/flycheck-error-list-goto-error-no-jump)))
+    (sm/save-window-excursion (call-interactively 'sm/flycheck-error-list-goto-error-no-jump)))
 
   (evil-collection-define-key 'normal 'flycheck-error-list-mode-map
     (kbd "SPC") #'sm/flycheck-error-list-show-error)

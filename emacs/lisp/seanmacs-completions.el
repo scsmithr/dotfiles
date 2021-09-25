@@ -49,7 +49,7 @@
   :config
   (setq imenu-auto-rescan t
         imenu-space-replacement " ")
-  :hook ((imenu-after-jump . sm/recenter))
+  :hook ((imenu-after-jump . recenter))
   :bind (("C-c b s" . imenu)))
 
 (use-package selectrum
@@ -81,7 +81,7 @@
   (defun sm/xref-show ()
     "Show xref result under point, keeping cursor in the xref window."
     (interactive)
-    (sm/save-window
+    (sm/save-window-excursion
      (xref-goto-xref)))
 
   (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map
