@@ -1819,45 +1819,50 @@
    #+END_SRC
 
 * Applications
+** Nyxt
 
-** Zathura
+   I don't use nyxt as my primary browser, but it's fun to mess around with
+   occasionally.
 
-   PDF reading.
+   Start the slynk server by running =start-slynk= in nyxt. This uses the
+   default swank port of 4006. Connect to the slynk server by running
+   =slynk-connect= in Emacs.
 
-   #+BEGIN_SRC conf :tangle ~/.config/zathura/zathurarc :noweb yes
-     set selection-clipboard clipboard
-     set window-title-home-tilde "true"
-     set statusbar-home-tilde "true"
-     set font                        "<<font-sans-serif()>> 11"
-     set default-fg                  "#26272d"
-     set default-bg                  "#ffffff"
-     set statusbar-bg                "#ffffff"
-     set statusbar-fg                "#26272d"
-     set inputbar-fg                 "#26272d"
-     set inputbar-bg                 "#ffffff"
-     set notification-error-bg       "#AC4142"
-     set notification-error-fg       "#151515"
-     set notification-warning-bg     "#AC4142"
-     set notification-warning-fg     "#151515"
-     set highlight-color             "#F4BF75"
-     set highlight-active-color      "#6A9FB5"
-     set completion-highlight-fg     "#303030"
-     set completion-highlight-bg     "#75B5AA"
-     set completion-bg               "#303030"
-     set completion-fg               "#75B5AA"
-     set notification-bg             "#90A959"
-     set notification-fg             "#151515"
-     set recolor-lightcolor          "#fdf6e3"
-     set recolor-darkcolor           "#556b72"
-     set recolor                     "false"
-     set recolor-keephue             "false"
+   #+BEGIN_SRC lisp :tangle ~/.config/nyxt/init.lisp
+     (defvar *custom-keymap* (make-keymap "custom-keymap")
+       "Keymap containing all my custom keybinds.")
+
+     (define-key *custom-keymap*
+       "C-d" 'nyxt/web-mode:scroll-page-down
+       "C-u" 'nyxt/web-mode:scroll-page-up)
+
+     (define-mode custom-keymap-mode ()
+       "Mode for using my custom keybinds."
+       ((keymap-scheme (keymap:make-scheme
+                        scheme:vi-normal *custom-keymap*))))
+
+     (defvar *search-engines*
+       (list '("google" "https://www.google.com/search?q=~a"))
+       "List of search engines.")
+
+     (define-configuration buffer
+       ((default-modes (append '(nyxt::vi-normal-mode custom-keymap-mode blocker-mode) %slot-default%))
+        (search-engines (append %slot-default%
+                                (mapcar (lambda (engine) (apply 'make-search-engine engine))
+                                        ,*search-engines*)))))
+
+     (define-configuration prompt-buffer
+       ((default-modes (append '(nyxt::vi-insert-mode) %slot-default%))))
+
+     ;; Load up slynk.
+     (push #p"~/.emacs.d/straight/build/sly/contrib/" asdf:*central-registry*)
+     (push #p"~/.emacs.d/straight/build/sly/slynk/" asdf:*central-registry*)
+     (asdf:load-system :slynk)
+
+     (define-command-global start-slynk (&optional (slynk-port *swank-port*))
+       "Start s Slynk server that can be connected to from Emacs via Sly."
+       (slynk:create-server :port slynk-port :dont-close t))
    #+END_SRC
 
-** Default applications
-
-   Mostly to make sure PDFs open up in zathura.
-
-   #+BEGIN_SRC conf :tangle ~/.local/share/applications/defaults.list
-     [Default Applications]
-     application/pdf=org.pwmt.zathura.desktop
-   #+END_SRC
+   #+RESULTS:
+   : #<COMMAND START-SLYNK {1007CFE8CB}>
