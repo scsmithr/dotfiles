@@ -5,17 +5,6 @@
 
 ;;; Code:
 
-;; Hide some things.
-;; Do this first so that I never see the menu bar.
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-(setq inhibit-x-resources t
-      inhibit-startup-message t
-      use-dialog-box nil
-      inihibit-startup-echo-area-message t)
-
 (setq initial-scratch-message ";; Not Invented Here\n\n")
 
 ;; GC things

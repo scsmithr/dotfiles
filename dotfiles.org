@@ -922,7 +922,7 @@
      transition=1
 
      dawn-time=6:00-10:30
-     dusk-time=17:30-22:00
+     dusk-time=17:30-21:00
 
      ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
      ; type 'redshift -l list' to see possible values
@@ -1826,7 +1826,7 @@
 
    Start the slynk server by running =start-slynk= in nyxt. This uses the
    default swank port of 4006. Connect to the slynk server by running
-   =slynk-connect= in Emacs.
+   =sly-connect= in Emacs.
 
    #+BEGIN_SRC lisp :tangle ~/.config/nyxt/init.lisp
      (defvar *custom-keymap* (make-keymap "custom-keymap")

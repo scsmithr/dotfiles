@@ -4,6 +4,7 @@
 DIR="$(git rev-parse --show-toplevel)"
 
 mkdir -p ~/.emacs.d
+ln -sv "$DIR/emacs/early-init.el" ~/.emacs.d/.
 ln -sv "$DIR/emacs/init.el" ~/.emacs.d/.
 ln -sv "$DIR/emacs/lisp" ~/.emacs.d/.
 ln -sv "$DIR/emacs/org-templates" ~/.emacs.d/.
