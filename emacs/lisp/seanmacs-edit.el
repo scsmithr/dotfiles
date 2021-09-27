@@ -111,13 +111,12 @@
   ;; built-in
   :config
   (setq whitespace-line-column 80)
-  (setq whitespace-style '(
-                           face
-                           space-mark
-                           tab-mark lines-tail
-                           trailing
-                           tabs
-                           spaces))
+  (setq whitespace-style '(face space-mark tab-mark lines-tail
+                           trailing tabs spaces))
+  (setq whitespace-display-mappings
+        '((space-mark   ?\  [?·])
+          (newline-mark ?\n [?$ ?\n])
+          (tab-mark     ?\t [?→ ?\t])))
   :hook ((prog-mode . whitespace-mode)))
 
 (defvar sm/ibuffer-filter-group-order nil
