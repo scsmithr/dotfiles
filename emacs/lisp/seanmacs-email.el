@@ -135,5 +135,10 @@
   ;; Provided by mu system package.
   :after mu4e)
 
+(use-package mm-decode
+  ;; built-in
+  :config
+  (setq mm-discouraged-alternatives '("text/html" "text/richtext" "image/.*")))
+
 (provide 'seanmacs-email)
 ;;; seanmacs-email.el ends here
