@@ -9,7 +9,7 @@
  ("clojure-mode" . "b5c913af12ab3f55723fa3f57d373a4984655e8a")
  ("closql" . "e2687e7ff958a19e6e5d6552c4e0b7b33c424bab")
  ("coder.el" . "c45bcad39209bbc45760dc6afac6b163c9fcf2eb")
- ("company-mode" . "b2003cf4ba474cfbbb3316137e1fa591537b89ad")
+ ("company-mode" . "5c84da83e7b8289170d811ac164e10a4d548962c")
  ("dash.el" . "39d067b9fbb2db65fc7a6938bfb21489ad990cb4")
  ("deadgrep" . "83e7812cda2673884b3d4d218757c7489f817fbb")
  ("diff-hl" . "738c5d6a6bffe46b18249c77d59ae1d9e2d4d126")
