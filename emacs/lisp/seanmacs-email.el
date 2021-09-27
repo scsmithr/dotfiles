@@ -12,6 +12,9 @@
   (setq user-full-name "Sean Smith"
         mu4e-attachment-dir "~/.mail/.attachments")
 
+  ;; mu4e defaults to using the gnus message viewer. Block all images.
+  (setq gnus-blocked-images ".")
+
   ;; General configuration with mbsync.
   (setq mu4e-get-mail-command "mbsync -a"
         mu4e-change-filenames-when-moving t)
