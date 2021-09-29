@@ -675,13 +675,13 @@
      [[ $- != *i* ]] && return
    #+END_SRC
 
-   Include scripts tangled from [[Scripts]].
+   Include scripts tangled from [[*Misc Scripts]]
 
    #+BEGIN_SRC bash
      export PATH=$PATH:$HOME/.bin/
    #+END_SRC
 
-   Set editor to script tangled from [[editor]].
+   Set editor to script tangled from [[*editor]].
 
    #+BEGIN_SRC bash
      export EDITOR=editor

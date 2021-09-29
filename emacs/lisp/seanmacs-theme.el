@@ -50,7 +50,7 @@
         modus-themes-region 'bg-only
         modus-themes-diffs 'bg-only
         modus-themes-org-agenda '((header-block . (no-scale))
-                                  (header-date . (bold-all))))
+                                  (header-date . (bold-all underline-today))))
 
   (setq x-underline-at-descent-line t)
 

@@ -186,6 +186,7 @@ the downloaded paper."
           ("http://www.philipzucker.com/feed.xml" dev blog)
           ("https://terrytao.wordpress.com/feed" math blog)
           ("http://www.math3ma.com/blog/rss.xml" math blog)
+          ("https://protesilaos.com/codelog.xml" blog)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.LG" '(ai))
           ,(sm/arxiv-atom-feed "cs.AI" '(ai))
