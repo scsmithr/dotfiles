@@ -787,5 +787,15 @@ Otherwise start the repl in the current directory."
   :config
   (setq plantuml-default-exec-mode 'executable))
 
+
+;; TLA+
+
+(define-derived-mode tlaplus-mode prog-mode "TLA+"
+  "Mode for working with TLA+ files."
+  (setq-local comment-start "(*"
+              comment-end "*)"))
+
+(add-to-list 'auto-mode-alist '("\\.tla\\'" . tlaplus-mode))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
