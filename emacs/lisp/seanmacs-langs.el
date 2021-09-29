@@ -797,5 +797,8 @@ Otherwise start the repl in the current directory."
 
 (add-to-list 'auto-mode-alist '("\\.tla\\'" . tlaplus-mode))
 
+;; Nice to have things updated immediately when running 'pcal'.
+(add-hook 'tlaplus-mode-hook #'auto-revert-mode)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
