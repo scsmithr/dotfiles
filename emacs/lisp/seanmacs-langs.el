@@ -687,10 +687,7 @@ Otherwise start the repl in the current directory."
 
 (use-package markdown-mode
   :straight t
-  :defer t
-  :config
-  (evil-collection-define-key 'normal 'markdown-mode-map
-    (kbd "TAB") 'markdown-cycle))
+  :defer t)
 
 
 ;; Dockerfile
