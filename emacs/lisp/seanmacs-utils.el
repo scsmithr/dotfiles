@@ -24,7 +24,8 @@
 (use-package shr
   ;; builtin
   :config
-  (setq shr-width 80))
+  (setq shr-width 80
+        shr-max-image-proportion 0.7))
 
 (use-package docker
   :straight t
