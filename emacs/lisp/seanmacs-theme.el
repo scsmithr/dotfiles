@@ -7,20 +7,18 @@
 
 (defun sm/setup-fonts (&optional frame)
   "Setup fonts for FRAME."
-  (when (and frame (display-graphic-p frame))
-    (message "Setting fonts")
-    (set-frame-font (font-spec :name "Triplicate A") t t)
-    (set-face-attribute 'default nil :family "Triplicate A" :height 120 :weight 'normal)
-    (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 120 :weight 'normal)
-    ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "Triplicate A"))
-    (set-fontset-font t 'unicode (font-spec :name "JuliaMono" :weight 'light) nil 'append)
-    (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans") nil 'append)))
+  (message "Setting fonts")
+  (set-face-attribute 'default nil :family "Triplicate A" :height 120 :weight 'normal)
+  (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 120 :weight 'normal)
+  ;; Unicode fallbacks.
+  (set-fontset-font t 'unicode (font-spec :name "Triplicate A"))
+  (set-fontset-font t 'unicode (font-spec :name "JuliaMono" :weight 'light) nil 'append)
+  (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans") nil 'append))
 
-;; Set fonts.
-(if (display-graphic-p)
-    (sm/setup-fonts (selected-frame))
-  (add-hook 'after-make-frame-functions #'sm/setup-fonts))
+(sm/setup-fonts)
+;; Setup fonts on every frame load so that the unicode fontsets get set
+;; everytime.
+(add-hook 'after-make-frame-functions #'sm/setup-fonts)
 
 (use-package minions
   :straight t
@@ -77,11 +75,11 @@
        ;; Org mode
        `(org-code ((t (:inherit modus-themes-fixed-pitch :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
 
-      (with-eval-after-load 'sly-mrepl
-        (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))
+       (with-eval-after-load 'sly-mrepl
+         (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))
 
-      (with-eval-after-load 'eglot
-        (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)))))
+       (with-eval-after-load 'eglot
+         (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)))))
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
