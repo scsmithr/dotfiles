@@ -59,6 +59,23 @@ If no region selected, colorize the entire buffer."
   (sm/load-tests)
   (ert t))
 
+;; Helpers for downloading things
+
+(defun sm/download-pdf (link &optional type)
+  "Download and save a pdf from LINK."
+  (interactive (list (read-string "Link: ")
+                     (completing-read "Type: " (list "paper" "book" "refile"))))
+  (let ((dir (cond ((equal type "paper") "~/syncthing/papers/")
+                   ((equal type "book")  "~/syncthing/books/")
+                   (t                    "~/syncthing/refile/")))
+        (name (file-name-nondirectory link)))
+    (if (string-empty-p name)
+        (user-error "Got empty file name from link: %s" link)
+      (let ((path (concat dir (if (string-suffix-p ".pdf" name) name (concat name ".pdf")))))
+        (with-current-buffer (url-retrieve-synchronously link)
+          (write-region nil nil path)
+          (find-file path))))))
+
 ;; Misc
 
 (defun sm/warn-fn-not-bound (fn-symbol)
