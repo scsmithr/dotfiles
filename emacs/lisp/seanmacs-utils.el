@@ -124,51 +124,26 @@
       (when tags
         (insert "(" tags-str ")"))))
 
-  (defvar sm/arxiv-download-dir "~/syncthing/arxiv/downloads/"
-    "Download directory for papers from arxiv.")
-
-  (defun sm/arxiv-pdf-name-from-link (link)
-    "Get the relative pdf name from an arxiv LINK."
-    (let ((paper-ref (car (last (split-string link "/")))))
-      (if (string-suffix-p ".pdf" paper-ref)
-          paper-ref ;; Link already points to pdf.
-        (concat paper-ref ".pdf"))))
-
-  (defun sm/expand-arxiv-paper-path (name)
-    "Get the full path to where a paper should be."
-    (concat (file-name-as-directory sm/arxiv-download-dir) name))
+  (defun sm/arxiv-link-to-pdf (link)
+    "Ensure that an arxiv link is pointing to the associated pdf."
+    (replace-regexp-in-string
+     (regexp-quote "abs") "pdf" link nil 'literal))
 
   (defun sm/download-arxiv-paper (link)
-    "Download associated arxiv pdf from arxiv LINK.
-
-If current buffer is an elfeed entry, use the link from the
-entry. Otherwise prompt for an arxiv link. Returns the path to
-the downloaded paper."
+    "Download pdf for arxiv paper at LINK."
     (interactive (list (or (and (boundp 'elfeed-show-entry)
                                 elfeed-show-entry
                                 (elfeed-entry-link elfeed-show-entry))
                            (read-string "Arxiv link: "))))
-    (let* ((pdf-link (replace-regexp-in-string
-                      (regexp-quote "abs") "pdf" link nil 'literal)))
-      (message (format "Downloading %s" pdf-link))
-      (mkdir sm/arxiv-download-dir t)
-      (let* ((name (sm/arxiv-pdf-name-from-link link))
-             (full-path (sm/expand-arxiv-paper-path name)))
-        (with-current-buffer (url-retrieve-synchronously pdf-link)
-          (write-region nil nil full-path)
-          full-path))))
+    (sm/download-pdf (sm/arxiv-link-to-pdf link) 'arxiv))
 
   (defun sm/open-arxiv-paper (link)
-    "Open pdf for arxiv paper at LINK. Download the paper if it doesn't exist."
+    "Open pdf for arxiv paper at LINK."
     (interactive (list (or (and (boundp 'elfeed-show-entry)
                                 elfeed-show-entry
                                 (elfeed-entry-link elfeed-show-entry))
                            (read-string "Arxiv link: "))))
-    (let* ((name (sm/arxiv-pdf-name-from-link link))
-           (path (sm/expand-arxiv-paper-path name)))
-      (when (not (file-exists-p path))
-        (sm/download-arxiv-paper link))
-      (find-file-other-window path)))
+    (sm/download-pdf (sm/arxiv-link-to-pdf link) 'arxiv t))
 
   :config
   (setq elfeed-db-directory "~/syncthing/elfeed/db"

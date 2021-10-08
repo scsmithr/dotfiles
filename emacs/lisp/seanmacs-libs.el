@@ -61,20 +61,29 @@ If no region selected, colorize the entire buffer."
 
 ;; Helpers for downloading things
 
-(defun sm/download-pdf (link &optional type)
-  "Download and save a pdf from LINK."
+(defun sm/download-pdf (link &optional type open)
+  "Download and save a pdf from LINK.
+
+TYPE may be one of paper, book, arxiv, or refile. When OPEN is
+non-nil, open the downloaded pdf. Does not overwrite existing
+files."
   (interactive (list (read-string "Link: ")
-                     (completing-read "Type: " (list "paper" "book" "refile"))))
-  (let ((dir (cond ((equal type "paper") "~/syncthing/papers/")
-                   ((equal type "book")  "~/syncthing/books/")
-                   (t                    "~/syncthing/refile/")))
+                     (completing-read "Type: " '(paper book arxiv refile))
+                     t))
+  (let ((dir (cond ((equal type (symbol-name 'paper)) "~/syncthing/papers/")
+                   ((equal type (symbol-name 'book))  "~/syncthing/books/")
+                   ((equal type (symbol-name 'arxiv)) "~/syncthing/arxiv/downloads/")
+                   (t                                 "~/syncthing/refile/")))
         (name (file-name-nondirectory link)))
+    (mkdir dir t)
     (if (string-empty-p name)
         (user-error "Got empty file name from link: %s" link)
       (let ((path (concat dir (if (string-suffix-p ".pdf" name) name (concat name ".pdf")))))
-        (with-current-buffer (url-retrieve-synchronously link)
-          (write-region nil nil path)
-          (find-file path))))))
+        (if (file-exists-p path)
+            (message "File already exists at %s" path)
+          (with-current-buffer (url-retrieve-synchronously link)
+            (write-region nil nil path)))
+        (when open (find-file path))))))
 
 ;; Misc
 
