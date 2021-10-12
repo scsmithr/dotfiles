@@ -694,6 +694,12 @@
      export PATH=$PATH:$HOME/.go/bin
    #+END_SRC
 
+   Stack installs binaries here. Needed since I'm using stack to manage xmonad.
+
+   #+BEGIN_SRC bash
+     export PATH=$PATH:$HOME/.local/bin
+   #+END_SRC
+
    Get the number of threads by counting occurrences of "processor" in cpu info.
 
    #+name: num-threads
@@ -1411,6 +1417,72 @@
    Combo of xmonad and xmobar.
 
 *** Xmonad
+
+    Xmonad is managed via =stack=.
+
+    Clone required repos.
+
+    #+BEGIN_SRC bash :results output
+      mkdir -p ~/.xmonad
+      if [ ! -d ~/.xmonad/xmonad-git/ ]; then
+         git clone "https://github.com/xmonad/xmonad" ~/.xmonad/xmonad-git 2>&1
+      fi
+
+      if [ ! -d ~/.xmonad/xmonad-contrib-git/ ]; then
+         git clone "https://github.com/xmonad/xmonad-contrib" ~/.xmonad/xmonad-contrib-git 2>&1
+      fi
+    #+END_SRC
+
+    #+RESULTS:
+    : Cloning into '/home/sean/.xmonad/xmonad-git'...
+    : Cloning into '/home/sean/.xmonad/xmonad-contrib-git'...
+
+    Get commit info.
+
+    #+BEGIN_SRC shell
+      (cd ~/.xmonad/xmonad-git/ && git rev-parse HEAD)
+      (cd ~/.xmonad/xmonad-contrib-git/ && git rev-parse HEAD)
+    #+END_SRC
+
+    #+RESULTS:
+    | 33a86c0cdb9aa481e23cc5527a997adef5e32d42 |
+    | f821a2ec0c567fc7ebff438410fd566d67480593 |
+
+    Stack configuration.
+
+    #+BEGIN_SRC yaml :tangle ~/.xmonad/stack.yaml
+      resolver:
+        url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/13.yaml
+
+      # Git packages.
+      packages:
+        - xmonad-git
+        - xmonad-contrib-git
+    #+END_SRC
+
+    Build file that's used when =xmonad --recompile= is called.
+
+    #+BEGIN_SRC sh :tangle ~/.xmonad/build :tangle-mode (identity #o755)
+      #!/bin/sh
+
+      exec stack ghc --  \
+          --make xmonad.hs \
+          -i               \
+          -ilib            \
+          -fforce-recomp   \
+          -main-is main    \
+          -v0              \
+          -o "$1"
+    #+END_SRC
+
+    Install xmonad. Installs to =~/.local/bin/=.
+
+    #+BEGIN_SRC emacs-lisp :dir ~/.xmonad
+      (async-shell-command "stack install" "*stack install [xmonad]*")
+    #+END_SRC
+
+    #+RESULTS:
+    : #<window 11 on *stack install [xmonad]*>
 
     Window manager configuration. The keybinds have been modified to support a
     reflected tall layout (main window on the right).
