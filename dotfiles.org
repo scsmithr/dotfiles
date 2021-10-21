@@ -805,6 +805,8 @@
         signingkey = BA3E3A399960AD0D
     [commit]
         gpgsign = true
+    [url "git@github.com:"]
+        insteadOf = https://github.com/
     [core]
         editor = editor
         excludesfile = /home/sean/.gitignore
