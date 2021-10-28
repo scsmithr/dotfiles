@@ -101,6 +101,9 @@
 
   (setq eglot-send-changes-idle-time 1)
 
+  (add-to-list 'eglot-server-programs
+               '(rust-mode . ("rust-analyzer")))
+
   (defvar sm/eglot-help-buffer nil)
 
   (mapc #'sm/warn-fn-not-bound '(eglot--dbind

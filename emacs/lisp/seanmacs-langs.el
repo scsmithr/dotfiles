@@ -154,17 +154,12 @@
 (use-package rust-mode
   :straight t
   :defer t
-  :init
-  (defun sm/rls-ensure ()
-    (setq eglot-workspace-configuration
-          `((rust . (clippy_preference "on"))))
-    (eglot-ensure))
   :config
   (setq rust-format-on-save t
         rust-format-show-buffer nil)
   :hook ((rust-mode . cargo-minor-mode)
          (rust-mode . sm/set-eglot-checker)
-         (rust-mode . sm/rls-ensure))
+         (rust-mode . eglot-ensure))
   :bind(:map rust-mode-map
              ("C-c C-d" . sm/eglot-lookup-doc)
              ("C-c r r" . eglot-rename)))
