@@ -818,11 +818,29 @@
         defaultBranch = main
   #+END_SRC
 
+  Ignore some things globally.
+
   #+BEGIN_SRC conf :tangle ~/.gitignore
     worktree/
     vendor/
     node_modules/
     .log/
+  #+END_SRC
+
+  Add new new diff mode for org mode files. This allows for customizing the hunk
+  header for org mode related diffs.
+
+  #+BEGIN_SRC conf :tangle ~/.config/git/attributes
+    ,*.org diff=org
+  #+END_SRC
+
+  Add regex to use org headers for diff headers. This will get the previous
+  header, which won't be the parent header in some cases, but that's still good
+  enough to provide context.
+
+  #+BEGIN_SRC conf :tangle ~/.gitconfig
+    [diff "org"]
+        xfuncname = "^(\\*+ +.*)$"
   #+END_SRC
 
 * X
