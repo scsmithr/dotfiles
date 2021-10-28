@@ -16,11 +16,17 @@
   :config
   ;; Enable basic movement keys in agenda.
   ;; Previous binds:
-  ;; h - org-agenda-holidays
   ;; j - org-agenda-goto-date
   ;; k - org-agenda-capture
-  ;; l - org-agenda-log-mode
-  (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
+  ;; g - org-agenda-redo-all
+  ;; C-w - kill-region
+  (evil-define-key 'emacs 'org-agenda-mode-map
+    "j" #'org-agenda-next-line
+    "k" #'org-agenda-previous-line
+    "gj" #'org-agenda-next-item
+    "gk" #'org-agenda-previous-item
+    "gr" #'org-agenda-redo-all
+    (kbd "C-w") 'evil-window-map)
 
   (setq org-default-notes-file (concat sm/notes-dir "refile.org")
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
