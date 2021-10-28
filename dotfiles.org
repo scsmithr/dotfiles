@@ -843,6 +843,20 @@
         xfuncname = "^(\\*+ +.*)$"
   #+END_SRC
 
+  Add diff and regex for markdown files as well.
+
+  #+BEGIN_SRC conf :tangle ~/.config/git/attributes
+    ,*.md diff=md
+  #+END_SRC
+
+  Regex only supports headers with =#= characters. I never use the alternative
+  way of denoting headers, and I have never seen it used beyond examples.
+
+  #+BEGIN_SRC conf :tangle ~/.gitconfig
+    [diff "md"]
+        xfuncname = "^(#+ +.*)$"
+  #+END_SRC
+
 * X
 
   Common fonts used throughout.
