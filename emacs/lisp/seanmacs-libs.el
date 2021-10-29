@@ -87,6 +87,14 @@ files."
 
 ;; Misc
 
+(defun sm/scratch ()
+  "Create a new scratch buffer."
+  (interactive)
+  (let ((buf (generate-new-buffer "*scratch*")))
+    (switch-to-buffer buf)
+    (and initial-major-mode (funcall initial-major-mode))
+    (insert initial-scratch-message)))
+
 (defun sm/warn-fn-not-bound (fn-symbol)
   "Warn if FN-SYMBOL is void."
   (when (not (fboundp fn-symbol))

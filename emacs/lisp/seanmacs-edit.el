@@ -112,7 +112,7 @@
   :config
   (setq whitespace-line-column 80)
   (setq whitespace-style '(face space-mark tab-mark lines-tail
-                           trailing tabs spaces))
+                                trailing tabs spaces))
   (setq whitespace-display-mappings
         '((space-mark   ?\  [?·])
           (newline-mark ?\n [?$ ?\n])
@@ -126,18 +126,20 @@
   ;; built-in
   :init
   (defun sm/ibuffer-switch-to-saved-filter-groups ()
+    "Switch to my custom filter group."
     (ibuffer-switch-to-saved-filter-groups "seanmacs"))
 
   (defun sm/ibuffer-jump-to-last-buffer ()
+    "Jump to the most recently visited buffer in ibuffer."
     (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list)))))
+
   :config
-  (setq ibuffer-read-only-char ?R)
-  (setq ibuffer-formats
-        '((mark modified read-only
-                " " (name 24 24 :left :elide)
-                " " (size-h 9 9 :right)
-                " " (mode 16 16 :left :elide)
-                " " filename-and-process))
+  (setq ibuffer-read-only-char ?R
+        ibuffer-formats '((mark modified read-only
+                                " " (name 24 24 :left :elide)
+                                " " (size-h 9 9 :right)
+                                " " (mode 16 16 :left :elide)
+                                " " filename-and-process))
         ibuffer-show-empty-filter-groups nil
         ibuffer-saved-filter-groups
         '(("seanmacs"
@@ -180,24 +182,25 @@
   (advice-add 'ibuffer-generate-filter-groups :filter-return #'sm/ibuffer-order-filter-groups)
 
   (define-ibuffer-column size-h
-    (:name "Size"
-           :inline t
-           :summarizer
-           ;; OPTIMIZE: Would be better to get the original values and sum those.
-           (lambda (strings)
-             (file-size-human-readable
-              (seq-reduce
-               (lambda (total value)
-                 (let* ((suffixes '("" "k" "M" "G" "T" "P" "E" "Z" "Y"))
-                        (suffix (car (member (substring value -1) suffixes)))
-                        (power 1000.0)
-                        (bytes (string-to-number value)))
-                   (while (and suffix (car suffixes) (not (string= (car suffixes) suffix)))
-                     (setq bytes (* bytes power)
-                           suffixes (cdr suffixes)))
-                   (+ total bytes)))
-               strings 0)
-              "si")))
+    (
+     :name "Size"
+     :inline t
+     :summarizer
+     ;; OPTIMIZE: Would be better to get the original values and sum those.
+     (lambda (strings)
+       (file-size-human-readable
+        (seq-reduce
+         (lambda (total value)
+           (let* ((suffixes '("" "k" "M" "G" "T" "P" "E" "Z" "Y"))
+                  (suffix (car (member (substring value -1) suffixes)))
+                  (power 1000.0)
+                  (bytes (string-to-number value)))
+             (while (and suffix (car suffixes) (not (string= (car suffixes) suffix)))
+               (setq bytes (* bytes power)
+                     suffixes (cdr suffixes)))
+             (+ total bytes)))
+         strings 0)
+        "si")))
     (file-size-human-readable (buffer-size) "si"))
 
   ;; Allows me to use ':b' to quickly jump to the buffer I was at before opening
