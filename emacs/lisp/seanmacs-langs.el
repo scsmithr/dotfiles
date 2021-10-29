@@ -116,9 +116,7 @@
          (go-mode . sm/set-eglot-checker)
          (go-mode . sm/gopls-ensure))
   :bind(:map go-mode-map
-             ("C-c C-d" . sm/eglot-lookup-doc)
-             ("C-c C-t" . sm/go-run-test-at-point)
-             ("C-c r r" . eglot-rename)))
+             ("C-c C-t" . sm/go-run-test-at-point)))
 
 (use-package flycheck-golangci-lint
   :straight t
@@ -157,12 +155,12 @@
   :config
   (setq rust-format-on-save t
         rust-format-show-buffer nil)
+
+  (sm/add-server-program 'rust-mode "rust-analyzer")
+
   :hook ((rust-mode . cargo-minor-mode)
          (rust-mode . sm/set-eglot-checker)
-         (rust-mode . eglot-ensure))
-  :bind(:map rust-mode-map
-             ("C-c C-d" . sm/eglot-lookup-doc)
-             ("C-c r r" . eglot-rename)))
+         (rust-mode . eglot-ensure)))
 
 (use-package cargo
   :straight t
@@ -331,7 +329,7 @@ Start a new process if not alive."
       (pop-to-buffer (process-buffer (sm/iex-process)))))
 
   :config
-  (add-to-list 'eglot-server-programs '(elixir-mode "elixir-ls"))
+  (sm/add-server-program 'elixir-mode "elixir-ls")
 
   (sm/set-goto-def-keybind 'elixir-mode-map #'xref-find-definitions)
 
@@ -339,9 +337,6 @@ Start a new process if not alive."
          (elixir-mode . sm/set-elixir-format-hook)
          (elixir-mode . sm/set-eglot-checker))
   :bind(:map elixir-mode-map
-             ("C-c C-d" . sm/eglot-lookup-doc)
-             ("C-c r r" . eglot-rename)
-             ("C-c C-r" . sm/iex-recompile-project)
              ("C-c C-l" . sm/iex-recompile-current-module)
              ("C-c C-c" . sm/iex-send-region-or-line)))
 
@@ -795,6 +790,17 @@ Otherwise start the repl in the current directory."
 
 ;; Nice to have things updated immediately when running 'pcal'.
 (add-hook 'tlaplus-mode-hook #'auto-revert-mode)
+
+
+;; C/C++
+
+(use-package cc-mode
+  ;; built-in
+  :config
+  (sm/add-server-program 'c++-mode "ccls")
+  (sm/add-server-program 'c-mode "ccls")
+  :hook ((c++-mode . eglot-ensure)
+         (c-mode . eglot-ensure)))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

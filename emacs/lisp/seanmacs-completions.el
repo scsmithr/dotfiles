@@ -93,7 +93,7 @@
 (use-package eglot
   :straight t
   :defer t
-  :commands (eglot eglot-ensure)
+  :commands (eglot eglot-ensure sm/add-server-program)
   :config
   ;; Seem to hit this with gopls and vendored deps.
   (setq max-specpdl-size 16000
@@ -101,8 +101,11 @@
 
   (setq eglot-send-changes-idle-time 1)
 
-  (add-to-list 'eglot-server-programs
-               '(rust-mode . ("rust-analyzer")))
+  ;; Mostly done to ensure eglot is loaded before attempting to modify the
+  ;; server programs list.
+  (defun sm/add-server-program (mode program)
+    "Helper for adding lsp server programs for MODE."
+    (add-to-list 'eglot-server-programs `(,mode . (,program))))
 
   (defvar sm/eglot-help-buffer nil)
 
@@ -188,7 +191,11 @@
       (flycheck-mode 1)
       (flycheck-buffer-deferred)))
 
-  (add-hook 'eglot-managed-mode-hook #'sm/eglot-flycheck-hook))
+  (add-hook 'eglot-managed-mode-hook #'sm/eglot-flycheck-hook)
+
+  :bind (:map eglot-mode-map
+              ("C-c C-d" . sm/eglot-lookup-doc)
+              ("C-c C-r" . eglot-rename)))
 
 (provide 'seanmacs-completions)
 ;;; seanmacs-completions.el ends here
