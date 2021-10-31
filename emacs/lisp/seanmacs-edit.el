@@ -270,16 +270,6 @@
     (interactive)
     (deadgrep--directory nil))
 
-  (defun sm/deadgrep-visit-or-toggle ()
-    "Vist result in other window, or toggle file results if on a filename."
-    (interactive)
-    (if (and (deadgrep--filename)
-             (not (deadgrep--line-number)))
-        (deadgrep-toggle-file-results)
-      (progn
-        (deadgrep-visit-result-other-window)
-        (recenter))))
-
   (defun sm/deadgrep-show ()
     "Display result in other window, keeping the cursor in the deadgrep window."
     (interactive)
@@ -291,7 +281,6 @@
     "gs" #'sm/deadgrep-change-search
     "gd" #'sm/deadgrep-change-dir
     "ge" #'deadgrep-edit-mode
-    (kbd "<tab>") #'sm/deadgrep-visit-or-toggle
     (kbd "SPC") #'sm/deadgrep-show))
 
 (use-package ripgrep

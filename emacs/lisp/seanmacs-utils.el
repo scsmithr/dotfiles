@@ -267,7 +267,6 @@ The output will be put into a temporary buffer."
      (call-interactively 'pdf-outline-follow-link)))
 
   (evil-collection-define-key 'normal 'pdf-outline-buffer-mode-map
-    (kbd "<tab>") #'pdf-outline-follow-link
     (kbd "SPC") #'sm/pdf-outline-show-link)
 
   :bind (:map pdf-view-mode-map
