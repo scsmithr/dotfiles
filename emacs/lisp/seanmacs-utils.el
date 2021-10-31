@@ -201,12 +201,20 @@ file at point will be used."
     (dolist (dirname dirnames)
       (dired-maybe-insert-subdir dirname)))
 
+  (defun sm/dired-preview-file-other-window ()
+    "Open file under point in other window."
+    (interactive)
+    (when (eq major-mode 'dired-mode)
+      (sm/save-window-excursion
+       (find-file-other-window (dired-get-filename)))))
+
   (evil-collection-define-key 'normal 'dired-mode-map
     "K" #'dired-kill-subdir
     "I" #'sm/dired-maybe-insert-subdir
     "]]" #'dired-next-subdir
     "[[" #'dired-prev-subdir
-    (kbd "TAB") 'dired-hide-subdir)
+    (kbd "TAB") #'dired-hide-subdir
+    (kbd "SPC") #'sm/dired-preview-file-other-window)
 
   (defun sm/dired-with-current-directory (orig-fn &rest args)
     "Set `default-directory' to dired's current dir if in dired mode."
