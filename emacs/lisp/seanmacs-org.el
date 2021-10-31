@@ -26,7 +26,9 @@
     "gj" #'org-agenda-next-item
     "gk" #'org-agenda-previous-item
     "gr" #'org-agenda-redo-all
-    (kbd "C-w") 'evil-window-map)
+    (kbd "C-w") 'evil-window-map
+    (kbd "S-<return>") #'org-agenda-goto
+    (kbd "g TAB") #'org-agenda-goto)
 
   (setq org-default-notes-file (concat sm/notes-dir "refile.org")
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
