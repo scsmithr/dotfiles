@@ -167,12 +167,9 @@
           ("https://updates.orgmode.org/feed/changes" dev updates)
           ("https://emacsair.me/feed.xml" blog dev updates)
           ;; Papers
-          ,(sm/arxiv-atom-feed "cs.LG" '(ai))
-          ,(sm/arxiv-atom-feed "cs.AI" '(ai))
           ,(sm/arxiv-atom-feed "cs.DC" '(cs))
           ,(sm/arxiv-atom-feed "cs.DB" '(cs))
-          ,(sm/arxiv-atom-feed "q-bio.NC" '(bio))
-          ,(sm/arxiv-atom-feed "q-bio.QM" '(bio))
+          ("https://db.cs.cmu.edu/files/rss/pvldb-atom.xml" cs)
           ))
 
   :bind(("C-c a e" . elfeed)
