@@ -493,7 +493,7 @@
 
     #+BEGIN_SRC bash :tangle ~/.bin/dpi
       laptop_dpi=222
-      monitor_dpi=116
+      monitor_dpi=148
 
       function set_dpi() {
          echo "Xft.dpi: $1" | xrdb -merge
@@ -1513,8 +1513,7 @@
     #+RESULTS:
     : #<window 11 on *stack install [xmonad]*>
 
-    Window manager configuration. The keybinds have been modified to support a
-    reflected tall layout (main window on the right).
+    Window manager configuration.
 
     #+BEGIN_SRC haskell :tangle ~/.xmonad/xmonad.hs :noweb yes
       import qualified Data.List as List
@@ -1555,7 +1554,6 @@
         ( Ambiguity (..),
           lessBorders,
         )
-      import XMonad.Layout.Reflect (reflectHoriz)
       import XMonad.Layout.Spacing
         ( Border (..),
           spacingRaw,
@@ -1620,15 +1618,15 @@
             ((modMask .|. shiftMask, xK_j), windows W.swapDown),
             ((modMask .|. shiftMask, xK_k), windows W.swapUp),
             -- Resize windows
-            ((modMask, xK_h), sendMessage Expand),
-            ((modMask, xK_l), sendMessage Shrink),
+            ((modMask, xK_h), sendMessage Shrink),
+            ((modMask, xK_l), sendMessage Expand),
             -- Floating layer
             ((modMask, xK_t), withFocused $ windows . W.sink),
             ((modMask, xK_f), withFocused $ flip centerWindow False),
             ((modMask .|. shiftMask, xK_f), withFocused $ flip centerWindow True),
             -- Increase/decrease windos in master area
-            ((modMask, xK_comma), sendMessage (IncMasterN (-1))),
-            ((modMask, xK_period), sendMessage (IncMasterN 1))
+            ((modMask, xK_comma), sendMessage (IncMasterN 1)),
+            ((modMask, xK_period), sendMessage (IncMasterN (-1)))
           ]
             ++
             -- Switch screens based on physical position (xrandr).
@@ -1679,7 +1677,7 @@
         uniformSpacing $
           lessBorders (OnlyScreenFloat) (tall ||| Full)
         where
-          tall = reflectHoriz $ Tall 1 (5 / 100) (13 / 20)
+          tall = Tall 1 (5 / 100) (1 / 2)
           gs = 5
           uniformSpacing = spacingRaw False (border) True (border) True
           border = Border gs gs gs gs
