@@ -62,6 +62,12 @@
 ;; LSP utilities.
 
 (defun sm/set-eglot-checker ()
+  "Ensure that eglot is the only checker enabled.
+
+This prevents other checkers from automatically being enabled.
+Since eglot is used for multiple different modes, this will
+prevent irrelevant checkers from running in modes that don't need
+them."
   (setq flycheck-checker 'eglot)) ;; Buffer local.
 
 
@@ -800,7 +806,9 @@ Otherwise start the repl in the current directory."
   (sm/add-server-program 'c++-mode "ccls")
   (sm/add-server-program 'c-mode "ccls")
   :hook ((c++-mode . eglot-ensure)
-         (c-mode . eglot-ensure)))
+         (c++-mode . sm/set-eglot-checker)
+         (c-mode . eglot-ensure)
+         (c-mode . sm/set-eglot-checker)))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

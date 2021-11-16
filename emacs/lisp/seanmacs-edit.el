@@ -301,7 +301,10 @@
   (setq flycheck-check-syntax-automatically '(mode-enabled save)
         flycheck-indication-mode 'right-fringe
         flycheck-display-errors-delay 1
-        flycheck-display-errors-function #'sm/flycheck-display-errors-function)
+        flycheck-display-errors-function #'sm/flycheck-display-errors-function
+        ;; Increased from 400, eglot with rls will sometimes display a lot of
+        ;; warnings, which I want to see.
+        flycheck-checker-error-threshold 1000)
   (fset 'flycheck-command-map flycheck-command-map)
 
   (defalias 'sm/flycheck-error-list-goto-error-no-jump 'flycheck-error-list-goto-error)
