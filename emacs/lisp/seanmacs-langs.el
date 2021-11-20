@@ -89,7 +89,6 @@ them."
   :config
   (setq gofmt-command "goimports"
         gofmt-args '("-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
-  (sm/set-goto-def-keybind 'go-mode-map #'xref-find-definitions)
 
   ;; Running golangci-lint can be slow. Enable on demand.
   (defun sm/enable-golangci ()
@@ -217,9 +216,6 @@ dir. Return nil otherwise."
     (interactive)
     (flycheck-remove-next-checker 'eglot 'javascript-eslint))
 
-  :config
-  (sm/set-goto-def-keybind 'typescript-mode-map #'xref-find-definitions)
-
   :hook ((typescript-mode . eglot-ensure)
          (typescript-mode . prettier-js-mode)
          (typescript-mode . sm/use-node-modules-eslint)
@@ -336,8 +332,6 @@ Start a new process if not alive."
 
   :config
   (sm/add-server-program 'elixir-mode "elixir-ls")
-
-  (sm/set-goto-def-keybind 'elixir-mode-map #'xref-find-definitions)
 
   :hook ((elixir-mode . eglot-ensure)
          (elixir-mode . sm/set-elixir-format-hook)
