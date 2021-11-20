@@ -80,10 +80,7 @@
      (xref-goto-xref)))
 
   (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map
-    (kbd "SPC") #'sm/xref-show)
-
-  :bind (("C-c x a" . xref-find-apropos)
-         ("C-c x r" . xref-find-references)))
+    (kbd "SPC") #'sm/xref-show))
 
 (use-package eldoc
   ;; built-in, ish. Eglot pulls in development versions.
