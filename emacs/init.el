@@ -34,6 +34,7 @@
 (straight-use-package 'eldoc)
 (straight-use-package 'project)
 (straight-use-package 'xref)
+(straight-use-package 'flymake)
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
