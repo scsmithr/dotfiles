@@ -29,6 +29,12 @@
 ;; Ensure use-package is here.
 (straight-use-package 'use-package)
 
+;; Ensure development versions of built in packages are registered.
+(straight-use-package 'org)
+(straight-use-package 'eldoc)
+(straight-use-package 'project)
+(straight-use-package 'xref)
+
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
 (use-package seanmacs-libs)

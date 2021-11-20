@@ -44,7 +44,7 @@
   :straight t
   :after evil
   :config
-  (setq evil-collection-company-use-tng nil) ;; Compat with company 0.9.13
+  (setq evil-collection-mode-list (delete 'go-mode evil-collection-mode-list))
   (evil-collection-init))
 
 (use-package evil-surround

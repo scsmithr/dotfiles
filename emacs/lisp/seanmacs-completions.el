@@ -71,7 +71,8 @@
   (selectrum-prescient-mode))
 
 (use-package xref
-  ;; built-in
+  ;; built-in, ish. Eglot pulls in development versions.
+  :straight t
   :config
   (defun sm/xref-show ()
     "Show xref result under point, keeping cursor in the xref window."
@@ -84,6 +85,7 @@
 
 (use-package eldoc
   ;; built-in, ish. Eglot pulls in development versions.
+  :straight t
   :config
   (setq eldoc-echo-area-use-multiline-p nil))
 
