@@ -92,6 +92,7 @@
  ("sesman" . "edee869c209c016e5f0c5cbb8abb9f3ccd2d1e05")
  ("sly" . "5966d68727898fa6130fb6bb02208f70aa8d5ce3")
  ("spinner" . "34905eae12a236753fa88abc831eff1e41e8576e")
+ ("sql-indent" . "ecbf6bc8367f195061db531a2b16790e76f94436")
  ("straight.el" . "a477409618de15f541ba793c9c9671c1661f0d43")
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
  ("transient" . "349116159f707a474926b47e5f6b6240e8997a4d")

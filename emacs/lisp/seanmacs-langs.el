@@ -804,5 +804,15 @@ Otherwise start the repl in the current directory."
          (c-mode . eglot-ensure)
          (c-mode . sm/set-eglot-checker)))
 
+
+;; SQL
+
+(use-package sql-indent
+  :straight t)
+
+(use-package sql
+  ;; built-in
+  :hook ((sql-mode . sqlind-minor-mode)))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
