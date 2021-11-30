@@ -101,7 +101,7 @@ files."
                       (replace-regexp-in-string regexp rep string nil t))))
     (let ((cleaned (thread-last item
                      (funcall replace-fn "\n" "\\n")
-                     (funcall replace-fn "^\t" "")
+                     (funcall replace-fn "^\t*" "")
                      (funcall replace-fn "\t" "\\t")
                      (funcall replace-fn "^[ ]*" "")))
           (truncate-width 80))
