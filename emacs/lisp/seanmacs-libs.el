@@ -85,6 +85,39 @@ files."
             (write-region nil nil path)))
         (when open (find-file path))))))
 
+;; Kill ring helpers
+
+(defun sm/kill-ring-alist (kill-ring)
+  "Create an alist of (CLEANED . ORIGINAL) for a KILL-RING."
+  (let ((alist))
+    (dolist (item kill-ring)
+      (push (cons (sm/clean-kill-item item) item) alist))
+    (reverse alist)))
+
+(defun sm/clean-kill-item (item)
+  "Clean ITEM for use in a single line context."
+  (set-text-properties 0 (length item) nil item)
+  (let ((replace-fn (lambda (regexp rep string)
+                      (replace-regexp-in-string regexp rep string nil t))))
+    (let ((cleaned (thread-last item
+                     (funcall replace-fn "\n" "\\n")
+                     (funcall replace-fn "^\t" "")
+                     (funcall replace-fn "\t" "\\t")
+                     (funcall replace-fn "^[ ]*" "")))
+          (truncate-width 80))
+      (if (> (length cleaned) truncate-width)
+          (truncate-string-to-width cleaned truncate-width 0 0 "...")
+        cleaned))))
+
+(defun sm/insert-from-kill-ring-at-point ()
+  "Select an item from the kill ring and insert it at point."
+  (interactive)
+  (let ((selectrum-should-sort nil) ;; Keep order of kill-ring
+        (alist (sm/kill-ring-alist kill-ring)))
+    (let ((selected (completing-read "Item: " alist nil t)))
+      (when-let ((entry (assoc selected alist)))
+        (insert (cdr entry))))))
+
 ;; Misc
 
 (defun sm/scratch ()
