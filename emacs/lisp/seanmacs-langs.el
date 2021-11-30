@@ -799,6 +799,7 @@ Otherwise start the repl in the current directory."
   :config
   (sm/add-server-program 'c++-mode "ccls")
   (sm/add-server-program 'c-mode "ccls")
+
   :hook ((c++-mode . eglot-ensure)
          (c++-mode . sm/set-eglot-checker)
          (c-mode . eglot-ensure)
@@ -812,6 +813,8 @@ Otherwise start the repl in the current directory."
 
 (use-package sql
   ;; built-in
+  :config
+  (advice-add #'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
   :hook ((sql-mode . sqlind-minor-mode)))
 
 (provide 'seanmacs-langs)

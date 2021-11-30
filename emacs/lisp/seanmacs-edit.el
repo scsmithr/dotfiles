@@ -104,6 +104,16 @@
         '((space-mark   ?\  [?·])
           (newline-mark ?\n [?$ ?\n])
           (tab-mark     ?\t [?→ ?\t])))
+
+  (defun sm/reinitialize-whitespace-mode (&rest _)
+    "If whitespace-mode is enabled, force it on again.
+
+Useful for certain modes that fontify after the mode has been
+loaded (e.g. sql-mode)."
+    (when (bound-and-true-p whitespace-mode)
+      (message "Reinitializing whitespace mode")
+      (whitespace-mode t)))
+
   :hook ((prog-mode . whitespace-mode)))
 
 (defvar sm/ibuffer-filter-group-order nil
