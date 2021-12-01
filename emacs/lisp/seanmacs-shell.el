@@ -142,6 +142,9 @@ If BUF-NAME is nil, the command will be used to name the buffer."
     ;; See https://github.com/noctuid/general.el/issues/80
     (local-set-key (kbd "M-r") 'eshell/insert-history))
 
+  ;; Added in https://github.com/emacs-evil/evil-collection/commit/a81b6c8f5537b3646e6a66a6e60ec634848d1926
+  (remove-hook 'eshell-mode-hook 'evil-collection-eshell-escape-stay)
+
   :hook ((eshell-mode . sm/add-eshell-aliases)
          (eshell-mode . sm/disable-company)
          (eshell-mode . sm/eshell-set-local-keybinds)
