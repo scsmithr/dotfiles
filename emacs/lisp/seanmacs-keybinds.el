@@ -44,7 +44,14 @@
   :straight t
   :after evil
   :config
-  (setq evil-collection-mode-list (delete 'go-mode evil-collection-mode-list))
+
+  (defvar sm/evil-collection-disabled-modes
+    '(go-mode)
+    "Modes that should not have modified keybinds.")
+
+  (dolist (mode sm/evil-collection-disabled-modes)
+    (setq evil-collection-mode-list (delete mode evil-collection-mode-list)))
+
   (evil-collection-init))
 
 (use-package evil-surround

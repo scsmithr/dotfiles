@@ -32,7 +32,6 @@
         '(;; selecting bottom side window
           ("\\*\
 \\(Flycheck errors\
-\\|docker\
 \\|kube\
 \\|xref\
 \\).*"
