@@ -691,13 +691,6 @@ Otherwise start the repl in the current directory."
   :defer t)
 
 
-;; Nix
-
-(use-package nix-mode
-  :straight t
-  :defer t)
-
-
 ;; Lean
 
 (use-package lean-mode
@@ -707,36 +700,6 @@ Otherwise start the repl in the current directory."
   (setq lean-memory-limit 16384
         lean-extra-arguments '("-D class.instance_max_depth=1000"))
   (sm/set-goto-def-keybind 'lean-mode-map #'lean-find-definition))
-
-
-;; Purescript
-
-(defvar seanmacs/purescript-formatter "purty")
-
-(use-package purescript-mode
-  :straight t
-  :defer t
-  :init
-  (reformatter-define purescript-format
-    :program seanmacs/purescript-formatter
-    :args '("-"))
-  :config
-  (sm/set-goto-def-keybind 'purescript-mode-map #'psc-ide-goto-definition)
-  :bind(:map purescript-mode-map
-             ("C-c C-r r" . psci)
-             ("C-c C-r l" . psci/load-current-file!)
-             ("C-c C-r m" . psci/load-module!))
-  :hook ((purescript-mode . turn-on-purescript-indentation)
-         (purescript-mode . psc-ide-mode)))
-
-(use-package psc-ide
-  :straight t
-  :defer t)
-
-(use-package psci
-  :straight t
-  :defer t
-  :commands (psci psci/load-module! psci/load-current-file!))
 
 
 ;; Agda
