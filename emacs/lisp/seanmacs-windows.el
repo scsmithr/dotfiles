@@ -37,7 +37,7 @@
 \\|docker\
 \\).*"
            (sm/display-buffer-in-side-window-select)
-           (window-height . 0.25)
+           (window-height . 0.3)
            (side . bottom)
            (slot . 1))
           ;; bottom side window
@@ -54,7 +54,7 @@
 \\|prettier errors\
 \\).*"
            (display-buffer-in-side-window)
-           (window-height . 0.25)
+           (window-height . 0.3)
            (side . bottom)
            (slot . 0))
           ;; always open in same window
