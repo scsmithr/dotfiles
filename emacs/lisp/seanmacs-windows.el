@@ -34,6 +34,7 @@
 \\(Flycheck errors\
 \\|kube\
 \\|xref\
+\\|docker\
 \\).*"
            (sm/display-buffer-in-side-window-select)
            (window-height . 0.25)

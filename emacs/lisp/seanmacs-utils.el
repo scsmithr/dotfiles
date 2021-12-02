@@ -30,6 +30,23 @@
 (use-package docker
   :straight t
   :defer t
+  :config
+  (setq docker-container-columns
+        '((:name "Id" :width 16 :template "{{json .ID}}" :sort nil :format nil)
+          (:name "Names" :width 16 :template "{{json .Names}}" :sort nil :format nil)
+          (:name "Status" :width 16 :template "{{json .Status}}" :sort nil :format
+                 (lambda
+                   (x)
+                   (propertize x 'font-lock-face
+                               (docker-container-status-face x))))
+          (:name "Image" :width 16 :template "{{json .Image}}" :sort nil :format nil)
+          (:name "Command" :width 30 :template "{{json .Command}}" :sort nil :format nil)
+          (:name "Created" :width 23 :template "{{json .CreatedAt}}" :sort nil :format
+                 (lambda
+                   (x)
+                   (format-time-string "%F %T"
+                                       (date-to-time x))))
+          (:name "Ports" :width 10 :template "{{json .Ports}}" :sort nil :format nil)))
   :bind (("C-c a d" . docker)))
 
 (use-package docker-tramp
