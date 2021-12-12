@@ -169,7 +169,11 @@ them."
 
 (use-package cargo
   :straight t
-  :defer t)
+  :defer t
+  :config
+  (defun sm/set-cargo-process-scroll-bottom ()
+    (setq-local compilation-scroll-output t))
+  :hook ((cargo-process-mode . sm/set-cargo-process-scroll-bottom)))
 
 
 ;; Typescript/ web stuff
