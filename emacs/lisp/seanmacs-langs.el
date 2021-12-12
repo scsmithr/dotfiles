@@ -173,7 +173,8 @@ them."
   :config
   (defun sm/set-cargo-process-scroll-bottom ()
     (setq-local compilation-scroll-output t))
-  :hook ((cargo-process-mode . sm/set-cargo-process-scroll-bottom)))
+  :hook ((cargo-process-mode . sm/set-cargo-process-scroll-bottom)
+         (cargo-process-mode . visual-line-mode)))
 
 
 ;; Typescript/ web stuff
