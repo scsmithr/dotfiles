@@ -320,8 +320,8 @@ opening the file."
 (use-package tramp-sh
   ;; built-in
   :config
-  (setq tramp-remote-path '(tramp-own-remote-path "/usr/bin" "/bin")
-        tramp-ssh-controlmaster-options (concat "-o ControlMaster=auto "
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (setq tramp-ssh-controlmaster-options (concat "-o ControlMaster=auto "
                                                 "-o ControlPath='tramp.%%C' "
                                                 "-o ControlPersist=yes")))
 
