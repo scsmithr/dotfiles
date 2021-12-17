@@ -45,7 +45,8 @@
   (setq message-kill-buffer-on-exit t)
 
   (setq mu4e-maildir-shortcuts '(("/personal/INBOX" . ?p)
-                                 ("/work/INBOX"     . ?w)))
+                                 ("/work/INBOX"     . ?w)
+                                 ("/glare/INBOX"    . ?g)))
 
   (setq mu4e-bookmarks
         '((:query "flag:unread and date:14d..now"
@@ -108,24 +109,34 @@
       context))
 
   (sm/set-email-account "personal"
-                     '((mu4e-sent-folder . "/personal/[Gmail]/Sent Mail")
-                       (mu4e-drafts-folder . "/personal/[Gmail]/Drafts")
-                       (mu4e-trash-folder . "/personal/[Gmail]/Trash")
-                       (mu4e-refile-folder . "/personal/[Gmail]/All Mail")
-                       (smtpmail-smtp-user . "scsmithr@gmail.com")
-                       (smtpmail-smtp-server . "smtp.gmail.com")
-                       (smtpmail-smtp-service . 587)
-                       (user-mail-address . "scsmithr@gmail.com")))
+                        '((mu4e-sent-folder . "/personal/[Gmail]/Sent Mail")
+                          (mu4e-drafts-folder . "/personal/[Gmail]/Drafts")
+                          (mu4e-trash-folder . "/personal/[Gmail]/Trash")
+                          (mu4e-refile-folder . "/personal/[Gmail]/All Mail")
+                          (smtpmail-smtp-user . "scsmithr@gmail.com")
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-service . 587)
+                          (user-mail-address . "scsmithr@gmail.com")))
 
   (sm/set-email-account "work"
-                     '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
-                       (mu4e-drafts-folder . "/work/[Gmail]/Drafts")
-                       (mu4e-trash-folder . "/work/[Gmail]/Trash")
-                       (mu4e-refile-folder . "/work/[Gmail]/All Mail")
-                       (smtpmail-smtp-user . "sean@coder.com")
-                       (smtpmail-smtp-server . "smtp.gmail.com")
-                       (smtpmail-smtp-service . 587)
-                       (user-mail-address . "sean@coder.com")))
+                        '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
+                          (mu4e-drafts-folder . "/work/[Gmail]/Drafts")
+                          (mu4e-trash-folder . "/work/[Gmail]/Trash")
+                          (mu4e-refile-folder . "/work/[Gmail]/All Mail")
+                          (smtpmail-smtp-user . "sean@coder.com")
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-service . 587)
+                          (user-mail-address . "sean@coder.com")))
+
+  (sm/set-email-account "glare"
+                        '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
+                          (mu4e-drafts-folder . "/work/[Gmail]/Drafts")
+                          (mu4e-trash-folder . "/work/[Gmail]/Trash")
+                          (mu4e-refile-folder . "/work/[Gmail]/All Mail")
+                          (smtpmail-smtp-user . "sean@glaredb.com")
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-service . 587)
+                          (user-mail-address . "sean@glaredb.com")))
 
   :hook ((mu4e-compose-mode . turn-off-auto-fill)
          (mu4e-compose-mode . flyspell-mode))
