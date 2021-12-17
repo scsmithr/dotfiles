@@ -174,6 +174,8 @@ them."
   (setq cargo-process--command-doc "doc --document-private-items"
         cargo-process--command-doc-open "doc --document-private-items --open")
 
+  (setq cargo-process--command-clippy "clippy")
+
   (defun sm/set-cargo-process-scroll-bottom ()
     (setq-local compilation-scroll-output t))
   :hook ((cargo-process-mode . sm/set-cargo-process-scroll-bottom)
