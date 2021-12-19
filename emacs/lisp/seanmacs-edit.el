@@ -327,5 +327,21 @@ loaded (e.g. sql-mode)."
   :config
   (which-key-mode 1))
 
+(use-package edit-indirect
+  :straight t
+  :commands edit-indirect-region
+  :config
+  (defun sm/edit-indirect-guess-mode (parent-buffer _beg _end)
+    "Guess major mode by getting the mode from PARENT-BUFFER."
+    (let ((mode (with-current-buffer parent-buffer
+                  major-mode)))
+      (if (eq mode 'fundamental-mode)
+          (normal-mode)
+        (funcall mode))))
+
+  (setq edit-indirect-guess-mode-function #'sm/edit-indirect-guess-mode)
+
+  :bind (("C-c e" . edit-indirect-region)))
+
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

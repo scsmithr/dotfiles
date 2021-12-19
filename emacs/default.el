@@ -18,6 +18,7 @@
  ("docker.el" . "8d64cf4f84d7da5f839a8248fdddfb635a63f803")
  ("dockerfile-mode" . "07dde72b0e356d772fb65b969bd6decfa166e4d7")
  ("dtrt-indent" . "95c08dc4841b37902fad63a5a976d20e7a5ce3b0")
+ ("edit-indirect" . "7fffd87ac3b027d10a26e8492629da01a4cd7633")
  ("eglot" . "a697084d8dfe29783985f298d38863ea5d59c632")
  ("el-get" . "b5a5a405d04f61ec9c5fcb19357a50a4b9e36a25")
  ("eldoc" . "24ab6e066c7a7536dc4346dc9e6090636ef58f0e")
