@@ -3,5 +3,6 @@
 # key: uml
 # --
 @startuml
+!theme plain
 $0
 @enduml
