@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Plantuml boilerplate
+# key: uml
+# --
+@startuml
+$0
+@enduml

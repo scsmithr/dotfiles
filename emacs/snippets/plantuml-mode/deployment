@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Deployment diagram
+# key: dep
+# --
+@startuml
+!theme plain
+database db {
+        card card1
+        card card2
+}
+node node1
+cloud cloud1
+db --> node1 : label1
+db == cloud1 : label2$0
+@enduml

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Sequence diagram
+# key: seq
+# --
+@startuml
+!theme plain
+Alice -> Bob: do something
+Bob -> Bill: do something else$0
+@enduml

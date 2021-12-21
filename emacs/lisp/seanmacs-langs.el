@@ -666,14 +666,14 @@ Otherwise start the repl in the current directory."
   ;; built-in
   :defer t
   :init
-  (defun seanmacs/elisp-describe-symbol-at-point ()
+  (defun sm/elisp-describe-symbol-at-point ()
     (interactive)
     (let ((sym (symbol-at-point)))
       (describe-symbol sym)))
   :bind (:map emacs-lisp-mode-map
-              ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)
+              ("C-c C-d" . sm/elisp-describe-symbol-at-point)
               :map lisp-interaction-mode-map
-              ("C-c C-d" . seanmacs/elisp-describe-symbol-at-point)))
+              ("C-c C-d" . sm/elisp-describe-symbol-at-point)))
 
 
 ;; Yaml
@@ -749,7 +749,18 @@ Otherwise start the repl in the current directory."
   :straight t
   :defer t
   :config
-  (setq plantuml-default-exec-mode 'executable))
+  (setq plantuml-default-exec-mode 'executable)
+
+  (defun sm/plantuml-save ()
+    "Execute plantuml against the current plantuml buffer."
+    (interactive)
+    (when (eq major-mode 'plantuml-mode)
+      (save-buffer)
+      (shell-command (string-join `(,plantuml-executable-path "-tsvg" ,buffer-file-name) " ")
+                     "*PLANTUML Output*")))
+
+   :bind (:map plantuml-mode-map
+              ("C-c C-s" . sm/plantuml-save)))
 
 
 ;; TLA+
