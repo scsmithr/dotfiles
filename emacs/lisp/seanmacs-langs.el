@@ -790,5 +790,13 @@ Otherwise start the repl in the current directory."
   (advice-add #'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
   :hook ((sql-mode . sqlind-minor-mode)))
 
+
+;; Solidity
+
+(use-package solidity-mode
+  :straight t
+  :config
+  (setq solidity-comment-style 'slash))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

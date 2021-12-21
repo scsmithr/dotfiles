@@ -26,6 +26,7 @@
  ("emacs-async" . "d7e7f79ee42311a0187aa2ab4f4e2f8843fa28da")
  ("emacs-elixir" . "9de08c17d54e190d220aa03cca58bd41497f44b6")
  ("emacs-reformatter" . "cb9a5938541a28c50ecb8f72e32b67531b8bf606")
+ ("emacs-solidity" . "dae5957e5028ffecb527c98a0b0c39696fa9ec1c")
  ("emacs-undo-fu" . "f4db4c9b9875134df6f5279281099361ae11c2e9")
  ("emacs-which-key" . "c0608e812a8d1bc7aefeacdfaeb56a7272eabf44")
  ("emacsmirror-mirror" . "fc970dcdc47b809ed393c5e40baaf49a38f889a1")
