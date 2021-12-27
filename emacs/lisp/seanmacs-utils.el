@@ -152,7 +152,7 @@
                                 elfeed-show-entry
                                 (elfeed-entry-link elfeed-show-entry))
                            (read-string "Arxiv link: "))))
-    (sm/download-pdf (sm/arxiv-link-to-pdf link) 'arxiv))
+    (sm/download-pdf (sm/arxiv-link-to-pdf link) 'arxiv t))
 
   (defun sm/open-arxiv-paper (link)
     "Open pdf for arxiv paper at LINK."
