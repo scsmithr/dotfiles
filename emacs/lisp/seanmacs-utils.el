@@ -330,6 +330,14 @@ opening the file."
   :config
   (setq tramp-verbose 3))
 
+(use-package nov
+  :straight t
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  :config
+  (setq nov-text-width 80))
+
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
 
