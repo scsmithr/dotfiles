@@ -8,8 +8,8 @@
 (defun sm/setup-fonts (&optional frame)
   "Setup fonts for FRAME."
   (message "Setting fonts")
-  (set-face-attribute 'default nil :family "Triplicate A" :height 120 :weight 'normal)
-  (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 120 :weight 'normal)
+  (set-face-attribute 'default nil :family "Triplicate A" :height 120)
+  (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 120)
   ;; Unicode fallbacks.
   (set-fontset-font t 'unicode (font-spec :name "Triplicate A"))
   (set-fontset-font t 'unicode (font-spec :name "JuliaMono" :weight 'light) nil 'append)
