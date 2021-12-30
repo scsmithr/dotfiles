@@ -231,8 +231,7 @@ dir. Return nil otherwise."
          (typescript-mode . sm/use-node-modules-eslint)
          (typescript-mode . sm/set-eglot-checker))
   :bind (:map typescript-mode-map
-              ("C-c C-d" . sm/eglot-lookup-doc)
-              ("C-c r r" . eglot-rename)))
+              ("C-c C-d" . sm/eglot-lookup-doc)))
 
 (define-derived-mode typescriptreact-mode typescript-mode "TSX"
   "Convenience mode for differentiating between regular

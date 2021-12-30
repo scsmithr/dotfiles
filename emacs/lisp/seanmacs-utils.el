@@ -333,8 +333,7 @@ opening the file."
 (use-package nov
   :straight t
   :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  :mode ("\\.epub\\'" . nov-mode)
   :config
   (setq nov-text-width 80))
 

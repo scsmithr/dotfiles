@@ -76,23 +76,26 @@
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 
-;; Don't wrap lines
-(add-hook 'prog-mode-hook 'toggle-truncate-lines)
+;; Don't wrap lines in prog buffers.
+(defun sm/truncate-lines ()
+  "Truncate lines for the buffer."
+  (toggle-truncate-lines 1))
+(add-hook 'prog-mode-hook 'sm/truncate-lines)
 
 ;; Allow narrowing to region
 (put 'narrow-to-region 'disabled nil)
 ;; Allow narrowing to page
 (put 'narrow-to-page 'disabled nil)
-
 ;; Allow erasing entire buffer
 (put 'erase-buffer 'disabled nil)
 
-(defun sm/sudo-edit ()
-  "Open current file in a new buffer with sudo."
-  (interactive)
-  (let ((file (or buffer-file-name
-                  (read-file-name "File: "))))
-    (find-file (concat "/sudo::" file))))
+(defun sm/sudo-edit (file)
+  "Open FILE in a new buffer with sudo.
+
+Defaults to opening file for the current buffer."
+  (interactive (list (or buffer-file-name
+                         (read-file-name "File: "))))
+  (find-file (concat "/sudo::" file)))
 
 (use-package whitespace
   ;; built-in
