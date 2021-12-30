@@ -66,7 +66,7 @@
  ("melpa" . "6860800b52e2c06ae339f5f65ace6a5e05ddcbbc")
  ("minions" . "4a81446e13f5bfb514e593d0e1c5253a60113301")
  ("mit" . "d17394f577aaa2854a74a1a0039cb8f73378b400")
- ("modus-themes" . "e2f02a54db96277cf7fc14f2a27301dd98fa4d9c")
+ ("modus-themes" . "c5c8fb9923ff19b1615f5f2f650ee536193d6b4c")
  ("nov.el" . "587ff2fe25b0a75726f090001441bca76aa0ce4b")
  ("ob-async" . "de1cd6c93242a4cb8773bbe115b7be3d4dd6b97e")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
