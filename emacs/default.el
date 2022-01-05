@@ -70,6 +70,7 @@
  ("nov.el" . "587ff2fe25b0a75726f090001441bca76aa0ce4b")
  ("ob-async" . "de1cd6c93242a4cb8773bbe115b7be3d4dd6b97e")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
+ ("olivetti" . "a31ac05a161a91fe5c157930b62a6c07037982ee")
  ("org" . "c0ca5e39054f6fde4afd74db033fbfc3f5f7b721")
  ("otp" . "b8cc6444878959dff71f55e10637d27e7106dfb7")
  ("parseclj" . "eff941126859bc9e949eae5cd6c2592e731629f2")

@@ -41,7 +41,7 @@
 (use-package modus-themes
   :straight t
   :config
-  (fringe-mode '(10 . 10))
+  (fringe-mode '(8 . 8))
 
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background

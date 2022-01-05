@@ -283,6 +283,12 @@ The output will be put into a temporary buffer."
   (evil-collection-define-key 'normal 'pdf-outline-buffer-mode-map
     (kbd "SPC") #'sm/pdf-outline-show-link)
 
+  (defun sm/pdf-tools-enable-olivetti ()
+    "Enable olivetti mode with a wider than normal body width for a comfortable pdf viewing experience."
+    (setq-local olivetti-body-width 120)
+    (olivetti-mode 1))
+
+  :hook ((pdf-view-mode . sm/pdf-tools-enable-olivetti))
   :bind (:map pdf-view-mode-map
               ("C-c C-t" . sm/pdf-to-text)))
 
@@ -336,6 +342,13 @@ opening the file."
   :mode ("\\.epub\\'" . nov-mode)
   :config
   (setq nov-text-width 80))
+
+(use-package olivetti
+  :straight t
+  :defer t
+  :config
+  (setq-default olivetti-body-width 102)
+  (remove-hook 'olivetti-mode-on-hook 'visual-line-mode))
 
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
