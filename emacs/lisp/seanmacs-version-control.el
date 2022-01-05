@@ -20,7 +20,7 @@
   (setq magit-module-sections-nested nil
         magit-diff-refine-hunk t ;; Show whitespace changes in status buffer.
         magit-bury-buffer-function 'magit-mode-quit-window
-        magit-section-visibility-indicator '(magit-fringe-bitmap> . magit-fringe-bitmapv))
+        magit-section-visibility-indicator '(magit-fringe-bitmap-bold> . magit-fringe-bitmap-boldv))
   :bind (("C-c g g" . magit-status)
          ("C-c g f" . magit-file-dispatch)))
 
@@ -44,8 +44,13 @@
 
 (use-package diff-hl
   :straight t
+  :demand t
   :config
   (setq diff-hl-draw-borders nil)
+  (define-fringe-bitmap 'sm/diff-hl-fringe-bmp [#b00111000] nil nil '(center t))
+  (defun sm/diff-hl-fringe-bmp (_type _pos)
+    'sm/diff-hl-fringe-bmp)
+  (setq diff-hl-fringe-bmp-function #'sm/diff-hl-fringe-bmp)
   (global-diff-hl-mode)
   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
          (magit-pre-refresh . diff-hl-magit-pre-refresh)))

@@ -41,7 +41,7 @@
 (use-package modus-themes
   :straight t
   :config
-  (fringe-mode '(8 . 8))
+  (fringe-mode '(16 . 16))
 
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
@@ -56,7 +56,15 @@
         '((fg-whitespace           . "#f2eff3")
           (bg-whitespace           . "#ffffff")
           (fg-window-divider-inner . "#dadada")
-          (fg-window-divider-outer . "#aaaaaa")))
+          (fg-window-divider-outer . "#aaaaaa")
+          ;; Custom fringe colors, I'm using these 'bg' colors as the
+          ;; foreground.
+          (red-fringe-bg     . "#c06873")
+          (green-fringe-bg   . "#4ea054")
+          (yellow-fringe-bg  . "#af9432")
+          (blue-fringe-bg    . "#688ccc")
+          (magenta-fringe-bg . "#b382cc")
+          (cyan-fringe-bg    . "#25a4b2")))
 
   (defun sm/customize-modus-operandi ()
     (modus-themes-with-colors
@@ -74,6 +82,13 @@
        `(company-preview-common ((t (:background ,bg-hl-line :foreground ,blue))))
        ;; Org mode
        `(org-code ((t (:inherit modus-themes-fixed-pitch :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
+       ;; Modus fringes
+       `(modus-themes-fringe-red ((t :foreground ,red-fringe-bg)))
+       `(modus-themes-fringe-green ((t :foreground ,green-fringe-bg)))
+       `(modus-themes-fringe-yellow ((t :foreground ,yellow-fringe-bg)))
+       `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg)))
+       `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg)))
+       `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg)))
 
        (with-eval-after-load 'sly-mrepl
          (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))

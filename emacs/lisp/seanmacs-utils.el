@@ -348,6 +348,7 @@ opening the file."
   :defer t
   :config
   (setq-default olivetti-body-width 102)
+  (setq olivetti-style 'fringes)
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode))
 
 (use-package gcloud
