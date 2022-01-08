@@ -349,7 +349,8 @@ opening the file."
   :config
   (setq-default olivetti-body-width 102)
   (setq olivetti-style 'fringes)
-  (remove-hook 'olivetti-mode-on-hook 'visual-line-mode))
+  (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
+  :bind (("C-c z" . olivetti-mode)))
 
 (use-package gcloud
   :straight (gcloud :type git :host github :repo "scsmithr/gcloud.el"))
