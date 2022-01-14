@@ -183,6 +183,9 @@
           ("https://lemire.me/blog/feed/" blog dev)
           ("https://updates.orgmode.org/feed/changes" dev updates)
           ("https://emacsair.me/feed.xml" blog dev updates)
+          ("https://www.micahlerner.com/feed.xml" blog dev)
+          ("https://brooker.co.za/blog/rss.xml" blog dev)
+          ("http://muratbuffalo.blogspot.com/feeds/posts/default" blog dev)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.DC" '(cs))
           ,(sm/arxiv-atom-feed "cs.DB" '(cs))
