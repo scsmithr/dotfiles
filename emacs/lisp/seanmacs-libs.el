@@ -61,20 +61,26 @@ If no region selected, colorize the entire buffer."
 
 ;; Helpers for downloading things
 
-(defun sm/download-pdf (link &optional type open)
+(defun sm/download-pdf (link &optional type open name)
   "Download and save a pdf from LINK.
 
 TYPE may be one of paper, book, arxiv, or refile. When OPEN is
 non-nil, open the downloaded pdf. Does not overwrite existing
-files."
-  (interactive (list (read-string "Link: ")
-                     (completing-read "Type: " '(paper book arxiv refile))
-                     t))
+files.
+
+NAME is the name to save the pdf as. If nil, defaults to the
+original file name. The '.pdf' extension will be appended if it's
+missing from the name."
+  (interactive (let ((link (read-string "Link: ")))
+                 (list link
+                       (completing-read "Type: " '(paper book arxiv refile))
+                       t
+                       (read-string "Name: " (file-name-nondirectory link)))))
   (let ((dir (cond ((string= type 'paper) "~/syncthing/papers/")
                    ((string= type 'book)  "~/syncthing/books/")
                    ((string= type 'arxiv) "~/syncthing/arxiv/downloads/")
                    (t                     "~/syncthing/refile/")))
-        (name (file-name-nondirectory link)))
+        (name (or name (file-name-nondirectory link))))
     (mkdir dir t)
     (if (string-empty-p name)
         (user-error "Got empty file name from link: %s" link)

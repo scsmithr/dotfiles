@@ -42,6 +42,8 @@
 ;; #Don't #create #lock #files
 (setq create-lockfiles nil)
 
+(setq sentence-end-double-space nil)
+
 ;; Auto insert closing parenthesis, braces, etc
 (use-package elec-pair
   ;; built-in

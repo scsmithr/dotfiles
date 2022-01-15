@@ -119,7 +119,8 @@
           (search . " %-12:c %b"))
         org-agenda-breadcrumbs-separator " > "
         org-agenda-search-view-always-boolean t
-        org-show-context-detail '((default . canonical)))
+        org-show-context-detail '((default . canonical))
+        org-agenda-block-separator ?-)
 
   (setq org-priority-highest ?A
         org-priority-lowest ?C
