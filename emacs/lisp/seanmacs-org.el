@@ -36,7 +36,7 @@
                              (org-agenda-files :maxlevel . 5))
         org-refile-use-outline-path t
         org-startup-folded nil
-        org-startup-with-inline-images t
+        org-startup-with-inline-images nil
         org-hide-leading-stars t
         ;; I prefer having blank lines between subtrees when unfolded, but
         ;; no blank lines when folded.
@@ -185,7 +185,7 @@
      (python     . t)
      (R          . t)
      (plantuml   . t)))
-  :hook ((org-babel-after-execute . org-display-inline-images)))
+  :hook ((org-babel-after-execute . org-redisplay-inline-images)))
 
 (use-package ob-http
   :straight t
