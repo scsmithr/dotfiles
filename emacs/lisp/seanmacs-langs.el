@@ -864,11 +864,7 @@ Otherwise start the repl in the current directory."
   ;; Use color instead of scaling section titles.
   (setq font-latex-fontify-sectioning 'color)
 
-  (defun sm/TeX-revert-document-buffer (file)
-    (sm/save-window-excursion
-     (TeX-revert-document-buffer file)))
-
-  (add-hook 'TeX-after-compilation-finished-functions #'sm/TeX-revert-document-buffer))
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
