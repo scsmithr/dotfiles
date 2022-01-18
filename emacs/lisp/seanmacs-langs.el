@@ -866,5 +866,15 @@ Otherwise start the repl in the current directory."
 
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
+
+;; CSV
+
+(use-package csv-mode
+  :straight t
+  :defer t
+  :config
+  (setq csv-align-padding 2)
+  :hook ((csv-mode . csv-align-mode)))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

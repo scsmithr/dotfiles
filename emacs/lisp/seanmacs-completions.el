@@ -135,7 +135,7 @@
           (display-local-help))))
     'deferred)
 
-  ;; Below is adapted from Doom Emac's handling of integration eglot diagnostics
+  ;; Below is adapted from Doom Emacs' handling of integration eglot diagnostics
   ;; with flycheck.
 
   (setq eglot-stay-out-of '(flymake))

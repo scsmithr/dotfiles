@@ -11,6 +11,7 @@
  ("closql" . "15f906c393db1a0fb6577afc3cf59466531eafef")
  ("coder.el" . "c45bcad39209bbc45760dc6afac6b163c9fcf2eb")
  ("company-mode" . "5c84da83e7b8289170d811ac164e10a4d548962c")
+ ("csv-mode" . "a4ad2e59d4039bf3b1bdbebdfab21c122ad5b487")
  ("dash.el" . "da167c51e9fd167a48d06c7c0ee8e3ac7abd9718")
  ("deadgrep" . "83e7812cda2673884b3d4d218757c7489f817fbb")
  ("diff-hl" . "738c5d6a6bffe46b18249c77d59ae1d9e2d4d126")
