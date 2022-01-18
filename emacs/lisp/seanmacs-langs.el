@@ -849,5 +849,26 @@ Otherwise start the repl in the current directory."
   :config
   (setq solidity-comment-style 'slash))
 
+
+;; Tex/Latex
+
+(use-package tex-site
+  :straight auctex
+  :config
+  (put 'LaTeX-narrow-to-environment 'disabled nil)
+
+  ;; Default to pdf-tools when compiling files.
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
+
+  ;; Use color instead of scaling section titles.
+  (setq font-latex-fontify-sectioning 'color)
+
+  (defun sm/TeX-revert-document-buffer (file)
+    (sm/save-window-excursion
+     (TeX-revert-document-buffer file)))
+
+  (add-hook 'TeX-after-compilation-finished-functions #'sm/TeX-revert-document-buffer))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
