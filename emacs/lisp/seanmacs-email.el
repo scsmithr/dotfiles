@@ -129,10 +129,10 @@
                           (user-mail-address . "sean@coder.com")))
 
   (sm/set-email-account "glare"
-                        '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
-                          (mu4e-drafts-folder . "/work/[Gmail]/Drafts")
-                          (mu4e-trash-folder . "/work/[Gmail]/Trash")
-                          (mu4e-refile-folder . "/work/[Gmail]/All Mail")
+                        '((mu4e-sent-folder . "/glare/[Gmail]/Sent Mail")
+                          (mu4e-drafts-folder . "/glare/[Gmail]/Drafts")
+                          (mu4e-trash-folder . "/glare/[Gmail]/Trash")
+                          (mu4e-refile-folder . "/glare/[Gmail]/All Mail")
                           (smtpmail-smtp-user . "sean@glaredb.com")
                           (smtpmail-smtp-server . "smtp.gmail.com")
                           (smtpmail-smtp-service . 587)
