@@ -186,6 +186,7 @@
           ("https://www.micahlerner.com/feed.xml" blog dev)
           ("https://brooker.co.za/blog/rss.xml" blog dev)
           ("http://muratbuffalo.blogspot.com/feeds/posts/default" blog dev)
+          ("http://charap.co/feed" blog dev)
           ;; Papers
           ,(sm/arxiv-atom-feed "cs.DC" '(cs))
           ,(sm/arxiv-atom-feed "cs.DB" '(cs))
