@@ -46,6 +46,8 @@
        # Setting this to false will result in window without borders and title bar.
        decorations: "none"
 
+       opacity: 1.0
+
      scrolling:
        # How many lines of scrollback to keep,
        # '0' will disable scrolling.
@@ -174,9 +176,6 @@
      bell:
        animation: EaseOutExpo
        duration: 0
-
-     # Background opacity
-     background_opacity: 1.0
 
      # Mouse bindings
      #
