@@ -27,6 +27,8 @@
         (fill-region beg end)
       (fill-paragraph nil))))
 
+(define-key global-map (kbd "M-Q") #'sm/unfill-paragraph)
+
 (defun sm/ansi-colorize (beg end)
   "Colorize region according to ANSI control sequences from BEG to END.
 If no region selected, colorize the entire buffer."
