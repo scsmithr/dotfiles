@@ -36,7 +36,7 @@
   "Run after `sm/load-theme-hook'."
   (run-hooks 'sm/load-theme-hook))
 
-(advice-add #'load-theme :after #'sm/run-load-theme-hook)
+(advice-add 'load-theme :after #'sm/run-load-theme-hook)
 
 (use-package modus-themes
   :straight t

@@ -40,7 +40,8 @@
         mu4e-headers-thread-duplicate-prefix '("=" . " "))
 
   (setq smtpmail-stream-type 'starttls
-        message-send-mail-function #'smtpmail-send-it)
+        message-send-mail-function #'smtpmail-send-it
+        message-confirm-send t)
 
   (setq message-kill-buffer-on-exit t)
 
@@ -138,8 +139,7 @@
                           (smtpmail-smtp-service . 587)
                           (user-mail-address . "sean@glaredb.com")))
 
-  :hook ((mu4e-compose-mode . turn-off-auto-fill)
-         (mu4e-compose-mode . flyspell-mode))
+  :hook ((mu4e-compose-mode . flyspell-mode))
   :bind (("C-c a m" . mu4e)))
 
 (use-package org-mu4e

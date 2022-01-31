@@ -838,7 +838,7 @@ Otherwise start the repl in the current directory."
 (use-package sql
   ;; built-in
   :config
-  (advice-add #'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
+  (advice-add 'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
   :hook ((sql-mode . sqlind-minor-mode)))
 
 
