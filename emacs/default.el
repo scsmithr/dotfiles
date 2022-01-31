@@ -56,6 +56,7 @@
  ("goto-chg" . "3ce1389fea12edde4e343bc7d54c8da97a1a6136")
  ("guile" . "700ac985c1c729ba1005a0a076c683e9f781526f")
  ("haskell-mode" . "20f72ccc17c8233dbb7c94ebf52a2a59e7d97730")
+ ("imenu-list" . "76f2335ee6f2f066d87fe4e4729219d70c9bc70d")
  ("json-mode" . "eedb4560034f795a7950fa07016bd4347c368873")
  ("json-snatcher" . "b28d1c0670636da6db508d03872d96ffddbc10f2")
  ("jsonrpc" . "dbfa30971026dacd9389f4312b0dd7a12fef0d87")

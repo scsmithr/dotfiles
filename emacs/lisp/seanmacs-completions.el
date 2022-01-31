@@ -47,6 +47,42 @@
   :hook ((imenu-after-jump . recenter))
   :bind (("C-c b s" . imenu)))
 
+(use-package imenu-list
+  :straight t
+  :init
+  (setq imenu-list-position 'right
+        imenu-list-size 44)
+
+  (defun sm/imenu-list-install-display-buffer ()
+    "Use a side window for the imenu-list buffer."
+    (let* ((side (cond ((eq imenu-list-position 'above) 'top)
+                       ((eq imenu-list-position 'below) 'bottom)
+                       (t imenu-list-position)))
+           (size-sym (if (or (eq side 'top)
+                             (eq side 'bottom))
+                         'window-height
+                       'window-width)))
+      (setf (alist-get (concat "^" (regexp-quote imenu-list-buffer-name) "$")
+                       display-buffer-alist nil nil #'equal)
+            `(display-buffer-in-side-window
+              (,size-sym . ,imenu-list-size)
+              (slot . 0)
+              (side . ,side)
+              (dedicated . t)))))
+
+  (advice-add 'imenu-list-install-display-buffer :override
+              #'sm/imenu-list-install-display-buffer)
+
+  (defun sm/imenu-list-show ()
+    (interactive)
+    (sm/save-window-excursion
+     (call-interactively 'imenu-list-goto-entry)))
+
+  (evil-collection-define-key 'normal 'imenu-list-major-mode-map
+    (kbd "SPC") #'sm/imenu-list-show)
+
+  :bind (("C-c b l" . imenu-list-smart-toggle)))
+
 (use-package selectrum
   :straight t
   :config
