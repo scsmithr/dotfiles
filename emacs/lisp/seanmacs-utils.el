@@ -229,6 +229,8 @@ file at point will be used."
   (evil-collection-define-key 'normal 'dired-mode-map
     "K" #'dired-kill-subdir
     "I" #'sm/dired-maybe-insert-subdir
+    "gj" #'dired-next-subdir
+    "gk" #'dired-prev-subdir
     "]]" #'dired-next-subdir
     "[[" #'dired-prev-subdir
     (kbd "TAB") #'dired-hide-subdir
