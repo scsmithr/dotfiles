@@ -262,16 +262,6 @@ loaded (e.g. sql-mode)."
     (let ((deadgrep-project-root-function (lambda () default-directory)))
       (call-interactively 'deadgrep)))
   :config
-  (defun sm/deadgrep-change-search ()
-    "Change deadgrep search term."
-    (interactive)
-    (deadgrep--search-term nil))
-
-  (defun sm/deadgrep-change-dir ()
-    "Change deadgrep current search directory."
-    (interactive)
-    (deadgrep--directory nil))
-
   (defun sm/deadgrep-show ()
     "Display result in other window, keeping the cursor in the deadgrep window."
     (interactive)
@@ -280,9 +270,9 @@ loaded (e.g. sql-mode)."
        (deadgrep-visit-result-other-window))))
 
   (evil-collection-define-key 'normal 'deadgrep-mode-map
-    "gs" #'sm/deadgrep-change-search
-    "gd" #'sm/deadgrep-change-dir
-    "ge" #'deadgrep-edit-mode
+    "gS" #'deadgrep-search-term
+    "gD" #'deadgrep-directory
+    "gE" #'deadgrep-edit-mode
     (kbd "SPC") #'sm/deadgrep-show))
 
 (use-package ripgrep

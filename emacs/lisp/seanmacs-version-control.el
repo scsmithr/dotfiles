@@ -31,16 +31,7 @@
   (setq forge-pull-notifications nil))
 
 (use-package transient
-  :straight t
-  :config
-  (defun sm/silence-transient-insert-message (fn &rest args)
-    (let ((inhibit-message t))
-      (apply fn args)))
-
-  ;; Forge currently tries to bind forge-dispatch to non-existent prefix since
-  ;; it's moved by evil-collection. Transient just displays a message saying
-  ;; that it couldn't insert. No harm in hiding that message.
-  (advice-add 'transient-insert-suffix :around #'sm/silence-transient-insert-message))
+  :straight t)
 
 (use-package diff-hl
   :straight t

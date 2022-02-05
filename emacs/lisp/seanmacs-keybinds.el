@@ -43,8 +43,9 @@
 (use-package evil-collection
   :straight t
   :after evil
+  :init
+  (setq forge-add-default-bindings nil)
   :config
-
   (defvar sm/evil-collection-disabled-modes
     '(go-mode)
     "Modes that should not have modified keybinds.")

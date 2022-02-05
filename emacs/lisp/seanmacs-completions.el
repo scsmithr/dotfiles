@@ -182,14 +182,13 @@
     (eglot-flymake-backend #'sm/eglot-on-diagnostic)
     (funcall callback 'finished sm/eglot-flycheck-current-errors))
 
-  (mapc #'sm/warn-fn-not-bound '(flymake--diag-buffer
-                                 flymake--diag-beg
+  (mapc #'sm/warn-fn-not-bound '(flymake--diag-beg
                                  flymake--diag-type
                                  flymake--diag-text
                                  flymake--diag-end))
 
   (defun sm/eglot-flymake-diag-to-flycheck (diag)
-    (with-current-buffer (flymake--diag-buffer diag)
+    (with-current-buffer (flymake-diagnostic-buffer diag)
       (flycheck-error-new-at-pos
        (flymake--diag-beg diag)
        (pcase (flymake--diag-type diag)
