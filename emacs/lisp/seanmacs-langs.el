@@ -842,14 +842,6 @@ Otherwise start the repl in the current directory."
   :hook ((sql-mode . sqlind-minor-mode)))
 
 
-;; Solidity
-
-(use-package solidity-mode
-  :straight t
-  :config
-  (setq solidity-comment-style 'slash))
-
-
 ;; Tex/Latex
 
 (use-package tex-site
