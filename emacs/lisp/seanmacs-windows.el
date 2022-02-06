@@ -32,29 +32,26 @@
         '(;; selecting bottom side window
           ("\\*\
 \\(Flycheck errors\
-\\|kube\
 \\|xref\
 \\|docker\
 \\).*"
            (sm/display-buffer-in-side-window-select)
-           (window-height . 0.3)
+           (window-height . 12)
            (side . bottom)
            (slot . 1))
           ;; bottom side window
           ("\\*\
 \\(Completions\
 \\|Flycheck error messages\
-\\|Ido Completions\
 \\|Help\
 \\|Warnings\
-\\|lsp-help\
 \\|eglot-help\
 \\|company-documentation\
 \\|Gofmt Errors\
 \\|prettier errors\
 \\).*"
            (display-buffer-in-side-window)
-           (window-height . 0.3)
+           (window-height . 12)
            (side . bottom)
            (slot . 0))
           ;; always open in same window
@@ -69,6 +66,12 @@
   "Display BUFFER in side window, selecting it."
   (let ((window (display-buffer-in-side-window buffer alist)))
     (select-window window)))
+
+(defun sm/pop-to-some-window ()
+  "Display current buffer in some window, selecting it."
+  (interactive)
+  (let ((win (display-buffer-use-some-window (current-buffer) '())))
+    (select-window win)))
 
 (provide 'seanmacs-windows)
 ;;; seanmacs-windows.el ends here

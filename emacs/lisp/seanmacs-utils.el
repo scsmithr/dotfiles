@@ -327,7 +327,9 @@ opening the file."
 
 (use-package help
   ;; built-in
-  :config)
+  :config
+  (evil-collection-define-key 'normal 'help-mode-map
+    "p" #'sm/pop-to-some-window))
 
 (use-package tramp-sh
   ;; built-in
