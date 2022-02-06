@@ -228,7 +228,7 @@ Requires that cargo-expand is installed."
 (defun sm/bin-from-node-modules (bin)
   "Return the full path if BIN exists in dominating node modules
 dir. Return nil otherwise."
-  (let* ((dir (or (projectile-project-root)
+  (let* ((dir (or (sm/project-root-maybe)
                   (buffer-file-name)
                   default-directory))
          (root (locate-dominating-file dir "node_modules"))
@@ -377,7 +377,7 @@ Start a new process if not alive."
   (defun sm/iex-project-run ()
     "Open an iex buffer for a project."
     (interactive)
-    (when-let ((default-directory (projectile-project-root)))
+    (when-let ((default-directory (sm/project-root-maybe)))
       (pop-to-buffer (process-buffer (sm/iex-process)))))
 
   :config
@@ -626,7 +626,7 @@ Attempt to start the repl in the project root if available.
 Otherwise start the repl in the current directory."
     (interactive)
     (let ((default-directory (or (sm/julia-project-root)
-                                 (projectile-project-root)
+                                 (sm/project-root-maybe)
                                  default-directory)))
       (pop-to-buffer (process-buffer (sm/julia-process)))))
 

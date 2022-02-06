@@ -86,8 +86,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
       (eshell/cd path)))
 
   (defun eshell/pd ()
-    (if (projectile-project-p)
-        (eshell/cd (projectile-project-root))
+    (if-let (project (project-current))
+        (eshell/cd (project-root project))
       (user-error "Not in project")))
 
   (defun eshell/clear ()

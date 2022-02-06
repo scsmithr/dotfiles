@@ -226,35 +226,48 @@ loaded (e.g. sql-mode)."
         dtrt-indent-min-hard-tab-superiority 180.0)
   (dtrt-indent-global-mode 1))
 
-(use-package projectile
-  :straight t
-  :demand t
+(use-package project
+  ;; Built-in, but using development version.
   :config
-  (setq projectile-completion-system 'default
-        projectile-require-project-root nil
-        projectile-sort-order 'recently-active
-        projectile-switch-project-action #'projectile-dired
-        ;; When you have a mono repo with a ton of submodules, caching helps
-        ;; speed things up...
-        projectile-enable-caching t
-        ;; Projectile lighter is hidden.
-        projectile-dynamic-mode-line nil)
 
-  ;; Register project for purescript.
-  (projectile-register-project-type 'purs '("spago.dhall")
-                                    :compile "spago build"
-                                    :test "spago test"
-                                    :run "spago run")
+  (defun sm/project-root-maybe ()
+    "Return the root of project if `default-directory' is in a project. Return nil otherwise."
+    (when-let (project (project-current))
+      (project-root)))
 
-  (projectile-mode +1)
-  :bind-keymap ("C-c p" . projectile-command-map)
-  :bind (:map projectile-command-map
-              ("s D" . deadgrep)
-              ("s d" . sm/deadgrep-this-directory)))
+  (defun sm/project-eshell ()
+    "Similiar to `project-eshell', opens eshell in the project root.
+
+This use the default windowing rules for eshell when opening the
+eshell buffer. In my case, this will open the eshell buffer in
+the currently selected window instead of popping to some other
+window."
+    (interactive)
+    (defvar eshell-buffer-name)
+    (let* ((default-directory (project-root (project-current t)))
+           (eshell-buffer-name (project-prefixed-buffer-name "eshell")))
+      (eshell current-prefix-arg)))
+
+  (setq project-switch-commands
+        '((project-find-file "Find file" ?f)
+          (sm/project-eshell "Eshell" ?e)
+          (project-find-dir "Find directory" ?d)
+          (project-dired "Project root" ?o)
+          (magit-status "Magit" ?g)
+          (deadgrep "Search" ?s)))
+  :bind-keymap ("C-c p" . project-prefix-map)
+  :bind (:map project-prefix-map
+              ("e" . sm/project-eshell)
+              ;; 's' is bound to `project-shell' by default, but I rarely use
+              ;; shell, so rebind to some search functions.
+              :prefix "s"
+              :prefix-map project-search-prefix-map
+              ("d" . sm/deadgrep-this-directory)
+              ("D" . deadgrep)))
 
 (use-package deadgrep
   :straight t
-  :after projectile
+  :defer t
   :init
   (defun sm/deadgrep-this-directory ()
     "Call deadgrep using `default-directory' as the project root."
@@ -277,7 +290,6 @@ loaded (e.g. sql-mode)."
 
 (use-package ripgrep
   :straight t
-  :after projectile
   :config
   (evil-collection-define-key 'normal 'ripgrep-search-mode-map
     "q" 'quit-window))

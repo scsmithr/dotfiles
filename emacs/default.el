@@ -84,7 +84,6 @@
  ("prescient.el" . "3dbcef387502d309d130a518a18d48cd2f0e15b7")
  ("prettier-emacs" . "e9b73e81d3e1642aec682195f127a42dfb0b5774")
  ("project" . "6264254a401ae59a2d6af5608bb7be323e6eefb7")
- ("projectile" . "f3f8a6505d50ca0f03f7deef99a1c8aa3bcd9e58")
  ("protobuf" . "35bdcabdd6a05ce9ee738ad7df8c1299d9c7fc4b")
  ("queue" . "130c2d656cd5d7376552272fab9e50a7c37d0c4a")
  ("racket" . "22e56ce80389544d3872cf4beb4008fb514b2218")
