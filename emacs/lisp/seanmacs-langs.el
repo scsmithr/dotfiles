@@ -820,6 +820,10 @@ Otherwise start the repl in the current directory."
 
 (use-package cc-mode
   ;; built-in
+  :init
+  ;; Workaround for whitespace-mode and doc fontification conflicting causing
+  ;; whitespace to be fontified incorrectly.
+  (setq-default c-doc-comment-style nil)
   :config
   (sm/add-server-program 'c++-mode "ccls")
   (sm/add-server-program 'c-mode "ccls")

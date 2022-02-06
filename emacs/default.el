@@ -84,7 +84,6 @@
  ("queue" . "130c2d656cd5d7376552272fab9e50a7c37d0c4a")
  ("racket" . "22e56ce80389544d3872cf4beb4008fb514b2218")
  ("restclient.el" . "abc307b965bf6720bc466281f2e204cd5ce37dc3")
- ("ripgrep.el" . "40e871dcc4519a70981e9f28acea304692a60978")
  ("rust-mode" . "e9e9e32c4f82a9b895543c120b327ab5536ec42b")
  ("s.el" . "08661efb075d1c6b4fa812184c1e5e90c08795a9")
  ("selectrum" . "26908ea0e88727f5eb6c5ebae7f9fbbe117ef25f")

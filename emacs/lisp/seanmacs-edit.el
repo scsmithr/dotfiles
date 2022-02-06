@@ -157,8 +157,7 @@ loaded (e.g. sql-mode)."
            ("scratch" (name . "\*scratch"))
            ("search" (or
                       (mode . deadgrep-mode)
-                      (mode . grep-mode)
-                      (mode . ripgrep-mode)))
+                      (mode . grep-mode)))
            ("special" (or (name . "\*")
                           (mode . geiser-repl-mode)))
            ("version control" (or
@@ -287,12 +286,6 @@ window."
     "gD" #'deadgrep-directory
     "gE" #'deadgrep-edit-mode
     (kbd "SPC") #'sm/deadgrep-show))
-
-(use-package ripgrep
-  :straight t
-  :config
-  (evil-collection-define-key 'normal 'ripgrep-search-mode-map
-    "q" 'quit-window))
 
 (use-package flycheck
   :straight t
