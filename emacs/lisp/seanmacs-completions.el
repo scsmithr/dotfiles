@@ -9,8 +9,9 @@
 (defun sm/default-completion-in-region (start end collection predicate)
   "A very simple completion-in-read function using `completing-read'.
 
-Fallback for when emacs is launched from the terminal (since
-child frames aren't available)."
+Fallback for when child frame based completions aren't
+available (for example while using emacs in the terminal or
+completing inside the minibuffer)."
   (let* ((prompt "Completion: ")
          (initial (buffer-substring-no-properties start end))
          (buffer (current-buffer))
@@ -37,6 +38,7 @@ child frames aren't available)."
 (use-package corfu
   :straight t
   :init
+  (setq enable-recursive-minibuffers t)
   (setq completion-in-region-function #'sm/default-completion-in-region)
 
   (setq tab-always-indent 'complete)
