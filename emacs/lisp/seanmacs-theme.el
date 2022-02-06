@@ -77,9 +77,6 @@
        `(whitespace-newline ((t (:foreground ,fg-whitespace))))
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
-       ;; Company
-       `(company-preview ((t (:background ,bg-hl-line :foreground ,fg-alt))))
-       `(company-preview-common ((t (:background ,bg-hl-line :foreground ,blue))))
        ;; Org mode
        `(org-code ((t (:inherit modus-themes-fixed-pitch :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
        ;; Modus fringes
@@ -89,6 +86,8 @@
        `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg)))
        `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg)))
        `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg)))
+       ;; Eldoc
+       `(eldoc-highlight-function-argument ((t :inherit bold :foreground ,blue-alt-other)))
 
        (with-eval-after-load 'eglot
          (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)))))
