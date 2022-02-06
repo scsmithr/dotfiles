@@ -70,8 +70,10 @@
 (defun sm/pop-to-some-window ()
   "Display current buffer in some window, selecting it."
   (interactive)
-  (let ((win (display-buffer-use-some-window (current-buffer) '())))
-    (select-window win)))
+  (let ((orig-win (get-buffer-window))
+        (win (display-buffer-use-some-window (current-buffer) '())))
+    (select-window win)
+    (delete-window orig-win)))
 
 (provide 'seanmacs-windows)
 ;;; seanmacs-windows.el ends here

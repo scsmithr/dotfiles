@@ -117,7 +117,7 @@
      (xref-goto-xref)))
 
   (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map
-    "p" #sm/pop-to-some-window
+    "p" #'sm/pop-to-some-window
     (kbd "SPC") #'sm/xref-show))
 
 (use-package eldoc
