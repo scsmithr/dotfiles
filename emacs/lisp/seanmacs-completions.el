@@ -5,21 +5,57 @@
 
 ;;; Code:
 
-(use-package company
+;; Adapted from https://github.com/minad/consult/blob/1a6ed29e92f00266daff4ff5f62602f53ef7d158/consult.el#L2284
+(defun sm/default-completion-in-region (start end collection predicate)
+  "A very simple completion-in-read function using `completing-read'.
+
+Fallback for when emacs is launched from the terminal (since
+child frames aren't available)."
+  (let* ((prompt "Completion: ")
+         (initial (buffer-substring-no-properties start end))
+         (buffer (current-buffer))
+         (completion (completing-read prompt
+                                      (if (functionp collection)
+                                          (lambda (&rest args)
+                                            (with-current-buffer buffer
+                                              (apply collection args)))
+                                        collection)
+                                      predicate nil initial)))
+    (if completion
+        (progn
+          (completion--replace start end (setq completion (concat completion)))
+          (when-let (exit-fn (plist-get completion-extra-properties :exit-function))
+            (funcall exit-fn completion
+                     (if (eq (try-completion completion collection predicate) t)
+                         'finished
+                       'exact)))
+          t)
+      (progn
+        (message "No completion")
+        nil))))
+
+(use-package corfu
   :straight t
-  :config
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.2)
-  (setq company-backends (delete 'company-dabbrev company-backends))
-  (setq company-frontends '(company-preview-frontend))
+  :init
+  (setq completion-in-region-function #'sm/default-completion-in-region)
+
   (setq tab-always-indent 'complete)
+  (setq corfu-preview-current t
+        corfu-auto nil)
+  (corfu-global-mode))
 
-  (unbind-key [return] company-active-map)
-  (unbind-key (kbd "RET") company-active-map)
+(use-package orderless
+  :straight t
+  :init
+  (setq completion-styles '(orderless)
+        orderless-matching-styles '(orderless-literal orderless-regexp)))
 
-  :hook ((after-init . global-company-mode))
-  :bind (:map company-active-map
-              ("<tab>" . company-complete-selection)))
+(use-package vertico
+  :straight t
+  :init
+  (setq vertico-count 10
+        vertico-resize nil)
+  (vertico-mode))
 
 (use-package flimenu
   :straight t
@@ -83,29 +119,6 @@
 
   :bind (("C-c b l" . imenu-list-smart-toggle)))
 
-(use-package selectrum
-  :straight t
-  :config
-  (setq selectrum-fix-vertical-window-height t
-        selectrum-count-style 'current/matches
-        selectrum-max-window-height 10)
-  ;; Disable since selectrum ordering doesn't match what emacs suggests.
-  (setq suggest-key-bindings nil)
-  (selectrum-mode +1))
-
-(use-package prescient
-  :straight t
-  :config
-  (setq prescient-filter-method '(literal regexp initialism fuzzy)
-        prescient-sort-length-enable nil
-        prescient-sort-full-matches-first t)
-  (prescient-persist-mode))
-
-(use-package selectrum-prescient
-  :straight t
-  :config
-  (selectrum-prescient-mode))
-
 (use-package xref
   ;; built-in, ish. Eglot pulls in development versions.
   :straight t
@@ -155,21 +168,21 @@
     "Request documentation for the thing at point."
     (interactive)
     (eglot--dbind ((Hover) contents range)
-        (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
-                         (eglot--TextDocumentPositionParams))
-      (let ((blurb (and (not (seq-empty-p contents))
-                        (eglot--hover-info contents range)))
-            (hint (thing-at-point 'symbol t)))
-        (if blurb
-            (with-current-buffer
-                (or (and (buffer-live-p sm/eglot-help-buffer)
-                         sm/eglot-help-buffer)
-                    (setq sm/eglot-help-buffer (generate-new-buffer "*eglot-help*")))
-              (with-help-window (current-buffer)
-                (rename-buffer (format "*eglot-help for %s*" hint))
-                (with-current-buffer standard-output (insert blurb))
-                (setq-local nobreak-char-display nil)))
-          (display-local-help))))
+                  (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
+                                   (eglot--TextDocumentPositionParams))
+                  (let ((blurb (and (not (seq-empty-p contents))
+                                    (eglot--hover-info contents range)))
+                        (hint (thing-at-point 'symbol t)))
+                    (if blurb
+                        (with-current-buffer
+                            (or (and (buffer-live-p sm/eglot-help-buffer)
+                                     sm/eglot-help-buffer)
+                                (setq sm/eglot-help-buffer (generate-new-buffer "*eglot-help*")))
+                          (with-help-window (current-buffer)
+                            (rename-buffer (format "*eglot-help for %s*" hint))
+                            (with-current-buffer standard-output (insert blurb))
+                            (setq-local nobreak-char-display nil)))
+                      (display-local-help))))
     'deferred)
 
   ;; Below is adapted from Doom Emacs' handling of integration eglot diagnostics

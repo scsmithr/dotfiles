@@ -45,7 +45,7 @@
 
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
-        modus-themes-region 'bg-only
+        modus-themes-region '(bg-only)
         modus-themes-diffs 'bg-only
         modus-themes-org-agenda '((header-block . (no-scale))
                                   (header-date . (bold-all underline-today))))
@@ -89,9 +89,6 @@
        `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg)))
        `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg)))
        `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg)))
-
-       (with-eval-after-load 'sly-mrepl
-         (set-face-attribute 'sly-mrepl-output-face nil :foreground cyan))
 
        (with-eval-after-load 'eglot
          (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)))))
