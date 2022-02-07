@@ -287,37 +287,6 @@ window."
     "gE" #'deadgrep-edit-mode
     (kbd "SPC") #'sm/deadgrep-show))
 
-(use-package flycheck
-  :straight t
-  :demand t
-  :config
-  (defun sm/flycheck-display-errors-function (errs)
-    (let ((message-truncate-lines t))
-      (flycheck-display-error-messages errs)))
-
-  (setq flycheck-check-syntax-automatically '(mode-enabled save)
-        flycheck-indication-mode 'right-fringe
-        flycheck-display-errors-delay 1
-        flycheck-display-errors-function #'sm/flycheck-display-errors-function
-        ;; Increased from 400, eglot with rls will sometimes display a lot of
-        ;; warnings, which I want to see.
-        flycheck-checker-error-threshold 1000)
-  (fset 'flycheck-command-map flycheck-command-map)
-
-  (defalias 'sm/flycheck-error-list-goto-error-no-jump 'flycheck-error-list-goto-error)
-  (evil-add-command-properties #'flycheck-error-list-goto-error :jump t)
-
-  (defun sm/flycheck-error-list-show-error ()
-    "Show location of error in the error list."
-    (interactive)
-    (sm/save-window-excursion (call-interactively 'sm/flycheck-error-list-goto-error-no-jump)))
-
-  (evil-collection-define-key 'normal 'flycheck-error-list-mode-map
-    (kbd "SPC") #'sm/flycheck-error-list-show-error)
-
-  (global-flycheck-mode)
-  :bind-keymap ("C-c f" . flycheck-command-map))
-
 (use-package yasnippet
   :straight t
   :config (yas-global-mode 1))

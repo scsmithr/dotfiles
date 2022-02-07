@@ -69,7 +69,10 @@ completing inside the minibuffer)."
   :init
   (setq vertico-count 10
         vertico-resize nil)
-  (vertico-mode))
+
+  (vertico-mode)
+  :bind (:map vertico-map
+              ("C-j" . vertico-exit-input)))
 
 (use-package flimenu
   :straight t
@@ -198,62 +201,6 @@ completing inside the minibuffer)."
                             (setq-local nobreak-char-display nil)))
                       (display-local-help))))
     'deferred)
-
-  ;; Below is adapted from Doom Emacs' handling of integration eglot diagnostics
-  ;; with flycheck.
-
-  (setq eglot-stay-out-of '(flymake))
-
-  (defvar-local sm/eglot-flycheck-current-errors nil)
-
-  (defun sm/eglot-flycheck-init (checker callback)
-    (eglot-flymake-backend #'sm/eglot-on-diagnostic)
-    (funcall callback 'finished sm/eglot-flycheck-current-errors))
-
-  (mapc #'sm/warn-fn-not-bound '(flymake--diag-beg
-                                 flymake--diag-type
-                                 flymake--diag-text
-                                 flymake--diag-end))
-
-  (defun sm/eglot-flymake-diag-to-flycheck (diag)
-    (with-current-buffer (flymake-diagnostic-buffer diag)
-      (flycheck-error-new-at-pos
-       (flymake--diag-beg diag)
-       (pcase (flymake--diag-type diag)
-         ('eglot-note 'info)
-         ('eglot-warning 'warning)
-         ('eglot-error 'error)
-         (_ (error "Unknown diagnostic type %S" diag)))
-       (flymake--diag-text diag)
-       :end-pos (flymake--diag-end diag)
-       :checker 'eglot
-       :buffer (current-buffer)
-       :filename (buffer-file-name))))
-
-  (defun sm/eglot-on-diagnostic (diags &rest _)
-    (setq sm/eglot-flycheck-current-errors
-          (mapcar #'sm/eglot-flymake-diag-to-flycheck diags))
-    (flycheck-buffer-deferred))
-
-  (flycheck-define-generic-checker 'eglot
-    "Report `eglot' diagnostics using `flycheck'."
-    :start #'sm/eglot-flycheck-init
-    :predicate #'eglot-managed-p
-    :modes '(prog-mode text-mode))
-
-  (push 'eglot flycheck-checkers)
-
-  (defun sm/eglot-flycheck-hook ()
-    (when (eglot-managed-p)
-      (flymake-mode -1)
-      (when-let ((current-checker (flycheck-get-checker-for-buffer)))
-        (unless (equal current-checker 'eglot)
-          (flycheck-add-next-checker 'eglot current-checker)))
-      (flycheck-add-mode 'eglot major-mode)
-      (flycheck-mode 1)
-      (flycheck-buffer-deferred)))
-
-  (add-hook 'eglot-managed-mode-hook #'sm/eglot-flycheck-hook)
 
   ;; See: https://github.com/joaotavora/eglot/pull/771#issuecomment-1030710724
   (defun sm/eglot-remove-company-docsig (completions)

@@ -23,9 +23,9 @@
 (use-package minions
   :straight t
   :config
-  ;; Flycheck - I always want to see warnings/errors.
+  ;; Flymake - I always want to see warnings/errors.
   ;; Follow - Can slow things down quite a bit, so nice to know if it's enabled.
-  (setq minions-direct '(flycheck-mode follow-mode))
+  (setq minions-direct '(flymake-mode follow-mode))
 
   (minions-mode 1))
 

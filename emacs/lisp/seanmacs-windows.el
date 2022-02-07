@@ -31,7 +31,7 @@
   (setq display-buffer-alist
         '(;; selecting bottom side window
           ("\\*\
-\\(Flycheck errors\
+\\(Flymake diagnostics\
 \\|xref\
 \\|docker\
 \\).*"
@@ -42,12 +42,10 @@
           ;; bottom side window
           ("\\*\
 \\(Completions\
-\\|Flycheck error messages\
 \\|Help\
 \\|Warnings\
 \\|eglot-help\
 \\|Gofmt Errors\
-\\|prettier errors\
 \\).*"
            (display-buffer-in-side-window)
            (window-height . 12)

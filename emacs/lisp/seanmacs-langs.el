@@ -61,15 +61,6 @@
 
 ;; LSP utilities.
 
-(defun sm/set-eglot-checker ()
-  "Ensure that eglot is the only checker enabled.
-
-This prevents other checkers from automatically being enabled.
-Since eglot is used for multiple different modes, this will
-prevent irrelevant checkers from running in modes that don't need
-them."
-  (setq flycheck-checker 'eglot)) ;; Buffer local.
-
 
 ;; Go
 
@@ -90,18 +81,6 @@ them."
   (setq gofmt-command "goimports"
         gofmt-args '("-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
 
-  ;; Running golangci-lint can be slow. Enable on demand.
-  (defun sm/enable-golangci ()
-    "Enable golangci-lint flycheck checker."
-    (interactive)
-    (flycheck-golangci-lint-setup)
-    (flycheck-add-next-checker 'eglot 'golangci-lint 'append))
-
-  (defun sm/disable-golangci ()
-    "Disable golangci-lint flycheck checker."
-    (interactive)
-    (flycheck-remove-next-checker 'eglot 'golangci-lint))
-
   (defun sm/go-toplevel-test ()
     "Get the name of the current top-level test function."
     (save-excursion
@@ -118,18 +97,9 @@ them."
         (sm/compile cmd buf-name))))
 
   :hook ((go-mode . sm/set-gofmt-hook)
-         (go-mode . sm/set-eglot-checker)
          (go-mode . sm/gopls-ensure))
   :bind(:map go-mode-map
              ("C-c C-t" . sm/go-run-test-at-point)))
-
-(use-package flycheck-golangci-lint
-  :straight t
-  :defer t
-  :commands flycheck-golangci-lint-setup
-  :config
-  (setq flycheck-golangci-lint-tests t
-        flycheck-golangci-lint-fast t))
 
 
 ;; Haskell
@@ -164,7 +134,6 @@ them."
   (sm/add-server-program 'rust-mode "rust-analyzer")
 
   :hook ((rust-mode . cargo-minor-mode)
-         (rust-mode . sm/set-eglot-checker)
          (rust-mode . eglot-ensure)))
 
 (use-package cargo
@@ -225,52 +194,11 @@ Requires that cargo-expand is installed."
 
 ;; Typescript/ web stuff
 
-(defun sm/bin-from-node-modules (bin)
-  "Return the full path if BIN exists in dominating node modules
-dir. Return nil otherwise."
-  (let* ((dir (or (sm/project-root-maybe)
-                  (buffer-file-name)
-                  default-directory))
-         (root (locate-dominating-file dir "node_modules"))
-         (rel-path (format "node_modules/.bin/%s" bin))
-         (path (and root (expand-file-name rel-path root))))
-    (when (and path (file-executable-p path))
-      path)))
-
-(defun sm/use-node-modules-eslint ()
-  (when-let ((eslint (sm/bin-from-node-modules "eslint")))
-    (setq-local flycheck-javascript-eslint-executable eslint)))
-
-(use-package prettier-js
-  :straight t
-  :defer t
-  :init
-  (defun sm/use-node-modules-prettier ()
-    (when-let ((prettier (sm/bin-from-node-modules "prettier")))
-      (setq-local prettier-js-command prettier)))
-  :hook ((prettier-js-mode . sm/use-node-modules-prettier)))
-
 (use-package typescript-mode
   :straight t
   :defer t
   :mode "\\.ts\\'"
-  :init
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-
-  (defun sm/enable-ts-eslint ()
-    "Enable javascript-esline flycheck checker for typescript."
-    (interactive)
-    (flycheck-add-next-checker 'eglot 'javascript-eslint))
-
-  (defun sm/disable-ts-eslint ()
-    "Disable javascript-eslint flycheck checker for typescript."
-    (interactive)
-    (flycheck-remove-next-checker 'eglot 'javascript-eslint))
-
-  :hook ((typescript-mode . eglot-ensure)
-         (typescript-mode . prettier-js-mode)
-         (typescript-mode . sm/use-node-modules-eslint)
-         (typescript-mode . sm/set-eglot-checker))
+  :hook ((typescript-mode . eglot-ensure))
   :bind (:map typescript-mode-map
               ("C-c C-d" . sm/eglot-lookup-doc)))
 
@@ -281,8 +209,7 @@ Typescript files and TSX files.
 Note that `eglot' is able to automatically detect language ID
 from the mode name. The typescript language server uses
 'typescriptreact' as the language ID for tsx files, hence the
-mode name."
-  (flycheck-add-mode 'javascript-eslint 'typescriptreact-mode))
+mode name.")
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
 
@@ -384,8 +311,7 @@ Start a new process if not alive."
   (sm/add-server-program 'elixir-mode "elixir-ls")
 
   :hook ((elixir-mode . eglot-ensure)
-         (elixir-mode . sm/set-elixir-format-hook)
-         (elixir-mode . sm/set-eglot-checker))
+         (elixir-mode . sm/set-elixir-format-hook))
   :bind(:map elixir-mode-map
              ("C-c C-l" . sm/iex-recompile-current-module)
              ("C-c C-c" . sm/iex-send-region-or-line)))
@@ -450,8 +376,7 @@ Start a new process if not alive."
   :straight t
   :defer t
   :init
-  (setq flycheck-scheme-chicken-executable "chicken-csc"
-        geiser-chicken-binary "chicken-csi"))
+  (setq geiser-chicken-binary "chicken-csi"))
 
 
 ;; Julia
@@ -829,9 +754,7 @@ Otherwise start the repl in the current directory."
   (sm/add-server-program 'c-mode "ccls")
 
   :hook ((c++-mode . eglot-ensure)
-         (c++-mode . sm/set-eglot-checker)
-         (c-mode . eglot-ensure)
-         (c-mode . sm/set-eglot-checker)))
+         (c-mode . eglot-ensure)))
 
 
 ;; SQL
@@ -871,6 +794,26 @@ Otherwise start the repl in the current directory."
   :config
   (setq csv-align-padding 2)
   :hook ((csv-mode . csv-align-mode)))
+
+
+;; Shell scripts
+
+(use-package sh-script
+  ;; built in
+  :init
+  (sm/define-flymake-checker shellcheck
+                             :executable "shellcheck"
+                             :args ("-o" "all" "-f" "gcc" "-")
+                             :regexp "^.+?:\\([0-9]+\\):\\([0-9]+\\): \\(.*\\): \\(.*\\)$"
+                             :match-line 1
+                             :match-col 2
+                             :match-type (lambda ()
+                                           (pcase (match-string 3)
+                                             ("error" :error)
+                                             ("warning" :warning)
+                                             (other :note)))
+                             :match-msg 4)
+  :hook ((sh-mode . sm/flymake-checker-shellcheck-load)))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

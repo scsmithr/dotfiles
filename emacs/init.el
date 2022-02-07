@@ -44,6 +44,7 @@
 (use-package seanmacs-windows)
 (use-package seanmacs-edit)
 (use-package seanmacs-completions)
+(use-package seanmacs-flymake)
 (use-package seanmacs-utils)
 (use-package seanmacs-version-control)
 (use-package seanmacs-org)
