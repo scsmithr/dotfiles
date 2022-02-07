@@ -10,7 +10,7 @@
   "A very simple completion-in-read function using `completing-read'.
 
 Fallback for when child frame based completions aren't
-available (for example while using emacs in the terminal or
+available (for example while using Emacs in the terminal or
 completing inside the minibuffer)."
   (let* ((prompt "Completion: ")
          (initial (buffer-substring-no-properties start end))
@@ -49,8 +49,18 @@ completing inside the minibuffer)."
 (use-package orderless
   :straight t
   :init
+  (defvar sm/default-orderless-matching-styles
+    '(orderless-literal orderless-regexp)
+    "Default matching styles for orderless.")
+
+  (defun sm/first-includes-flex (pattern index total)
+    "First component will also be matched with flex."
+    (when (= index 0) (append sm/default-orderless-matching-styles
+                              '(orderless-flex))))
+
   (setq completion-styles '(orderless)
-        orderless-matching-styles '(orderless-literal orderless-regexp)))
+        orderless-matching-styles sm/default-orderless-matching-styles
+        orderless-style-dispatchers '(sm/first-includes-flex)))
 
 (use-package vertico
   :straight t
