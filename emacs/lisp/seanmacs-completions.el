@@ -58,9 +58,11 @@ completing inside the minibuffer)."
     (when (= index 0) (append sm/default-orderless-matching-styles
                               '(orderless-flex))))
 
+  (setq orderless-matching-styles sm/default-orderless-matching-styles
+        orderless-style-dispatchers '(sm/first-includes-flex))
+
   (setq completion-styles '(orderless)
-        orderless-matching-styles sm/default-orderless-matching-styles
-        orderless-style-dispatchers '(sm/first-includes-flex)))
+        completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package vertico
   :straight t
