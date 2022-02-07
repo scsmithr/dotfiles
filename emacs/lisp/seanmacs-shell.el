@@ -38,9 +38,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   (setq compilation-scroll-output 'first-error)
   :hook ((compilation-filter . sm/colorize-compile-buffer)))
 
-(defun sm/disable-company ()
-  (company-mode -1))
-
 (defvar sm/eshell-append-history-on-command t
   "Whether or not eshell should write to the history file before each command.")
 
@@ -146,16 +143,10 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   (remove-hook 'eshell-mode-hook 'evil-collection-eshell-escape-stay)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
-         (eshell-mode . sm/disable-company)
          (eshell-mode . sm/eshell-set-local-keybinds)
          (eshell-pre-command . sm/eshell-append-history))
   :bind (("C-c s s" . eshell)
          ("C-c s n" . sm/eshell-new)))
-
-(use-package shell
-  ;; built-in
-  :config
-  :hook ((shell-mode . sm/disable-company)))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here

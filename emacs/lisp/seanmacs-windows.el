@@ -46,7 +46,6 @@
 \\|Help\
 \\|Warnings\
 \\|eglot-help\
-\\|company-documentation\
 \\|Gofmt Errors\
 \\|prettier errors\
 \\).*"
