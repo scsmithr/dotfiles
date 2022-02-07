@@ -312,5 +312,8 @@ window."
 
   :bind (("C-c e" . edit-indirect-region)))
 
+(use-package apheleia
+  :straight t)
+
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

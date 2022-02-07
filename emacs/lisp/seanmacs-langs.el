@@ -67,19 +67,15 @@
 (use-package go-mode
   :straight t
   :defer t
-  :commands gofmt
   :init
-  (defun sm/set-gofmt-hook ()
-    (add-hook 'before-save-hook #'gofmt nil t))
-
   (defun sm/gopls-ensure ()
     (setq eglot-workspace-configuration
           `((gopls . (directoryFilters ,(vector "-node_modules"
                                                 "-vendor")))))
     (eglot-ensure))
   :config
-  (setq gofmt-command "goimports"
-        gofmt-args '("-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
+  (setf (alist-get 'goimports apheleia-formatters) '("goimports" "-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
+  (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports)
 
   (defun sm/go-toplevel-test ()
     "Get the name of the current top-level test function."
@@ -96,7 +92,7 @@
             (buf-name (format "*Test: Go [%s]*" test-name)))
         (sm/compile cmd buf-name))))
 
-  :hook ((go-mode . sm/set-gofmt-hook)
+  :hook ((go-mode . apheleia-mode)
          (go-mode . sm/gopls-ensure))
   :bind(:map go-mode-map
              ("C-c C-t" . sm/go-run-test-at-point)))
@@ -108,11 +104,15 @@
   :straight t
   :defer t
   :config
-  (setq haskell-stylish-on-save t
-        haskell-mode-stylish-haskell-path "ormolu"
+  (setq haskell-stylish-on-save nil ;; Handled by apheleia.
         haskell-interactive-popup-errors nil)
+
+  (setf (alist-get 'ormolu apheleia-formatters) '("ormolu"))
+  (setf (alist-get 'haskell-mode apheleia-mode-alist) 'ormolu)
+
   (sm/set-goto-def-keybind 'haskell-mode-map #'haskell-mode-jump-to-def)
-  :hook ((haskell-mode . interactive-haskell-mode)))
+  :hook ((haskell-mode . interactive-haskell-mode)
+         (haskell-mode . apheleia-mode)))
 
 
 ;; Octave
@@ -128,13 +128,14 @@
   :straight t
   :defer t
   :config
-  (setq rust-format-on-save t
+  (setq rust-format-on-save nil ;; Handled by apheleia
         rust-format-show-buffer nil)
 
   (sm/add-server-program 'rust-mode "rust-analyzer")
 
   :hook ((rust-mode . cargo-minor-mode)
-         (rust-mode . eglot-ensure)))
+         (rust-mode . eglot-ensure)
+         (rust-mode . apheleia-mode)))
 
 (use-package cargo
   :straight t
@@ -198,7 +199,8 @@ Requires that cargo-expand is installed."
   :straight t
   :defer t
   :mode "\\.ts\\'"
-  :hook ((typescript-mode . eglot-ensure))
+  :hook ((typescript-mode . eglot-ensure)
+         (typescript-mode . apheleia-mode))
   :bind (:map typescript-mode-map
               ("C-c C-d" . sm/eglot-lookup-doc)))
 
@@ -664,17 +666,6 @@ Otherwise start the repl in the current directory."
 (use-package dockerfile-mode
   :straight t
   :defer t)
-
-
-;; Lean
-
-(use-package lean-mode
-  :straight t
-  :defer t
-  :config
-  (setq lean-memory-limit 16384
-        lean-extra-arguments '("-D class.instance_max_depth=1000"))
-  (sm/set-goto-def-keybind 'lean-mode-map #'lean-find-definition))
 
 
 ;; Agda

@@ -17,10 +17,6 @@
   (setq tabulated-list-gui-sort-indicator-asc ?↓
         tabulated-list-gui-sort-indicator-desc ?↑))
 
-;; Quickly generate lang formatters.
-(use-package reformatter
-  :straight t)
-
 (use-package shr
   ;; builtin
   :config
