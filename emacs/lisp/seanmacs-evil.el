@@ -1,12 +1,17 @@
-;;; seanmacs-keybinds.el --- Core keybindings -*- lexical-binding: t; -*-
+;;; seanmacs-evil.el --- Evil keybindings -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Keybind configuration.
+;; Evil configuration.
 
 ;;; Code:
 
 (use-package undo-fu
   :straight t)
+
+(use-package winner
+  ;; built-in
+  :config
+  (winner-mode 1))
 
 ;; evil
 (use-package evil
@@ -60,5 +65,5 @@
   :after evil
   :config (global-evil-surround-mode 1))
 
-(provide 'seanmacs-keybinds)
+(provide 'seanmacs-evil)
 ;;; seanmacs-keybinds.el ends here

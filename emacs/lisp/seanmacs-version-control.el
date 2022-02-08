@@ -38,7 +38,7 @@
   :demand t
   :config
   (setq diff-hl-draw-borders nil)
-  (define-fringe-bitmap 'sm/diff-hl-fringe-bmp [#b00111000] nil nil '(center t))
+  (define-fringe-bitmap 'sm/diff-hl-fringe-bmp [#b00011100] nil nil '(center t))
   (defun sm/diff-hl-fringe-bmp (_type _pos)
     'sm/diff-hl-fringe-bmp)
   (setq diff-hl-fringe-bmp-function #'sm/diff-hl-fringe-bmp)

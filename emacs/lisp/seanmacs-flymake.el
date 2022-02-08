@@ -9,8 +9,8 @@
   ;; built-in, ish. Eglot pulls in development versions.
   :demand t
   :init
-  ;; `flymake--log-1' calls `string-replace' but that's void .
-  ;; Alias it to an equivalent function.
+  ;; `flymake--log-1' calls `string-replace' but that's void in Emacs 27. Alias
+  ;; it to an equivalent function.
   (when (not (fboundp 'string-replace))
     (defalias 'string-replace #'s-replace))
   :config
@@ -18,10 +18,19 @@
         flymake-no-changes-timeout 1
         flymake-fringe-indicator-position 'right-fringe)
 
+  (define-fringe-bitmap 'sm/flymake-bitmap [#b00111000] nil nil '(center t))
+  (setq flymake-note-bitmap '(sm/flymake-bitmap modus-themes-fringe-cyan)
+        flymake-warning-bitmap '(sm/flymake-bitmap modus-themes-fringe-yellow)
+        flymake-error-bitmap '(sm/flymake-bitmap modus-themes-fringe-red))
+
   (evil-collection-define-key 'normal 'flymake-diagnostics-buffer-mode-map
     (kbd "SPC") #'flymake-show-diagnostic)
 
-  :hook ((prog-mode . flymake-mode))
+  (defun sm/flymake-sort-by-line ()
+    (setq tabulated-list-sort-key '("Line" . nil)))
+
+  :hook ((prog-mode . flymake-mode)
+         (flymake-diagnostics-buffer-mode . sm/flymake-sort-by-line))
   :bind (:prefix "C-c f"
                  :prefix-map flymake-prefix-map
                  ("l" . flymake-show-buffer-diagnostics)

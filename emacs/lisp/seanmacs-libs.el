@@ -29,6 +29,16 @@
 
 (define-key global-map (kbd "M-Q") #'sm/unfill-paragraph)
 
+(defun sm/indent-region-or-buffer (start end)
+  "Indent region from START to END, or the entire buffer if no region is selected."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (indent-region start end))
+
+(define-key global-map (kbd "C-c b i") #'sm/indent-region-or-buffer)
+(define-key global-map (kbd "C-c .") #'repeat)
+
 (defun sm/ansi-colorize (beg end)
   "Colorize region according to ANSI control sequences from BEG to END.
 If no region selected, colorize the entire buffer."
@@ -60,38 +70,6 @@ If no region selected, colorize the entire buffer."
   (interactive)
   (sm/load-tests)
   (ert t))
-
-;; Helpers for downloading things
-
-(defun sm/download-pdf (link &optional type open name)
-  "Download and save a pdf from LINK.
-
-TYPE may be one of paper, book, arxiv, or refile. When OPEN is
-non-nil, open the downloaded pdf. Does not overwrite existing
-files.
-
-NAME is the name to save the pdf as. If nil, defaults to the
-original file name. The '.pdf' extension will be appended if it's
-missing from the name."
-  (interactive (let ((link (read-string "Link: ")))
-                 (list link
-                       (completing-read "Type: " '(paper book arxiv refile))
-                       t
-                       (read-string "Name: " (file-name-nondirectory link)))))
-  (let ((dir (cond ((string= type 'paper) "~/syncthing/papers/")
-                   ((string= type 'book)  "~/syncthing/books/")
-                   ((string= type 'arxiv) "~/syncthing/arxiv/downloads/")
-                   (t                     "~/syncthing/refile/")))
-        (name (or name (file-name-nondirectory link))))
-    (mkdir dir t)
-    (if (string-empty-p name)
-        (user-error "Got empty file name from link: %s" link)
-      (let ((path (concat dir (if (string-suffix-p ".pdf" name) name (concat name ".pdf")))))
-        (if (file-exists-p path)
-            (message "File already exists at %s" path)
-          (with-current-buffer (url-retrieve-synchronously link)
-            (write-region nil nil path)))
-        (when open (find-file path))))))
 
 ;; Kill ring helpers
 

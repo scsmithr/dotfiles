@@ -149,48 +149,8 @@
   (defun sm/set-cargo-process-scroll-bottom ()
     (setq-local compilation-scroll-output t))
 
-  (defvar sm/rust-fn-or-struct-regex
-    "^[ ]*\\(?:pub \\|pub\\(?:.*\\) \\)?\\(?:fn\\|struct\\) \\([a-zA-Z0-9_]+\\)"
-    "Regex for capturing the fn or struct identifier.")
-
-  (defun sm/rust-fn-or-struct ()
-    "Get the identifier for the fn or struct at point."
-    (save-excursion
-      (end-of-line)
-      (re-search-backward sm/rust-fn-or-struct-regex nil t)
-      (let ((ident (match-string-no-properties 1)))
-        ident)))
-
-  (defun sm/rust-qualified-fn-or-struct ()
-    "Get the fully qualified identifier for the fn or struct at point."
-    (let ((ident (sm/rust-fn-or-struct))
-          (mod (cargo-process--get-current-mod)))
-      (if mod
-          (concat mod "::" ident)
-        ident)))
-
-  (defun sm/cargo-process-expand-ident ()
-    "Run the cargo expand subcommand against the current identifier.
-
-Requires that cargo-expand is installed."
-    (interactive)
-    (if-let ((ident (sm/rust-qualified-fn-or-struct)))
-        (cargo-process--start "Expand ident"
-                              (concat "expand" " " ident))
-      (error "Could not find rust identifier to expand")))
-
-  (defun sm/cargo-process-expand-module ()
-    "Run the cargo expand command against the current module.
-
-Requires that cargo-expand is installed."
-    (interactive)
-    (cargo-process--start "Expand mod"
-                          (concat "expand" " " (cargo-process--get-current-mod))))
-
   :hook ((cargo-process-mode . sm/set-cargo-process-scroll-bottom)
-         (cargo-process-mode . visual-line-mode))
-  :bind(:map cargo-minor-mode-command-map
-             ("C-i" . sm/cargo-process-expand-ident)))
+         (cargo-process-mode . visual-line-mode)))
 
 
 ;; Typescript/ web stuff
@@ -243,9 +203,6 @@ mode name.")
   :straight t
   :defer t
   :init
-  (defun sm/set-elixir-format-hook ()
-    (add-hook 'before-save-hook #'elixir-format nil t))
-
   (defvar sm/iex-name "iex"
     "Command for iex.")
 
@@ -313,7 +270,7 @@ Start a new process if not alive."
   (sm/add-server-program 'elixir-mode "elixir-ls")
 
   :hook ((elixir-mode . eglot-ensure)
-         (elixir-mode . sm/set-elixir-format-hook))
+         (elixir-mode . alpheleia-mode))
   :bind(:map elixir-mode-map
              ("C-c C-l" . sm/iex-recompile-current-module)
              ("C-c C-c" . sm/iex-send-region-or-line)))
