@@ -196,6 +196,11 @@ mode name.")
         web-mode-enable-auto-indentation nil)
   :hook ((web-mode . sm/reset-web-mode-offsets)))
 
+(use-package css-mode
+  ;; builtin
+  :config
+  (setq css-fontify-colors nil))
+
 
 ;; Elixir
 
