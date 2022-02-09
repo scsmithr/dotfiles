@@ -78,7 +78,7 @@
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
        ;; Org mode
-       `(org-code ((t (:inherit modus-themes-fixed-pitch :foreground ,magenta-nuanced-fg :background ,magenta-nuanced-bg))))
+       `(org-code ((t (:inherit modus-themes-markup-verbatim))))
        ;; Modus fringes
        `(modus-themes-fringe-red ((t :foreground ,red-fringe-bg)))
        `(modus-themes-fringe-green ((t :foreground ,green-fringe-bg)))
