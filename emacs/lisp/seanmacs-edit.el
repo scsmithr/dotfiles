@@ -208,6 +208,10 @@ loaded (e.g. sql-mode)."
   ;; ibuffer.
   (advice-add 'ibuffer-visit-buffer :around #'sm/run-and-bury)
 
+  (evil-collection-define-key 'normal 'ibuffer-mode-map
+    "gj" #'ibuffer-forward-filter-group
+    "gk" #'ibuffer-backward-filter-group)
+
   :hook ((ibuffer-mode . sm/ibuffer-switch-to-saved-filter-groups)
          (ibuffer . sm/ibuffer-jump-to-last-buffer))
   :bind (("C-c b b" . ibuffer)))
@@ -285,6 +289,9 @@ window."
     "gS" #'deadgrep-search-term
     "gD" #'deadgrep-directory
     "gE" #'deadgrep-edit-mode
+    ;; movement
+    "gj" #'deadgrep-forward-filename
+    "gk" #'deadgrep-backward-filename
     (kbd "SPC") #'sm/deadgrep-show))
 
 (use-package yasnippet
