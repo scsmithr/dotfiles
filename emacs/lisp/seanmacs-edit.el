@@ -236,7 +236,7 @@ loaded (e.g. sql-mode)."
   (defun sm/project-root-maybe ()
     "Return the root of project if `default-directory' is in a project. Return nil otherwise."
     (when-let (project (project-current))
-      (project-root)))
+      (project-root project)))
 
   (defun sm/project-eshell ()
     "Similiar to `project-eshell', opens eshell in the project root.
