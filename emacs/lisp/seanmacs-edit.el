@@ -145,27 +145,32 @@ loaded (e.g. sql-mode)."
         ibuffer-show-empty-filter-groups nil
         ibuffer-saved-filter-groups
         '(("seanmacs"
-           ("async" (name . "\*Async"))
-           ("compile" (mode . compilation-mode))
-           ("shell" (or
+           ("Async" (name . "\*Async"))
+           ("Compile" (mode . compilation-mode))
+           ("Shell" (or
                      (mode . eshell-mode)
                      (mode . term-mode)
                      (mode . shell-mode)))
-           ("dired" (or (mode . dired-mode)
+           ("Dired" (or (mode . dired-mode)
                         (mode . image-dired-thumbnail-mode)))
-           ("email" (name . "\*mu4e"))
-           ("scratch" (name . "\*scratch"))
-           ("search" (or
+           ("Email" (name . "\*mu4e"))
+           ("Scratch" (name . "\*scratch"))
+           ("Search" (or
                       (mode . deadgrep-mode)
                       (mode . grep-mode)))
-           ("special" (or (name . "\*")
+           ("Special" (or (name . "\*")
                           (mode . geiser-repl-mode)))
-           ("version control" (or
+           ("Version control" (or
                                (name . "magit")
                                (mode . diff-mode)
-                               (mode . github-review-mode))))))
+                               (mode . github-review-mode)))
+           ("Docs" (or
+                    (mode . pdf-view-mode)
+                    (mode . pdf-outline-mode)
+                    (derived-mode . text-mode)
+                    (mode . nov-mode))))))
 
-  (setq sm/ibuffer-filter-group-order '("Default" "shell" "special"))
+  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Special"))
 
   (defun sm/ibuffer-order-filter-groups (groups)
     "Sort GROUPS using `sm/ibuffer-filter-group-order' and then alphabetically."
@@ -208,9 +213,16 @@ loaded (e.g. sql-mode)."
   ;; ibuffer.
   (advice-add 'ibuffer-visit-buffer :around #'sm/run-and-bury)
 
+  (defun sm/ibuffer-backward-filter-group-skip-current ()
+    "Jump to the previous filter group header."
+    (interactive)
+    (if (get-text-property (point) 'ibuffer-filter-group-name)
+        (ibuffer-backward-filter-group 1)
+      (ibuffer-backward-filter-group 3)))
+
   (evil-collection-define-key 'normal 'ibuffer-mode-map
     "gj" #'ibuffer-forward-filter-group
-    "gk" #'ibuffer-backward-filter-group)
+    "gk" #'sm/ibuffer-backward-filter-group-skip-current)
 
   :hook ((ibuffer-mode . sm/ibuffer-switch-to-saved-filter-groups)
          (ibuffer . sm/ibuffer-jump-to-last-buffer))
