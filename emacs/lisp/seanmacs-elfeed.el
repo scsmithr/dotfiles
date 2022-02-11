@@ -156,8 +156,7 @@ missing from the name."
       (let ((path (concat dir (if (string-suffix-p ".pdf" name) name (concat name ".pdf")))))
         (if (file-exists-p path)
             (message "File already exists at %s" path)
-          (with-current-buffer (url-retrieve-synchronously link t)
-            (write-region nil nil path)))
+          (url-copy-file link path))
         (when open (find-file path))))))
 
 (defun sm/arxiv-link-to-pdf (link)
