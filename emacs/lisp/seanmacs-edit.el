@@ -166,7 +166,6 @@ loaded (e.g. sql-mode)."
                                (mode . github-review-mode)))
            ("Docs" (or
                     (mode . pdf-view-mode)
-                    (mode . pdf-outline-mode)
                     (derived-mode . text-mode)
                     (mode . nov-mode))))))
 
