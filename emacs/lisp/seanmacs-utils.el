@@ -206,7 +206,46 @@ opening the file."
   (setq-default olivetti-body-width 102)
   (setq olivetti-style 'fringes)
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
-  :bind (("C-c z" . olivetti-mode)))
+  :bind (("C-c z" . zen-mode)))
+
+(defvar-local zen-mode-flymake-fringe-indicator-position nil
+  "Original buffer local setting for `flymake-fringe-indicator-position'.")
+
+(defvar-local zen-mode-fringe-indicator-alist nil
+  "Original buffer local setting for `fringe-indicator-alist'.")
+
+(define-minor-mode zen-mode
+  "Mode that centers the current buffer and disables select fringe elements."
+  :init-value nil
+  :global nil
+  :lighter "Zen"
+  (if zen-mode
+      (progn
+        (diff-hl-mode -1)
+
+        (when (local-variable-p 'flymake-fringe-indicator-position)
+          (setq zen-mode-flymake-fringe-indicator-position flymake-fringe-indicator-position))
+
+        (when (local-variable-p 'fringe-indicator-alist)
+          (setq zen-mode-fringe-indicator-alist fringe-indicator-alist))
+
+        (setq-local flymake-fringe-indicator-position nil)
+        (setq-local fringe-indicator-alist (mapcar #'(lambda (mapping)
+                                                       (cons (car mapping) nil))
+                                                   fringe-indicator-alist))
+        (olivetti-mode 1))
+    (progn
+      (diff-hl-mode 1)
+
+      (if zen-mode-flymake-fringe-indicator-position
+          (setq-local flymake-fringe-indicator-position zen-mode-flymake-fringe-indicator-position)
+        (kill-local-variable 'flymake-fringe-indicator-position))
+
+      (if zen-mode-fringe-indicator-alist
+          (setq-local fringe-indicator-alist zen-mode-fringe-indicator-alist)
+        (kill-local-variable 'fringe-indicator-alist))
+
+      (olivetti-mode -1))))
 
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

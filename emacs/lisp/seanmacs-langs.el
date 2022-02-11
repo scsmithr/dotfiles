@@ -620,7 +620,8 @@ Otherwise start the repl in the current directory."
   :config
   (setq-default markdown-hide-urls t)
   (setq markdown-url-compose-char ?#
-        markdown-fontify-code-blocks-natively t))
+        markdown-fontify-code-blocks-natively t)
+  :hook ((markdown-mode . visual-line-mode)))
 
 
 ;; Dockerfile
