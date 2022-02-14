@@ -822,6 +822,7 @@
     vendor/
     node_modules/
     .log/
+    .ccls-cache/
   #+END_SRC
 
   Add new new diff mode for org mode files. This allows for customizing the hunk
@@ -847,7 +848,7 @@
   #+END_SRC
 
   Regex only supports headers with =#= characters. I never use the alternative
-  way of denoting headers, and I have never seen it used beyond examples.
+  way of denoting headers, so this is good enough for my use case.
 
   #+BEGIN_SRC conf :tangle ~/.gitconfig
     [diff "md"]
