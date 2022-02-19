@@ -24,6 +24,10 @@
   :bind (("C-c g g" . magit-status)
          ("C-c g f" . magit-file-dispatch)))
 
+(use-package orgit
+  :straight t
+  :after (org))
+
 (use-package forge
   :straight t
   :after magit

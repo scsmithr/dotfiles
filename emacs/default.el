@@ -68,6 +68,7 @@
  ("olivetti" . "a31ac05a161a91fe5c157930b62a6c07037982ee")
  ("orderless" . "ce462a63e32dd32bceea041f656bb79da953d62f")
  ("org" . "c0ca5e39054f6fde4afd74db033fbfc3f5f7b721")
+ ("orgit" . "42b7f682b3e4e487ff209a44221a729921241133")
  ("otp" . "b8cc6444878959dff71f55e10637d27e7106dfb7")
  ("parseclj" . "eff941126859bc9e949eae5cd6c2592e731629f2")
  ("parseedn" . "90cfe3df51b96f85e346f336c0a0ee6bf7fee508")
