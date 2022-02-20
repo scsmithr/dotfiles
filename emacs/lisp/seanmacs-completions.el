@@ -65,7 +65,8 @@ completing inside the minibuffer)."
         orderless-style-dispatchers '(sm/first-includes-flex))
 
   (setq completion-styles '(orderless)
-        completion-category-overrides '((file (styles basic partial-completion)))))
+        completion-category-overrides '((file (styles basic partial-completion)))
+        completion-ignore-case t))
 
 (use-package vertico
   :straight t
