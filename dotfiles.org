@@ -952,7 +952,7 @@
      [redshift]
      ; Set the day and night screen temperatures
      temp-day=6500
-     temp-night=2500
+     temp-night=3500
 
      ; Enable/Disable a smooth transition between day and night
      ; 0 will cause a direct change from day to night screen temperature.
