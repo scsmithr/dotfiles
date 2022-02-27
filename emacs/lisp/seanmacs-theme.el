@@ -53,8 +53,7 @@
   (setq x-underline-at-descent-line t)
 
   (setq modus-themes-operandi-color-overrides
-        '((bg-main                 . "#fcfcfc")
-          (fg-whitespace           . "#f2eff3")
+        '((fg-whitespace           . "#f2eff3")
           (bg-whitespace           . "#ffffff")
           (fg-window-divider-inner . "#dadada")
           (fg-window-divider-outer . "#aaaaaa")
