@@ -46,7 +46,8 @@ completing inside the minibuffer)."
         corfu-auto nil)
   (corfu-global-mode)
   :bind (:map corfu-map
-              ("C-j" . corfu-quit)))
+              ("C-j" . corfu-quit)
+              ("SPC" . corfu-insert-separator)))
 
 
 (use-package orderless

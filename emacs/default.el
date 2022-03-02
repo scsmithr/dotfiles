@@ -10,7 +10,7 @@
  ("cider" . "7afa8ac74b1e511387ac9bfe5b0bee83c1dbb943")
  ("clojure-mode" . "913e2450a77a6ddda051f55ac651c99337147db1")
  ("closql" . "15f906c393db1a0fb6577afc3cf59466531eafef")
- ("corfu" . "b3d296529ea7a9c15991e65b5e730b35ac918207")
+ ("corfu" . "9768992fa2deb703323fd2bba97f87b5af29ac3e")
  ("csv-mode" . "a4ad2e59d4039bf3b1bdbebdfab21c122ad5b487")
  ("dash.el" . "da167c51e9fd167a48d06c7c0ee8e3ac7abd9718")
  ("deadgrep" . "aebaf72e35546fd235b4861399791814e4e4c7d8")
