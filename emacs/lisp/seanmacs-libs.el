@@ -104,6 +104,46 @@ If no region selected, colorize the entire buffer."
       (when-let ((entry (assoc selected alist)))
         (insert (cdr entry))))))
 
+;; Git stuff
+
+(defvar sm/code-dir "~/Code")
+
+(defconst sm/https-git-url-regexp "^https://\\([a-z.]+\\)/\\(.+\\)$")
+(defconst sm/ssh-git-url-regexp "^git@\\([a-z.]+\\):\\(.+\\)$")
+
+(defun sm/format-git-ssh-url (host path)
+  (format "git@%s:/%s" host path))
+
+(defun sm/parse-clone-url (url)
+  (when (cond
+         ((string-match sm/https-git-url-regexp url) t)
+         ((string-match sm/ssh-git-url-regexp url) t)
+         (t nil)))
+  (let ((host (match-string 1 url))
+        (path (file-name-sans-extension
+               (match-string 2 url))))
+    (list 'host host
+          'path path
+          'clone-url (sm/format-git-ssh-url host path))))
+
+(defun sm/git-clone (url)
+  "Clone URL into a subdirectory of `sm/code-dir'.
+
+Errors if the the destination dir already exists."
+  (interactive (list (read-string "Git url: ")))
+  (let ((props (sm/parse-clone-url url)))
+    (when (not props)
+      (user-error "Could not parse git url: %s" url))
+    (let* ((host (plist-get props 'host))
+           (path (plist-get props 'path))
+           (clone-dir (string-join (list sm/code-dir host path) "/")))
+      (when (file-exists-p clone-dir)
+        (user-error "%s already exists" clone-dir))
+      (let ((buf-name (format "*Git clone [%s]*" path))
+            (clone-url (plist-get props 'clone-url)))
+        (async-shell-command (format "git clone %s %s" clone-url clone-dir)
+                             buf-name)))))
+
 ;; Misc
 
 (defun sm/scratch ()
