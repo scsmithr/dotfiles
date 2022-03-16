@@ -83,6 +83,7 @@
  ("restclient.el" . "abc307b965bf6720bc466281f2e204cd5ce37dc3")
  ("rust-mode" . "e9e9e32c4f82a9b895543c120b327ab5536ec42b")
  ("s.el" . "08661efb075d1c6b4fa812184c1e5e90c08795a9")
+ ("separedit.el" . "a33a04479fc1d4fa0ee618833965ce9914b9c1f4")
  ("sesman" . "e0f555f963c9f02f8e4a50e06fc353eb4c15ee77")
  ("sly" . "5966d68727898fa6130fb6bb02208f70aa8d5ce3")
  ("spinner" . "34905eae12a236753fa88abc831eff1e41e8576e")

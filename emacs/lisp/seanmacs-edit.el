@@ -330,6 +330,15 @@ window."
 
   :bind (("C-c e" . edit-indirect-region)))
 
+(use-package separedit
+  :straight t
+  :defer t
+  :config
+  (setq separedit-default-mode 'markdown-mode
+        separedit-remove-trailing-spaces-in-comment t)
+  :bind (:map prog-mode-map
+              ("C-c '" . separedit)))
+
 (use-package apheleia
   :straight t)
 
