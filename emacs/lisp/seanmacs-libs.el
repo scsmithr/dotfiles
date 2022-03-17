@@ -171,6 +171,24 @@ Same peculiarities as with `save-window-excursion'."
          (pulse-momentary-highlight-one-line (point))
          (select-window ,win)))))
 
+(defvar sm/screenshots-dir "~/Pictures/emacs/")
+
+(defun sm/take-screenshot (prompt)
+  "Take a screenshot of the current Emacs window.
+
+Prompt for output file when PROMPT is non-nil."
+  (interactive "P")
+  (let* ((time-format "%FT%T%z")
+         (time-str (format-time-string time-format (current-time)))
+         (default-file-name (concat (file-name-as-directory sm/screenshots-dir)
+                                    "screenshot-" time-str ".svg"))
+         (file-name (if prompt
+                        (read-file-name "Save to file: ")
+                      default-file-name)))
+    (make-empty-file file-name t)
+    (with-temp-file file-name
+      (insert (x-export-frames nil 'svg)))))
+
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here
 

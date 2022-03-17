@@ -6,6 +6,8 @@ Repository for easy syncing of my dotfiles.
 
 Running `link.sh` will symlink emacs files to `~/.emacs.d`.
 
+![Emacs screenshot](./screenshot.svg)
+
 ## Everything else
 
 Configuration for everything else lives in
