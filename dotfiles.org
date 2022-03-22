@@ -787,8 +787,8 @@
              <edit name="family" mode="assign" binding="same"><string><<font-monospace()>></string></edit>
          </match>
 
-         <match target="pattern">
-             <edit name="hintstyle" mode="append"><const>hintnone</const></edit>
+         <match target="font">
+             <edit name="hintstyle" mode="assign"><const>hintnone</const></edit>
          </match>
      </fontconfig>
    #+END_SRC
