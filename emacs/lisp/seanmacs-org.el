@@ -199,5 +199,60 @@
   :straight t
   :after ob)
 
+;; Export org subtrees as github issues.
+
+(use-package ghub
+  :straight t)
+
+(use-package ox-gfm
+  :straight t
+  :after org)
+
+(defvar sm/org-github-issue-create-done-state "DONE"
+  "Move the org entry to this state after successfully creating an issue.")
+
+(defvar sm/org-github-project-property "GH-PROJECT"
+  "Property that should be used to specify the github repo to create issues in.
+
+Should be in the form of 'owner/repo'.")
+
+(defvar sm/org-github-issue-property "GH-ISSUE"
+  "The property containing the url of the github issue. Set after issue was successfully created.")
+
+(defun sm/org-get-github-issue-payload ()
+  (let* ((title (org-get-heading t t t t))
+         (org-export-with-toc nil)
+         (body (org-export-as 'gfm t nil t)))
+    (set-text-properties 0 (length title) nil title)
+    `((title . ,title)
+      (body . ,body))))
+
+(defun sm/org-subtree-to-github-issue ()
+  "Create an issue from the org entry under point.
+
+The GH-PROJECT property must be set for the org entry or some
+parent entry.
+
+The org entry must be in a TODO state, and will be flipped to the
+state is defined in `sm/org-github-issue-create-done-state'."
+  (interactive)
+  (unless (org-entry-is-todo-p)
+    (user-error "Org entry is not a todo"))
+  (let* ((org-use-property-inheritance (list sm/org-github-project-property))
+         (gh-project (org-entry-get (point) sm/org-github-project-property 'selective)))
+    (unless gh-project
+      (user-error "Org entry missing github project property"))
+    (let ((resource (format "/repos/%s/issues"
+                            gh-project))
+          (payload (sm/org-get-github-issue-payload)))
+      (let* ((resp (ghub-post resource nil
+                 :auth 'org-export
+                 :payload payload))
+             (html-url (alist-get 'html_url resp))
+             (issue-link (format "[[%s]]" html-url)))
+        (org-todo sm/org-github-issue-create-done-state)
+        (org-set-property sm/org-github-issue-property issue-link)
+        (message "Created issue: %s" html-url)))))
+
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here
