@@ -281,7 +281,6 @@ window."
 
 (use-package deadgrep
   :straight t
-  :defer t
   :init
   (defun sm/deadgrep-this-directory ()
     "Call deadgrep using `default-directory' as the project root."
