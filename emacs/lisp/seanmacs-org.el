@@ -68,7 +68,7 @@
         org-fast-tag-selection-single-key 'expert)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "BLOCKED(b)" "IN-PROGRESS(i)" "|" "DELEGATED(e)" "DONE(d)" "CANCELED(c)")))
+        '((sequence "TODO(t)" "NEXT(n)" "BLOCKED(b)" "IN-PROGRESS(i)" "|" "REFILED(r)" "DONE(d)" "CANCELED(c)")))
 
   (setq org-agenda-custom-commands
         '(("d" "Day overview"
@@ -208,7 +208,7 @@
   :straight t
   :after org)
 
-(defvar sm/org-github-issue-create-done-state "DONE"
+(defvar sm/org-github-issue-create-done-state "REFILED"
   "Move the org entry to this state after successfully creating an issue.")
 
 (defvar sm/org-github-project-property "GH-PROJECT"
