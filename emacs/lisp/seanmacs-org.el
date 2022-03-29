@@ -245,9 +245,12 @@ state is defined in `sm/org-github-issue-create-done-state'."
     (let ((resource (format "/repos/%s/issues"
                             gh-project))
           (payload (sm/org-get-github-issue-payload)))
+      (recenter) ;; Widening after narrowing often moves the beginning of the entry off screen.
+      (unless (y-or-n-p (format "Create issue '%s' for '%s'? " (alist-get 'title payload) gh-project))
+        (user-error "Issue creation canceled"))
       (let* ((resp (ghub-post resource nil
-                 :auth 'org-export
-                 :payload payload))
+                              :auth 'org-export
+                              :payload payload))
              (html-url (alist-get 'html_url resp))
              (issue-link (format "[[%s]]" html-url)))
         (org-todo sm/org-github-issue-create-done-state)
