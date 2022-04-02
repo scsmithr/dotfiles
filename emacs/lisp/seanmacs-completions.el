@@ -172,6 +172,8 @@ completing inside the minibuffer)."
 
   (setq eglot-send-changes-idle-time 1)
 
+  (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
+
   ;; Mostly done to ensure eglot is loaded before attempting to modify the
   ;; server programs list.
   (defun sm/add-server-program (mode program)

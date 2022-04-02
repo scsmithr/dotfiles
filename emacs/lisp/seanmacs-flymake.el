@@ -23,8 +23,12 @@
         flymake-warning-bitmap '(sm/flymake-bitmap modus-themes-fringe-yellow)
         flymake-error-bitmap '(sm/flymake-bitmap modus-themes-fringe-red))
 
-  (evil-collection-define-key 'normal 'flymake-diagnostics-buffer-mode-map
-    (kbd "SPC") #'flymake-show-diagnostic)
+  (mapc #'(lambda (map)
+            (evil-collection-define-key 'normal map
+              "p" #'sm/pop-to-some-window
+              (kbd "SPC") #'flymake-show-diagnostic))
+        '(flymake-diagnostics-buffer-mode-map
+          flymake-project-diagnostics-mode-map))
 
   (defun sm/flymake-sort-by-line ()
     (setq tabulated-list-sort-key '("Line" . nil)))

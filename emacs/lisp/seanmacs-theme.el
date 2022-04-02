@@ -90,7 +90,9 @@
        `(eldoc-highlight-function-argument ((t :inherit bold :foreground ,blue-alt-other)))
 
        (with-eval-after-load 'eglot
-         (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)))))
+         (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)
+         (set-face-attribute 'eglot-diagnostic-tag-deprecated-face nil :inherit 'unspecified)
+         (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil :inherit 'unspecified)))))
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
