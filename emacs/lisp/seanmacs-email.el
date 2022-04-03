@@ -46,7 +46,6 @@
   (setq message-kill-buffer-on-exit t)
 
   (setq mu4e-maildir-shortcuts '(("/personal/INBOX" . ?p)
-                                 ("/work/INBOX"     . ?w)
                                  ("/glare/INBOX"    . ?g)))
 
   (setq mu4e-bookmarks
@@ -56,9 +55,6 @@
           (:query "date:today..now"
            :name "Today's messages"
            :key ?t)
-          (:query "subject:cdr or from:coder.com or from:clubhouse.io"
-           :name "Coder messages"
-           :key ?c)
           (:query "flag:flagged"
            :name "Flagged messages"
            :key ?f)))
@@ -118,16 +114,6 @@
                           (smtpmail-smtp-server . "smtp.gmail.com")
                           (smtpmail-smtp-service . 587)
                           (user-mail-address . "scsmithr@gmail.com")))
-
-  (sm/set-email-account "work"
-                        '((mu4e-sent-folder . "/work/[Gmail]/Sent Mail")
-                          (mu4e-drafts-folder . "/work/[Gmail]/Drafts")
-                          (mu4e-trash-folder . "/work/[Gmail]/Trash")
-                          (mu4e-refile-folder . "/work/[Gmail]/All Mail")
-                          (smtpmail-smtp-user . "sean@coder.com")
-                          (smtpmail-smtp-server . "smtp.gmail.com")
-                          (smtpmail-smtp-service . 587)
-                          (user-mail-address . "sean@coder.com")))
 
   (sm/set-email-account "glare"
                         '((mu4e-sent-folder . "/glare/[Gmail]/Sent Mail")

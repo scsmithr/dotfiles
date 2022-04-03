@@ -17,7 +17,8 @@
   :defer t
   :config
   (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
-  (setq magit-module-sections-nested nil
+  (setq magit-blame-echo-style 'margin
+        magit-module-sections-nested nil
         magit-diff-refine-hunk t ;; Show whitespace changes in status buffer.
         magit-bury-buffer-function 'magit-mode-quit-window
         magit-section-visibility-indicator '(magit-fringe-bitmap-bold> . magit-fringe-bitmap-boldv))
