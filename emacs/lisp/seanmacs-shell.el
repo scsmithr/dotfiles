@@ -104,16 +104,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
     (evil-insert 1)
     (apply 'insert args))
 
-  (defun eshell/insert-history ()
-    "Prompt for a history item and insert it."
-    (interactive)
-    (eshell-read-history)
-    (sm/eshell-insert (completing-read
-                       "History: "
-                       (mapcar #'string-trim
-                               (delete-dups
-                                (ring-elements eshell-history-ring))))))
-
   ;; Nearly identical to the default prompt function, but will display last
   ;; status if non-zero. Satisfies default prompt regex.
   (defun sm/eshell-prompt-function ()
@@ -132,21 +122,30 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
-  (defun sm/eshell-set-local-keybinds ()
-    ;; Needs to be ran inside the hook since eshell-mode-map is
-    ;; buffer local.
-    ;;
-    ;; See https://github.com/noctuid/general.el/issues/80
-    (local-set-key (kbd "M-r") 'eshell/insert-history))
-
   ;; Added in https://github.com/emacs-evil/evil-collection/commit/a81b6c8f5537b3646e6a66a6e60ec634848d1926
   (remove-hook 'eshell-mode-hook 'evil-collection-eshell-escape-stay)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
-         (eshell-mode . sm/eshell-set-local-keybinds)
          (eshell-pre-command . sm/eshell-append-history))
   :bind (("C-c s s" . eshell)
          ("C-c s n" . sm/eshell-new)))
+
+(use-package em-hist
+  ;; built-in
+  :config
+  (defun sm/eshell-insert-history ()
+    "Prompt for a history item and insert it."
+    (interactive)
+    (eshell-read-history)
+    (let ((vertico-sort-function nil))
+      (sm/eshell-insert (completing-read
+                         "History: "
+                         (mapcar #'string-trim
+                                 (delete-dups
+                                  (ring-elements eshell-history-ring)))))))
+
+  :bind (:map eshell-hist-mode-map
+              ("C-c C-l" . sm/eshell-insert-history)))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here

@@ -20,6 +20,8 @@
 ;; everytime.
 (add-hook 'after-make-frame-functions #'sm/setup-fonts)
 
+(blink-cursor-mode -1)
+
 (use-package minions
   :straight t
   :config

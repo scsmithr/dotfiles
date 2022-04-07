@@ -5,9 +5,6 @@
 
 ;;; Code:
 
-(use-package undo-fu
-  :straight t)
-
 (use-package winner
   ;; built-in
   :config
@@ -26,7 +23,7 @@
         evil-want-C-i-jump nil
         evil-want-fine-undo t
         evil-want-keybinding nil
-        evil-undo-system 'undo-fu)
+        evil-undo-system 'undo-redo)
 
   :config
   (evil-mode)

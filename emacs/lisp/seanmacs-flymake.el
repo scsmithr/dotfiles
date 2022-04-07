@@ -8,11 +8,6 @@
 (use-package flymake
   ;; built-in, ish. Eglot pulls in development versions.
   :demand t
-  :init
-  ;; `flymake--log-1' calls `string-replace' but that's void in Emacs 27. Alias
-  ;; it to an equivalent function.
-  (when (not (fboundp 'string-replace))
-    (defalias 'string-replace #'s-replace))
   :config
   (setq flymake-start-on-save-buffer t
         flymake-no-changes-timeout 1
