@@ -55,7 +55,8 @@
         ;; both the org buffer and the source at the same time.
         org-src-window-setup 'other-window
         org-log-into-drawer t
-        org-global-properties '(("Effort_ALL" . "5min 15min 30min 1h 2h 4h 8h 1d")))
+        org-global-properties '(("Effort_ALL" . "5min 15min 30min 1h 2h 4h 8h 1d"))
+        org-ellipsis "…")
 
   ;; Default except no special pdf handling. This will cause PDFs to open in
   ;; emacs.

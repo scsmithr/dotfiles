@@ -22,12 +22,15 @@
 
 (blink-cursor-mode -1)
 
+(setq mode-line-compact 'long)
+
 (use-package minions
   :straight t
   :config
   ;; Flymake - I always want to see warnings/errors.
   ;; Follow - Can slow things down quite a bit, so nice to know if it's enabled.
-  (setq minions-direct '(flymake-mode follow-mode))
+  (setq minions-direct '(flymake-mode follow-mode)
+        minions-mode-line-lighter "…")
 
   (minions-mode 1))
 
