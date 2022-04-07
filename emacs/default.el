@@ -35,7 +35,7 @@
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
  ("esxml" . "f88a323bd15ad7bd94eda684e1a36525ba81a089")
  ("evil" . "787455068f56f29493cc1e33d4e5c2986ea25577")
- ("evil-collection" . "e69abfcb1cc0dd59dfe7c055b0779a6622f8282d")
+ ("evil-collection" . "8342a50830d4ba20c589396ee4c9fce6284f7981")
  ("evil-commentary" . "2dab6ac34d1617971768ad219d73af48f7473fec")
  ("evil-surround" . "346d4d85fcf1f9517e9c4991c1efe68b4130f93a")
  ("flimenu" . "4c0ff37cf3bd6c836bd136b5f6c450560a6c92b9")
