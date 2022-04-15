@@ -340,7 +340,14 @@ window."
               ("C-c '" . separedit)))
 
 (use-package apheleia
-  :straight t)
+  :straight t
+  :config
+  (setq apheleia-remote-algorithm 'remote))
+
+(use-package bookmark
+  ;; built-in
+  :config
+  (setq bookmark-save-flag 1))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here
