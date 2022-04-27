@@ -298,7 +298,9 @@ Start a new process if not alive."
 
 (use-package protobuf-mode
   :straight t
-  :defer t)
+  :defer t
+  :hook ((protobuf-mode . display-line-numbers-mode)
+         (protobuf-mode . whitespace-mode)))
 
 
 ;; Common lisp

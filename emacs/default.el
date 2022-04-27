@@ -78,7 +78,7 @@
  ("pkg-info" . "76ba7415480687d05a4353b27fea2ae02b8d9d61")
  ("plantuml-mode" . "ea45a13707abd2a70df183f1aec6447197fc9ccc")
  ("project" . "4fe1eec8035969d59ab461eb1674343378182a0b")
- ("protobuf" . "35bdcabdd6a05ce9ee738ad7df8c1299d9c7fc4b")
+ ("protobuf" . "3ea30d80847cd9561db570ae7f673afc15523545")
  ("queue" . "130c2d656cd5d7376552272fab9e50a7c37d0c4a")
  ("racket" . "22e56ce80389544d3872cf4beb4008fb514b2218")
  ("restclient.el" . "abc307b965bf6720bc466281f2e204cd5ce37dc3")
