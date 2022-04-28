@@ -762,7 +762,7 @@
 
   #+name: font-monospace
   #+BEGIN_SRC sh
-    echo "Triplicate A"
+    echo "PragmataPro Mono"
   #+END_SRC
 
   #+RESULTS: font-monospace
