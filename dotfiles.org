@@ -861,7 +861,7 @@
 
   #+name: ui-font-size
   #+BEGIN_SRC shell
-    echo 10
+    echo 11
   #+END_SRC
 
   #+RESULTS: ui-font-size
@@ -869,15 +869,15 @@
 
   #+name: ui-font-weight
   #+BEGIN_SRC shell
-    echo semibold
+    echo normal
   #+END_SRC
 
   #+RESULTS: ui-font-weight
-  : semibold
+  : bold
 
   #+name: xft-ui-font
   #+BEGIN_SRC shell :noweb yes
-    echo "xft:<<font-sans-serif()>>:<<ui-font-weight()>>:size=<<ui-font-size()>>"
+    echo "xft:<<font-monospace()>>:<<ui-font-weight()>>:size=<<ui-font-size()>>"
   #+END_SRC
 
   #+RESULTS: xft-ui-font
@@ -887,7 +887,7 @@
 
   #+name: ui-dark-color
   #+BEGIN_SRC shell
-    echo "#46474d"
+    echo "#36373d"
   #+END_SRC
 
   #+RESULTS: ui-dark-color
@@ -1032,7 +1032,7 @@
    #+BEGIN_SRC sh
      xset s 300 5 # Lock after 5 minutes
      export XSECURELOCK_PASSWORD_PROMPT=time
-     export XSECURELOCK_FONT="<<font-sans-serif()>>"
+     export XSECURELOCK_FONT="<<font-monospace()>>"
      xss-lock -l -- xsecurelock&
    #+END_SRC
 
@@ -1201,7 +1201,7 @@
 
      ### Text ###
 
-     font = <<font-sans-serif()>> <<ui-font-weight()>> <<ui-font-size()>>
+     font = <<font-monospace()>> <<ui-font-weight()>> <<ui-font-size()>>
 
      # The spacing between lines.  If the height is smaller than the
      # font height, it will get raised to the font height.
@@ -1659,7 +1659,7 @@
           fmt s = "[" ++ s ++ "]"
 
       myLogHook h = do
-        let fmt fg bg = D.pad . D.pad . D.xmobarColor fg bg
+        let fmt fg bg = D.pad . D.xmobarColor fg bg
         D.dynamicLogWithPP
           D.xmobarPP
             { D.ppCurrent = fmt primary "",
@@ -1723,7 +1723,7 @@
 
       primary = "#e8e8e8"
 
-      urgent = "#8b3800"
+      urgent = "#fa7610"
 
       myFocusedBorderColor = "<<ui-dark-color()>>"
 
@@ -1757,9 +1757,9 @@
           font = "<<xft-ui-font()>>",
           bgColor = "<<ui-dark-color()>>",
           fgColor = "<<ui-fg-color()>>",
-          border = BottomB,
+          border = FullB,
           borderColor = "<<ui-border-color()>>",
-          borderWidth = 1,
+          borderWidth = 2,
           position = Top,
           allDesktops = False,
           lowerOnStart = True,
@@ -1879,8 +1879,8 @@
             (format-wifi)
             (format-volume)
             (format-battery))
-           "    "))
-         "  "))
+           "  "))
+         " "))
 
       (define loop-wait 5)
 
