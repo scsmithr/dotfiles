@@ -156,7 +156,7 @@ loaded (e.g. sql-mode)."
            ("Email" (name . "\*mu4e"))
            ("Scratch" (name . "\*scratch"))
            ("Search" (or
-                      (mode . deadgrep-mode)
+                      (mode . rg-mode)
                       (mode . grep-mode)))
            ("Special" (or (name . "\*")
                           (mode . geiser-repl-mode)))
@@ -268,41 +268,20 @@ window."
           (project-find-dir "Find directory" ?d)
           (project-dired "Project root" ?o)
           (magit-status "Magit" ?g)
-          (deadgrep "Search" ?s)))
+          (rg-project "Search" ?s)))
   :bind-keymap ("C-c p" . project-prefix-map)
   :bind (:map project-prefix-map
               ("e" . sm/project-eshell)
-              ;; 's' is bound to `project-shell' by default, but I rarely use
-              ;; shell, so rebind to some search functions.
-              :prefix "s"
-              :prefix-map project-search-prefix-map
-              ("d" . sm/deadgrep-this-directory)
-              ("D" . deadgrep)))
+              ("r" . rg-project))) ;; Shadows `project-query-replace-regexp'.
 
-(use-package deadgrep
+(use-package rg
   :straight t
-  :init
-  (defun sm/deadgrep-this-directory ()
-    "Call deadgrep using `default-directory' as the project root."
-    (interactive)
-    (let ((deadgrep-project-root-function (lambda () default-directory)))
-      (call-interactively 'deadgrep)))
   :config
-  (defun sm/deadgrep-show ()
-    "Display result in other window, keeping the cursor in the deadgrep window."
-    (interactive)
-    (when (and (deadgrep--filename) (deadgrep--line-number))
-      (sm/save-window-excursion
-       (deadgrep-visit-result-other-window))))
-
-  (evil-collection-define-key 'normal 'deadgrep-mode-map
-    "gS" #'deadgrep-search-term
-    "gD" #'deadgrep-directory
-    "gE" #'deadgrep-edit-mode
-    ;; movement
-    "gj" #'deadgrep-forward-filename
-    "gk" #'deadgrep-backward-filename
-    (kbd "SPC") #'sm/deadgrep-show))
+  (evil-collection-define-key 'normal 'rg-mode-map
+    "gj" #'rg-next-file
+    "gk" #'rg-prev-file
+    (kbd "SPC") #'compilation-display-error)
+  :bind (("C-c r" . rg-menu)))
 
 (use-package yasnippet
   :straight t
