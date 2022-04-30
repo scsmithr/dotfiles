@@ -298,9 +298,7 @@ Start a new process if not alive."
 
 (use-package protobuf-mode
   :straight t
-  :defer t
-  :hook ((protobuf-mode . display-line-numbers-mode)
-         (protobuf-mode . whitespace-mode)))
+  :defer t)
 
 
 ;; Common lisp
@@ -631,37 +629,6 @@ Otherwise start the repl in the current directory."
 (use-package dockerfile-mode
   :straight t
   :defer t)
-
-
-;; Agda
-
-(use-package agda2-mode
-  :straight t
-  :defer t
-  :init
-  (defun sm/current-agda-version ()
-    "Return the version string for Agda."
-    (when-let ((exe (executable-find "agda")))
-      (let ((out (shell-command-to-string (format "%s --version" exe))))
-        ;; Assumes "Agda version <version>"
-        (nth 2 (split-string out)))))
-
-  (defun sm/set-agda-version ()
-    "Set `agda2-version' to the version of the currently installed Agda bin."
-    (interactive)
-    (when-let ((ver (sm/current-agda-version)))
-      (message "Setting `agda2-version' to %s" ver)
-      (setq agda2-version ver)))
-
-  (defun sm/set-input-agda ()
-    (require 'agda-input)
-    (set-input-method "Agda"))
-  :config
-  (sm/set-goto-def-keybind 'agda2-mode-map #'agda2-goto-definition-keyboard)
-
-  (setq agda2-highlight-face-groups 'default-faces)
-  :hook ((agda2-mode . sm/set-input-agda)
-         (agda2-mode . whitespace-turn-off)))
 
 
 ;; Plantuml
