@@ -49,6 +49,9 @@ completing inside the minibuffer)."
               ("C-j" . corfu-quit)
               ("SPC" . corfu-insert-separator)))
 
+(use-package cape
+  :straight t)
+
 (use-package orderless
   :straight t
   :init

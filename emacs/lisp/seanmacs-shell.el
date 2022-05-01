@@ -119,6 +119,13 @@ If BUF-NAME is nil, the command will be used to name the buffer."
         eshell-cmpl-cycle-completions nil
         eshell-banner-message "Mistake Not...\n\n")
 
+  (defun sm/eshell-add-completions ()
+    (when (featurep 'cape)
+      (add-to-list 'completion-at-point-functions #'cape-file)
+
+      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
+
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
@@ -126,6 +133,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   (remove-hook 'eshell-mode-hook 'evil-collection-eshell-escape-stay)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
+         (eshell-mode . sm/eshell-add-completions)
          (eshell-pre-command . sm/eshell-append-history))
   :bind (("C-c s s" . eshell)
          ("C-c s n" . sm/eshell-new)))

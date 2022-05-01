@@ -4,6 +4,7 @@
  ("annalist.el" . "134fa3f0fb91a636a1c005c483516d4b64905a6d")
  ("apheleia" . "806210414b84549f1c19d2df94a4a0491a581f2f")
  ("auctex" . "5674ce6c0fd41b1765c2c74b5b86de121af82e79")
+ ("cape" . "640e53f909f6702ff8a9069f4d250f8d936cfe7f")
  ("cargo.el" . "9442af81d64f73935d3590948c97594f0bc79d4a")
  ("chez" . "03da1c17253856d8713bc5a25140cb5002c9c188")
  ("chicken" . "ceab39c89607f55cba88e5606ba5eb37c7df5260")
