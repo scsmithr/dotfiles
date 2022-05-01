@@ -139,10 +139,25 @@ Errors if the the destination dir already exists."
            (clone-dir (string-join (list sm/code-dir host path) "/")))
       (when (file-exists-p clone-dir)
         (user-error "%s already exists" clone-dir))
-      (let ((buf-name (format "*Git clone [%s]*" path))
+      (let ((out-buf (generate-new-buffer (format "*Git clone [%s]*" path)))
             (clone-url (plist-get props 'clone-url)))
         (async-shell-command (format "git clone %s %s" clone-url clone-dir)
-                             buf-name)))))
+                             out-buf)
+        (let ((proc (get-buffer-process out-buf)))
+          (if (process-live-p proc)
+              (set-process-sentinel proc #'sm/git-clone-sentinel)
+            (message "No process")))))))
+
+(defun sm/git-clone-sentinel (proc change)
+  "Open dired to the cloned directory on completion."
+  (when (equal "finished" (string-trim change))
+    (let ((rx "Cloning into '\\(.+\\)'...")
+          (buf (process-buffer proc)))
+      (with-current-buffer buf
+        (re-search-backward rx)
+        (let ((path (match-string 1)))
+          (with-selected-window (get-buffer-window buf)
+            (dired path)))))))
 
 ;; Misc
 
