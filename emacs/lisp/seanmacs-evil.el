@@ -49,7 +49,7 @@
   (setq forge-add-default-bindings nil)
   :config
   (defvar sm/evil-collection-disabled-modes
-    '(go-mode)
+    '(go-mode corfu)
     "Modes that should not have modified keybinds.")
 
   (dolist (mode sm/evil-collection-disabled-modes)

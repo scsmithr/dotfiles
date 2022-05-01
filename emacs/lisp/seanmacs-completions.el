@@ -44,11 +44,10 @@ completing inside the minibuffer)."
   (setq tab-always-indent 'complete)
   (setq corfu-preview-current t
         corfu-auto nil)
-  (corfu-global-mode)
+  (global-corfu-mode)
   :bind (:map corfu-map
               ("C-j" . corfu-quit)
               ("SPC" . corfu-insert-separator)))
-
 
 (use-package orderless
   :straight t
