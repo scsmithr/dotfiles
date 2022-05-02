@@ -203,7 +203,7 @@ opening the file."
   :straight t
   :defer t
   :config
-  (setq-default olivetti-body-width 102)
+  (setq-default olivetti-body-width 120)
   (setq olivetti-style 'fringes)
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
   :bind (("C-c z" . zen-mode)))
