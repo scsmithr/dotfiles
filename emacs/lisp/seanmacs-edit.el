@@ -312,7 +312,7 @@ window."
   :straight t
   :defer t
   :config
-  (setq separedit-default-mode 'markdown-mode
+  (setq separedit-default-mode 'gfm-mode
         separedit-remove-trailing-spaces-in-comment t
         separedit-continue-fill-column t)
   :bind (:map prog-mode-map

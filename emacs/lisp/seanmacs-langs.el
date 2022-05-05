@@ -617,6 +617,7 @@ Otherwise start the repl in the current directory."
 (use-package markdown-mode
   :straight t
   :defer t
+  :mode ("\\.md\\'" . gfm-mode)
   :config
   (setq-default markdown-hide-urls t)
   (setq markdown-url-compose-char ?#
