@@ -129,7 +129,8 @@ If no region selected, colorize the entire buffer."
 (defun sm/git-clone (url)
   "Clone URL into a subdirectory of `sm/code-dir'.
 
-Errors if the the destination dir already exists."
+Opens the directory after the repo is finished cloning. Opens the
+directory immediately if it already exists."
   (interactive (list (read-string "Git url: ")))
   (let ((props (sm/parse-clone-url url)))
     (when (not props)
@@ -137,16 +138,18 @@ Errors if the the destination dir already exists."
     (let* ((host (plist-get props 'host))
            (path (plist-get props 'path))
            (clone-dir (string-join (list sm/code-dir host path) "/")))
-      (when (file-exists-p clone-dir)
-        (user-error "%s already exists" clone-dir))
-      (let ((out-buf (generate-new-buffer (format "*Git clone [%s]*" path)))
-            (clone-url (plist-get props 'clone-url)))
-        (async-shell-command (format "git clone %s %s" clone-url clone-dir)
-                             out-buf)
-        (let ((proc (get-buffer-process out-buf)))
-          (if (process-live-p proc)
-              (set-process-sentinel proc #'sm/git-clone-sentinel)
-            (message "No process")))))))
+      (if (file-exists-p clone-dir)
+          (progn
+            (message "%s already exists" clone-dir)
+            (dired clone-dir))
+        (let ((out-buf (generate-new-buffer (format "*Git clone [%s]*" path)))
+              (clone-url (plist-get props 'clone-url)))
+          (async-shell-command (format "git clone %s %s" clone-url clone-dir)
+                               out-buf)
+          (let ((proc (get-buffer-process out-buf)))
+            (if (process-live-p proc)
+                (set-process-sentinel proc #'sm/git-clone-sentinel)
+              (message "No process"))))))))
 
 (defun sm/git-clone-sentinel (proc change)
   "Open dired to the cloned directory on completion."
