@@ -23,6 +23,7 @@
         evil-want-C-i-jump nil
         evil-want-fine-undo t
         evil-want-keybinding nil
+        evil-respect-visual-line-mode t
         evil-undo-system 'undo-redo)
 
   :config

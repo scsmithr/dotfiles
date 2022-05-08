@@ -125,7 +125,9 @@
                           (smtpmail-smtp-service . 587)
                           (user-mail-address . "sean@glaredb.com")))
 
-  :hook ((mu4e-compose-mode . flyspell-mode))
+  :hook ((mu4e-compose-mode . flyspell-mode)
+         (mu4e-compose-mode . turn-off-auto-fill)
+         (mu4e-compose-mode . turn-on-visual-line-mode))
   :bind (("C-c a m" . mu4e)))
 
 (use-package org-mu4e
