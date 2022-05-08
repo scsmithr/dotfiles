@@ -82,6 +82,9 @@
             (todo "NEXT"
                   ((org-agenda-overriding-header "Up next")
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+            (tags "+revisit"
+                  ((org-agenda-overriding-header "Revisit")
+                   (org-agenda-prefix-format "%i %-12:c ")))
             (tags "CLOSED>=\"<today>\""
                   ((org-agenda-overriding-header "Completed Today")))))
           ("u" "Unscheduled"
@@ -122,6 +125,10 @@
         org-agenda-search-view-always-boolean t
         org-show-context-detail '((default . canonical))
         org-agenda-block-separator ?-)
+
+  (setq org-attach-store-link-p t
+        org-attach-expert t
+        org-attach-use-inheritance t)
 
   (setq org-priority-highest ?A
         org-priority-lowest ?C
@@ -257,6 +264,36 @@ state is defined in `sm/org-github-issue-create-done-state'."
         (org-todo sm/org-github-issue-create-done-state)
         (org-set-property sm/org-github-issue-property issue-link)
         (message "Created issue: %s" html-url)))))
+
+;; Helpers for org attachments
+
+(defun sm/org-convert-file-to-attach ()
+  "Convert the file link under point to an attachment."
+  (interactive)
+  (let ((context (org-element-context)))
+    (if (not (and (eq (car context) 'link)))
+        (user-error "Context not a link")
+      (let ((type (org-element-property :type context))
+            (path (org-element-property :path context)))
+        (org-attach-attach path)
+        (message "File attached")))))
+
+(defun sm/org-attach-buffer-file ()
+  "Attach the current buffer's file to a subtree in other window."
+  (interactive)
+  (let ((start-win (selected-window))
+        (other-win (get-window-with-predicate
+                    (lambda (window)
+                      (with-current-buffer (window-buffer window)
+                        (eq major-mode 'org-mode)))))
+        (path buffer-file-name))
+    (unless other-win
+      (user-error "No window displaying an Org buffer"))
+    (unless path
+      (user-error "Buffer has no file"))
+    (select-window other-win)
+    (org-attach-attach path)
+    (select-window start-win)))
 
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here
