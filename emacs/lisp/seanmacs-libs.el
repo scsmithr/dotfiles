@@ -148,19 +148,17 @@ directory immediately if it already exists."
                                out-buf)
           (let ((proc (get-buffer-process out-buf)))
             (if (process-live-p proc)
-                (set-process-sentinel proc #'sm/git-clone-sentinel)
+                (set-process-sentinel proc (sm/create-git-clone-sentinel clone-dir))
               (message "No process"))))))))
 
-(defun sm/git-clone-sentinel (proc change)
-  "Open dired to the cloned directory on completion."
-  (when (equal "finished" (string-trim change))
-    (let ((rx "Cloning into '\\(.+\\)'...")
-          (buf (process-buffer proc)))
-      (with-current-buffer buf
-        (re-search-backward rx)
-        (let ((path (match-string 1)))
+(defun sm/create-git-clone-sentinel (clone-dir)
+  "Return a sentinel that will open CLONE-DIR on completion."
+  (lambda (proc change)
+    (when (equal "finished" (string-trim change))
+      (let ((buf (process-buffer proc)))
+        (with-current-buffer buf
           (with-selected-window (get-buffer-window buf)
-            (dired path)))))))
+            (dired clone-dir)))))))
 
 ;; Misc
 
