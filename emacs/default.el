@@ -35,7 +35,7 @@
  ("emacsql" . "373975cbccf7776af771e23f86043b236a330702")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
  ("esxml" . "f88a323bd15ad7bd94eda684e1a36525ba81a089")
- ("evil" . "b32e00179538af9685ab7c31d46eea6dc40595d4")
+ ("evil" . "9db1c09633db4c6c0a6c8c730f84332ffe1a11c0")
  ("evil-collection" . "c8366be12490b1cf9b4e5dff05522e416bb2ba9c")
  ("evil-commentary" . "2dab6ac34d1617971768ad219d73af48f7473fec")
  ("evil-surround" . "346d4d85fcf1f9517e9c4991c1efe68b4130f93a")
