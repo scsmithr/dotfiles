@@ -26,6 +26,18 @@
         evil-respect-visual-line-mode t
         evil-undo-system 'undo-redo)
 
+  :init
+  ;; See https://github.com/emacs-evil/evil/issues/1297
+  ;;
+  ;; Temporary goal column occasionally is set to an negative value with
+  ;; display-line-numbers-mode and whitespace-mode both enabled. Evil uses this
+  ;; value when calculating which column to use after some motions. This fix
+  ;; just ensures that the column is never negative.
+  (defun sm/fix-negative-column (args)
+    (list (max (car args) 0)))
+
+  (advice-add 'line-move-to-column :filter-args #'sm/fix-negative-column)
+
   :config
   (evil-mode)
   (evil-update-insert-state-bindings "\C-n" t)
