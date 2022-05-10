@@ -270,6 +270,7 @@ state is defined in `sm/org-github-issue-create-done-state'."
 (defun sm/org-convert-file-to-attach ()
   "Convert the file link under point to an attachment."
   (interactive)
+  (require 'org-attach)
   (let ((context (org-element-context)))
     (if (not (and (eq (car context) 'link)))
         (user-error "Context not a link")
@@ -281,6 +282,7 @@ state is defined in `sm/org-github-issue-create-done-state'."
 (defun sm/org-attach-buffer-file ()
   "Attach the current buffer's file to a subtree in other window."
   (interactive)
+  (require 'org-attach)
   (let ((start-win (selected-window))
         (other-win (get-window-with-predicate
                     (lambda (window)
