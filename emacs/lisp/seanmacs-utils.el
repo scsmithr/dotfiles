@@ -144,7 +144,8 @@ The output will be put into a temporary buffer."
 
   :hook ((pdf-view-mode . sm/pdf-tools-enable-olivetti))
   :bind (:map pdf-view-mode-map
-              ("C-c C-t" . sm/pdf-to-text)))
+              ("C-c C-t" . sm/pdf-to-text)
+              ("C-c C-a" . sm/org-attach-buffer-file)))
 
 (use-package ffap
   ;; built-in
