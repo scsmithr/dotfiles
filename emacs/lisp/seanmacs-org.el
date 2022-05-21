@@ -30,7 +30,7 @@
     (kbd "S-<return>") #'org-agenda-goto
     (kbd "g TAB") #'org-agenda-goto)
 
-  (setq org-default-notes-file (concat sm/notes-dir "refile.org")
+  (setq org-default-notes-file (concat sm/notes-dir "log.org")
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
         org-refile-targets '((nil :maxlevel . 5)
                              (org-agenda-files :maxlevel . 5))
@@ -94,13 +94,7 @@
                    (org-agenda-todo-ignore-scheduled 'all)))))
           ("b" "Blocked"
            ((todo "BLOCKED"
-                  ((org-agenda-overriding-header "Blocked")))))
-          ("r" "Refile overview"
-           ((tags-todo "refile+task"
-                       ((org-agenda-overriding-header "Tasks")
-                        (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
-            (tags "refile+note+LEVEL=2"
-                  ((org-agenda-overriding-header "Notes")))))))
+                  ((org-agenda-overriding-header "Blocked")))))))
 
   (setq org-agenda-files (list sm/notes-dir)
         org-agenda-restore-windows-after-quit t
@@ -136,13 +130,13 @@
 
   (setq org-capture-templates
         `(
-          ("a" "Annotate" entry (file+headline "" "Notes")
+          ("a" "Annotate" entry (file+olp+datetree "")
            (file ,(concat sm/org-capture-templates-dir "/annotate"))
            :empty-lines 1)
-          ("n" "Note" entry (file+headline "" "Notes")
+          ("n" "Note" entry (file+olp+datetree "")
            (file ,(concat sm/org-capture-templates-dir "/note"))
            :empty-lines 1)
-          ("t" "Task" entry (file+headline "" "Tasks")
+          ("t" "Task" entry (file+olp+datetree "")
            (file ,(concat sm/org-capture-templates-dir "/task"))
            :empty-lines 1)))
 
