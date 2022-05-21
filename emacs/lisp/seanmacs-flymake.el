@@ -25,11 +25,11 @@
         '(flymake-diagnostics-buffer-mode-map
           flymake-project-diagnostics-mode-map))
 
-  (defun sm/flymake-sort-by-line ()
-    (setq tabulated-list-sort-key '("Line" . nil)))
+  (defun sm/flymake-sort ()
+    (setq tabulated-list-sort-key '("Type" . t)))
 
-  :hook ((prog-mode . flymake-mode)
-         (flymake-diagnostics-buffer-mode . sm/flymake-sort-by-line))
+  :hook ((from-from . flymake-mode)
+         (flymake-diagnostics-buffer-mode . sm/flymake-sort))
   :bind (:prefix "C-c f"
                  :prefix-map flymake-prefix-map
                  ("l" . flymake-show-buffer-diagnostics)
