@@ -151,6 +151,8 @@
   ;; Auto-save after refiling.
   (advice-add 'org-refile :after (lambda (&rest _) (org-save-all-org-buffers)))
 
+  (evil-add-command-properties 'org-open-at-point :jump t)
+
   (defun sm/org-set-before-save-hook ()
     (add-hook 'before-save-hook #'delete-trailing-whitespace 99 t))
 
