@@ -75,7 +75,7 @@
  ("ox-gfm" . "99f93011b069e02b37c9660b8fcb45dab086a07f")
  ("parseclj" . "eff941126859bc9e949eae5cd6c2592e731629f2")
  ("parseedn" . "e70ca8d03a314f97e4f49b7d6098fa565742e217")
- ("pdf-tools" . "326552eef71ae6d53e215c46be5bf532575b7abb")
+ ("pdf-tools" . "f9ccdf99e560bae70d3a13325cec9dc0e3cc45b0")
  ("pkg-info" . "76ba7415480687d05a4353b27fea2ae02b8d9d61")
  ("plantuml-mode" . "ea45a13707abd2a70df183f1aec6447197fc9ccc")
  ("project" . "4fe1eec8035969d59ab461eb1674343378182a0b")
