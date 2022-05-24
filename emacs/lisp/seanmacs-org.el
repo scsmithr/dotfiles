@@ -293,5 +293,7 @@ state is defined in `sm/org-github-issue-create-done-state'."
     (org-attach-attach path)
     (select-window start-win)))
 
+(define-key global-map (kbd "C-x C-a") #'sm/org-attach-buffer-file)
+
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here
