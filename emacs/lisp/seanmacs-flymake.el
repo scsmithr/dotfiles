@@ -28,7 +28,7 @@
   (defun sm/flymake-sort ()
     (setq tabulated-list-sort-key '("Type" . t)))
 
-  :hook ((from-from . flymake-mode)
+  :hook ((prog-mode . flymake-mode)
          (flymake-diagnostics-buffer-mode . sm/flymake-sort))
   :bind (:prefix "C-c f"
                  :prefix-map flymake-prefix-map
