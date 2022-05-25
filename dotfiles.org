@@ -1682,7 +1682,8 @@
           uniformSpacing = spacingRaw False (border) True (border) True
           border = Border gs gs gs gs
 
-      myManageHook = composeAll [isDialog =? True --> doCenterFloat]
+      myManageHook = composeAll [ isDialog =? True --> doCenterFloat
+                                , className =? "zoom" --> doCenterFloat ]
 
       myConfig pipe =
         withUrgencyHook NoUrgencyHook $
