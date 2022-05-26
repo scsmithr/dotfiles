@@ -762,11 +762,72 @@
 
   #+name: font-monospace
   #+BEGIN_SRC sh
-    echo "PragmataPro Mono"
+    echo "Iosevka Custom"
   #+END_SRC
 
   #+RESULTS: font-monospace
   : Triplicate A
+
+** Iosevka build
+
+   #+BEGIN_SRC sh
+     git clone "https://github.com/be5invis/Iosevka" ~/Code/github.com/be5invis/Iosevka --depth 1
+   #+END_SRC
+
+   #+RESULTS:
+
+   #+BEGIN_SRC sh
+     cd ~/Code/github.com/be5invis/Iosevka && git rev-parse HEAD
+   #+END_SRC
+
+   #+RESULTS:
+   : fa8166b05776288eb57613dbce54ef256c4c5034
+
+   #+name: iosevka-build-plan
+   #+BEGIN_SRC toml
+     [buildPlans.iosevka-custom]
+     family = "Iosevka Custom"
+     spacing = "fixed"
+     serifs = "sans"
+     no-cv-ss = false
+
+     [buildPlans.iosevka-custom.variants.design]
+     asterisk = "penta-low"
+     number-sign = "slanted-open"
+     dollar = "open"
+     cent = "open"
+     percent = "rings-continuous-slash"
+     zero = "slashed-split"
+     ampersand = "upper-open"
+     g = "double-storey"
+
+     [buildPlans.iosevka-custom.metric-override]
+     leading = 1200
+   #+END_SRC
+
+   Build the ttf files with the build plan. Requires =ttfautohint= to be
+   installed (can be installed from the AUR).
+
+   #+BEGIN_SRC sh :noweb yes
+     cd ~/Code/github.com/be5invis/Iosevka &&
+         echo '
+     <<iosevka-build-plan>>
+     ' > private-build-plans.toml
+   #+END_SRC
+
+   #+RESULTS:
+
+   #+BEGIN_SRC emacs-lisp :noweb yes
+     (let ((default-directory "~/Code/github.com/be5invis/Iosevka")
+           (cmd (string-join '("npm install"
+                               "npm run build -- ttf::iosevka-custom"
+                               "cp -r dist/iosevka-custom ~/syncthing/config/fonts/.")
+                             "&&")))
+       (async-shell-command cmd "*Iosevka build*"))
+   #+END_SRC
+
+   #+RESULTS:
+   : #<window 15 on *Iosevka build*>
 
 ** Font config
 
