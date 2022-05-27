@@ -762,11 +762,11 @@
 
   #+name: font-monospace
   #+BEGIN_SRC sh
-    echo "Iosevka Custom"
+    echo "PragmataPro Mono"
   #+END_SRC
 
   #+RESULTS: font-monospace
-  : Triplicate A
+  : PragmataPro Mono
 
 ** Iosevka build
 
