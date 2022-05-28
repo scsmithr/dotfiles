@@ -119,6 +119,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
         eshell-cmpl-cycle-completions nil
         eshell-banner-message "Mistake Not...\n\n")
 
+  (add-to-list 'eshell-visual-commands "watch")
+
   (defun sm/eshell-add-completions ()
     (when (featurep 'cape)
       (add-to-list 'completion-at-point-functions #'cape-file)
