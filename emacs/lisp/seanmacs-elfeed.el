@@ -131,26 +131,39 @@
         ("C-c C-o o" . sm/open-arxiv-paper)
         ("C-c C-o C-o" . sm/open-arxiv-paper)))
 
+(defvar sm/pdf-type-to-dir-alist
+  '((paper .        "~/syncthing/papers/")
+    (book .         "~/syncthing/books/")
+    (presentation . "~/syncthing/presentations/")
+    (arxiv .        "~/syncthing/arxiv/downloads/")
+    (refile .       "~/syncthing/refile/"))
+  "An alist mapping a pdf type to where it should be downloaded.")
+
 (defun sm/download-pdf (link &optional type open name)
   "Download and save a pdf from LINK.
 
-TYPE may be one of paper, book, arxiv, or refile. When OPEN is
-non-nil, open the downloaded pdf. Does not overwrite existing
-files.
+TYPE may be one of the keys in `sm/pdf-type-to-dir-alist', and
+determines where the pdf is saved. If TYPE is a string, it will
+be interned.
+
+When OPEN is non-nil, open the downloaded pdf. Does not overwrite
+existing files.
 
 NAME is the name to save the pdf as. If nil, defaults to the
 original file name. The '.pdf' extension will be appended if it's
 missing from the name."
   (interactive (let ((link (read-string "Link: ")))
                  (list link
-                       (completing-read "Type: " '(paper book arxiv refile))
+                       (completing-read "Type: " (mapcar #'car sm/pdf-type-to-dir-alist))
                        t
                        (read-string "Name: " (file-name-nondirectory link)))))
-  (let ((dir (cond ((string= type 'paper) "~/syncthing/papers/")
-                   ((string= type 'book)  "~/syncthing/books/")
-                   ((string= type 'arxiv) "~/syncthing/arxiv/downloads/")
-                   (t                     "~/syncthing/refile/")))
+  (let ((dir (alist-get (if (stringp type)
+                            (intern type)
+                          type)
+                        sm/pdf-type-to-dir-alist))
         (name (or name (file-name-nondirectory link))))
+    (when (null dir)
+      (user-error "No associated directory for pdf type: %s" type))
     (mkdir dir t)
     (if (string-empty-p name)
         (user-error "Got empty file name from link: %s" link)
