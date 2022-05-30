@@ -118,7 +118,10 @@
         org-agenda-breadcrumbs-separator " > "
         org-agenda-search-view-always-boolean t
         org-show-context-detail '((default . canonical))
-        org-agenda-block-separator ?-)
+        org-agenda-block-separator ?-
+        ;; Removes 'agenda' as I only ever want to see top-level items in the
+        ;; agenda.
+        org-agenda-use-tag-inheritance '(todo search))
 
   (setq org-attach-store-link-p t
         org-attach-expert t
