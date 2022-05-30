@@ -84,7 +84,8 @@
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
             (tags "+revisit"
                   ((org-agenda-overriding-header "Revisit")
-                   (org-agenda-prefix-format "%i %-12:c ")))
+                   (org-agenda-prefix-format "%i %-12:c ")
+                   (org-use-tag-inheritance nil)))
             (tags "CLOSED>=\"<today>\""
                   ((org-agenda-overriding-header "Completed Today")))))
           ("u" "Unscheduled"
@@ -118,10 +119,7 @@
         org-agenda-breadcrumbs-separator " > "
         org-agenda-search-view-always-boolean t
         org-show-context-detail '((default . canonical))
-        org-agenda-block-separator ?-
-        ;; Removes 'agenda' as I only ever want to see top-level items in the
-        ;; agenda.
-        org-agenda-use-tag-inheritance '(todo search))
+        org-agenda-block-separator ?-)
 
   (setq org-attach-store-link-p t
         org-attach-expert t
