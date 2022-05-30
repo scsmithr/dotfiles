@@ -5,19 +5,25 @@
 
 ;;; Code:
 
-(defun sm/setup-fonts (&optional frame)
-  "Setup fonts for FRAME."
-  (message "Setting fonts")
-  (set-face-attribute 'default nil :family "PragmataPro Mono" :height 120 :weight 'normal)
-  (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 130)
-  ;; Unicode fallbacks.
-  (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
-  (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append))
+(defun sm/setup-frame-fonts ()
+  "Setup fonts for currently active frame."
+  (when (display-graphic-p)
+    (message "Setting frame fonts")
+    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 120 :weight 'normal)
+    (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 130)
+    ;; Unicode fallbacks.
+    (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
+    (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)))
 
-(sm/setup-fonts)
-;; Setup fonts on every frame load so that the unicode fontsets get set
-;; everytime.
-(add-hook 'after-make-frame-functions #'sm/setup-fonts)
+;; Set default font. When not running in a daemon, this will ensure the frame
+;; has the appropriate font set.
+(add-to-list 'default-frame-alist '(font . "PragmataPro Mono"))
+
+;; If running as a daemon, make sure fonts are set everytime a new frame is
+;; created. This ensures unicode fallbacks are set for all frames.
+(if (daemonp)
+    (add-hook 'server-after-make-frame-hook #'sm/setup-frame-fonts)
+  (sm/setup-frame-fonts))
 
 (blink-cursor-mode -1)
 
