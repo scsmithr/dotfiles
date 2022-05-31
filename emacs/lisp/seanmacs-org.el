@@ -269,32 +269,12 @@ state is defined in `sm/org-github-issue-create-done-state'."
   (interactive)
   (require 'org-attach)
   (let ((context (org-element-context)))
-    (if (not (and (eq (car context) 'link)))
+    (if (not (eq (car context) 'link))
         (user-error "Context not a link")
       (let ((type (org-element-property :type context))
             (path (org-element-property :path context)))
         (org-attach-attach path)
         (message "File attached")))))
-
-(defun sm/org-attach-buffer-file ()
-  "Attach the current buffer's file to a subtree in other window."
-  (interactive)
-  (require 'org-attach)
-  (let ((start-win (selected-window))
-        (other-win (get-window-with-predicate
-                    (lambda (window)
-                      (with-current-buffer (window-buffer window)
-                        (eq major-mode 'org-mode)))))
-        (path buffer-file-name))
-    (unless other-win
-      (user-error "No window displaying an Org buffer"))
-    (unless path
-      (user-error "Buffer has no file"))
-    (select-window other-win)
-    (org-attach-attach path)
-    (select-window start-win)))
-
-(define-key global-map (kbd "C-x C-a") #'sm/org-attach-buffer-file)
 
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here
