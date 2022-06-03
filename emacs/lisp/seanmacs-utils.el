@@ -204,7 +204,7 @@ opening the file."
   :defer t
   :config
   (setq-default olivetti-body-width 120)
-  (setq olivetti-style 'fringes)
+  (setq olivetti-style 'fancy)
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
   :bind (("C-c z" . zen-mode)))
 
@@ -213,6 +213,9 @@ opening the file."
 
 (defvar-local zen-mode-fringe-indicator-alist nil
   "Original buffer local setting for `fringe-indicator-alist'.")
+
+(defvar-local zen-mode-display-line-numbers-mode nil
+  "Non-nil if the `display-line-numbers-mode' was enabled.")
 
 (define-minor-mode zen-mode
   "Mode that centers the current buffer and disables select fringe elements."
@@ -233,6 +236,11 @@ opening the file."
         (setq-local fringe-indicator-alist (mapcar #'(lambda (mapping)
                                                        (cons (car mapping) nil))
                                                    fringe-indicator-alist))
+
+        (when (bound-and-true-p display-line-numbers-mode)
+          (setq zen-mode-display-line-numbers-mode t)
+          (display-line-numbers-mode -1))
+
         (olivetti-mode 1))
     (progn
       (diff-hl-mode 1)
@@ -244,6 +252,9 @@ opening the file."
       (if zen-mode-fringe-indicator-alist
           (setq-local fringe-indicator-alist zen-mode-fringe-indicator-alist)
         (kill-local-variable 'fringe-indicator-alist))
+
+      (when zen-mode-display-line-numbers-mode
+        (display-line-numbers-mode 1))
 
       (olivetti-mode -1))))
 
