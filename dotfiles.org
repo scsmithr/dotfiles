@@ -1645,14 +1645,11 @@
           }
 
       -- | Float and resize window to the center of the screen.
-      --
-      -- This is useful for ultra wides. Sometime I only want one window in a
-      -- workspace and taking up the entirety of the screen is uncomfortable.
-      centerWindow :: Window -> Bool -> X ()
-      centerWindow win wide = do
+      centerWindow :: Window -> X ()
+      centerWindow win = do
         (_, W.RationalRect x y w h) <- floatLocation win
         let newH = 11 / 12
-        let newW = if wide then 3 / 5 else 2 / 5
+        let newW = 3 / 5
         windows $
           W.float win (W.RationalRect ((1 - newW) / 2) ((1 - newH) / 2) newW newH)
         return ()
@@ -1683,8 +1680,7 @@
             ((modMask, xK_l), sendMessage Expand),
             -- Floating layer
             ((modMask, xK_t), withFocused $ windows . W.sink),
-            ((modMask, xK_f), withFocused $ flip centerWindow False),
-            ((modMask .|. shiftMask, xK_f), withFocused $ flip centerWindow True),
+            ((modMask, xK_f), withFocused $ centerWindow),
             -- Increase/decrease windos in master area
             ((modMask, xK_comma), sendMessage (IncMasterN 1)),
             ((modMask, xK_period), sendMessage (IncMasterN (-1)))
@@ -1744,7 +1740,8 @@
           border = Border gs gs gs gs
 
       myManageHook = composeAll [ isDialog =? True --> doCenterFloat
-                                , className =? "xmessage" --> doCenterFloat
+                                , className =? "Xmessage" --> doCenterFloat
+                                , className =? "Pavucontrol" --> doCenterFloat
                                 , fmap (List.isPrefixOf "zoom") className --> doCenterFloat ]
 
       myConfig pipe =
