@@ -18,15 +18,14 @@
         evil-ex-complete-emacs-commands nil
         evil-shift-round nil
         evil-want-C-u-scroll t
-        ;; C-i and TAB being the same thing messes with some keybinds (e.g. org
-        ;; headline toggle)
-        evil-want-C-i-jump nil
         evil-want-fine-undo t
         evil-want-keybinding nil
         evil-respect-visual-line-mode t
         evil-undo-system 'undo-redo)
   :config
   (evil-mode)
+  ;; Removing these from the insert map allows using them to select items in
+  ;; corfu.
   (evil-update-insert-state-bindings "\C-n" t)
   (evil-update-insert-state-bindings "\C-p" t)
 
