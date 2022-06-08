@@ -1097,6 +1097,12 @@
      xss-lock -l -- xsecurelock&
    #+END_SRC
 
+   Enable smoother scrolling in firefox.
+
+   #+BEGIN_SRC sh
+     export MOZ_USE_XINPUT2=1
+   #+END_SRC
+
    Launch =xmonad=.
 
    #+BEGIN_SRC sh
