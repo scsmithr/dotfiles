@@ -25,11 +25,26 @@
         '(flymake-diagnostics-buffer-mode-map
           flymake-project-diagnostics-mode-map))
 
-  (defun sm/flymake-sort ()
-    (setq tabulated-list-sort-key '("Type" . t)))
+  (defun sm/flymake-sort-entries (entries)
+    "Return a sorted list of ENTRIES where each entry is sorted by
+severity descending, then line ascending."
+    (sort entries
+          #'(lambda (a b)
+              (let* ((f (lambda (entry)
+                          (cons (plist-get (car entry) :severity)
+                                (plist-get (car entry) :line))))
+                     (cmp-a (funcall f a))
+                     (cmp-b (funcall f b)))
+                (or (> (car cmp-a)
+                       (car cmp-b))
+                    (and (eq (car cmp-a)
+                             (car cmp-b))
+                         (< (cdr cmp-a)
+                            (cdr cmp-b))))))))
 
-  :hook ((prog-mode . flymake-mode)
-         (flymake-diagnostics-buffer-mode . sm/flymake-sort))
+  (advice-add 'flymake--diagnostics-buffer-entries :filter-return #'sm/flymake-sort-entries)
+
+  :hook ((prog-mode . flymake-mode))
   :bind (:prefix "C-c f"
                  :prefix-map flymake-prefix-map
                  ("l" . flymake-show-buffer-diagnostics)
