@@ -33,7 +33,17 @@
     (define-key evil-window-map key def)
     (define-key evil-motion-state-map (kbd (concat "C-w " key)) def))
 
-  (sm/evil-define-window-key "u" #'winner-undo))
+  (sm/evil-define-window-key "u" #'winner-undo)
+
+  (evil-define-motion sm/evil-goto-first-line-no-comment (count)
+    "Go to the first non-commented line, then move forward COUNT lines."
+    :jump t
+    :type line
+    (beginning-of-buffer)
+    (forward-comment 1000)
+    (forward-line (or count 0)))
+
+  (evil-global-set-key 'normal "gG" 'sm/evil-goto-first-line-no-comment))
 
 (use-package evil-commentary
   :straight t
