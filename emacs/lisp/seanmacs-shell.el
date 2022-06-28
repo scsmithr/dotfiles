@@ -16,17 +16,21 @@ If BUF-NAME is nil, the command will be used to name the buffer."
          #'(lambda (_mode) (or buf-name (format "*Compile: %s*" command)))))
     (compile command)))
 
-(defun sm/listify-env-vars (env val &rest rest)
-  "Create a list of environment variables and values suitable to use in the shell."
-  (let ((list '()))
-    (while env
-      (let ((s (format "%s=%s" env val)))
-        (push s list))
-      (setq env (pop rest) val (pop rest)))
-    list))
+(defun sm/buffer-setenv (env val)
+  "Set an environment variable for the buffer."
+  (interactive (list (read-string "Environment variable: ")
+                     (read-string "Value: ")))
+  (make-local-variable 'process-environment)
+  (unless (or (string-empty-p env)
+              (string-empty-p val))
+    (setq process-environment (cons (format "%s=%s" env val)
+                                    process-environment))))
 
-(defun sm/append-process-environment (env val &rest rest)
-  (append (apply 'sm/listify-env-vars env val rest) process-environment '()))
+(defun sm/buffer-kill-env ()
+  "Remove the locally set environment."
+  (interactive)
+  (when (local-variable-p 'process-environment)
+    (kill-local-variable 'process-environment)))
 
 (use-package compile
   ;; built-in
