@@ -61,7 +61,7 @@
         modus-themes-region '(bg-only)
         modus-themes-diffs 'bg-only
         modus-themes-italic-constructs t
-        modus-themes-lang-checkers '(straight-underline background)
+        modus-themes-lang-checkers '(straight-underline)
         modus-themes-org-agenda '((header-block . (no-scale))
                                   (header-date . (bold-all underline-today))))
 
