@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (use-package elfeed
   :straight t
   :defer t

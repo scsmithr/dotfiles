@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 ;; Utilities for creating repls using comint.
 
 (defface sm/comint-echo-face '((t :inherit shadow))
@@ -599,6 +602,20 @@ Otherwise start the repl in the current directory."
     (interactive)
     (let ((sym (symbol-at-point)))
       (describe-symbol sym)))
+
+  (setq elisp-flymake-byte-compile-load-path nil)
+
+  (defun sm/set-elisp-flymake-load-path ()
+    (interactive)
+    (setq-local elisp-flymake-byte-compile-load-path load-path))
+
+  (defvar sm/elisp-dots-dir (expand-file-name "~/dotfiles/emacs/"))
+
+  (defun sm/set-elisp-flymake-load-path-when-dots ()
+    (when (string-prefix-p sm/elisp-dots-dir buffer-file-name)
+      (sm/set-elisp-flymake-load-path)))
+
+  :hook ((emacs-lisp-mode . sm/set-elisp-flymake-load-path-when-dots))
   :bind (:map emacs-lisp-mode-map
               ("C-c C-d" . sm/elisp-describe-symbol-at-point)
               :map lisp-interaction-mode-map

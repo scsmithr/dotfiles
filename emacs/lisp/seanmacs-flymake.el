@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (use-package flymake
   ;; built-in, ish. Eglot pulls in development versions.
   :demand t

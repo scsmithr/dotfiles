@@ -26,6 +26,8 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(setq use-package-enable-imenu-support t)
+
 ;; Ensure use-package is here.
 (straight-use-package 'use-package)
 
@@ -39,21 +41,21 @@
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 
-(use-package seanmacs-libs)
-(use-package seanmacs-theme)
-(use-package seanmacs-evil)
-(use-package seanmacs-windows)
-(use-package seanmacs-edit)
-(use-package seanmacs-completions)
-(use-package seanmacs-flymake)
-(use-package seanmacs-utils)
-(use-package seanmacs-elfeed)
-(use-package seanmacs-version-control)
-(use-package seanmacs-org)
-(use-package seanmacs-langs)
-(use-package seanmacs-shell)
-(use-package seanmacs-email)
-(use-package seanmacs-password)
+(require 'seanmacs-libs)
+(require 'seanmacs-theme)
+(require 'seanmacs-evil)
+(require 'seanmacs-windows)
+(require 'seanmacs-edit)
+(require 'seanmacs-completions)
+(require 'seanmacs-flymake)
+(require 'seanmacs-utils)
+(require 'seanmacs-elfeed)
+(require 'seanmacs-version-control)
+(require 'seanmacs-org)
+(require 'seanmacs-langs)
+(require 'seanmacs-shell)
+(require 'seanmacs-email)
+(require 'seanmacs-password)
 
 ;;; init.el ends here
 

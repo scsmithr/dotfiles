@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (require 'subr-x)
 
 (defun sm/compile (command &optional buf-name)

@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 ;; Highlight parenthesis
 (show-paren-mode 1)
 

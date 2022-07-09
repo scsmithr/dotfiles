@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (use-package mu4e
   ;; Provided by mu system package.
   :commands (mu4e)

@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (defvar sm/notes-dir "~/syncthing/notes/"
   "Directory containging all of my notes (including org files).")
 

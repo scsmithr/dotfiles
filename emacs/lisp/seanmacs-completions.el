@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 ;; Adapted from https://github.com/minad/consult/blob/1a6ed29e92f00266daff4ff5f62602f53ef7d158/consult.el#L2284
 (defun sm/default-completion-in-region (start end collection predicate)
   "A very simple completion-in-read function using `completing-read'.

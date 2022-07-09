@@ -6,6 +6,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (require 'cl-lib)
 
 ;; Useful string utilities, e.g. 's-contains-p'.

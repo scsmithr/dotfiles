@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+
 (defun sm/setup-frame-fonts ()
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
@@ -58,6 +61,7 @@
         modus-themes-region '(bg-only)
         modus-themes-diffs 'bg-only
         modus-themes-italic-constructs t
+        modus-themes-lang-checkers '(straight-underline background)
         modus-themes-org-agenda '((header-block . (no-scale))
                                   (header-date . (bold-all underline-today))))
 
