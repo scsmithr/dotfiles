@@ -930,7 +930,7 @@
 
   #+name: ui-font-weight
   #+BEGIN_SRC shell
-    echo regular
+    echo semibold
   #+END_SRC
 
   #+RESULTS: ui-font-weight
@@ -1625,6 +1625,8 @@
             ((modMask, xK_p), shellPrompt promptConf),
             ((modMask, xK_b), spawn myBrowser),
             ((modMask, xK_v), spawn myEditor),
+            ((modMask, xK_n), spawn "dunstctl history-pop"),
+            ((modMask .|. shiftMask, xK_n), spawn "dunstctl close"),
             ((modMask, xK_q), spawn "lock"),
             ((modMask .|. shiftMask, xK_q), spawn "lock suspend"),
             ((modMask, xK_x), spawn "if type xmonad; then xmonad --restart; fi"),
