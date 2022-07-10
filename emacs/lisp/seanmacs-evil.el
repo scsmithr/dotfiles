@@ -15,7 +15,7 @@
 
 ;; evil
 (use-package evil
-  :straight (:host github :repo "scsmithr/evil" :branch "fix-temporary-goal-column")
+  :straight t
   :init
   (setq evil-search-module 'evil-search
         evil-ex-complete-emacs-commands nil
