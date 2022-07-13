@@ -32,7 +32,7 @@
   :config
   (setq docker-container-columns
         '((:name "Id" :width 16 :template "{{json .ID}}" :sort nil :format nil)
-          (:name "Names" :width 16 :template "{{json .Names}}" :sort nil :format nil)
+          (:name "Names" :width 24 :template "{{json .Names}}" :sort nil :format nil)
           (:name "Status" :width 16 :template "{{json .Status}}" :sort nil :format
                  (lambda
                    (x)
