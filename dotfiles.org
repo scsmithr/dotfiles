@@ -663,6 +663,16 @@
       esac
     #+END_SRC
 
+
+*** postgres-scratch
+
+    Spin up a postgres docker container.
+
+    #+BEGIN_SRC bash :tangle ~/.bin/postgres-scratch
+      name="postgres-scratch-${RANDOM}"
+      docker run --rm --name "$name" -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:14
+    #+END_SRC
+
 ** Bashrc
    :PROPERTIES:
    :header-args:bash: :tangle ~/.bashrc :comments org :padline no
@@ -1093,7 +1103,7 @@
    #+BEGIN_SRC sh
      xset s 300 5 # Lock after 5 minutes
      export XSECURELOCK_PASSWORD_PROMPT=time
-     export XSECURELOCK_FONT="<<font-monospace()>>"
+     export XSECURELOCK_FONT="<<font-sans-serif()>>"
      xss-lock -l -- xsecurelock&
    #+END_SRC
 
