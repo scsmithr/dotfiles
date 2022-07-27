@@ -63,7 +63,7 @@
  ("melpa" . "0fdd6cb9b09cfa3941c0d4dc8271d4c86863bd31")
  ("minions" . "4a81446e13f5bfb514e593d0e1c5253a60113301")
  ("mit" . "d17394f577aaa2854a74a1a0039cb8f73378b400")
- ("modus-themes" . "2860a94f78154dfdd0b2d01bdf0af7992195f34c")
+ ("modus-themes" . "4211bcd6db3c3c51d6d97e3c9c119fb5b32b7ecd")
  ("nongnu-elpa" . "0461407fbe5d4e33a9d034cb63a941a82f7981d7")
  ("nov.el" . "587ff2fe25b0a75726f090001441bca76aa0ce4b")
  ("ob-async" . "de1cd6c93242a4cb8773bbe115b7be3d4dd6b97e")
