@@ -64,7 +64,8 @@ severity descending, then line ascending."
         flymake-languagetool-server-command `("languagetool"
                                               "--http"
                                               "--port" ,flymake-languagetool-server-port)
-        flymake-languagetool-check-spelling t)
+        flymake-languagetool-check-spelling t
+        flymake-languagetool--disabled-rules '("WHITESPACE_RULE"))
 
   (defun sm/flymake-languagetool-load ()
     (interactive)
