@@ -41,6 +41,7 @@
  ("evil-surround" . "346d4d85fcf1f9517e9c4991c1efe68b4130f93a")
  ("flimenu" . "4c0ff37cf3bd6c836bd136b5f6c450560a6c92b9")
  ("flymake" . "6bc8782d9c05d4c9bbba524542d457e6a3b1734b")
+ ("flymake-languagetool" . "857f4f94a7615d7de5305a40045b2b85ae1ff760")
  ("forge" . "05babf69068de7a982bd2e8ad888f37dc7319003")
  ("geiser" . "4099dce8f5f17cce8f292cdf0bc1bf2e5cb6975c")
  ("ghub" . "f14c1bc84135fe149c42348dce6eaa23ba610224")

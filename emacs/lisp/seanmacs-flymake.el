@@ -55,6 +55,23 @@ severity descending, then line ascending."
                  ("n" . flymake-goto-next-error)
                  ("p" . flymake-goto-prev-error)))
 
+(use-package flymake-languagetool
+  :straight t
+  :defer t
+  :commands sm/flymake-languagetool-load
+  :init
+  (setq flymake-languagetool-server-port "10888"
+        flymake-languagetool-server-command `("languagetool"
+                                              "--http"
+                                              "--port" ,flymake-languagetool-server-port)
+        flymake-languagetool-check-spelling t)
+
+  (defun sm/flymake-languagetool-load ()
+    (flymake-mode 1)
+    (flymake-languagetool-load))
+
+  :hook ((markdown-mode . sm/flymake-languagetool-load)))
+
 (defvar-local sm/flymake-processes-alist nil
   "Processes that are currently checking the buffer.
 
