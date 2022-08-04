@@ -142,6 +142,9 @@
            :empty-lines 1)
           ("t" "Task" entry (file+olp+datetree "")
            (file ,(concat sm/org-capture-templates-dir "/task"))
+           :empty-lines 1)
+          ("i" "Issue" entry (file+olp+datetree "")
+           (file ,(concat sm/org-capture-templates-dir "/issue"))
            :empty-lines 1)))
 
   ;; Keep track when I reschedule or complete things.

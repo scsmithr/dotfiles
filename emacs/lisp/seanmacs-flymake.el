@@ -67,6 +67,7 @@ severity descending, then line ascending."
         flymake-languagetool-check-spelling t)
 
   (defun sm/flymake-languagetool-load ()
+    (interactive)
     (flymake-mode 1)
     (flymake-languagetool-load))
 

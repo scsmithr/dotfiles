@@ -31,6 +31,7 @@
 (blink-cursor-mode -1)
 
 (setq mode-line-compact 'long)
+(setq column-number-mode t)
 
 (use-package minions
   :straight t
