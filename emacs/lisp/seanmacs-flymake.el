@@ -56,7 +56,7 @@ severity descending, then line ascending."
                  ("p" . flymake-goto-prev-error)))
 
 (use-package flymake-languagetool
-  :straight t
+  :straight (:host github :repo "scsmithr/flymake-languagetool" :branch "master")
   :defer t
   :commands sm/flymake-languagetool-load
   :init
