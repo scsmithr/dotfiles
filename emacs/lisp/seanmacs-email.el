@@ -30,7 +30,6 @@
         message-citation-line-function 'message-insert-formatted-citation-line)
 
   (setq mu4e-completing-read-function 'completing-read
-        mu4e-view-show-addresses t
         mu4e-compose-dont-reply-to-self t)
 
   (setq mu4e-use-fancy-chars nil

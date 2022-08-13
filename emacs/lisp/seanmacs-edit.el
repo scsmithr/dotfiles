@@ -141,8 +141,8 @@ loaded (e.g. sql-mode)."
   :config
   (setq ibuffer-read-only-char ?R
         ibuffer-eliding-string "…"
-        ibuffer-directory-abbrev-alist '(("^/home/sean/Code/[a-zA-Z.]+/" . "..")
-                                         ("^/home/sean/.go/src/[a-zA-Z.]+/" . ".."))
+        ibuffer-directory-abbrev-alist '(("^/home/sean/Code/[a-zA-Z.]+/" . "[c] ")
+                                         ("^/home/sean/.go/src/[a-zA-Z.]+/" . "[g] "))
         ibuffer-formats '((mark modified read-only
                                 " " (name 28 28 :left :elide)
                                 " " (mode 16 16 :left :elide)
