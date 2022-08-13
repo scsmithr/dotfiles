@@ -61,7 +61,7 @@
         modus-themes-org-blocks 'gray-background
         modus-themes-region '(bg-only)
         modus-themes-diffs 'bg-only
-        modus-themes-italic-constructs t
+        modus-themes-italic-constructs nil
         modus-themes-lang-checkers '(straight-underline)
         modus-themes-org-agenda '((header-block . (no-scale))
                                   (header-date . (bold-all underline-today))))
@@ -73,6 +73,10 @@
           (bg-whitespace           . "#ffffff")
           (fg-window-divider-inner . "#dadada")
           (fg-window-divider-outer . "#aaaaaa")
+          ;; Tweaked doc/alt colors. Lightened to have docs and comments stand
+          ;; out a bit more from surrounding text.
+          (fg-docstring . "#4a688a")
+          (fg-alt       . "#707070")
           ;; Custom fringe colors, I'm using these 'bg' colors as the
           ;; foreground.
           (red-fringe-bg     . "#c06873")
