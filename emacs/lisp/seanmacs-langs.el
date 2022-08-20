@@ -756,5 +756,17 @@ Otherwise start the repl in the current directory."
                              :match-msg 4)
   :hook ((sh-mode . sm/flymake-checker-shellcheck-load)))
 
+
+;; Nix
+
+(use-package nix-mode
+  :straight t
+  :mode "\\.nix\\'")
+
+;; Extra packages from the `nix-mode' repo.
+(use-package nix-flake :after nix-mode)
+(use-package nix-repl :after nix-mode)
+(use-package nix-store :after nix-mode)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

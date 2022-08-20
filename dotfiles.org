@@ -2002,3 +2002,30 @@
 
    #+RESULTS:
    : #<COMMAND START-SLYNK {1007CFE8CB}>
+
+* Nix
+
+  An experiment...
+
+** Setup
+
+   Install nix, enable nix-daemon.
+
+   Add user to nix-users group.
+
+   #+BEGIN_SRC bash :dir /sudo::
+     usermod -aG nix-users sean
+   #+END_SRC
+
+   #+RESULTS:
+
+** Config
+   :PROPERTIES:
+   :header-args:conf: :tangle ~/.config/nix/nix.conf :comments org :padline no
+   :END:
+
+   Enable flakes.
+
+   #+BEGIN_SRC conf
+     experimental-features = nix-command flakes
+   #+END_SRC
