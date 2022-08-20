@@ -30,7 +30,7 @@
 
 (blink-cursor-mode -1)
 
-(setq mode-line-compact 'long)
+(setq mode-line-compact nil)
 (setq column-number-mode t)
 
 (use-package minions
