@@ -106,6 +106,9 @@
        `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg)))
        `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg)))
        `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg)))
+       ;; Man/woman
+       `(Man-overstrike ((t :inherit bold :foreground ,fg-special-calm)))
+       `(woman-bold ((t :inherit bold :foreground ,fg-special-calm)))
        ;; Eldoc
        `(eldoc-highlight-function-argument ((t :inherit bold :foreground ,blue-alt-other)))
 
