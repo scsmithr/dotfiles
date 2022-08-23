@@ -709,6 +709,44 @@ Otherwise start the repl in the current directory."
   (advice-add 'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
   :hook ((sql-mode . sqlind-minor-mode)))
 
+;; sqllogictest
+
+(defvar sqllogictest-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    ;; Add '#' as a comment.
+    (modify-syntax-entry ?# "<" table)
+    (modify-syntax-entry ?\n ">" table)
+    (modify-syntax-entry ?\f ">" table)
+    table)
+  "Syntax table for `sqlogictest-mode'.")
+
+(defvar sqllogictest-mode-font-lock-keywords
+  '(("^\\(statement\\|query\\)" . font-lock-keyword-face)
+    ("^----" . font-lock-doc-markup-face)
+    ("^halt" . font-lock-warning-face)
+    ("^hash-threshold" . font-lock-function-name-face)
+    ("^\\(skipif\\|onlyif\\)" . font-lock-function-name-face))
+  "Keywords specification for `sqllogictest-mode'.")
+
+(defvar sqllogictest-mode-imenu-generic-expression
+  '(("Statements" "^statement .+[\r\n]\\(.+\\)" 1)
+    ("Queries" "^query .+[\r\n]\\(.+\\)" 1))
+  "Imenu expression for `sqllogictest-mode'.")
+
+(define-derived-mode sqllogictest-mode prog-mode "sqllogictest"
+  "A mode for for working with 'sqllogictest' files."
+  :syntax-table sqllogictest-mode-syntax-table
+  (setq-local comment-start "#"
+              comment-end "")
+
+  (setq-local font-lock-defaults '(sqllogictest-mode-font-lock-keywords))
+  (setq-local imenu-generic-expression sqllogictest-mode-imenu-generic-expression
+              imenu-case-fold-search t)
+
+  (run-hooks 'sqllogictest-mode-hook))
+
+(add-to-list 'auto-mode-alist '("\\.slt\\'" . sqllogictest-mode))
+
 
 ;; Tex/Latex
 
