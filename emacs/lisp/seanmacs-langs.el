@@ -729,7 +729,8 @@ Otherwise start the repl in the current directory."
   "Keywords specification for `sqllogictest-mode'.")
 
 (defvar sqllogictest-mode-imenu-generic-expression
-  '(("Statements" "^statement .+[\r\n]\\(.+\\)" 1)
+  '(("Statements.error" "^statement error\\(?:[:space:]\\)*[\r\n]\\(.+\\)" 1)
+    ("Statements.ok" "^statement ok\\(?:[:space:]\\)*[\r\n]\\(.+\\)" 1)
     ("Queries" "^query .+[\r\n]\\(.+\\)" 1))
   "Imenu expression for `sqllogictest-mode'.")
 
