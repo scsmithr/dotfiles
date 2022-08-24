@@ -744,6 +744,11 @@ Otherwise start the repl in the current directory."
   (setq-local imenu-generic-expression sqllogictest-mode-imenu-generic-expression
               imenu-case-fold-search t)
 
+  (setq-local electric-indent-mode nil
+              indent-tabs-mode nil
+              tab-width 4
+              indent-line-function 'insert-tab)
+
   (run-hooks 'sqllogictest-mode-hook))
 
 (add-to-list 'auto-mode-alist '("\\.slt\\'" . sqllogictest-mode))
