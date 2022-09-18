@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ret-handler-func
+# key: hf
+# --
+func ${1:name}(${2:args}) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		$0
+	})
+}
