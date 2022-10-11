@@ -75,7 +75,7 @@
           (fg-window-divider-outer . "#aaaaaa")
           ;; Tweaked doc/alt colors. Lightened to have docs and comments stand
           ;; out a bit more from surrounding text.
-          (fg-docstring . "#4a688a")
+          (fg-docstring . "#7a587a")
           (fg-alt       . "#707070")
           ;; Custom fringe colors, I'm using these 'bg' colors as the
           ;; foreground.
@@ -111,6 +111,8 @@
        `(woman-bold ((t :inherit bold :foreground ,fg-special-calm)))
        ;; Eldoc
        `(eldoc-highlight-function-argument ((t :inherit bold :foreground ,blue-alt-other)))
+       ;; Evil
+       `(evil-ex-substitute-replacement ((t :inherit modus-themes-refine-green :underline t)))
 
        (with-eval-after-load 'eglot
          (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)
