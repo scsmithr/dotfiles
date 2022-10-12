@@ -78,7 +78,7 @@
           (fg-docstring . "#707070")
           (fg-alt       . "#707070")
           ;; Changes background for modeline.
-          (bg-active   . "#efefef")
+          (bg-active   . "#eaeaea")
           (bg-inactive . "#f8f8f8")
           ;; Custom fringe colors, I'm using these 'bg' colors as the
           ;; foreground.
