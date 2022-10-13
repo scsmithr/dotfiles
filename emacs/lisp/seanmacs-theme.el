@@ -78,7 +78,7 @@
           (fg-docstring . "#707070")
           (fg-alt       . "#707070")
           ;; Changes background for modeline.
-          (bg-active   . "#eaeaea")
+          (bg-active   . "#e8e8e8")
           (bg-inactive . "#f8f8f8")
           ;; Custom fringe colors, I'm using these 'bg' colors as the
           ;; foreground.
@@ -116,6 +116,8 @@
        `(eldoc-highlight-function-argument ((t :inherit bold :foreground ,blue-alt-other)))
        ;; Evil
        `(evil-ex-substitute-replacement ((t :inherit modus-themes-refine-green :underline t)))
+       ;; Corfu
+       `(corfu-default ((t :background ,bg-inactive)))
 
        (with-eval-after-load 'eglot
          (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)
