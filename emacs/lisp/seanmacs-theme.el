@@ -75,7 +75,7 @@
           (fg-window-divider-outer . "#aaaaaa")
           ;; Tweaked doc/alt colors. Lightened to have docs and comments stand
           ;; out a bit more from surrounding text.
-          (fg-docstring . "#707070")
+          (fg-docstring . "#6a6a90")
           (fg-alt       . "#707070")
           ;; Changes background for modeline.
           (bg-active   . "#e8e8e8")
