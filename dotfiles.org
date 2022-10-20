@@ -1211,9 +1211,9 @@
      follow = none
 
      width = 360
-     origin = top-center
-     offset = 0x34
-     notification_limit = 1
+     origin = bottom-right
+     offset = 0x0
+     notification_limit = 2
 
      # Show how many messages are currently hidden (because of geometry).
      indicate_hidden = yes
@@ -1233,7 +1233,7 @@
      separator_height = 1
 
      # Padding between text and separator.
-     padding = 4
+     padding = 0
 
      # Horizontal padding.
      horizontal_padding = 8
