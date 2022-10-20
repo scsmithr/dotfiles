@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Create schema and set search path to that schema.
+# key: schema
+# --
+statement ok
+create schema $1;
+
+statement ok
+set search_path = $1;
+
+$0
