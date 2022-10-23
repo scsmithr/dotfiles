@@ -7,6 +7,10 @@
 
 (setq initial-scratch-message ";; Not Invented Here\n\n")
 
+;; Suppress native comp warnings (for now).
+(setq native-comp-async-report-warnings-errors :silent
+      warning-suppress-log-types '((comp)))
+
 ;; GC things
 (setq gc-cons-threshold 20000000)
 (setq read-process-output-max (* 1024 1024))
