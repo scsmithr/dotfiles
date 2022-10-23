@@ -83,10 +83,8 @@
 
   programs.bash = {
     enable = true;
-    sessionVariables = {
-      # Be consistent so eshell regex can match this.
-      PS1 = "[\u@\h \W]\$ ";
-    };
+    # Be consistent so eshell regex can match this.
+    initExtra = "PS1='[\\u@\\h \\W]\\$ '";
   };
 
   programs.go = {
