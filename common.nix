@@ -57,6 +57,9 @@
     # Javascript/Typescript
     yarn
     nodejs-16_x
+
+    # Scheme
+    guile
   ];
 
   programs.firefox = {

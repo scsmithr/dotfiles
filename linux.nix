@@ -47,6 +47,10 @@
     source = ./linux/scripts/vol;
   };
 
+  home.file.".status/status.scm" = {
+    source = ./linux/status.scm;
+  };
+
   programs.xmobar = {
     enable = true;
     extraConfig = ''
@@ -66,7 +70,7 @@
             commands = [
                 Run Date "%a, %b %d %I:%M%P" "date" 10,
 
-                Run CommandReader "STATUS_SECTION_COLOR=#828282 ~/.status/status.scm" "status",
+                Run CommandReader "STATUS_SECTION_COLOR=#828282 guile -e main -s ~/.status/status.scm" "status",
 
                 Run StdinReader
             ],
