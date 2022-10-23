@@ -9,7 +9,6 @@
   home.sessionPath = [
     "$HOME/.bin/"
     "$HOME/.cargo/bin"
-    "$HOME/.elan/bin"
     "$HOME/\${config.programs.go.goPath}/bin"
     # Stack installs binaries here. Needed since I'm using stack to manage
     # xmonad.
@@ -19,6 +18,11 @@
   home.sessionVariables = {
     EDITOR = "editor";
     JULIA_NUM_THREADS = "16";
+  };
+
+  home.file.".bin/editor" = {
+    executable = true;
+    source = ./scripts/editor;
   };
 
   # Packages
