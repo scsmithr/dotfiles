@@ -32,4 +32,21 @@
     rustfmt
     rust-analyzer
   ];
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font.size = 11;
+    };
+  };
+
+  # Emacs
+  home.file.".emacs.d" = {
+    source = ./emacs;
+    recursive = true;
+  };
+
+  programs.emacs = {
+    enable = true;
+  };
 }
