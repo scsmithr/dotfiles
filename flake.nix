@@ -24,7 +24,7 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home/common.nix ];
+        modules = [ ./common.nix ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
