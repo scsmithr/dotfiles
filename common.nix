@@ -8,6 +8,7 @@
   home.sessionPath = [
     "$HOME/.bin"
     "$HOME/.cargo/bin"
+    "$HOME/.go/bin"
     # Stack installs binaries here. Needed since I'm using stack to manage
     # xmonad.
     "$HOME/.local/bin"
@@ -39,6 +40,8 @@
     jq
     ripgrep
     tree
+    docker
+    gnupg
 
     # Google cloud
     google-cloud-sdk

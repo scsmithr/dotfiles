@@ -516,14 +516,6 @@
       fi
     #+END_SRC
 
-*** editor
-
-    Start the emacs daemon if it's not already started, and open a client to it.
-
-    #+BEGIN_SRC bash :tangle ~/.bin/editor
-      emacsclient -a '' "$@"
-    #+END_SRC
-
 *** essid
 
     Get currently connected ssid.
@@ -663,15 +655,6 @@
       esac
     #+END_SRC
 
-
-*** postgres-scratch
-
-    Spin up a postgres docker container.
-
-    #+BEGIN_SRC bash :tangle ~/.bin/postgres-scratch
-      name="postgres-scratch-${RANDOM}"
-      docker run --rm --name "$name" -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:14
-    #+END_SRC
 
 * Fonts
 
