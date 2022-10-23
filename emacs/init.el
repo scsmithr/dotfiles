@@ -8,7 +8,8 @@
 (setq initial-scratch-message ";; Not Invented Here\n\n")
 
 ;; Suppress native comp warnings (for now).
-(setq warning-minimum-level :error)
+(setq native-comp-async-report-warnings-errors :silent
+      warning-suppress-log-types '((comp)))
 
 ;; GC things
 (setq gc-cons-threshold 20000000)
