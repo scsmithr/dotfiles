@@ -65,13 +65,6 @@
     enable = true;
   };
 
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      font.size = 11;
-    };
-  };
-
   home.file.".emacs.d" = {
     source = ./emacs;
     recursive = true;
