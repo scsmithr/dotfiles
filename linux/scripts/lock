@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+case $1 in
+    "suspend")
+        systemctl suspend
+        ;;
+    *)
+        xset s activate
+        ;;
+esac
