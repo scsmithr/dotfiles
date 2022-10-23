@@ -6,7 +6,7 @@
   programs.home-manager.enable = true;
 
   home.sessionPath = [
-    "$HOME/.bin/"
+    "$HOME/.bin"
     "$HOME/.cargo/bin"
     # Stack installs binaries here. Needed since I'm using stack to manage
     # xmonad.

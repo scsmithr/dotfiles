@@ -17,7 +17,10 @@
   outputs = { nixpkgs, home-manager, emacs-overlay, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config = { allowUnfree = true; };
+      };
     in {
       homeConfigurations.sean = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
