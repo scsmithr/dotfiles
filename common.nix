@@ -8,7 +8,6 @@
   home.sessionPath = [
     "$HOME/.bin/"
     "$HOME/.cargo/bin"
-    "$HOME/\${config.programs.go.goPath}/bin"
     # Stack installs binaries here. Needed since I'm using stack to manage
     # xmonad.
     "$HOME/.local/bin"
@@ -84,8 +83,10 @@
 
   programs.bash = {
     enable = true;
-    # Be consistent so eshell regex can match this.
-    bashrcExtra = "PS1='[\u@\h \W]\$ '";
+    sessionVariables = {
+      # Be consistent so eshell regex can match this.
+      PS1 = "[\u@\h \W]\$ ";
+    };
   };
 
   programs.go = {
