@@ -5,6 +5,10 @@
   home.username = "sean";
   home.homeDirectory = "/home/sean";
 
+  home.packages = with pkgs; [
+    xorg.xmodmap
+  ];
+
   # idk how to loop
 
   home.file.".bin/bri" = {
@@ -25,6 +29,11 @@
   home.file.".bin/lock" = {
     executable = true;
     source = ./linux/scripts/lock;
+  };
+
+  home.file.".bin/mm" = {
+    executable = true;
+    source = ./linux/scripts/mm;
   };
 
   home.file.".bin/notify" = {
@@ -81,9 +90,12 @@
     '';
   };
 
-  xsession.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    config = ./linux/xmonad.hs;
+  xsession = {
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      config = ./linux/xmonad.hs;
+    };
   };
+
 }
