@@ -609,10 +609,8 @@ Otherwise start the repl in the current directory."
     (interactive)
     (setq-local elisp-flymake-byte-compile-load-path load-path))
 
-  (defvar sm/elisp-dots-dir (expand-file-name "~/dotfiles/emacs/"))
-
   (defun sm/set-elisp-flymake-load-path-when-dots ()
-    (when (string-prefix-p sm/elisp-dots-dir buffer-file-name)
+    (when (string-prefix-p sm/dotfiles-dir buffer-file-name)
       (sm/set-elisp-flymake-load-path)))
 
   :hook ((emacs-lisp-mode . sm/set-elisp-flymake-load-path-when-dots))

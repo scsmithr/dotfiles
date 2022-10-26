@@ -111,6 +111,10 @@ file at point will be used."
   :straight t
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
+  ;; Sharper text on macos.
+  (setq pdf-view-use-scaling t
+        pdf-view-use-imagemagick nil)
+
   (defvar sm/pdf-to-text-fill t
     "Determine if the plain text should auto filled.")
 
@@ -207,59 +211,9 @@ opening the file."
   :defer t
   :config
   (setq-default olivetti-body-width 120)
-  (setq olivetti-style 'fancy)
+  (setq olivetti-style nil)
   (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
-  :bind (("C-c z" . zen-mode)))
-
-(defvar-local zen-mode-flymake-fringe-indicator-position nil
-  "Original buffer local setting for `flymake-fringe-indicator-position'.")
-
-(defvar-local zen-mode-fringe-indicator-alist nil
-  "Original buffer local setting for `fringe-indicator-alist'.")
-
-(defvar-local zen-mode-display-line-numbers-mode nil
-  "Non-nil if the `display-line-numbers-mode' was enabled.")
-
-(define-minor-mode zen-mode
-  "Mode that centers the current buffer and disables select fringe elements."
-  :init-value nil
-  :global nil
-  :lighter "Zen"
-  (if zen-mode
-      (progn
-        (diff-hl-mode -1)
-
-        (when (local-variable-p 'flymake-fringe-indicator-position)
-          (setq zen-mode-flymake-fringe-indicator-position flymake-fringe-indicator-position))
-
-        (when (local-variable-p 'fringe-indicator-alist)
-          (setq zen-mode-fringe-indicator-alist fringe-indicator-alist))
-
-        (setq-local flymake-fringe-indicator-position nil)
-        (setq-local fringe-indicator-alist (mapcar #'(lambda (mapping)
-                                                       (cons (car mapping) nil))
-                                                   fringe-indicator-alist))
-
-        (when (bound-and-true-p display-line-numbers-mode)
-          (setq zen-mode-display-line-numbers-mode t)
-          (display-line-numbers-mode -1))
-
-        (olivetti-mode 1))
-    (progn
-      (diff-hl-mode 1)
-
-      (if zen-mode-flymake-fringe-indicator-position
-          (setq-local flymake-fringe-indicator-position zen-mode-flymake-fringe-indicator-position)
-        (kill-local-variable 'flymake-fringe-indicator-position))
-
-      (if zen-mode-fringe-indicator-alist
-          (setq-local fringe-indicator-alist zen-mode-fringe-indicator-alist)
-        (kill-local-variable 'fringe-indicator-alist))
-
-      (when zen-mode-display-line-numbers-mode
-        (display-line-numbers-mode 1))
-
-      (olivetti-mode -1))))
+  :bind (("C-c z" . olivetti-mode)))
 
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

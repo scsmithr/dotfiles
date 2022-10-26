@@ -112,14 +112,15 @@ If BUF-NAME is nil, the command will be used to name the buffer."
     (apply 'insert args))
 
   ;; Nearly identical to the default prompt function, but will display last
-  ;; status if non-zero. Satisfies default prompt regex.
+  ;; status if non-zero.
   (defun sm/eshell-prompt-function ()
     (concat (abbreviate-file-name (eshell/pwd))
             (unless (zerop eshell-last-command-status)
               (format " [%s]" eshell-last-command-status))
-            (if (= (user-uid) 0) " # " " $ ")))
+            (if (= (user-uid) 0) " # " " % ")))
 
-  (setq eshell-prompt-function #'sm/eshell-prompt-function)
+  (setq eshell-prompt-function #'sm/eshell-prompt-function
+        eshell-prompt-regexp "^[^#%\n]* [#%] ")
 
   (setq eshell-history-size 10000
         eshell-save-history-on-exit nil ;; This is handled elsewhere.

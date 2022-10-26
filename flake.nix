@@ -8,32 +8,32 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-    };
   };
 
   outputs = { nixpkgs, home-manager, emacs-overlay, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
+      darwin-pkgs = import nixpkgs {
+        system = "aarch64-darwin";
+        config = { allowUnfree = true; };
+      };
+      linux-pkgs = import nixpkgs {
+        system = "x86_64-linux";
         config = { allowUnfree = true; };
       };
     in {
-      homeConfigurations.sean = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
+      homeConfigurations.sean-darwin = home-manager.lib.homeManagerConfiguration {
+        pkgs = darwin-pkgs;
+        modules = [
+          ./darwin.nix
+          ./common.nix
+        ];
+      };
+      homeConfigurations.sean-linux = home-manager.lib.homeManagerConfiguration {
+        pkgs = linux-pkgs;
         modules = [
           ./linux.nix
           ./common.nix
         ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
       };
     };
 }

@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;; Theme stuff.
 
+
 ;;; Code:
 
 (eval-when-compile
@@ -12,8 +13,9 @@
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
     (message "Setting frame fonts")
-    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 120 :weight 'normal)
-    (set-face-attribute 'variable-pitch nil :family "Source Serif Pro" :height 130)
+    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 150)
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)))
@@ -55,11 +57,14 @@
 (use-package modus-themes
   :straight t
   :config
-  (fringe-mode '(16 . 16))
+  (fringe-mode '(8 . 8))
 
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
+        modus-themes-mode-line '(borderless (padding . 4))
         modus-themes-region '(bg-only)
+        modus-themes-hl-line nil
+        modus-themes-completions nil
         modus-themes-diffs 'bg-only
         modus-themes-italic-constructs nil
         modus-themes-lang-checkers '(straight-underline)
@@ -77,9 +82,6 @@
           ;; out a bit more from surrounding text.
           (fg-docstring . "#6a6a90")
           (fg-alt       . "#707070")
-          ;; Changes background for modeline.
-          (bg-active   . "#e8e8e8")
-          (bg-inactive . "#f8f8f8")
           ;; Custom fringe colors, I'm using these 'bg' colors as the
           ;; foreground.
           (red-fringe-bg     . "#c06873")
@@ -109,6 +111,8 @@
        `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg)))
        `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg)))
        `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg)))
+       ;; Modus reset
+       `(modus-themes-reset-hard ((t :inherit default)))
        ;; Man/woman
        `(Man-overstrike ((t :inherit bold :foreground ,fg-special-calm)))
        `(woman-bold ((t :inherit bold :foreground ,fg-special-calm)))
@@ -126,6 +130,98 @@
 
   (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
   (load-theme 'modus-operandi t))
+
+;; Fringe bitmaps
+
+(define-fringe-bitmap 'right-curly-arrow
+  [#b00000000
+   #b00000000
+   #b00000000
+   #b01111000
+   #b01111000
+   #b00011000
+   #b00011000
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'left-curly-arrow
+  [#b00000000
+   #b00011000
+   #b00011000
+   #b00011110
+   #b00011110
+   #b00000000
+   #b00000000
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'right-arrow
+  [#b00000000
+   #b00100000
+   #b00110000
+   #b00111000
+   #b00111100
+   #b00111000
+   #b00110000
+   #b00100000
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'left-arrow
+  [#b00000000
+   #b00000100
+   #b00001100
+   #b00011100
+   #b00111100
+   #b00011100
+   #b00001100
+   #b00000100
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'up-arrow
+  [#b00000000
+   #b01111100
+   #b00111100
+   #b00011100
+   #b00001100
+   #b00000100
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'down-arrow
+  [#b00000000
+   #b00000100
+   #b00001100
+   #b00011100
+   #b00111100
+   #b01111100
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'right-triangle
+  [#b00000000
+   #b00100000
+   #b00110000
+   #b00111000
+   #b00111100
+   #b00111000
+   #b00110000
+   #b00100000
+   #b00000000]
+  nil nil 'center)
+
+(define-fringe-bitmap 'left-triangle
+  [#b00000000
+   #b00000100
+   #b00001100
+   #b00011100
+   #b00111100
+   #b00011100
+   #b00001100
+   #b00000100
+   #b00000000]
+  nil nil 'center)
 
 (provide 'seanmacs-theme)
 ;;; seanmacs-theme.el ends here

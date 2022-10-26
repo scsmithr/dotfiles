@@ -74,32 +74,6 @@
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "BLOCKED(b)" "IN-PROGRESS(i)" "|" "REFILED(r)" "DONE(d)" "CANCELED(c)")))
 
-  (setq org-agenda-custom-commands
-        '(("d" "Day overview"
-           ((agenda ""
-                    ((org-agenda-span 'day)
-                     (org-deadline-warning-days 1)))
-            (todo "IN-PROGRESS"
-                  ((org-agenda-overriding-header "In progress")
-                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Up next")
-                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
-            (tags "+revisit"
-                  ((org-agenda-overriding-header "Revisit")
-                   (org-agenda-prefix-format "%i %-12:c ")
-                   (org-use-tag-inheritance nil)))
-            (tags "CLOSED>=\"<today>\""
-                  ((org-agenda-overriding-header "Completed Today")))))
-          ("u" "Unscheduled"
-           ((todo ""
-                  ((org-agenda-overriding-header "Unscheduled")
-                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")
-                   (org-agenda-todo-ignore-scheduled 'all)))))
-          ("b" "Blocked"
-           ((todo "BLOCKED"
-                  ((org-agenda-overriding-header "Blocked")))))))
-
   (setq org-agenda-files (list sm/notes-dir)
         org-agenda-restore-windows-after-quit t
         org-agenda-span 'fortnight

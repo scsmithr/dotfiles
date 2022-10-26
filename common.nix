@@ -1,6 +1,12 @@
 # Home manager configuration shared across all machines.
 
 {config, pkgs, ...}:
+
+let
+  # Extra packages.
+  tygo = pkgs.callPackage ./pkgs/tygo.nix {};
+  typescript-ls = pkgs.callPackage ./pkgs/typescript-ls.nix {};
+in
 {
   home.stateVersion = "22.05";
   programs.home-manager.enable = true;
@@ -9,19 +15,22 @@
     "$HOME/.bin"
     "$HOME/.cargo/bin"
     "$HOME/.go/bin"
-    # Stack installs binaries here. Needed since I'm using stack to manage
-    # xmonad.
-    "$HOME/.local/bin"
   ];
 
   home.sessionVariables = {
     EDITOR = "editor";
+    PAGER = "cat"; # Works for now.
     JULIA_NUM_THREADS = "16";
   };
 
   home.file.".bin/editor" = {
     executable = true;
     source = ./scripts/editor;
+  };
+
+  home.shellAliases = {
+    ec = "editor -nc";
+    et = "editor -nw";
   };
 
   # Packages
@@ -42,9 +51,40 @@
     tree
     docker
     gnupg
+    gnugrep
+    gnutar
+    gnused
+    syncthing
+    tygo
+    postgresql
+    languagetool
+    ispell
+    qemu
+    findutils
+    plantuml
 
-    # Google cloud
-    google-cloud-sdk
+    # Find missing binaries.
+    nix-index
+
+    # Shells
+    bash
+    zsh
+
+    # Linting stuff
+    shellcheck
+    golangci-lint
+
+    # Dev utilities
+    (pkgs.google-cloud-sdk.withExtraComponents
+      ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
+    docker
+    protobuf
+    sqlc
+    kubectl
+    cloud-sql-proxy
+
+    # Python
+    python311
 
     # Go
     go
@@ -59,14 +99,31 @@
     # Javascript/Typescript
     yarn
     nodejs-16_x
+    nodePackages.typescript
+    typescript-ls
 
     # Scheme
     guile
-  ];
 
-  programs.firefox = {
-    enable = true;
-  };
+    # Clojure
+    clojure
+
+    # Common lisp
+    sbcl
+
+    # Elixir/erlang
+    elixir
+    erlang
+
+    # Haskell
+    haskell.compiler.ghc942
+    ormolu
+
+    # Fonts
+    source-sans
+    source-serif
+    source-code-pro
+  ];
 
   home.file.".emacs.d" = {
     source = ./emacs;
@@ -75,12 +132,6 @@
 
   programs.emacs = {
     enable = true;
-  };
-
-  programs.bash = {
-    enable = true;
-    # Be consistent so eshell regex can match this.
-    initExtra = "PS1='[\\u@\\h \\W]\\$ '";
   };
 
   programs.go = {
@@ -118,5 +169,22 @@
         defaultBranch = "main";
       };
     };
+  };
+
+  programs.man = {
+    enable = true;
+    generateCaches = true;
+  };
+
+  # Shells
+
+  programs.bash = {
+    enable = true;
+    # Be consistent so eshell regex can match this.
+    initExtra = "PS1='[\\u@\\h \\W]\\$ '";
+  };
+
+  programs.zsh = {
+    enable = true;
   };
 }

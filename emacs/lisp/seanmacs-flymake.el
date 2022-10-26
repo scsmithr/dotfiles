@@ -16,7 +16,7 @@
         flymake-no-changes-timeout 1
         flymake-fringe-indicator-position 'right-fringe)
 
-  (define-fringe-bitmap 'sm/flymake-bitmap [#b00111000] nil nil '(center t))
+  (define-fringe-bitmap 'sm/flymake-bitmap [#b00011000] nil nil '(center t))
   (setq flymake-note-bitmap '(sm/flymake-bitmap modus-themes-fringe-cyan)
         flymake-warning-bitmap '(sm/flymake-bitmap modus-themes-fringe-yellow)
         flymake-error-bitmap '(sm/flymake-bitmap modus-themes-fringe-red))
@@ -54,25 +54,6 @@ severity descending, then line ascending."
                  ("L" . flymake-show-project-diagnostics)
                  ("n" . flymake-goto-next-error)
                  ("p" . flymake-goto-prev-error)))
-
-(use-package flymake-languagetool
-  :straight (:host github :repo "scsmithr/flymake-languagetool" :branch "master")
-  :defer t
-  :commands sm/flymake-languagetool-load
-  :init
-  (setq flymake-languagetool-server-port "10888"
-        flymake-languagetool-server-command `("languagetool"
-                                              "--http"
-                                              "--port" ,flymake-languagetool-server-port)
-        flymake-languagetool-check-spelling t
-        flymake-languagetool--disabled-rules '("WHITESPACE_RULE"))
-
-  (defun sm/flymake-languagetool-load ()
-    (interactive)
-    (flymake-mode 1)
-    (flymake-languagetool-load))
-
-  :hook ((markdown-mode . sm/flymake-languagetool-load)))
 
 (defvar-local sm/flymake-processes-alist nil
   "Processes that are currently checking the buffer.

@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(setq split-height-threshold 100
+      split-width-threshold 160)
+
 (setq display-buffer-alist
       '(;; selecting bottom side window
         ("\\*\
