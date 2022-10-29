@@ -16,5 +16,5 @@ home-manager switch --flake .#sean-darwin
 
 Running `link.sh` will symlink emacs files to `~/.emacs.d`.
 
-![Emacs screenshot](./screenshot.svg)
+![Emacs screenshot](./screenshot.png)
 
