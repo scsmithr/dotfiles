@@ -14,7 +14,8 @@ home-manager switch --flake .#sean-darwin
 
 ## Emacs
 
-Running `link.sh` will symlink emacs files to `~/.emacs.d`.
+Emacs configuration will be placed in `~/.emacs.d` when running `home-manager
+switch ...`.
 
 ![Emacs screenshot](./screenshot.png)
 
