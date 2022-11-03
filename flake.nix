@@ -10,26 +10,25 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, emacs-overlay, ... }:
+  outputs = { nixpkgs, home-manager, ... }:
     let
-      darwin-pkgs = import nixpkgs {
-        system = "aarch64-darwin";
-        config = { allowUnfree = true; };
-      };
-      linux-pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        config = { allowUnfree = true; };
-      };
+      mkHome = system: {modules}: (
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            config = {allowUnfree = true;};
+          };
+          inherit modules;
+        }
+      );
     in {
-      homeConfigurations.sean-darwin = home-manager.lib.homeManagerConfiguration {
-        pkgs = darwin-pkgs;
+      homeConfigurations.sean-darwin = mkHome "aarch64-darwin" {
         modules = [
           ./darwin.nix
           ./common.nix
         ];
       };
-      homeConfigurations.sean-linux = home-manager.lib.homeManagerConfiguration {
-        pkgs = linux-pkgs;
+      homeConfigurations.sean-linux = mkHome "x86_64-linux" {
         modules = [
           ./linux.nix
           ./common.nix

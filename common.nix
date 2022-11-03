@@ -82,6 +82,7 @@ in
     sqlc
     kubectl
     cloud-sql-proxy
+    terraform
 
     # Python
     python311
@@ -89,6 +90,7 @@ in
     # Go
     go
     gopls
+    gotools
 
     # Rust
     cargo
