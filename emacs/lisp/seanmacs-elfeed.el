@@ -6,7 +6,8 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  (require 'subr-x))
 
 (use-package elfeed
   :straight t
@@ -198,4 +199,4 @@ missing from the name."
   (sm/download-pdf (sm/arxiv-link-to-pdf link) 'arxiv t))
 
 (provide 'seanmacs-elfeed)
-;;; seanmacs-flymake.el ends here
+;;; seanmacs-elfeed.el ends here

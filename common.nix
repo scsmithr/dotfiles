@@ -93,7 +93,7 @@ in
     gotools
 
     # Rust
-    (fenix.beta.withComponents [
+    (fenix.stable.withComponents [
       "cargo"
       "clippy"
       "rust-src"

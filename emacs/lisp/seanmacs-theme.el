@@ -30,6 +30,8 @@
     (add-hook 'server-after-make-frame-hook #'sm/setup-frame-fonts)
   (sm/setup-frame-fonts))
 
+(setq frame-title-format "Emacs")
+
 (blink-cursor-mode -1)
 
 (setq mode-line-compact nil)
@@ -61,7 +63,6 @@
 
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
-        modus-themes-mode-line '(borderless (padding . 4))
         modus-themes-region '(bg-only)
         modus-themes-hl-line nil
         modus-themes-completions nil
