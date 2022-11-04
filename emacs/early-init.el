@@ -6,8 +6,8 @@
 ;;; Code:
 
 ;; Hide some things.
-;; Do this first so that I never see the menu bar.
-(menu-bar-mode -1)
+(unless (eq system-type 'darwin)
+  (menu-bar-mode -1))
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 

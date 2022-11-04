@@ -93,10 +93,13 @@ in
     gotools
 
     # Rust
-    cargo
-    clippy
-    rustc
-    rustfmt
+    (fenix.beta.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+    ])
     rust-analyzer
 
     # Javascript/Typescript
