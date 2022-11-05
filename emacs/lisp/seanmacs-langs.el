@@ -704,6 +704,17 @@ Otherwise start the repl in the current directory."
 (use-package sql
   ;; built-in
   :config
+
+  (defun sm/sql-postgres-generic (&optional buf-name)
+    "Connect to a database via a postgres connection string."
+    (interactive "P")
+    (let ((sql-connection-alist '((generic-psql (sql-product 'postgres)
+                                                (sql-database (read-string "Connection: "))
+                                                (sql-user "")
+                                                (sql-server "")
+                                                (sql-port 0)))))
+      (sql-connect 'generic-psql buf-name)))
+
   (advice-add 'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
   :hook ((sql-mode . sqlind-minor-mode)))
 
