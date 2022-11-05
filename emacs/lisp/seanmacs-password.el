@@ -7,7 +7,7 @@
 
 (require 'auth-source)
 
-(defvar sm/password-auth-sources '("~/syncthing/passwords.gpg")
+(defvar sm/password-auth-sources `(,(concat sm/sync-dir "passwords.gpg"))
   "Where to store passwords.")
 
 (defvar sm/password-use-symbols nil

@@ -30,7 +30,7 @@
     (add-hook 'server-after-make-frame-hook #'sm/setup-frame-fonts)
   (sm/setup-frame-fonts))
 
-(setq frame-title-format "Emacs")
+(setq frame-title-format "emacs")
 
 (blink-cursor-mode -1)
 

@@ -178,25 +178,6 @@ completing inside the minibuffer)."
                       (display-local-help))))
     'deferred)
 
-  ;; See: https://github.com/joaotavora/eglot/pull/771#issuecomment-1030710724
-  (defun sm/eglot-remove-company-docsig (completions)
-    "Remove the :company-docsig property from the properties list in COMPLETIONS.
-
-Selectrum will attempt to funcall the function associated with
-:company-docsig, and eglot currently attempts to use the lsp
-server associated with the buffer. Unfortunately this breaks when
-using selectrum for completions since there won't be a server
-associated with the minibuffer. To avoid errors, just remove it."
-    (when completions
-      (let ((plist (nthcdr 3 completions)))
-        (map-delete plist :company-docsig)
-        `(,(nth 0 completions)
-          ,(nth 1 completions)
-          ,(nth 2 completions)
-          ,@plist))))
-
-  (advice-add 'eglot-completion-at-point :filter-return #'sm/eglot-remove-company-docsig)
-
   :bind (:map eglot-mode-map
               ("C-c C-d" . sm/eglot-lookup-doc)
               ("C-c C-r" . eglot-rename)))

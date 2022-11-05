@@ -14,6 +14,15 @@
 (defvar sm/dotfiles-dir (expand-file-name "~/dotfiles/")
   "Root directory containing my dotfiles.")
 
+
+(defvar sm/sync-dir (expand-file-name "~/Library/Mobile Documents/com~apple~CloudDocs/")
+  "Root directory for file syncing.")
+
+(defun sm/dired-sync-dir ()
+  "Open Dired inside the configured sync dir."
+  (interactive)
+  (dired sm/sync-dir))
+
 ;; Useful string utilities, e.g. 's-contains-p'.
 (use-package s :straight t)
 

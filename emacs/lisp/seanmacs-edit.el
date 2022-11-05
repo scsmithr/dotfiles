@@ -141,8 +141,9 @@ loaded (e.g. sql-mode)."
   :config
   (setq ibuffer-read-only-char ?R
         ibuffer-eliding-string "…"
-        ibuffer-directory-abbrev-alist '(("^/home/sean/Code/[a-zA-Z.]+/" . "[c] ")
-                                         ("^/home/sean/.go/src/[a-zA-Z.]+/" . "[g] "))
+        ibuffer-directory-abbrev-alist `(("^/\\(Users\\|home\\)/sean/Code/[a-zA-Z.]+/"    . "[c] ")
+                                         ("^/\\(Users\\|home\\)/sean/.go/src/[a-zA-Z.]+/" . "[g] ")
+                                         (,(concat "^" sm/sync-dir)                       . "[sync] "))
         ibuffer-formats '((mark modified read-only
                                 " " (name 28 28 :left :elide)
                                 " " (mode 16 16 :left :elide)
@@ -251,7 +252,7 @@ window."
           (project-find-dir "Find directory" ?d)
           (project-dired "Project root" ?o)
           (magit-status "Magit" ?g)
-          (rg-project "Search" ?s)))
+          (rg-project "Ripgrep" ?r)))
   :bind-keymap ("C-c p" . project-prefix-map)
   :bind (:map project-prefix-map
               ("e" . sm/project-eshell)

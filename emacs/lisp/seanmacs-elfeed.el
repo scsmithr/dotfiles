@@ -31,7 +31,8 @@
             (nth 0
                  (split-string
                   title
-                  "&")) "cat:"))))
+                  "&"))
+            "cat:"))))
 
   (defun sm/elfeed-concat-authors (authors-list)
     "Given AUTHORS-LIST, list of plists; return string of all authors concatenated."
@@ -96,8 +97,7 @@
       (when tags
         (insert "(" tags-str ")"))))
 
-  (setq elfeed-db-directory "~/syncthing/elfeed/db"
-        elfeed-search-print-entry-function #'sm/elfeed-print-entry)
+  (setq elfeed-search-print-entry-function #'sm/elfeed-print-entry)
   (setq elfeed-feeds
         `(
           ;; Blogs
@@ -136,11 +136,16 @@
         ("C-c C-o C-o" . sm/open-arxiv-paper)))
 
 (defvar sm/pdf-type-to-dir-alist
-  '((paper .        "~/syncthing/papers/")
-    (book .         "~/syncthing/books/")
-    (presentation . "~/syncthing/presentations/")
-    (arxiv .        "~/syncthing/arxiv/downloads/")
-    (refile .       "~/syncthing/refile/"))
+  (let ((pdf-root (concat sm/sync-dir "pdfs/"))
+        (alist '((paper .        "papers/")
+                 (book .         "books/")
+                 (presentation . "presentations/")
+                 (arxiv .        "arxiv/")
+                 (refile .       "refile/"))))
+    (mapcar (lambda (pair)
+              (cons (car pair)
+                    (concat pdf-root (cdr pair))))
+            alist))
   "An alist mapping a pdf type to where it should be downloaded.")
 
 (defun sm/download-pdf (link &optional type open name)

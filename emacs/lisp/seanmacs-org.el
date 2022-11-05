@@ -8,7 +8,7 @@
 (eval-when-compile
   (require 'use-package))
 
-(defvar sm/notes-dir "~/syncthing/notes/"
+(defvar sm/notes-dir (concat sm/sync-dir "notes/")
   "Directory containging all of my notes (including org files).")
 
 (defvar sm/org-capture-templates-dir "~/.emacs.d/org-templates"
