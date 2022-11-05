@@ -141,6 +141,9 @@ loaded (e.g. sql-mode)."
   :config
   (setq ibuffer-read-only-char ?R
         ibuffer-eliding-string "…"
+        ;; NOTE: Code directories contain "host" subdirs (e.g. github.com or
+        ;; gitlab.org). I don't want those showing up in ibuffer so make sure we
+        ;; match on those.
         ibuffer-directory-abbrev-alist `(("^/\\(Users\\|home\\)/sean/Code/[a-zA-Z.]+/"    . "[c] ")
                                          ("^/\\(Users\\|home\\)/sean/.go/src/[a-zA-Z.]+/" . "[g] ")
                                          (,(concat "^" sm/sync-dir)                       . "[sync] "))
@@ -310,7 +313,8 @@ window."
 (use-package bookmark
   ;; built-in
   :config
-  (setq bookmark-save-flag 1))
+  (setq bookmark-save-flag 1
+        bookmark-set-fringe-mark nil))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

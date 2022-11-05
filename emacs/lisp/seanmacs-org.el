@@ -121,6 +121,29 @@
            (file ,(concat sm/org-capture-templates-dir "/issue"))
            :empty-lines 1)))
 
+  (setq org-agenda-custom-commands
+        '(("d" "Day overview"
+           ((agenda ""
+                    ((org-agenda-span 'day)
+                     (org-deadline-warning-days 1)))
+            (todo "IN-PROGRESS"
+                  ((org-agenda-overriding-header "In progress")
+                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Up next")
+                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+            (tags "+revisit"
+                  ((org-agenda-overriding-header "Revisit")
+                   (org-agenda-prefix-format "%i %-12:c ")
+                   (org-use-tag-inheritance nil)))
+            (tags "CLOSED>=\"<today>\""
+                  ((org-agenda-overriding-header "Completed Today")))))
+          ("u" "Unscheduled"
+           ((todo ""
+                  ((org-agenda-overriding-header "Unscheduled")
+                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")
+                   (org-agenda-todo-ignore-scheduled 'all)))))))
+
   ;; Keep track when I reschedule or complete things.
   (setq org-log-done 'time
         org-log-redeadline 'time
