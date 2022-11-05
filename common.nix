@@ -5,6 +5,7 @@
 let
   # Extra packages.
   tygo = pkgs.callPackage ./pkgs/tygo.nix {};
+  goose = pkgs.callPackage ./pkgs/goose.nix {};
   typescript-ls = pkgs.callPackage ./pkgs/typescript-ls.nix {};
 in
 {
@@ -55,7 +56,6 @@ in
     gnutar
     gnused
     syncthing
-    tygo
     postgresql
     languagetool
     ispell
@@ -91,6 +91,8 @@ in
     go
     gopls
     gotools
+    goose
+    tygo
 
     # Rust
     (fenix.stable.withComponents [
