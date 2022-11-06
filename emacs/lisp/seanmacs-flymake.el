@@ -16,10 +16,9 @@
         flymake-no-changes-timeout 1
         flymake-fringe-indicator-position 'right-fringe)
 
-  (define-fringe-bitmap 'sm/flymake-bitmap [#b00011000] nil nil '(center t))
-  (setq flymake-note-bitmap '(sm/flymake-bitmap modus-themes-fringe-cyan)
-        flymake-warning-bitmap '(sm/flymake-bitmap modus-themes-fringe-yellow)
-        flymake-error-bitmap '(sm/flymake-bitmap modus-themes-fringe-red))
+  (setq flymake-note-bitmap '(sm/right-line-bmp modus-themes-fringe-cyan)
+        flymake-warning-bitmap '(sm/right-line-bmp modus-themes-fringe-yellow)
+        flymake-error-bitmap '(sm/right-line-bmp modus-themes-fringe-red))
 
   (mapc #'(lambda (map)
             (evil-collection-define-key 'normal map

@@ -172,7 +172,10 @@ loaded (e.g. sql-mode)."
            ("Version control" (or
                                (name . "magit")
                                (mode . diff-mode)
-                               (mode . github-review-mode))))))
+                               (mode . github-review-mode)))
+           ("Docs" (or
+                    (mode . pdf-view-mode)
+                    (mode . nov-mode))))))
 
   (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Special"))
 

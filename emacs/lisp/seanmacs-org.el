@@ -40,7 +40,7 @@
         org-refile-use-outline-path t
         org-startup-folded nil
         org-startup-with-inline-images nil
-        org-hide-leading-stars t
+        org-hide-leading-stars nil
         ;; I prefer having blank lines between subtrees when unfolded, but
         ;; no blank lines when folded.
         org-blank-before-new-entry (quote ((heading . always) (plain-list-item . always)))
@@ -51,7 +51,7 @@
         org-confirm-babel-evaluate nil ;; I trust myself.
         org-catch-invisible-edits 'show-and-error ;; I don't trust myself.
         org-fontify-done-headline nil
-        org-adapt-indentation t
+        org-adapt-indentation nil
         org-hide-emphasis-markers nil
         org-src-tab-acts-natively t
         ;; Keep layout, just use different window than current. Useful to see
@@ -135,14 +135,16 @@
             (tags "+revisit"
                   ((org-agenda-overriding-header "Revisit")
                    (org-agenda-prefix-format "%i %-12:c ")
-                   (org-use-tag-inheritance nil)))
-            (tags "CLOSED>=\"<today>\""
-                  ((org-agenda-overriding-header "Completed Today")))))
+                   (org-use-tag-inheritance nil)))))
           ("u" "Unscheduled"
            ((todo ""
                   ((org-agenda-overriding-header "Unscheduled")
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")
                    (org-agenda-todo-ignore-scheduled 'all)))))))
+
+  ;; Footnotes
+  (setq org-footnote-section nil
+        org-footnote-auto-label 'random)
 
   ;; Keep track when I reschedule or complete things.
   (setq org-log-done 'time
@@ -213,7 +215,7 @@
   :straight t)
 
 (use-package ox-gfm
-  :straight t
+  :straight (:host github :repo "scsmithr/ox-gfm" :branch "master")
   :after org)
 
 (defvar sm/org-github-issue-create-done-state "REFILED"

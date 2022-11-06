@@ -46,9 +46,8 @@
   :demand t
   :config
   (setq diff-hl-draw-borders nil)
-  (define-fringe-bitmap 'sm/diff-hl-fringe-bmp [#b00011000] nil nil '(center t))
   (defun sm/diff-hl-fringe-bmp (_type _pos)
-    'sm/diff-hl-fringe-bmp)
+    'sm/left-line-bmp)
   (setq diff-hl-fringe-bmp-function #'sm/diff-hl-fringe-bmp)
   (global-diff-hl-mode)
   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)

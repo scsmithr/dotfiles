@@ -28,7 +28,7 @@
 ;; created. This ensures unicode fallbacks are set for all frames.
 (if (daemonp)
     (add-hook 'server-after-make-frame-hook #'sm/setup-frame-fonts)
-  (sm/setup-frame-fonts))
+  (add-hook 'window-setup-hook #'sm/setup-frame-fonts))
 
 (setq frame-title-format "emacs")
 
@@ -47,15 +47,6 @@
 
   (minions-mode 1))
 
-(defvar sm/load-theme-hook nil
-  "Hook run after a color theme is loaded using `load-theme'.")
-
-(defun sm/run-load-theme-hook (&rest _)
-  "Run after `sm/load-theme-hook'."
-  (run-hooks 'sm/load-theme-hook))
-
-(advice-add 'load-theme :after #'sm/run-load-theme-hook)
-
 (use-package modus-themes
   :straight t
   :config
@@ -64,6 +55,7 @@
   (setq modus-themes-fringes 'subtle
         modus-themes-org-blocks 'gray-background
         modus-themes-region '(bg-only)
+        modus-themes-links '(faint)
         modus-themes-hl-line nil
         modus-themes-completions nil
         modus-themes-diffs 'bg-only
@@ -92,45 +84,131 @@
           (magenta-fringe-bg . "#b382cc")
           (cyan-fringe-bg    . "#25a4b2")))
 
-  (defun sm/customize-modus-operandi ()
+  (setq modus-themes-vivendi-color-overrides
+        '((bg-main . "#201f20") (fg-main . "#fafafa")
+          (bg-dim . "#292a2b") (fg-dim . "#e0e6f0")
+          (bg-alt . "#393a3b") (fg-alt . "#a8a8a8")
+          (bg-active . "#424242") (fg-active . "#f4f4f4")
+          (bg-inactive . "#2e2e2e") (fg-inactive . "#bfc0c4")
+          (bg-active-accent . "#3a3a76")
+          (bg-hl-line . "#302f30")
+          (fg-whitespace . "#403f40")
+          (bg-whitespace . "#201f20")
+          (fg-window-divider-inner . "#444444")
+          (fg-window-divider-outer . "#646464")))
+
+  (defun sm/customize-modus ()
     (modus-themes-with-colors
-      (custom-theme-set-faces
-       'modus-operandi
+      (custom-set-faces
        ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,fg-whitespace))))
        `(whitespace-indentation ((t (:foreground ,fg-whitespace))))
-       `(whitespace-line ((t (:background ,bg-dim))))
+       `(whitespace-line ((t (:background ,bg-dim :inherit unspecified))))
        `(whitespace-newline ((t (:foreground ,fg-whitespace))))
        `(whitespace-space ((t (:foreground ,fg-whitespace))))
        `(whitespace-tab ((t (:foreground ,fg-whitespace))))
        ;; Org mode
        `(org-code ((t (:inherit modus-themes-markup-verbatim))))
        ;; Modus fringes
-       `(modus-themes-fringe-red ((t :foreground ,red-fringe-bg)))
-       `(modus-themes-fringe-green ((t :foreground ,green-fringe-bg)))
-       `(modus-themes-fringe-yellow ((t :foreground ,yellow-fringe-bg)))
-       `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg)))
-       `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg)))
-       `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg)))
+       `(modus-themes-fringe-red ((t :foreground ,red-fringe-bg :background unspecified)))
+       `(modus-themes-fringe-green ((t :foreground ,green-fringe-bg :background unspecified)))
+       `(modus-themes-fringe-yellow ((t :foreground ,yellow-fringe-bg :background unspecified)))
+       `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg :background unspecified)))
+       `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg :background unspecified)))
+       `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg :background unspecified)))
        ;; Modus reset
        `(modus-themes-reset-hard ((t :inherit default)))
        ;; Man/woman
        `(Man-overstrike ((t :inherit bold :foreground ,fg-special-calm)))
        `(woman-bold ((t :inherit bold :foreground ,fg-special-calm)))
-       ;; Eldoc
-       `(eldoc-highlight-function-argument ((t :inherit bold :foreground ,blue-alt-other)))
        ;; Evil
        `(evil-ex-substitute-replacement ((t :inherit modus-themes-refine-green :underline t)))
        ;; Corfu
        `(corfu-default ((t :background ,bg-inactive)))
+       ;; mode-line
+       `(mode-line ((t :inherit modus-themes-ui-variable-pitch
+                       ,@(modus-themes--mode-line-attrs
+                          fg-active bg-active
+                          fg-dim bg-active
+                          fg-main bg-active-accent
+                          bg-region bg-active
+                          'alt-style bg-main))))
+       ;; eglot
+       `(eglot-highlight-symbol-face ((t :foreground ,yellow-alt-other :background ,yellow-nuanced-bg :weight normal)))
+       `(eglot-diagnostic-tag-deprecated-face ((t :inherit unspecified)))
+       `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified))))))
 
-       (with-eval-after-load 'eglot
-         (set-face-attribute 'eglot-highlight-symbol-face nil :background cyan-nuanced-bg :weight 'normal)
-         (set-face-attribute 'eglot-diagnostic-tag-deprecated-face nil :inherit 'unspecified)
-         (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil :inherit 'unspecified)))))
+  (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)
 
-  (add-hook 'sm/load-theme-hook 'sm/customize-modus-operandi)
-  (load-theme 'modus-operandi t))
+  (load-theme 'modus-operandi t t)
+  (load-theme 'modus-vivendi t t)
+  (modus-themes-load-operandi)
+
+  (defun sm/get-system-appearance ()
+    "Get the system appearance.
+
+Defaults to light if running in terminal or not running on mac."
+    (if (and (display-graphic-p)
+             (eq system-type 'darwin))
+        (ns-do-applescript "
+        tell application \"System Events\"
+          tell appearance preferences
+            if (dark mode) then
+              return \"dark\"
+            else
+              return \"light\"
+            end if
+          end tell
+        end tell
+        ")
+      "light"))
+
+  (defun sm/toggle-system-appearance ()
+    "Toggle system appearance if running on mac."
+    (if (eq system-type 'darwin)
+        (ns-do-applescript "
+        tell application \"System Events\"
+          tell appearance preferences
+            set dark mode to not dark mode
+          end tell
+        end tell")))
+
+  (defun sm/toggle-theme ()
+    "Toggle the system theme along with the emacs theme."
+    (interactive)
+    (sm/toggle-system-appearance)
+    (sm/sync-theme))
+
+  (defun sm/sync-theme ()
+    "Sync emacs theme with the system theme."
+    (interactive)
+    (if (string= (sm/get-system-appearance) "dark")
+        (modus-themes-load-vivendi)
+      (modus-themes-load-operandi)))
+
+  ;; pdf-tools specific settings
+
+  (defun sm/pdf-tools-backdrop ()
+    (face-remap-add-relative
+     'default
+     `(:background ,(modus-themes-color 'bg-alt))))
+
+  (defun sm/pdf-tools-midnight-mode-toggle ()
+    (when (derived-mode-p 'pdf-view-mode)
+      (if (eq (car custom-enabled-themes) 'modus-vivendi)
+          (pdf-view-midnight-minor-mode 1)
+        (pdf-view-midnight-minor-mode -1))
+      (sm/pdf-tools-backdrop)))
+
+  (defun sm/pdf-tools-themes-toggle ()
+    (mapc
+     (lambda (buf)
+       (with-current-buffer buf
+         (sm/pdf-tools-midnight-mode-toggle)))
+     (buffer-list)))
+
+  (add-hook 'pdf-tools-enabled-hook #'sm/pdf-tools-midnight-mode-toggle) ;; TODO: Get this hook working.
+  (add-hook 'modus-themes-after-load-theme-hook #'sm/pdf-tools-themes-toggle))
 
 ;; Fringe bitmaps
 
@@ -223,6 +301,9 @@
    #b00000100
    #b00000000]
   nil nil 'center)
+
+(define-fringe-bitmap 'sm/right-line-bmp [#b00011000] nil nil '(center t))
+(define-fringe-bitmap 'sm/left-line-bmp [#b00011000] nil nil '(center t))
 
 (provide 'seanmacs-theme)
 ;;; seanmacs-theme.el ends here

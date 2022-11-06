@@ -69,7 +69,7 @@
  ("org" . "b93a61af9c93d21c56cf883630e52f36076e40bd")
  ("orgit" . "5036c3db5897ce93cd895aa213072661a497a4e6")
  ("otp" . "73f6be02cab08454a915108e2d98df2fe7d529ab")
- ("ox-gfm" . "46faa67dbb3fb0cd7a76c3fe518f16e4195c22c7")
+ ("ox-gfm" . "fe68968ae6649a1fa88d5d0065d9f580fcd75266")
  ("parseclj" . "4d0e780e00f1828b00c43099e6eebc6582998f72")
  ("parseedn" . "a09686fbb9113b8b1b4f20c9e1dc0d6fea01a64f")
  ("pdf-tools" . "d6980bc3273e1cf1a73feee6bb523d1568405685")
