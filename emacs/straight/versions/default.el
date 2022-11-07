@@ -28,6 +28,7 @@
  ("emacs-aio" . "da93523e235529fa97d6f251319d9e1d6fc24a41")
  ("emacs-async" . "ffde304480421f497458077bf5d563504e1ba5dd")
  ("emacs-elixir" . "4974ff9a83daf50f2f03dc0d6d00871296e088b0")
+ ("emacs-hcl-mode" . "e4d9eef631e8a386341ae8f94f7c2579586e65b5")
  ("emacs-kv" . "721148475bce38a70e0b678ba8aa923652e8900e")
  ("emacs-which-key" . "8093644032854b1cdf3245ce4e3c7b6673f741bf")
  ("emacsmirror-mirror" . "be9d095bd1bc7159f51a5caf04d721590199632a")

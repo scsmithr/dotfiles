@@ -816,5 +816,11 @@ Otherwise start the repl in the current directory."
 (use-package nix-repl :after nix-mode)
 (use-package nix-store :after nix-mode)
 
+;; Terraform/HCL
+
+(use-package hcl-mode
+  :straight t
+  :mode "\\.tf\\'")
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
