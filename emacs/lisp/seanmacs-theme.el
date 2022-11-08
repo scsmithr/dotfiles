@@ -85,28 +85,29 @@
           (cyan-fringe-bg    . "#25a4b2")))
 
   (setq modus-themes-vivendi-color-overrides
-        '((bg-main . "#201f20") (fg-main . "#fafafa")
-          (bg-dim . "#292a2b") (fg-dim . "#e0e6f0")
-          (bg-alt . "#393a3b") (fg-alt . "#a8a8a8")
-          (bg-active . "#424242") (fg-active . "#f4f4f4")
-          (bg-inactive . "#2e2e2e") (fg-inactive . "#bfc0c4")
-          (bg-active-accent . "#3a3a76")
-          (bg-hl-line . "#302f30")
-          (fg-whitespace . "#403f40")
-          (bg-whitespace . "#201f20")
+        '((bg-main . "#101010") (fg-main . "#f9f9f9")
+          (bg-dim . "#141314")
+          (bg-hl-line . "#1a1d28")
+          (fg-whitespace . "#1f222d")
+          (bg-whitespace . "#101010")
           (fg-window-divider-inner . "#444444")
           (fg-window-divider-outer . "#646464")))
 
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
+       ;; Region (for unspecifying distant foreground).
+       `(region ((,class :distant-foreground unspecified
+                         ,@(modus-themes--region bg-region fg-main
+                                                 bg-hl-alt-intense bg-region-accent
+                                                 bg-region-accent-subtle))))
        ;; Whitespace
-       `(whitespace-hspace ((t (:foreground ,fg-whitespace))))
-       `(whitespace-indentation ((t (:foreground ,fg-whitespace))))
+       `(whitespace-hspace ((t (:foreground ,fg-whitespace :background unspecified))))
+       `(whitespace-indentation ((t (:foreground ,fg-whitespace :background unspecified))))
        `(whitespace-line ((t (:background ,bg-dim :inherit unspecified))))
-       `(whitespace-newline ((t (:foreground ,fg-whitespace))))
-       `(whitespace-space ((t (:foreground ,fg-whitespace))))
-       `(whitespace-tab ((t (:foreground ,fg-whitespace))))
+       `(whitespace-newline ((t (:foreground ,fg-whitespace :background unspecified))))
+       `(whitespace-space ((t (:foreground ,fg-whitespace :background unspecified))))
+       `(whitespace-tab ((t (:foreground ,fg-whitespace :background unspecified))))
        ;; Org mode
        `(org-code ((t (:inherit modus-themes-markup-verbatim))))
        ;; Modus fringes
