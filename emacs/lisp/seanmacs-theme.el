@@ -96,6 +96,9 @@
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
+       ;; Base faces, reduce number of colors.
+       `(font-lock-function-name-face ((t :foreground unspecified)))
+       `(font-lock-variable-name-face ((t :foreground unspecified)))
        ;; Region (for unspecifying distant foreground).
        `(region ((,class :distant-foreground unspecified
                          ,@(modus-themes--region bg-region fg-main
@@ -135,7 +138,7 @@
                           bg-region bg-active
                           'alt-style bg-main))))
        ;; eglot
-       `(eglot-highlight-symbol-face ((t :foreground ,yellow-alt-other :background ,yellow-nuanced-bg :weight normal)))
+       `(eglot-highlight-symbol-face ((t :background ,yellow-nuanced-bg :weight normal)))
        `(eglot-diagnostic-tag-deprecated-face ((t :inherit unspecified)))
        `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified))))))
 
