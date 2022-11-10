@@ -820,7 +820,10 @@ Otherwise start the repl in the current directory."
 
 (use-package hcl-mode
   :straight t
-  :mode "\\.tf\\'")
+  :mode "\\.tf\\|.tfvars\\'"
+  :config
+  (setf (alist-get 'hcl-mode apheleia-mode-alist) 'terraform)
+  :hook ((hcl-mode . apheleia-mode)))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
