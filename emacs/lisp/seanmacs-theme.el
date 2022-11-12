@@ -14,8 +14,7 @@
   (when (display-graphic-p)
     (message "Setting frame fonts")
     (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono" :height 140 :weight 'normal)
-    (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 150)
+    (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 160)
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)))
@@ -96,6 +95,7 @@
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
+       `(fixed-pitch ((t :inherit default)))
        ;; Base faces, reduce number of colors.
        `(font-lock-function-name-face ((t :foreground unspecified)))
        `(font-lock-variable-name-face ((t :foreground unspecified)))
@@ -120,8 +120,6 @@
        `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg :background unspecified)))
        `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg :background unspecified)))
        `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg :background unspecified)))
-       ;; Modus reset
-       `(modus-themes-reset-hard ((t :inherit default)))
        ;; Man/woman
        `(Man-overstrike ((t :inherit bold :foreground ,fg-special-calm)))
        `(woman-bold ((t :inherit bold :foreground ,fg-special-calm)))
@@ -186,9 +184,11 @@ Defaults to light if running in terminal or not running on mac."
   (defun sm/sync-theme ()
     "Sync emacs theme with the system theme."
     (interactive)
-    (if (string= (sm/get-system-appearance) "dark")
-        (modus-themes-load-vivendi)
-      (modus-themes-load-operandi)))
+    (let ((appearance (sm/get-system-appearance)))
+      (message "syncing theme: %s" appearance)
+      (if (string= appearance "dark")
+          (modus-themes-load-vivendi)
+        (modus-themes-load-operandi))))
 
   ;; pdf-tools specific settings
 
@@ -211,7 +211,7 @@ Defaults to light if running in terminal or not running on mac."
          (sm/pdf-tools-midnight-mode-toggle)))
      (buffer-list)))
 
-  (add-hook 'pdf-tools-enabled-hook #'sm/pdf-tools-midnight-mode-toggle) ;; TODO: Get this hook working.
+  (add-hook 'pdf-view-mode-hook #'sm/pdf-tools-midnight-mode-toggle)
   (add-hook 'modus-themes-after-load-theme-hook #'sm/pdf-tools-themes-toggle))
 
 ;; Fringe bitmaps

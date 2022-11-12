@@ -57,11 +57,15 @@ in
     gnused
     syncthing
     postgresql
-    languagetool
-    ispell
     qemu
     findutils
     plantuml
+
+    # Speling
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
 
     # Find missing binaries.
     nix-index

@@ -54,6 +54,7 @@
         org-adapt-indentation nil
         org-hide-emphasis-markers nil
         org-src-tab-acts-natively t
+        org-src-preserve-indentation t
         ;; Keep layout, just use different window than current. Useful to see
         ;; both the org buffer and the source at the same time.
         org-src-window-setup 'other-window
