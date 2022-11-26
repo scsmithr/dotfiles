@@ -825,5 +825,37 @@ Otherwise start the repl in the current directory."
   (setf (alist-get 'hcl-mode apheleia-mode-alist) 'terraform)
   :hook ((hcl-mode . apheleia-mode)))
 
+;; D2
+
+(defvar d2-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    ;; Add '#' as a comment.
+    (modify-syntax-entry ?# "<" table)
+    (modify-syntax-entry ?\n ">" table)
+    (modify-syntax-entry ?\f ">" table)
+    table)
+  "Syntax table for `d2-mode'.")
+
+(defvar d2-mode-font-lock-keywords
+  '()
+  "Keywords specification for `d2-mode'.")
+
+(define-derived-mode d2-mode prog-mode "d2"
+  "A mode for for working with 'd2' files."
+  :syntax-table d2-mode-syntax-table
+  (setq-local comment-start "#"
+              comment-end "")
+
+  (setq-local font-lock-defaults '(d2-mode-font-lock-keywords))
+
+  (setq-local indent-tabs-mode nil
+              tab-width 2
+              indent-line-function 'insert-tab
+              electric-indent-mode nil)
+
+  (run-hooks 'd2-mode-hook))
+
+(add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

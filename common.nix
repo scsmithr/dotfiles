@@ -6,6 +6,7 @@ let
   # Extra packages.
   tygo = pkgs.callPackage ./pkgs/tygo.nix {};
   goose = pkgs.callPackage ./pkgs/goose.nix {};
+  d2 = pkgs.callPackage ./pkgs/d2.nix {};
   typescript-ls = pkgs.callPackage ./pkgs/typescript-ls.nix {};
 in
 {
@@ -60,6 +61,7 @@ in
     qemu
     findutils
     plantuml
+    unixtools.getopt
 
     # Speling
     aspell
@@ -87,6 +89,9 @@ in
     kubectl
     cloud-sql-proxy
     terraform
+    skopeo
+    gh
+    d2
 
     # Python
     python311

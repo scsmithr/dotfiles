@@ -14,6 +14,7 @@
   (when (display-graphic-p)
     (message "Setting frame fonts")
     (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono")
     (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 160)
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
@@ -84,18 +85,30 @@
           (cyan-fringe-bg    . "#25a4b2")))
 
   (setq modus-themes-vivendi-color-overrides
-        '((bg-main . "#101010") (fg-main . "#f9f9f9")
-          (bg-dim . "#141314")
-          (bg-hl-line . "#1a1d28")
-          (fg-whitespace . "#1f222d")
-          (bg-whitespace . "#101010")
+        '(
+          ;; Make everything a bit less contrasty.
+          (bg-main . "#202020") (fg-main . "#f4f4f4")
+          (bg-dim . "#2c2b2c") (fg-dim . "#e0e6f0")
+          (bg-alt . "#333536") (fg-alt . "#a8a8a8")
+
+          (bg-active . "#323232") (fg-active . "#f4f4f4")
+          (bg-inactive . "#282828") (fg-inactive . "#bfc0c4")
+
+          (bg-header . "#313131") (fg-header . "#dddddd")
+
+          (bg-hl-line . "#353843")
+
+          (fg-whitespace . "#30333e")
+          (bg-whitespace . "#202020")
           (fg-window-divider-inner . "#444444")
           (fg-window-divider-outer . "#646464")))
 
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
-       `(fixed-pitch ((t :inherit default)))
+       ;; Modus reset
+       `(modus-themes-reset-hard ((t :inherit (fixed-pitch modus-themes-reset-soft)
+                                     :family unspecified)))
        ;; Base faces, reduce number of colors.
        `(font-lock-function-name-face ((t :foreground unspecified)))
        `(font-lock-variable-name-face ((t :foreground unspecified)))
@@ -136,7 +149,7 @@
                           bg-region bg-active
                           'alt-style bg-main))))
        ;; eglot
-       `(eglot-highlight-symbol-face ((t :background ,yellow-nuanced-bg :weight normal)))
+       `(eglot-highlight-symbol-face ((t :background ,yellow-nuanced-bg :weight unspecified)))
        `(eglot-diagnostic-tag-deprecated-face ((t :inherit unspecified)))
        `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified))))))
 
