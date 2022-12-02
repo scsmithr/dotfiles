@@ -144,12 +144,6 @@ The output will be put into a temporary buffer."
   (evil-collection-define-key 'normal 'pdf-outline-buffer-mode-map
     (kbd "SPC") #'sm/pdf-outline-show-link)
 
-  (defun sm/pdf-tools-enable-olivetti ()
-    "Enable olivetti mode with a wider than normal body width for a comfortable pdf viewing experience."
-    (setq-local olivetti-body-width 120)
-    (olivetti-mode 1))
-
-  :hook ((pdf-view-mode . sm/pdf-tools-enable-olivetti))
   :bind (:map pdf-view-mode-map
               ("C-c C-t" . sm/pdf-to-text)))
 

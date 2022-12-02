@@ -62,6 +62,7 @@ in
     findutils
     plantuml
     unixtools.getopt
+    cloc
 
     # Speling
     aspell
