@@ -25,8 +25,9 @@
   (delete-file sm/straight-lock-file-user-dir))
 
 (defun sm/straight-freeze-and-copy-lock ()
-  "Copy the existing lockfile to my dotfiles repo."
+  "Copy the frozen lockfile to my dotfiles repo."
   (interactive)
+  (delete-file sm/straight-lock-file-user-dir)
   (straight-freeze-versions)
   (copy-file sm/straight-lock-file-user-dir sm/straight-lock-file-dotfiles t))
 

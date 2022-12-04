@@ -62,8 +62,6 @@
   "Set jump property for FN."
   (evil-add-command-properties fn :jump t))
 
-;; LSP utilities.
-
 
 ;; Go
 
@@ -545,26 +543,6 @@ Otherwise start the repl in the current directory."
              ("C-c C-d C-m" . sm/julia-methods)))
 
 
-;; R
-
-(use-package ess
-  :straight t
-  :defer t
-  :init
-  (defun sm/ess-r-comint-vars ()
-    (setq-local comint-scroll-to-bottom-on-output t)
-    (setq-local comint-prompt-read-only t))
-  :config
-  (setq ess-use-ido nil)
-  ;; Make help buffer more evil like.
-  (evil-set-initial-state 'ess-r-help-mode 'normal)
-  (evil-collection-define-key 'normal 'ess-help-mode-map
-    (kbd "q") 'kill-current-buffer
-    (kbd "]]") 'ess-skip-to-next-section
-    (kbd "[[") 'ess-skip-to-previous-section)
-  :hook ((inferior-ess-r-mode . sm/ess-r-comint-vars)))
-
-
 ;; Clojure
 
 (use-package clojure-mode
@@ -825,6 +803,7 @@ Otherwise start the repl in the current directory."
   (setf (alist-get 'hcl-mode apheleia-mode-alist) 'terraform)
   :hook ((hcl-mode . apheleia-mode)))
 
+
 ;; D2
 
 (defvar d2-mode-syntax-table

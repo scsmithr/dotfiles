@@ -63,6 +63,7 @@ in
     plantuml
     unixtools.getopt
     cloc
+    poppler_utils
 
     # Speling
     aspell

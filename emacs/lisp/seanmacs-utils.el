@@ -126,8 +126,10 @@ file at point will be used."
 
 The output will be put into a temporary buffer."
     (interactive (list (buffer-file-name)))
-    (let ((cmd (string-join (list sm/pdf-to-text-command file "-") " "))
-          (output-buf (format "%s [text]" (file-name-nondirectory file))))
+    (let* ((file (concat "\"" file "\""))
+           (cmd (string-join (list sm/pdf-to-text-command file "-") " "))
+           (output-buf (format "%s [text]" (file-name-nondirectory file))))
+      (message "cmd: %s" cmd)
       (shell-command cmd output-buf)
       (switch-to-buffer-other-window output-buf)
       (text-mode)
@@ -199,15 +201,6 @@ opening the file."
   :mode ("\\.epub\\'" . nov-mode)
   :config
   (setq nov-text-width 80))
-
-(use-package olivetti
-  :straight t
-  :defer t
-  :config
-  (setq-default olivetti-body-width 120)
-  (setq olivetti-style nil)
-  (remove-hook 'olivetti-mode-on-hook 'visual-line-mode)
-  :bind (("C-c z" . olivetti-mode)))
 
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here
