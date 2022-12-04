@@ -23,7 +23,7 @@
           pkgs = import nixpkgs {
             inherit system;
             config = {allowUnfree = true;};
-            overlays = [fenix.overlay];
+            overlays = [fenix.overlays.default];
           };
           inherit modules;
         }

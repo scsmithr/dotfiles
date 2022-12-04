@@ -112,8 +112,8 @@ in
       "rust-src"
       "rustc"
       "rustfmt"
+      "rust-analyzer"
     ])
-    rust-analyzer
 
     # Javascript/Typescript
     yarn
@@ -142,6 +142,7 @@ in
     source-sans
     source-serif
     source-code-pro
+    fira-mono
   ];
 
   home.file.".emacs.d" = {
