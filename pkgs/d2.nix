@@ -4,8 +4,8 @@ pkgs.buildGoModule {
   src = pkgs.fetchFromGitHub {
     owner = "terrastruct";
     repo = "d2";
-    rev = "b54e376ff41bda84b436d65c16bdbe1f7919444a";
-    sha256 = "sha256-ID/PybiZAx2S25nQvEVZN2OlVYcdwXLUXFRVcYJ/dDk=";
+    rev = "a4e66f658a6f6a95749d37978521007d18e55a47";
+    sha256 = "sha256-p25BJ7c4cFDTc6943kg5Vq9NHzYBG7/eQNLTkyk7Ddg=";
   };
 
   pname = "d2";
@@ -15,5 +15,5 @@ pkgs.buildGoModule {
   # since it check against output generated with Go 1.18.
   doCheck = false;
 
-  vendorSha256 = "sha256-/BEl4UqOL4Ux7I2eubNH2YGGl4DxntpI5WN9ggvYu80=";
+  vendorSha256 = "sha256-L6ivdbpwve3hYrhoDElExcu9MSQKbtC3jfuTXHdt1vE=";
 }

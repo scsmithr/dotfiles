@@ -832,7 +832,13 @@ Otherwise start the repl in the current directory."
               indent-line-function 'insert-tab
               electric-indent-mode nil)
 
+  (with-eval-after-load 'apheleia
+    (setf (alist-get 'd2 apheleia-formatters) '("d2" "fmt" "-"))
+    (setf (alist-get 'd2-mode apheleia-mode-alist) 'd2))
+
   (run-hooks 'd2-mode-hook))
+
+(add-hook 'd2-mode-hook 'apheleia-mode)
 
 (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
