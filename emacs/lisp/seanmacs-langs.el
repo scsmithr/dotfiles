@@ -667,11 +667,27 @@ Otherwise start the repl in the current directory."
   ;; whitespace to be fontified incorrectly.
   (setq-default c-doc-comment-style nil)
   :config
-  (sm/add-server-program 'c++-mode "ccls")
-  (sm/add-server-program 'c-mode "ccls")
+  (sm/add-server-program 'c++-mode "clangd")
+  (sm/add-server-program 'c-mode "clangd")
+
+  (setf (alist-get 'clang-format apheleia-formatters)
+        '("clang-format"
+          "--style=file"
+          "--assume-filename"
+          (or
+           (buffer-file-name)
+           (cdr
+            (assoc major-mode
+                   '((c-mode . ".c")
+                     (c++-mode . ".cpp")
+                     (cuda-mode . ".cu")
+                     (protobuf-mode . ".proto"))))
+           ".c")))
 
   :hook ((c++-mode . eglot-ensure)
-         (c-mode . eglot-ensure)))
+         (c-mode . eglot-ensure)
+         (c++-mode . apheleia-mode)
+         (c-mode . apheleia-mode)))
 
 
 ;; SQL

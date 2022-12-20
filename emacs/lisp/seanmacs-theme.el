@@ -117,6 +117,8 @@
                          ,@(modus-themes--region bg-region fg-main
                                                  bg-hl-alt-intense bg-region-accent
                                                  bg-region-accent-subtle))))
+       ;; Ansi
+       `(ansi-color-faint ((t (:foreground ,fg-alt :weight unspecified))))
        ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,fg-whitespace :background unspecified))))
        `(whitespace-indentation ((t (:foreground ,fg-whitespace :background unspecified))))

@@ -23,6 +23,9 @@ in
     EDITOR = "editor";
     PAGER = "cat"; # Works for now.
     JULIA_NUM_THREADS = "16";
+
+    # Ensure system packages can be found by pkg-config.
+    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 
   home.file.".bin/editor" = {
@@ -44,7 +47,7 @@ in
     vim
     coreutils
     cacert
-    binutils
+    wget
     git
     gnumake
     gnupg
@@ -64,6 +67,10 @@ in
     unixtools.getopt
     cloc
     poppler_utils
+    pkgconfig
+    openssl
+    openssl.dev
+    libiconv
 
     # Speling
     aspell
@@ -95,6 +102,12 @@ in
     gh
     d2
 
+    # C/C++
+    cmake
+    doxygen
+    clang-tools
+    # TODO: clang and clangd
+
     # Python
     python311
 
@@ -120,6 +133,7 @@ in
     nodejs-16_x
     nodePackages.typescript
     typescript-ls
+    esbuild
 
     # Scheme
     guile
