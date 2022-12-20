@@ -50,10 +50,9 @@
 ;; Auto insert closing parenthesis, braces, etc
 (use-package elec-pair
   ;; built-in
-  :init
+  :config
   ;; Helps a lot with triple quoting.
   (setq electric-pair-inhibit-predicate #'electric-pair-conservative-inhibit)
-  :config
   (electric-pair-mode 1))
 
 ;; Folding
@@ -296,7 +295,6 @@ window."
 
 (use-package separedit
   :straight t
-  :defer t
   :config
   (setq separedit-default-mode 'gfm-mode
         separedit-remove-trailing-spaces-in-comment t

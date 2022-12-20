@@ -132,7 +132,6 @@ completing inside the minibuffer)."
 
 (use-package eglot
   :straight t
-  :defer t
   :commands (eglot eglot-ensure sm/add-server-program)
   :config
   ;; Seem to hit this with gopls and vendored deps.

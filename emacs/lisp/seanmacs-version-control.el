@@ -17,7 +17,6 @@
 
 (use-package magit
   :straight t
-  :defer t
   :config
   (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
   (setq magit-blame-echo-style 'margin
@@ -29,12 +28,10 @@
          ("C-c g f" . magit-file-dispatch)))
 
 (use-package orgit
-  :straight t
-  :after (org))
+  :straight t)
 
 (use-package forge
   :straight t
-  :after magit
   :config
   (setq forge-pull-notifications nil))
 
@@ -43,7 +40,6 @@
 
 (use-package diff-hl
   :straight t
-  :demand t
   :config
   (setq diff-hl-draw-borders nil)
   (defun sm/diff-hl-fringe-bmp (_type _pos)
@@ -55,16 +51,11 @@
 
 (use-package git-link
   :straight t
-  :demand t
-  :init
-  (defun sm/browse-git-link ()
-    "Browse `git-link' at point."
-    (interactive)
-    (let ((git-link-open-in-browser t))
-      (call-interactively 'git-link)))
   :config
-  (setq git-link-use-commit t)
-  :bind (("C-c g o" . sm/browse-git-link)))
+  (setq git-link-use-commit t
+        git-link-open-in-browser t)
+
+  :bind (("C-c g o" . git-link)))
 
 (provide 'seanmacs-version-control)
 ;;; seanmacs-version-control.el ends here

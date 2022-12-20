@@ -11,7 +11,6 @@
 
 (use-package elfeed
   :straight t
-  :defer t
   :config
   (defvar sm/arxiv-number-results 100
     "Number of results to fetch from Arxiv.")

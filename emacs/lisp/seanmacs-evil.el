@@ -50,13 +50,11 @@
 
 (use-package evil-commentary
   :straight t
-  :after evil
   :config
   (evil-commentary-mode))
 
 (use-package evil-collection
   :straight t
-  :after evil
   :init
   (setq forge-add-default-bindings nil)
   :config
@@ -71,7 +69,6 @@
 
 (use-package evil-surround
   :straight t
-  :after evil
   :config (global-evil-surround-mode 1))
 
 (provide 'seanmacs-evil)

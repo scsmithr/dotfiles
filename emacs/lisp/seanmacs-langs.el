@@ -13,7 +13,6 @@
 
 (use-package go-mode
   :straight t
-  :defer t
   :init
   (defun sm/gopls-ensure ()
     (setq eglot-workspace-configuration
@@ -49,7 +48,6 @@
 
 (use-package rust-mode
   :straight t
-  :defer t
   :config
   (setq rust-format-on-save nil ;; Handled by apheleia
         rust-format-show-buffer nil)
@@ -62,7 +60,6 @@
 
 (use-package cargo
   :straight t
-  :defer t
   :config
   (setq cargo-process--command-doc "doc --document-private-items"
         cargo-process--command-doc-open "doc --document-private-items --open")
@@ -80,7 +77,6 @@
 
 (use-package typescript-mode
   :straight t
-  :defer t
   :mode "\\.ts\\'"
   :hook ((typescript-mode . eglot-ensure)
          (typescript-mode . apheleia-mode))
@@ -100,7 +96,6 @@ mode name.")
 
 (use-package web-mode
   :straight t
-  :defer t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.jsx\\'" . web-mode))
   :init
@@ -128,37 +123,30 @@ mode name.")
 ;; Protobuf
 
 (use-package protobuf-mode
-  :straight t
-  :defer t)
+  :straight t)
 
 
 ;; Scheme
 
 (use-package geiser
   :straight t
-  :defer t
   :config
   (setq geiser-default-implementation 'guile))
 
 (use-package geiser-guile
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package geiser-racket
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package geiser-chez
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package geiser-mit
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package geiser-chicken
   :straight t
-  :defer t
   :init
   (setq geiser-chicken-binary "chicken-csi"))
 
@@ -167,7 +155,6 @@ mode name.")
 
 (use-package elisp-mode
   ;; built-in
-  :defer t
   :init
   (defun sm/elisp-describe-symbol-at-point ()
     (interactive)
@@ -194,15 +181,13 @@ mode name.")
 ;; Yaml
 
 (use-package yaml-mode
-  :straight t
-  :defer t)
+  :straight t)
 
 
 ;; Markdown
 
 (use-package markdown-mode
   :straight t
-  :defer t
   :mode ("\\.md\\'" . gfm-mode)
   :config
   (setq-default markdown-hide-urls t)
@@ -214,15 +199,13 @@ mode name.")
 ;; Dockerfile
 
 (use-package dockerfile-mode
-  :straight t
-  :defer t)
+  :straight t)
 
 
 ;; Plantuml
 
 (use-package plantuml-mode
   :straight t
-  :defer t
   :config
   (setq plantuml-default-exec-mode 'executable)
 
@@ -366,7 +349,6 @@ mode name.")
 
 (use-package csv-mode
   :straight t
-  :defer t
   :config
   (setq csv-align-padding 2)
   :hook ((csv-mode . csv-align-mode)))

@@ -170,14 +170,21 @@
          ("C-c l" . org-store-link)))
 
 (use-package org-crypt
-  :after org
   :config
   (setq org-crypt-key "C201D03C1BB3A68E"
         org-crypt-tag-matcher "encrypt")
   (org-crypt-use-before-save-magic))
 
+(use-package ob-http
+  :straight t)
+
+(use-package gnuplot
+  :straight t)
+
+(use-package ob-async
+  :straight t)
+
 (use-package ob
-  :after org
   :config
   (setq org-plantuml-exec-mode 'plantuml
         org-babel-lisp-eval-fn #'sly-eval)
@@ -197,18 +204,6 @@
      (R          . t)
      (plantuml   . t)))
   :hook ((org-babel-after-execute . org-redisplay-inline-images)))
-
-(use-package ob-http
-  :straight t
-  :after ob)
-
-(use-package gnuplot
-  :straight t
-  :after ob)
-
-(use-package ob-async
-  :straight t
-  :after ob)
 
 ;; Export org subtrees as github issues.
 

@@ -28,7 +28,6 @@
 
 (use-package docker
   :straight t
-  :defer t
   :config
   (setq docker-container-columns
         '((:name "Id" :width 16 :template "{{json .ID}}" :sort nil :format nil)
@@ -49,8 +48,7 @@
   :bind (("C-c a d" . docker)))
 
 (use-package docker-tramp
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package restclient
   :straight t)
@@ -104,8 +102,7 @@ file at point will be used."
          ("C-c C-p" . dired-prev-subdir)))
 
 (use-package diredfl
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package pdf-tools
   :straight t
@@ -197,7 +194,6 @@ opening the file."
 
 (use-package nov
   :straight t
-  :defer t
   :mode ("\\.epub\\'" . nov-mode)
   :config
   (setq nov-text-width 80))
