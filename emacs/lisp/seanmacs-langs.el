@@ -126,31 +126,6 @@ mode name.")
   :straight t)
 
 
-;; Scheme
-
-(use-package geiser
-  :straight t
-  :config
-  (setq geiser-default-implementation 'guile))
-
-(use-package geiser-guile
-  :straight t)
-
-(use-package geiser-racket
-  :straight t)
-
-(use-package geiser-chez
-  :straight t)
-
-(use-package geiser-mit
-  :straight t)
-
-(use-package geiser-chicken
-  :straight t
-  :init
-  (setq geiser-chicken-binary "chicken-csi"))
-
-
 ;; Emacs lisp
 
 (use-package elisp-mode

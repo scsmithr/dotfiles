@@ -3,7 +3,6 @@
 ;;; Commentary:
 ;; Theme stuff.
 
-
 ;;; Code:
 
 (eval-when-compile
@@ -48,118 +47,147 @@
   (minions-mode 1))
 
 (use-package modus-themes
-  :straight t
+  :straight (:host sourcehut :repo "protesilaos/modus-themes" :branch "version-4")
   :config
-  (fringe-mode '(8 . 8))
 
-  (setq modus-themes-fringes 'subtle
-        modus-themes-org-blocks 'gray-background
+  (setq modus-themes-italic-constructs nil
+        modus-themes-bold-constructs nil
         modus-themes-region '(bg-only)
-        modus-themes-links '(faint)
-        modus-themes-hl-line nil
-        modus-themes-completions nil
-        modus-themes-diffs 'bg-only
-        modus-themes-italic-constructs nil
-        modus-themes-lang-checkers '(straight-underline)
-        modus-themes-org-agenda '((header-block . (no-scale))
-                                  (header-date . (bold-all underline-today))))
+        modus-themes-org-blocks 'gray-background)
 
-  (setq x-underline-at-descent-line t)
-
-  (setq modus-themes-operandi-color-overrides
-        '((fg-whitespace           . "#f2eff3")
-          (bg-whitespace           . "#ffffff")
-          (fg-window-divider-inner . "#dadada")
-          (fg-window-divider-outer . "#aaaaaa")
-          ;; Tweaked doc/alt colors. Lightened to have docs and comments stand
-          ;; out a bit more from surrounding text.
-          (fg-docstring . "#6a6a90")
-          (fg-alt       . "#707070")
-          ;; Custom fringe colors, I'm using these 'bg' colors as the
-          ;; foreground.
-          (red-fringe-bg     . "#c06873")
-          (green-fringe-bg   . "#4ea054")
-          (yellow-fringe-bg  . "#af9432")
-          (blue-fringe-bg    . "#688ccc")
-          (magenta-fringe-bg . "#b382cc")
-          (cyan-fringe-bg    . "#25a4b2")))
-
-  (setq modus-themes-vivendi-color-overrides
+  ;; Just overriding a single theme.
+  (setq modus-vivendi-palette-overrides
         '(
-          ;; Make everything a bit less contrasty.
-          (bg-main . "#202020") (fg-main . "#f4f4f4")
-          (bg-dim . "#2c2b2c") (fg-dim . "#e0e6f0")
-          (bg-alt . "#333536") (fg-alt . "#a8a8a8")
+          (bg-main          "#292626")
+          (bg-dim           "#353333")
+          (fg-main          "#f0dbdb")
+          (fg-dim           "#9b9898")
+          (fg-alt           "#c7daff")
+          (bg-active        "#535353")
+          (bg-inactive      "#303030")
+          (border           "#646464")
 
-          (bg-active . "#323232") (fg-active . "#f4f4f4")
-          (bg-inactive . "#282828") (fg-inactive . "#bfc0c4")
+          (fringe bg-inactive)            ; set to bg-main to hide it
+          (cursor fg-main)
+          (builtin maroon)
+          (comment fg-dim)                ; default
+          (constant blue-faint)
+          (docstring yellow-faint)
+          (docmarkup magenta-faint)       ; default
+          (fnname pink)
+          (keyword magenta-faint)
+          (preprocessor rust)
+          (string slate)
+          (type cyan-faint)
+          (variable cyan-faint)
+          (rx-construct gold)
+          (rx-backslash olive)
 
-          (bg-header . "#313131") (fg-header . "#dddddd")
+          (underline-err red-faint)
+          (underline-warning yellow-faint)
+          (underline-note cyan-faint)
 
-          (bg-hl-line . "#353843")
+          (date-common slate)
+          (date-deadline rust)
+          (date-event fg-alt)             ; default
+          (date-holiday magenta)          ; default
+          (date-scheduled yellow-faint)
+          (date-weekend pink)
 
-          (fg-whitespace . "#30333e")
-          (bg-whitespace . "#202020")
-          (fg-window-divider-inner . "#444444")
-          (fg-window-divider-outer . "#646464")))
+          (link blue-faint)
+          (link-symbolic cyan-faint)
+          (link-visited magenta-faint)
+          (name maroon)
+          (identifier yellow-faint)       ; default
+          (prompt cyan-faint)
+
+          (mail-cite-0 cyan-faint)
+          (mail-cite-1 yellow-faint)
+          (mail-cite-2 green-faint)
+          (mail-cite-3 red-faint)
+          (mail-part olive)
+          (mail-recipient indigo)
+          (mail-subject maroon)
+          (mail-other slate)
+
+          (prose-block fg-dim)            ; default
+          (prose-code olive)
+          (prose-done green-faint)
+          (prose-macro indigo)
+          (prose-metadata fg-dim)         ; default
+          (prose-metadata-value fg-alt)   ; default
+          (prose-table fg-alt)            ; default
+          (prose-tag rust)
+          (prose-todo red-faint)
+          (prose-verbatim maroon)
+
+          (accent-0 blue-faint)
+          (accent-1 magenta-faint)
+          (accent-2 cyan-faint)
+          (accent-3 yellow)
+          (bg-accent-0 bg-blue-subtle)
+          (bg-accent-1 bg-magenta-subtle)
+          (bg-accent-2 bg-cyan-subtle)
+          (bg-accent-3 bg-yellow-subtle)
+
+          ;; All headings are left at their defaults values.
+
+          (heading-0 cyan-cooler)
+          (heading-1 fg-main)
+          (heading-2 yellow-faint)
+          (heading-3 blue-faint)
+          (heading-4 magenta)
+          (heading-5 green-faint)
+          (heading-6 red-faint)
+          (heading-7 cyan-faint)
+          (heading-8 fg-dim)
+
+          ;; Special purpose
+
+          (bg-completion       "#5f446f")
+          (bg-hover            "#004f70")
+          (bg-hover-secondary  "#654a39")
+          (bg-hl-line          "#3f3849")
+          (bg-paren-match      "#2f7f9f")
+          (bg-paren-expression "#453040")
+          (bg-region           "#5c5c5c")
+          (bg-region-subtle    "#4f1c2f")
+          (bg-prompt           "#5f3a60")
+
+          (bg-mode-line-active        "#555252")
+          (fg-mode-line-active        fg-main)
+          (border-mode-line-active    "#a09797")
+          (bg-mode-line-inactive      "#332f2f")
+          (fg-mode-line-inactive      fg-dim)
+          (border-mode-line-inactive  "#666363")
+          ))
 
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
-       ;; Modus reset
-       `(modus-themes-reset-hard ((t :inherit (fixed-pitch modus-themes-reset-soft)
-                                     :family unspecified)))
-       ;; Base faces, reduce number of colors.
-       `(font-lock-function-name-face ((t :foreground unspecified)))
-       `(font-lock-variable-name-face ((t :foreground unspecified)))
-       ;; Region (for unspecifying distant foreground).
-       `(region ((,class :distant-foreground unspecified
-                         ,@(modus-themes--region bg-region fg-main
-                                                 bg-hl-alt-intense bg-region-accent
-                                                 bg-region-accent-subtle))))
-       ;; Ansi
-       `(ansi-color-faint ((t (:foreground ,fg-alt :weight unspecified))))
-       ;; Whitespace
-       `(whitespace-hspace ((t (:foreground ,fg-whitespace :background unspecified))))
-       `(whitespace-indentation ((t (:foreground ,fg-whitespace :background unspecified))))
+       `(whitespace-hspace ((t (:foreground ,bg-dim :background unspecified))))
+       `(whitespace-indentation ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-line ((t (:background ,bg-dim :inherit unspecified))))
-       `(whitespace-newline ((t (:foreground ,fg-whitespace :background unspecified))))
-       `(whitespace-space ((t (:foreground ,fg-whitespace :background unspecified))))
-       `(whitespace-tab ((t (:foreground ,fg-whitespace :background unspecified))))
-       ;; Org mode
-       `(org-code ((t (:inherit modus-themes-markup-verbatim))))
-       ;; Modus fringes
-       `(modus-themes-fringe-red ((t :foreground ,red-fringe-bg :background unspecified)))
-       `(modus-themes-fringe-green ((t :foreground ,green-fringe-bg :background unspecified)))
-       `(modus-themes-fringe-yellow ((t :foreground ,yellow-fringe-bg :background unspecified)))
-       `(modus-themes-fringe-blue ((t :foreground ,blue-fringe-bg :background unspecified)))
-       `(modus-themes-fringe-magenta ((t :foreground ,magenta-fringe-bg :background unspecified)))
-       `(modus-themes-fringe-cyan ((t :foreground ,cyan-fringe-bg :background unspecified)))
-       ;; Man/woman
-       `(Man-overstrike ((t :inherit bold :foreground ,fg-special-calm)))
-       `(woman-bold ((t :inherit bold :foreground ,fg-special-calm)))
-       ;; Evil
-       `(evil-ex-substitute-replacement ((t :inherit modus-themes-refine-green :underline t)))
-       ;; Corfu
-       `(corfu-default ((t :background ,bg-inactive)))
-       ;; mode-line
-       `(mode-line ((t :inherit modus-themes-ui-variable-pitch
-                       ,@(modus-themes--mode-line-attrs
-                          fg-active bg-active
-                          fg-dim bg-active
-                          fg-main bg-active-accent
-                          bg-region bg-active
-                          'alt-style bg-main))))
-       ;; eglot
-       `(eglot-highlight-symbol-face ((t :background ,yellow-nuanced-bg :weight unspecified)))
+       `(whitespace-newline ((t (:foreground ,bg-dim :background unspecified))))
+       `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
+       `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
+       ;; Region (unspecify distant foreground)
+       `(region ((,c :distant-foreground unspecified
+                     ,@(modus-themes--region bg-region fg-main bg-region-subtle))))
+       ;; Eglot
+       `(eglot-highlight-symbol-face ((t :background ,bg-hover-secondary :weight unspecified)))
        `(eglot-diagnostic-tag-deprecated-face ((t :inherit unspecified)))
-       `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified))))))
+       `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified)))
+       ;; Evil
+       `(evil-ex-substitute-matches ((t :background ,bg-changed :underline nil)))
+       `(evil-ex-substitute-replacement ((t :background ,bg-added)))
+       ;; Diff hl
+       `(diff-hl-change ((t :background unspecified :foreground ,fg-changed)))
+       `(diff-hl-delete ((t :background unspecified :foreground ,fg-removed)))
+       `(diff-hl-insert ((t :background unspecified :foreground ,fg-added)))
+       )))
 
   (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)
-
-  (load-theme 'modus-operandi t t)
-  (load-theme 'modus-vivendi t t)
-  (modus-themes-load-operandi)
 
   (defun sm/get-system-appearance ()
     "Get the system appearance.
@@ -202,32 +230,10 @@ Defaults to light if running in terminal or not running on mac."
     (let ((appearance (sm/get-system-appearance)))
       (message "syncing theme: %s" appearance)
       (if (string= appearance "dark")
-          (modus-themes-load-vivendi)
-        (modus-themes-load-operandi))))
+          (modus-themes-select 'modus-vivendi)
+        (modus-themes-select 'modus-operandi-tinted))))
 
-  ;; pdf-tools specific settings
-
-  (defun sm/pdf-tools-backdrop ()
-    (face-remap-add-relative
-     'default
-     `(:background ,(modus-themes-color 'bg-alt))))
-
-  (defun sm/pdf-tools-midnight-mode-toggle ()
-    (when (derived-mode-p 'pdf-view-mode)
-      (if (eq (car custom-enabled-themes) 'modus-vivendi)
-          (pdf-view-midnight-minor-mode 1)
-        (pdf-view-midnight-minor-mode -1))
-      (sm/pdf-tools-backdrop)))
-
-  (defun sm/pdf-tools-themes-toggle ()
-    (mapc
-     (lambda (buf)
-       (with-current-buffer buf
-         (sm/pdf-tools-midnight-mode-toggle)))
-     (buffer-list)))
-
-  (add-hook 'pdf-view-mode-hook #'sm/pdf-tools-midnight-mode-toggle)
-  (add-hook 'modus-themes-after-load-theme-hook #'sm/pdf-tools-themes-toggle))
+  (modus-themes-load-theme 'modus-operandi-tinted))
 
 ;; Fringe bitmaps
 

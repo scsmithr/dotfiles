@@ -40,6 +40,7 @@
 
 (use-package diff-hl
   :straight t
+  :demand t ;; Doesn't like to come on.
   :config
   (setq diff-hl-draw-borders nil)
   (defun sm/diff-hl-fringe-bmp (_type _pos)
