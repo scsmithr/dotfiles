@@ -162,6 +162,13 @@
           (border-mode-line-inactive  "#666363")
           ))
 
+  (setq modus-operandi-tinted-palette-overrides
+        '(
+          (comment             fg-dim)
+          (bg-hl-line          "#f0e5e0")
+          (bg-completion       "#ecd5d0")
+          ))
+
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
