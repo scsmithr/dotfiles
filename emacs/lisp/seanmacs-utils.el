@@ -198,5 +198,30 @@ opening the file."
   :config
   (setq nov-text-width 80))
 
+(use-package olivetti
+  :straight t
+  :config
+  (setq olivetti-body-width 92)
+  :bind (("C-c z" . zen-mode)))
+
+(defvar-local zen-mode-display-line-numbers-mode nil
+  "Non-nil if the `display-line-numbers-mode' was enabled.")
+
+(define-minor-mode zen-mode
+  "Mode that centers the current buffer and disables line numbers."
+  :init-value nil
+  :global nil
+  :lighter "Zen"
+  (if zen-mode
+      (progn
+        (when (bound-and-true-p display-line-numbers-mode)
+          (setq zen-mode-display-line-numbers-mode t)
+          (display-line-numbers-mode -1))
+        (olivetti-mode 1))
+    (progn
+      (when zen-mode-display-line-numbers-mode
+        (display-line-numbers-mode 1))
+      (olivetti-mode -1))))
+
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

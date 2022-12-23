@@ -42,10 +42,6 @@
   :straight t
   :demand t ;; Doesn't like to come on.
   :config
-  (setq diff-hl-draw-borders nil)
-  (defun sm/diff-hl-fringe-bmp (_type _pos)
-    'sm/left-line-bmp)
-  (setq diff-hl-fringe-bmp-function #'sm/diff-hl-fringe-bmp)
   (global-diff-hl-mode)
   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
          (magit-pre-refresh . diff-hl-magit-pre-refresh)))

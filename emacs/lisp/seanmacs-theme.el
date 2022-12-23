@@ -51,127 +51,110 @@
   :config
 
   (setq modus-themes-italic-constructs nil
-        modus-themes-bold-constructs nil
+        modus-themes-bold-constructs t
         modus-themes-region '(bg-only)
-        modus-themes-org-blocks 'gray-background)
+        modus-themes-org-blocks 'gray-background
+        modus-themes-prompts '(bold))
 
-  ;; Just overriding a single theme.
+  (setq modus-themes-common-palette-overrides
+        '(
+          (fringe bg-inactive)
+          (cursor fg-main)
+          (builtin fg-main)
+          (comment fg-dim)
+          (constant fg-main)
+          (docstring fg-alt)
+          (docmarkup fg-main)
+          (fnname fg-main)
+          (keyword fg-main)
+          (preprocessor magenta-faint)
+          (string blue-faint)
+          (type fg-main)
+          (variable fg-main)
+          (rx-construct fg-main)
+          (rx-backslash fg-main)
+
+          (keybind blue-cooler)
+          (fg-link blue-faint)
+          (fg-link-symbolic cyan-faint)
+          (fg-link-visited magenta-faint)
+          (name magenta)
+          (identifier yellow-cooler)
+          (prompt fg-main)
+
+          (err red)
+          (warning yellow-warmer)
+          (info green)
+
+          (underline-err red-intense)
+          (underline-warning yellow-intense)
+          (underline-note cyan-intense)
+
+          (fg-accent-0 blue-faint)
+          (fg-accent-1 magenta-faint)
+          (fg-accent-2 cyan-faint)
+          (fg-accent-3 red-faint)
+          (bg-accent-0 bg-blue-subtle)
+          (bg-accent-1 bg-magenta-subtle)
+          (bg-accent-2 bg-cyan-subtle)
+          (bg-accent-3 bg-red-subtle)
+
+          (date-common cyan-faint)
+          (date-deadline red)
+          (date-event fg-alt)
+          (date-holiday magenta)
+          (date-scheduled yellow-warmer)
+          (date-weekend red-faint)
+
+          (mail-cite-0 blue-faint)
+          (mail-cite-1 yellow-warmer)
+          (mail-cite-2 cyan-cooler)
+          (mail-cite-3 red-cooler)
+          (mail-part cyan)
+          (mail-recipient magenta-cooler)
+          (mail-subject magenta-warmer)
+          (mail-other magenta-faint)
+
+          (prose-block fg-dim)
+          (prose-code green-warmer)
+          (prose-done green-warmer)
+          (prose-macro magenta-warmer)
+          (prose-metadata fg-dim)
+          (prose-metadata-value fg-alt)
+          (prose-table fg-alt)
+          (prose-tag magenta-faint)
+          (prose-todo red-warmer)
+          (prose-verbatim magenta-warmer)
+
+          (fg-heading-0 fg-main)
+          (fg-heading-1 fg-main)
+          (fg-heading-2 fg-main)
+          (fg-heading-3 fg-main)
+          (fg-heading-4 fg-main)
+          (fg-heading-5 fg-main)
+          (fg-heading-6 fg-main)
+          (fg-heading-7 fg-main)
+          (fg-heading-8 fg-main)
+
+          ;; Mode line
+          (bg-mode-line-active        bg-active)
+          (fg-mode-line-active        fg-main)
+          (border-mode-line-active    border)
+          (bg-mode-line-inactive      bg-inactive)
+          (fg-mode-line-inactive      fg-dim)
+          (border-mode-line-inactive  border)
+          ))
+
   (setq modus-vivendi-palette-overrides
         '(
           (bg-main          "#292626")
           (bg-dim           "#353333")
-          (fg-main          "#f0dbdb")
-          (fg-dim           "#9b9898")
-          (fg-alt           "#c7daff")
-          (bg-active        "#535353")
-          (bg-inactive      "#303030")
-          (border           "#646464")
-
-          (fringe bg-inactive)            ; set to bg-main to hide it
-          (cursor fg-main)
-          (builtin maroon)
-          (comment fg-dim)                ; default
-          (constant blue-faint)
-          (docstring yellow-faint)
-          (docmarkup magenta-faint)       ; default
-          (fnname pink)
-          (keyword magenta-faint)
-          (preprocessor rust)
-          (string slate)
-          (type cyan-faint)
-          (variable cyan-faint)
-          (rx-construct gold)
-          (rx-backslash olive)
-
-          (underline-err red-faint)
-          (underline-warning yellow-faint)
-          (underline-note cyan-faint)
-
-          (date-common slate)
-          (date-deadline rust)
-          (date-event fg-alt)             ; default
-          (date-holiday magenta)          ; default
-          (date-scheduled yellow-faint)
-          (date-weekend pink)
-
-          (link blue-faint)
-          (link-symbolic cyan-faint)
-          (link-visited magenta-faint)
-          (name maroon)
-          (identifier yellow-faint)       ; default
-          (prompt cyan-faint)
-
-          (mail-cite-0 cyan-faint)
-          (mail-cite-1 yellow-faint)
-          (mail-cite-2 green-faint)
-          (mail-cite-3 red-faint)
-          (mail-part olive)
-          (mail-recipient indigo)
-          (mail-subject maroon)
-          (mail-other slate)
-
-          (prose-block fg-dim)            ; default
-          (prose-code olive)
-          (prose-done green-faint)
-          (prose-macro indigo)
-          (prose-metadata fg-dim)         ; default
-          (prose-metadata-value fg-alt)   ; default
-          (prose-table fg-alt)            ; default
-          (prose-tag rust)
-          (prose-todo red-faint)
-          (prose-verbatim maroon)
-
-          (accent-0 blue-faint)
-          (accent-1 magenta-faint)
-          (accent-2 cyan-faint)
-          (accent-3 yellow)
-          (bg-accent-0 bg-blue-subtle)
-          (bg-accent-1 bg-magenta-subtle)
-          (bg-accent-2 bg-cyan-subtle)
-          (bg-accent-3 bg-yellow-subtle)
-
-          ;; All headings are left at their defaults values.
-
-          (heading-0 cyan-cooler)
-          (heading-1 fg-main)
-          (heading-2 yellow-faint)
-          (heading-3 blue-faint)
-          (heading-4 magenta)
-          (heading-5 green-faint)
-          (heading-6 red-faint)
-          (heading-7 cyan-faint)
-          (heading-8 fg-dim)
-
-          ;; Special purpose
-
-          (bg-completion       "#5f446f")
-          (bg-hover            "#004f70")
-          (bg-hover-secondary  "#654a39")
-          (bg-hl-line          "#3f3849")
-          (bg-paren-match      "#2f7f9f")
-          (bg-paren-expression "#453040")
-          (bg-region           "#5c5c5c")
-          (bg-region-subtle    "#4f1c2f")
-          (bg-prompt           "#5f3a60")
-
-          (bg-mode-line-active        "#555252")
-          (fg-mode-line-active        fg-main)
-          (border-mode-line-active    "#a09797")
-          (bg-mode-line-inactive      "#332f2f")
-          (fg-mode-line-inactive      fg-dim)
-          (border-mode-line-inactive  "#666363")
-          ))
-
-  (setq modus-operandi-tinted-palette-overrides
-        '(
-          (comment             fg-dim)
-          (bg-hl-line          "#f0e5e0")
-          (bg-completion       "#ecd5d0")
           ))
 
   (defun sm/customize-modus ()
     (modus-themes-with-colors
       (custom-set-faces
+       ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-indentation ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-line ((t (:background ,bg-dim :inherit unspecified))))
@@ -185,13 +168,13 @@
        `(eglot-highlight-symbol-face ((t :background ,bg-hover-secondary :weight unspecified)))
        `(eglot-diagnostic-tag-deprecated-face ((t :inherit unspecified)))
        `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified)))
+       ;; Flymake
+       `(flymake-error-bitmap '(flymake-double-exclamation-mark modus-themes-subtle-red))
+       `(flymake-warning-bitmap '(exclamation-mark modus-themes-subtle-yellow))
+       `(flymake-note-bitmap '(exclamation-mark modus-themes-subtle-cyan))
        ;; Evil
-       `(evil-ex-substitute-matches ((t :background ,bg-changed :underline nil)))
-       `(evil-ex-substitute-replacement ((t :background ,bg-added)))
-       ;; Diff hl
-       `(diff-hl-change ((t :background unspecified :foreground ,fg-changed)))
-       `(diff-hl-delete ((t :background unspecified :foreground ,fg-removed)))
-       `(diff-hl-insert ((t :background unspecified :foreground ,fg-added)))
+       `(evil-ex-substitute-matches ((t :background ,bg-changed :foreground ,fg-changed :underline t)))
+       `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
        )))
 
   (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)
@@ -238,9 +221,9 @@ Defaults to light if running in terminal or not running on mac."
       (message "syncing theme: %s" appearance)
       (if (string= appearance "dark")
           (modus-themes-select 'modus-vivendi)
-        (modus-themes-select 'modus-operandi-tinted))))
+        (modus-themes-select 'modus-operandi))))
 
-  (modus-themes-load-theme 'modus-operandi-tinted))
+  (modus-themes-load-theme 'modus-operandi))
 
 ;; Fringe bitmaps
 
@@ -333,9 +316,6 @@ Defaults to light if running in terminal or not running on mac."
    #b00000100
    #b00000000]
   nil nil 'center)
-
-(define-fringe-bitmap 'sm/right-line-bmp [#b00011000] nil nil '(center t))
-(define-fringe-bitmap 'sm/left-line-bmp [#b00011000] nil nil '(center t))
 
 (provide 'seanmacs-theme)
 ;;; seanmacs-theme.el ends here
