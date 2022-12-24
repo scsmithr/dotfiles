@@ -9,7 +9,6 @@
  ("corfu" . "03688d628ff238d78bd6aa1acf0f657dcd7d0107")
  ("csv-mode" . "e13282b678af6b9ba74e5232610c6a4406c87877")
  ("dash.el" . "3df46d7d9fe74f52a661565888e4d31fd760f0df")
- ("diff-hl" . "68fb280b300c5d8460cc7b9183e29fb3ec604136")
  ("diredfl" . "94bd99eeced6d52a5a7b9db3745239feafd633e2")
  ("docker-tramp.el" . "930d7b46c180d8a13240a028c1b40af84f2a3219")
  ("docker.el" . "cc0046e6a557dce0ccc4108dd22e04f21ba8b0dc")

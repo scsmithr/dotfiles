@@ -38,14 +38,6 @@
 (use-package transient
   :straight t)
 
-(use-package diff-hl
-  :straight t
-  :demand t ;; Doesn't like to come on.
-  :config
-  (global-diff-hl-mode)
-  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
-         (magit-pre-refresh . diff-hl-magit-pre-refresh)))
-
 (use-package git-link
   :straight t
   :config
