@@ -51,7 +51,7 @@
   :config
 
   (setq modus-themes-italic-constructs nil
-        modus-themes-bold-constructs t
+        modus-themes-bold-constructs nil
         modus-themes-region '(bg-only)
         modus-themes-org-blocks 'gray-background
         modus-themes-prompts '(bold))
@@ -61,12 +61,12 @@
           (fringe bg-inactive)
           (cursor fg-main)
           (builtin fg-main)
-          (comment fg-dim)
+          (comment yellow-cooler)
           (constant fg-main)
-          (docstring fg-alt)
-          (docmarkup fg-main)
+          (docstring green-warmer)
+          (docmarkup green-cooler)
           (fnname fg-main)
-          (keyword fg-main)
+          (keyword fg-dim)
           (preprocessor magenta-faint)
           (string blue-faint)
           (type fg-main)
@@ -80,7 +80,7 @@
           (fg-link-visited magenta-faint)
           (name magenta)
           (identifier yellow-cooler)
-          (prompt fg-main)
+          (prompt blue-faint)
 
           (err red)
           (warning yellow-warmer)
@@ -149,6 +149,7 @@
         '(
           (bg-main          "#292626")
           (bg-dim           "#353333")
+          (fg-dim           "#b8b8b8")
           ))
 
   (defun sm/customize-modus ()

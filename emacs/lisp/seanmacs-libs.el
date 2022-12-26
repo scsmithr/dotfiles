@@ -14,7 +14,6 @@
 (defvar sm/dotfiles-dir (expand-file-name "~/dotfiles/")
   "Root directory containing my dotfiles.")
 
-
 (defvar sm/sync-dir (expand-file-name "~/Library/Mobile Documents/com~apple~CloudDocs/")
   "Root directory for file syncing.")
 
