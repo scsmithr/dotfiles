@@ -150,7 +150,8 @@ in
 
     # Haskell
     haskell.compiler.ghc942
-    ormolu
+    # https://github.com/NixOS/nixpkgs/issues/140774
+    # ormolu
 
     # Fonts
     source-sans
