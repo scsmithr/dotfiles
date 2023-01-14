@@ -123,7 +123,10 @@ mode name.")
 ;; Protobuf
 
 (use-package protobuf-mode
-  :straight t)
+  :straight t
+  :config
+  (setf (alist-get 'protobuf-mode apheleia-mode-alist) 'clang-format)
+  :hook ((protobuf-mode . apheleia-mode)))
 
 
 ;; Emacs lisp
@@ -220,20 +223,6 @@ mode name.")
   :config
   (sm/add-server-program 'c++-mode "clangd")
   (sm/add-server-program 'c-mode "clangd")
-
-  (setf (alist-get 'clang-format apheleia-formatters)
-        '("clang-format"
-          "--style=file"
-          "--assume-filename"
-          (or
-           (buffer-file-name)
-           (cdr
-            (assoc major-mode
-                   '((c-mode . ".c")
-                     (c++-mode . ".cpp")
-                     (cuda-mode . ".cu")
-                     (protobuf-mode . ".proto"))))
-           ".c")))
 
   :hook ((c++-mode . eglot-ensure)
          (c-mode . eglot-ensure)

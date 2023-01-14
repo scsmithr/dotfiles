@@ -305,7 +305,21 @@ window."
 (use-package apheleia
   :straight t
   :config
-  (setq apheleia-remote-algorithm 'remote))
+  (setq apheleia-remote-algorithm 'remote)
+
+  (setf (alist-get 'clang-format apheleia-formatters)
+        '("clang-format"
+          "--style=file"
+          "--assume-filename"
+          (or
+           (buffer-file-name)
+           (cdr
+            (assoc major-mode
+                   '((c-mode . ".c")
+                     (c++-mode . ".cpp")
+                     (cuda-mode . ".cu")
+                     (protobuf-mode . ".proto"))))
+           ".c"))))
 
 (use-package bookmark
   ;; built-in
