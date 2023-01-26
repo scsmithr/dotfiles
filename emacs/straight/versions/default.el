@@ -54,7 +54,7 @@
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
  ("olivetti" . "8d287a80c5e3d72ac01b56c8afe60b01f18500b4")
  ("orderless" . "b355ef6d386134f16eafe17051e9fafcfbea9cad")
- ("org" . "b93a61af9c93d21c56cf883630e52f36076e40bd")
+ ("org" . "6001313b8f8bc2c717b44070d6e7b19afc6125ec")
  ("orgit" . "5036c3db5897ce93cd895aa213072661a497a4e6")
  ("ox-gfm" . "fe68968ae6649a1fa88d5d0065d9f580fcd75266")
  ("pdf-tools" . "d6980bc3273e1cf1a73feee6bb523d1568405685")
