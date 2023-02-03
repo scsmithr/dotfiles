@@ -166,7 +166,7 @@ mode name.")
 
 (use-package markdown-mode
   :straight t
-  :mode ("\\.md\\'" . gfm-mode)
+  :mode ("\\.mdx?\\'" . gfm-mode)
   :config
   (setq-default markdown-hide-urls t)
   (setq markdown-url-compose-char ?#

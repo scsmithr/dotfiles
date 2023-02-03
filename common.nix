@@ -61,6 +61,7 @@ in
     gnused
     syncthing
     postgresql
+    mysql
     qemu
     findutils
     plantuml
