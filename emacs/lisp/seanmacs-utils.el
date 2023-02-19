@@ -47,9 +47,6 @@
           (:name "Ports" :width 10 :template "{{json .Ports}}" :sort nil :format nil)))
   :bind (("C-c a d" . docker)))
 
-(use-package docker-tramp
-  :straight t)
-
 (use-package restclient
   :straight t)
 
@@ -200,7 +197,7 @@ opening the file."
 
 (use-package olivetti
   :straight t
-  :config
+  :init
   (setq olivetti-body-width 92)
   :bind (("C-c z" . zen-mode)))
 

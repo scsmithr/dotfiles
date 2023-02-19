@@ -111,6 +111,7 @@ in
 
     # Python
     python311
+    python3.pkgs.pip
 
     # Go
     go
@@ -168,6 +169,7 @@ in
 
   programs.emacs = {
     enable = true;
+    package = pkgs.emacs29;
   };
 
   programs.go = {

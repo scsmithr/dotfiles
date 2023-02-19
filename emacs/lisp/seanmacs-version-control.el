@@ -35,9 +35,6 @@
   :config
   (setq forge-pull-notifications nil))
 
-(use-package transient
-  :straight t)
-
 (use-package git-link
   :straight t
   :config

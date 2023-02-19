@@ -23,25 +23,18 @@
   (setf (alist-get 'goimports apheleia-formatters) '("goimports" "-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
   (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports)
 
-  (defun sm/go-toplevel-test ()
-    "Get the name of the current top-level test function."
-    (save-excursion
-      (save-match-data
-        (re-search-backward "func \\(Test[A-Za-z0-9_]+\\)(t \\*testing.T)\s+" nil t)
-        (match-string 1))))
-
-  (defun sm/go-run-test-at-point ()
-    "Run top-level test at point."
+  (defun sm/go-test-package ()
+    "Run tests in the current package."
     (interactive)
-    (when-let ((test-name (sm/go-toplevel-test)))
-      (let ((cmd (format "go test -run %s -v" test-name))
-            (buf-name (format "*Test: Go [%s]*" test-name)))
-        (sm/compile cmd buf-name))))
+    (let ((cmd (format "go test %s"
+                       (file-name-directory buffer-file-name)))
+          (buf-name "*Go Test*"))
+      (sm/compile cmd buf-name)))
 
   :hook ((go-mode . apheleia-mode)
          (go-mode . sm/gopls-ensure))
   :bind(:map go-mode-map
-             ("C-c C-t" . sm/go-run-test-at-point)))
+             ("C-c C-c C-t" . sm/go-test-package)))
 
 
 ;; Rust

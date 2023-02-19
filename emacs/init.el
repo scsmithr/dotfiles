@@ -11,6 +11,10 @@
 (setq native-comp-async-report-warnings-errors :silent
       warning-suppress-log-types '((comp)))
 
+;; Remove when merged: https://github.com/radian-software/straight.el/pull/1054
+(unless (boundp 'native-comp-deferred-compilation-deny-list)
+  (defvar native-comp-deferred-compilation-deny-list nil))
+
 ;; GC things
 (setq gc-cons-threshold 20000000)
 (setq read-process-output-max (* 1024 1024))
@@ -34,17 +38,6 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq use-package-enable-imenu-support t)
-
-;; Ensure use-package is here.
-(straight-use-package 'use-package)
-
-;; Ensure development versions of built in packages are registered.
-(straight-use-package 'org)
-(straight-use-package 'eldoc)
-(straight-use-package 'project)
-(straight-use-package 'xref)
-(straight-use-package 'flymake)
-(straight-use-package 'transient)
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 

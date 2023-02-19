@@ -15,7 +15,6 @@
   "Directory containing capture templates.")
 
 (use-package org
-  :straight t
   :config
   ;; Enable basic movement keys in agenda.
   ;; Previous binds:
@@ -262,20 +261,6 @@ state is defined in `sm/org-github-issue-create-done-state'."
         (org-todo sm/org-github-issue-create-done-state)
         (org-set-property sm/org-github-issue-property issue-link)
         (message "Created issue: %s" html-url)))))
-
-;; Helpers for org attachments
-
-(defun sm/org-convert-file-to-attach ()
-  "Convert the file link under point to an attachment."
-  (interactive)
-  (require 'org-attach)
-  (let ((context (org-element-context)))
-    (if (not (eq (car context) 'link))
-        (user-error "Context not a link")
-      (let ((type (org-element-property :type context))
-            (path (org-element-property :path context)))
-        (org-attach-attach path)
-        (message "File attached")))))
 
 (provide 'seanmacs-org)
 ;;; seanmacs-org.el ends here

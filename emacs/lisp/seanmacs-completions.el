@@ -79,7 +79,6 @@ completing inside the minibuffer)."
   :init
   (setq vertico-count 10
         vertico-resize nil)
-
   (vertico-mode)
   :bind (:map vertico-map
               ("C-j" . vertico-exit-input)))
@@ -111,8 +110,6 @@ completing inside the minibuffer)."
   :bind (("C-c b s" . imenu)))
 
 (use-package xref
-  ;; built-in, ish. Eglot pulls in development versions.
-  :straight t
   :config
   (defun sm/xref-show ()
     "Show xref result under point, keeping cursor in the xref window."
@@ -125,21 +122,13 @@ completing inside the minibuffer)."
     (kbd "SPC") #'sm/xref-show))
 
 (use-package eldoc
-  ;; built-in, ish. Eglot pulls in development versions.
-  :straight t
   :config
-  (setq eldoc-echo-area-use-multiline-p nil))
+  (setq eldoc-echo-area-use-multiline-p nil
+        eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly))
 
 (use-package eglot
-  :straight t
   :commands (eglot eglot-ensure sm/add-server-program)
   :config
-  ;; Seem to hit this with gopls and vendored deps.
-  (setq max-specpdl-size 16000
-        max-lisp-eval-depth 3200)
-
-  (setq eglot-send-changes-idle-time 1)
-
   (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
 
   ;; Mostly done to ensure eglot is loaded before attempting to modify the

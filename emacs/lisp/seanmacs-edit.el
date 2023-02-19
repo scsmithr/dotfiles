@@ -226,7 +226,6 @@ loaded (e.g. sql-mode)."
   (dtrt-indent-global-mode 1))
 
 (use-package project
-  ;; Built-in, but using development version.
   :config
 
   (defun sm/project-root-maybe ()
