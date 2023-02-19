@@ -135,8 +135,12 @@
 
 ;; Yaml
 
-(use-package yaml-mode
-  :straight t)
+(require 'yaml-ts-mode)
+
+
+;; Toml
+
+(require 'toml-ts-mode)
 
 
 ;; Markdown

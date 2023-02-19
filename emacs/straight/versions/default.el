@@ -66,7 +66,6 @@
  ("vertico" . "9c3daf87b49b1d4cd510d09c26a3a123b20837ee")
  ("web-mode" . "df97ab62c94826a84adbde060a4111ca91deda8e")
  ("with-editor" . "59867aebe16454be4d8c0c858f3b00b8a34f3f61")
- ("yaml-mode" . "3fcb36d6039bef57e2a0f6e24c51f623c0bf5fb7")
  ("yaml.el" . "73fde9d8fbbaf2596449285df9eb412ae9dd74d9")
  ("yasnippet" . "5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6"))
 :gamma
