@@ -232,6 +232,17 @@ mode name.")
   ;; built-in
   :config
 
+  (defun sm/sql-glaredb-local (&optional buf-name)
+    "Connect to locally running glaredb instance."
+    (interactive "P")
+    (let ((sql-connection-alist '((glaredb-psql (sql-product 'postgres)
+                                                (sql-database "glaredb")
+                                                (sql-user "glaredb")
+                                                (sql-password "")
+                                                (sql-server "localhost")
+                                                (sql-port 6543)))))
+      (sql-connect 'glaredb-psql buf-name)))
+
   (defun sm/sql-postgres-generic (&optional buf-name)
     "Connect to a database via a postgres connection string."
     (interactive "P")
