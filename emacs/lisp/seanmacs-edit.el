@@ -220,9 +220,15 @@ loaded (e.g. sql-mode)."
     (interactive)
     (dtrt-indent-undo)
     (dtrt-indent-adapt))
+
   :config
   (setq dtrt-indent-min-quality 65.0
         dtrt-indent-min-hard-tab-superiority 180.0)
+
+  ;; Treesitter modes.
+  (add-to-list 'dtrt-indent-hook-mapping-list '(typescript-ts-base-mode javascript typescript-ts-mode-indent-offset))
+  (add-to-list 'dtrt-indent-hook-mapping-list '(rust-ts-mode c/c++/java rust-ts-mode-indent-offset))
+
   (dtrt-indent-global-mode 1))
 
 (use-package project

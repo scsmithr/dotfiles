@@ -8,11 +8,14 @@
 (eval-when-compile
   (require 'use-package))
 
+(require 'treesit)
+
 
 ;; Go
 
-(use-package go-mode
-  :straight t
+(require 'go-ts-mode)
+
+(use-package go-ts-mode
   :init
   (defun sm/gopls-ensure ()
     (setq eglot-workspace-configuration
@@ -20,8 +23,8 @@
                                                 "-vendor")))))
     (eglot-ensure))
   :config
-  (setf (alist-get 'goimports apheleia-formatters) '("goimports" "-local=coder.com,cdr.dev,go.coder.com,github.com/cdr"))
-  (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports)
+  (setf (alist-get 'goimports apheleia-formatters) '("goimports"))
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist) 'goimports)
 
   (defun sm/go-test-package ()
     "Run tests in the current package."
@@ -31,25 +34,23 @@
           (buf-name "*Go Test*"))
       (sm/compile cmd buf-name)))
 
-  :hook ((go-mode . apheleia-mode)
-         (go-mode . sm/gopls-ensure))
-  :bind(:map go-mode-map
+  :hook ((go-ts-mode . apheleia-mode)
+         (go-ts-mode . sm/gopls-ensure))
+  :bind(:map go-ts-mode-map
              ("C-c C-c C-t" . sm/go-test-package)))
 
 
 ;; Rust
 
-(use-package rust-mode
-  :straight t
+(require 'rust-ts-mode)
+
+(use-package rust-ts-mode
   :config
-  (setq rust-format-on-save nil ;; Handled by apheleia
-        rust-format-show-buffer nil)
+  (sm/add-server-program 'rust-ts-mode "rust-analyzer")
 
-  (sm/add-server-program 'rust-mode "rust-analyzer")
-
-  :hook ((rust-mode . cargo-minor-mode)
-         (rust-mode . eglot-ensure)
-         (rust-mode . apheleia-mode)))
+  :hook ((rust-ts-mode . cargo-minor-mode)
+         (rust-ts-mode . eglot-ensure)
+         (rust-ts-mode . apheleia-mode)))
 
 (use-package cargo
   :straight t
@@ -68,35 +69,19 @@
 
 ;; Typescript/ web stuff
 
-(use-package typescript-mode
-  :straight t
-  :mode "\\.ts\\'"
-  :hook ((typescript-mode . eglot-ensure)
-         (typescript-mode . apheleia-mode))
-  :bind (:map typescript-mode-map
+(require 'typescript-ts-mode)
+
+;; `tsx-ts-mode' and `typescript-ts-mode' both derive from this.
+(use-package typescript-ts-base-mode
+  :hook ((typescript-ts-base-mode . eglot-ensure)
+         (typescript-ts-base-mode . apheleia-mode))
+  :bind (:map typescript-ts-base-mode-map
               ("C-c C-d" . sm/eglot-lookup-doc)))
-
-(define-derived-mode typescriptreact-mode typescript-mode "TSX"
-  "Convenience mode for differentiating between regular
-Typescript files and TSX files.
-
-Note that `eglot' is able to automatically detect language ID
-from the mode name. The typescript language server uses
-'typescriptreact' as the language ID for tsx files, hence the
-mode name.")
-
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
 
 (use-package web-mode
   :straight t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.jsx\\'" . web-mode))
-  :init
-  (defun sm/reset-web-mode-offsets ()
-    (dtrt-indent-adapt) ;; Only runs once per buffer, no harm in calling it here.
-    (setq-local web-mode-code-indent-offset standard-indent)
-    (setq-local web-mode-css-indent-offset standard-indent)
-    (setq-local web-mode-markup-indent-offset standard-indent))
   :config
   (setq web-mode-comment-style 1
         web-mode-enable-css-colorization t
@@ -104,8 +89,7 @@ mode name.")
         web-mode-enable-comment-keywords t
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-quoting nil
-        web-mode-enable-auto-indentation nil)
-  :hook ((web-mode . sm/reset-web-mode-offsets)))
+        web-mode-enable-auto-indentation nil))
 
 (use-package css-mode
   ;; builtin
