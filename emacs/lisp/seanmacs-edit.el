@@ -228,6 +228,8 @@ loaded (e.g. sql-mode)."
   ;; Treesitter modes.
   (add-to-list 'dtrt-indent-hook-mapping-list '(typescript-ts-base-mode javascript typescript-ts-mode-indent-offset))
   (add-to-list 'dtrt-indent-hook-mapping-list '(rust-ts-mode c/c++/java rust-ts-mode-indent-offset))
+  (add-to-list 'dtrt-indent-hook-mapping-list '(json-ts-mode javascript json-ts-mode-indent-offset))
+  (add-to-list 'dtrt-indent-hook-mapping-list '(c-ts-base-mode c/c++/java c-ts-mode-indent-offset))
 
   (dtrt-indent-global-mode 1))
 

@@ -160,6 +160,8 @@ in
     source-serif
     source-code-pro
     fira-mono
+    ibm-plex
+    jetbrains-mono
   ];
 
   home.file.".emacs.d" = {

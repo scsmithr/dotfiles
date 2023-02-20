@@ -143,6 +143,11 @@
 (require 'toml-ts-mode)
 
 
+;; Json
+
+(require 'json-ts-mode)
+
+
 ;; Markdown
 
 (use-package markdown-mode
@@ -195,20 +200,17 @@
 
 ;; C/C++
 
-(use-package cc-mode
-  ;; built-in
-  :init
-  ;; Workaround for whitespace-mode and doc fontification conflicting causing
-  ;; whitespace to be fontified incorrectly.
-  (setq-default c-doc-comment-style nil)
-  :config
-  (sm/add-server-program 'c++-mode "clangd")
-  (sm/add-server-program 'c-mode "clangd")
+(require 'c-ts-mode)
 
-  :hook ((c++-mode . eglot-ensure)
-         (c-mode . eglot-ensure)
-         (c++-mode . apheleia-mode)
-         (c-mode . apheleia-mode)))
+(use-package c-ts-mode
+  :config
+  (sm/add-server-program 'c++-ts-mode "clangd")
+  (sm/add-server-program 'c-ts-mode "clangd")
+
+  :hook ((c++-ts-mode . eglot-ensure)
+         (c-ts-mode . eglot-ensure)
+         (c++-ts-mode . apheleia-mode)
+         (c-ts-mode . apheleia-mode)))
 
 
 ;; SQL
