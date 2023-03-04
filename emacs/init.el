@@ -5,15 +5,15 @@
 
 ;;; Code:
 
+;; See https://github.com/jrblevin/markdown-mode/issues/578
+(defvar native-comp-jit-compilation-deny-list nil)
+(add-to-list 'native-comp-jit-compilation-deny-list "markdown-mode\\.el$")
+
 (setq initial-scratch-message ";; Not Invented Here\n\n")
 
 ;; Suppress native comp warnings (for now).
 (setq native-comp-async-report-warnings-errors :silent
       warning-suppress-log-types '((comp)))
-
-;; Remove when merged: https://github.com/radian-software/straight.el/pull/1054
-(unless (boundp 'native-comp-deferred-compilation-deny-list)
-  (defvar native-comp-deferred-compilation-deny-list nil))
 
 ;; GC things
 (setq gc-cons-threshold 20000000)
@@ -40,6 +40,16 @@
 (setq use-package-enable-imenu-support t)
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+
+(straight-use-package '(org :type built-in))
+(straight-use-package '(eglot :type built-in))
+(straight-use-package '(project :type built-in))
+(straight-use-package '(xref :type built-in))
+
+(bind-keys :prefix "C-c g" :prefix-map git-prefix-map)
+(bind-keys :prefix "C-c a" :prefix-map app-prefix-map)
+(bind-keys :prefix "C-c s" :prefix-map shell-prefix-map)
+(bind-keys :prefix "C-c b" :prefix-map buffer-prefix-map)
 
 (require 'seanmacs-libs)
 (require 'seanmacs-straight)

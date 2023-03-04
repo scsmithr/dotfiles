@@ -45,7 +45,8 @@
                    (format-time-string "%F %T"
                                        (date-to-time x))))
           (:name "Ports" :width 10 :template "{{json .Ports}}" :sort nil :format nil)))
-  :bind (("C-c a d" . docker)))
+  :bind (:map app-prefix-map
+              ("d" . docker)))
 
 (use-package restclient
   :straight t)
@@ -65,13 +66,6 @@ file at point will be used."
     (dolist (dirname dirnames)
       (dired-maybe-insert-subdir dirname)))
 
-  (defun sm/dired-preview-file-other-window ()
-    "Open file under point in other window."
-    (interactive)
-    (when (eq major-mode 'dired-mode)
-      (sm/save-window-excursion
-       (find-file-other-window (dired-get-filename)))))
-
   (evil-collection-define-key 'normal 'dired-mode-map
     "K" #'dired-kill-subdir
     "I" #'sm/dired-maybe-insert-subdir
@@ -79,8 +73,7 @@ file at point will be used."
     "gk" #'dired-prev-subdir
     "]]" #'dired-next-subdir
     "[[" #'dired-prev-subdir
-    (kbd "TAB") #'dired-hide-subdir
-    (kbd "SPC") #'sm/dired-preview-file-other-window)
+    (kbd "TAB") #'dired-hide-subdir)
 
   (defun sm/dired-with-current-directory (orig-fn &rest args)
     "Set `default-directory' to dired's current dir if in dired mode."
@@ -93,10 +86,7 @@ file at point will be used."
   (advice-add 'find-file-read-args :around 'sm/dired-with-current-directory)
 
   :hook ((dired-mode . diredfl-mode))
-  :bind (("C-x d" . dired-jump)
-         :map dired-mode-map
-         ("C-c C-n" . dired-next-subdir)
-         ("C-c C-p" . dired-prev-subdir)))
+  :bind (("C-x d" . dired-jump)))
 
 (use-package diredfl
   :straight t)

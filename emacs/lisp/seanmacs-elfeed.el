@@ -126,7 +126,8 @@
           ("https://db.cs.cmu.edu/files/rss/pvldb-atom.xml" cs)
           ))
 
-  :bind(("C-c a e" . elfeed)
+  :bind(:map app-prefix-map
+        ("e" . elfeed)
         :map elfeed-search-mode-map
         ("C-c C-u" . elfeed-update)
         :map elfeed-show-mode-map

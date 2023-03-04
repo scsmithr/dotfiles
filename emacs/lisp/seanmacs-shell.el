@@ -100,17 +100,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
       (erase-buffer)
       (eshell-send-input)))
 
-  (defun sm/eshell-insert (&rest args)
-    (goto-char (point-max))
-    ;; Only reset prompt if there's already some input.
-    (let ((curr-point (point)))
-      (eshell-bol)
-      (let ((no-input (eq (- curr-point (point)) 0)))
-        (unless no-input
-          (eshell-reset))))
-    (evil-insert 1)
-    (apply 'insert args))
-
   ;; Nearly identical to the default prompt function, but will display last
   ;; status if non-zero.
   (defun sm/eshell-prompt-function ()
@@ -142,31 +131,17 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
-  ;; Added in https://github.com/emacs-evil/evil-collection/commit/a81b6c8f5537b3646e6a66a6e60ec634848d1926
-  (remove-hook 'eshell-mode-hook 'evil-collection-eshell-escape-stay)
-
   :hook ((eshell-mode . sm/add-eshell-aliases)
          (eshell-mode . sm/eshell-add-completions)
          (eshell-pre-command . sm/eshell-append-history))
-  :bind (("C-c s s" . eshell)
-         ("C-c s n" . sm/eshell-new)))
+  :bind (:map shell-prefix-map
+              ("s" . eshell)
+              ("n" . sm/eshell-new)))
 
 (use-package em-hist
   ;; built-in
-  :config
-  (defun sm/eshell-insert-history ()
-    "Prompt for a history item and insert it."
-    (interactive)
-    (eshell-read-history)
-    (let ((vertico-sort-function nil))
-      (sm/eshell-insert (completing-read
-                         "History: "
-                         (mapcar #'string-trim
-                                 (delete-dups
-                                  (ring-elements eshell-history-ring)))))))
-
   :bind (:map eshell-hist-mode-map
-              ("C-c C-l" . sm/eshell-insert-history)))
+              ("C-c C-l" . consult-history)))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here

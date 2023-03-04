@@ -166,8 +166,9 @@ loaded (e.g. sql-mode)."
            ("Search" (or
                       (mode . rg-mode)
                       (mode . grep-mode)))
-           ("Special" (or (name . "\*")
-                          (mode . geiser-repl-mode)))
+           ("Interactive" (or (mode . sql-interactive-mode)
+                              (mode . geiser-repl-mode)))
+           ("Special" (or (name . "\*")))
            ("Version control" (or
                                (name . "magit")
                                (mode . diff-mode)
@@ -176,7 +177,7 @@ loaded (e.g. sql-mode)."
                     (mode . pdf-view-mode)
                     (mode . nov-mode))))))
 
-  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Special"))
+  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Interactive" "Special"))
 
   (defun sm/ibuffer-order-filter-groups (groups)
     "Sort GROUPS using `sm/ibuffer-filter-group-order' and then alphabetically."
@@ -210,7 +211,8 @@ loaded (e.g. sql-mode)."
 
   :hook ((ibuffer-mode . sm/ibuffer-switch-to-saved-filter-groups)
          (ibuffer . sm/ibuffer-jump-to-last-buffer))
-  :bind (("C-c b b" . ibuffer)))
+  :bind (:map buffer-prefix-map
+         ("b" . ibuffer)))
 
 (use-package dtrt-indent
   :straight t
@@ -222,7 +224,8 @@ loaded (e.g. sql-mode)."
     (dtrt-indent-adapt))
 
   :config
-  (setq dtrt-indent-min-quality 65.0
+  (setq dtrt-indent-verbosity 0
+        dtrt-indent-min-quality 65.0
         dtrt-indent-min-hard-tab-superiority 180.0)
 
   ;; Treesitter modes.
@@ -259,12 +262,10 @@ window."
           (sm/project-eshell "Eshell" ?e)
           (project-find-dir "Find directory" ?d)
           (project-dired "Project root" ?o)
-          (magit-status "Magit" ?g)
-          (rg-project "Ripgrep" ?r)))
+          (magit-status "Magit" ?m)))
   :bind-keymap ("C-c p" . project-prefix-map)
   :bind (:map project-prefix-map
-              ("e" . sm/project-eshell)
-              ("r" . rg-project))) ;; Shadows `project-query-replace-regexp'.
+              ("e" . sm/project-eshell)))
 
 (use-package rg
   :straight t
@@ -273,7 +274,8 @@ window."
     "gj" #'rg-next-file
     "gk" #'rg-prev-file
     (kbd "SPC") #'compilation-display-error)
-  :bind (("C-c r" . rg-menu)))
+  :bind (:map app-prefix-map
+         ("r" . rg-menu)))
 
 (use-package yasnippet
   :straight t
@@ -298,7 +300,8 @@ window."
 
   (setq edit-indirect-guess-mode-function #'sm/edit-indirect-guess-mode)
 
-  :bind (("C-c e" . edit-indirect-region)))
+  :bind (:map buffer-prefix-map
+         ("e" . edit-indirect-region)))
 
 (use-package separedit
   :straight t
@@ -331,8 +334,7 @@ window."
 (use-package bookmark
   ;; built-in
   :config
-  (setq bookmark-save-flag 1
-        bookmark-set-fringe-mark nil))
+  (setq bookmark-save-flag 1))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

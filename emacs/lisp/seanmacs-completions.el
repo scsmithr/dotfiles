@@ -8,41 +8,17 @@
 (eval-when-compile
   (require 'use-package))
 
-;; Adapted from https://github.com/minad/consult/blob/1a6ed29e92f00266daff4ff5f62602f53ef7d158/consult.el#L2284
-(defun sm/default-completion-in-region (start end collection predicate)
-  "A very simple completion-in-read function using `completing-read'.
-
-Fallback for when child frame based completions aren't
-available (for example while using Emacs in the terminal or
-completing inside the minibuffer)."
-  (let* ((prompt "Completion: ")
-         (initial (buffer-substring-no-properties start end))
-         (buffer (current-buffer))
-         (completion (completing-read prompt
-                                      (if (functionp collection)
-                                          (lambda (&rest args)
-                                            (with-current-buffer buffer
-                                              (apply collection args)))
-                                        collection)
-                                      predicate nil initial)))
-    (if completion
-        (progn
-          (completion--replace start end (setq completion (concat completion)))
-          (when-let (exit-fn (plist-get completion-extra-properties :exit-function))
-            (funcall exit-fn completion
-                     (if (eq (try-completion completion collection predicate) t)
-                         'finished
-                       'exact)))
-          t)
-      (progn
-        (message "No completion")
-        nil))))
-
 (use-package corfu
   :straight t
   :init
   (setq enable-recursive-minibuffers t)
-  (setq completion-in-region-function #'sm/default-completion-in-region)
+
+  (setq completion-in-region-function
+        (lambda (&rest args)
+          (apply (if vertico-mode
+                     #'consult-completion-in-region
+                   #'completion--in-region)
+                 args)))
 
   (setq tab-always-indent 'complete)
   (setq corfu-preview-current t
@@ -75,51 +51,53 @@ completing inside the minibuffer)."
         completion-ignore-case t))
 
 (use-package vertico
-  :straight t
+  :straight (:host github :repo "minad/vertico"
+                   :files (:defaults "extensions/*"))
   :init
   (setq vertico-count 10
-        vertico-resize nil)
+        vertico-resize nil
+        vertico-sort-function #'vertico-sort-history-alpha)
+
   (vertico-mode)
   :bind (:map vertico-map
+              ("M-N" . vertico-next-group)
+              ("M-P" . vertico-previous-group)
               ("C-j" . vertico-exit-input)))
 
-(use-package flimenu
+(use-package marginalia
   :straight t
-  :config
-  (defface sm/flimenu-prefix-face '((t :inherit font-lock-keyword-face))
-    "Face for prefixes in imenu entries.")
+  :init
+  (setq marginalia-align 'left
+        marginalia-align-offset 25)
+  (marginalia-mode))
 
-  (defun sm/flimenu-format-entry (entry-name &optional prefixes)
-    (if prefixes
-        (let ((prop-prefix (propertize
-                            (concat "[" (string-join prefixes "/") "]")
-                            'face 'sm/flimenu-prefix-face)))
-          (string-join (list prop-prefix entry-name) " "))
-      entry-name))
-
-  (setq flimenu-imenu-separator #'sm/flimenu-format-entry)
-
-  (flimenu-global-mode))
+(use-package consult
+  :straight t
+  :bind (
+         ("C-c h" . consult-history)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         :map buffer-prefix-map
+         ("s" . consult-imenu)
+         :map project-prefix-map
+         ("r" . consult-ripgrep)
+         ("b" . consult-project-buffer)
+         ))
 
 (use-package imenu
   ;; built-in
   :config
   (setq imenu-auto-rescan t
-        imenu-space-replacement " ")
-  :hook ((imenu-after-jump . recenter))
-  :bind (("C-c b s" . imenu)))
+        imenu-space-replacement " "))
 
 (use-package xref
+  ;; built-in
   :config
-  (defun sm/xref-show ()
-    "Show xref result under point, keeping cursor in the xref window."
-    (interactive)
-    (sm/save-window-excursion
-     (xref-goto-xref)))
-
-  (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map
-    "p" #'sm/pop-to-some-window
-    (kbd "SPC") #'sm/xref-show))
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
 
 (use-package eldoc
   :config
@@ -140,30 +118,30 @@ completing inside the minibuffer)."
   (defvar sm/eglot-help-buffer nil)
 
   (mapc #'sm/warn-fn-not-bound '(eglot--dbind
-                                 eglot--current-server-or-lose
-                                 eglot--TextDocumentIdentifier
-                                 eglot--hover-info))
+                                    eglot--current-server-or-lose
+                                    eglot--TextDocumentIdentifier
+                                  eglot--hover-info))
 
   ;; Adapted from Doom Emacs.
   (defun sm/eglot-lookup-doc ()
     "Request documentation for the thing at point."
     (interactive)
     (eglot--dbind ((Hover) contents range)
-                  (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
-                                   (eglot--TextDocumentPositionParams))
-                  (let ((blurb (and (not (seq-empty-p contents))
-                                    (eglot--hover-info contents range)))
-                        (hint (thing-at-point 'symbol t)))
-                    (if blurb
-                        (with-current-buffer
-                            (or (and (buffer-live-p sm/eglot-help-buffer)
-                                     sm/eglot-help-buffer)
-                                (setq sm/eglot-help-buffer (generate-new-buffer "*eglot-help*")))
-                          (with-help-window (current-buffer)
-                            (rename-buffer (format "*eglot-help for %s*" hint))
-                            (with-current-buffer standard-output (insert blurb))
-                            (setq-local nobreak-char-display nil)))
-                      (display-local-help))))
+        (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
+                         (eglot--TextDocumentPositionParams))
+      (let ((blurb (and (not (seq-empty-p contents))
+                        (eglot--hover-info contents range)))
+            (hint (thing-at-point 'symbol t)))
+        (if blurb
+            (with-current-buffer
+                (or (and (buffer-live-p sm/eglot-help-buffer)
+                         sm/eglot-help-buffer)
+                    (setq sm/eglot-help-buffer (generate-new-buffer "*eglot-help*")))
+              (with-help-window (current-buffer)
+                (rename-buffer (format "*eglot-help for %s*" hint))
+                (with-current-buffer standard-output (insert blurb))
+                (setq-local nobreak-char-display nil)))
+          (display-local-help))))
     'deferred)
 
   :bind (:map eglot-mode-map

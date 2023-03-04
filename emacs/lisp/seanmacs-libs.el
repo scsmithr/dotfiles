@@ -50,8 +50,7 @@
                  (list (point-min) (point-max))))
   (indent-region start end))
 
-(define-key global-map (kbd "C-c b i") #'sm/indent-region-or-buffer)
-(define-key global-map (kbd "C-c .") #'repeat)
+(bind-keys :map buffer-prefix-map ("i" . sm/indent-region-or-buffer))
 
 (defun sm/ansi-colorize (beg end)
   "Colorize region according to ANSI control sequences from BEG to END.
@@ -188,18 +187,6 @@ directory immediately if it already exists."
   "Warn if FN-SYMBOL is void."
   (when (not (fboundp fn-symbol))
     (message "WARN: %s is void!" fn-symbol)))
-
-(defmacro sm/save-window-excursion (&rest body)
-  "Save active window, execute BODY, then restore the originally active window.
-
-Same peculiarities as with `save-window-excursion'."
-  (let ((win (gensym)))
-    `(let ((,win (selected-window)))
-       (progn
-         ,@body
-         (recenter)
-         (pulse-momentary-highlight-one-line (point))
-         (select-window ,win)))))
 
 (provide 'seanmacs-libs)
 ;;; seanmacs-libs.el ends here

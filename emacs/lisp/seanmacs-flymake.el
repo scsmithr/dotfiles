@@ -16,13 +16,6 @@
         flymake-no-changes-timeout 1
         flymake-fringe-indicator-position 'right-fringe)
 
-  (mapc #'(lambda (map)
-            (evil-collection-define-key 'normal map
-              "p" #'sm/pop-to-some-window
-              (kbd "SPC") #'flymake-show-diagnostic))
-        '(flymake-diagnostics-buffer-mode-map
-          flymake-project-diagnostics-mode-map))
-
   (defun sm/flymake-sort-entries (entries)
     "Return a sorted list of ENTRIES where each entry is sorted by
 severity descending, then line ascending."
@@ -45,8 +38,7 @@ severity descending, then line ascending."
   :hook ((prog-mode . flymake-mode))
   :bind (:prefix "C-c f"
                  :prefix-map flymake-prefix-map
-                 ("l" . flymake-show-buffer-diagnostics)
-                 ("L" . flymake-show-project-diagnostics)
+                 ("l" . consult-flymake)
                  ("n" . flymake-goto-next-error)
                  ("p" . flymake-goto-prev-error)))
 

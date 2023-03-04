@@ -338,11 +338,6 @@
   :straight t
   :mode "\\.nix\\'")
 
-;; Extra packages from the `nix-mode' repo.
-(use-package nix-flake :after nix-mode)
-(use-package nix-repl :after nix-mode)
-(use-package nix-store :after nix-mode)
-
 ;; Terraform/HCL
 
 (use-package hcl-mode

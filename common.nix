@@ -143,6 +143,9 @@ in
     # Clojure
     clojure
 
+    # Java
+    jdk
+
     # Common lisp
     sbcl
 

@@ -24,11 +24,11 @@
     "emacs29-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1676907376,
-        "narHash": "sha256-MLFhwo+gMv69XFNoH+8XeOYhmVHLnJVSqU15jqpKaZA=",
+        "lastModified": 1677951939,
+        "narHash": "sha256-ab5kiEwISGfxpMCDeLKrxI7AolbTDN2jFtJDRyKPttU=",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "02aba20d528f1ec45ad36424e8d65ace985dd04a",
+        "rev": "246f5b541c50b28c4303a365f8d8cd384f0aa6c9",
         "type": "github"
       },
       "original": {
@@ -46,11 +46,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1676787789,
-        "narHash": "sha256-9TR/KjA/EXlNQ7E/ysUA3irAwZnBgRSzladPDG9hQa4=",
+        "lastModified": 1677910987,
+        "narHash": "sha256-kFQ7GiOJj705g0t+yvzMA4yf7hh+H8aySoFmCcLm7O0=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "3820015f5000744a928a760c183a24a53674fcfe",
+        "rev": "be23b5ec5cba92cd1e02d8f268148b4363a10c91",
         "type": "github"
       },
       "original": {
@@ -123,11 +123,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1676584162,
-        "narHash": "sha256-8h0sV0fmMSB7KydJJD5Iz1kJxR3YzYa3iJ71VD2zePk=",
+        "lastModified": 1677879715,
+        "narHash": "sha256-ZCdbfF8m7BCs6Z3Cqa9j8bKELfSTr3WZsbx7rG+Hrcs=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "a6603fc21d50b3386a488c96225b2d1fd492e533",
+        "rev": "73e2505cfa8be6838f5151b272f1d24869b2a3d6",
         "type": "github"
       },
       "original": {

@@ -24,8 +24,9 @@
         magit-diff-refine-hunk t ;; Show whitespace changes in status buffer.
         magit-bury-buffer-function 'magit-mode-quit-window
         magit-section-visibility-indicator '(right-arrow . down-arrow))
-  :bind (("C-c g g" . magit-status)
-         ("C-c g f" . magit-file-dispatch)))
+  :bind (:map git-prefix-map
+              ("g" . magit-status)
+              ("f" . magit-file-dispatch)))
 
 (use-package orgit
   :straight t)
@@ -40,8 +41,8 @@
   :config
   (setq git-link-use-commit t
         git-link-open-in-browser t)
-
-  :bind (("C-c g o" . git-link)))
+  :bind (:map git-prefix-map
+              ("o" . git-link)))
 
 (provide 'seanmacs-version-control)
 ;;; seanmacs-version-control.el ends here
