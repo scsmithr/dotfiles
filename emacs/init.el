@@ -9,7 +9,7 @@
 (defvar native-comp-jit-compilation-deny-list nil)
 (add-to-list 'native-comp-jit-compilation-deny-list "markdown-mode\\.el$")
 
-(setq initial-scratch-message ";; Not Invented Here\n\n")
+(setq initial-scratch-message ";; *scratch*\n\n")
 
 ;; Suppress native comp warnings (for now).
 (setq native-comp-async-report-warnings-errors :silent

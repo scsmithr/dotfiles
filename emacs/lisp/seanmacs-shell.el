@@ -48,31 +48,26 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 (defvar sm/eshell-append-history-on-command t
   "Whether or not eshell should write to the history file before each command.")
 
+(defvar sm/eshell-aliases
+  '(("cargo" "cargo --color=always $*")
+    ;; kubectl
+    ("kgp" "kubectl get pods $*")
+    ("kgs" "kubectl get service $*")
+    ("kgn" "kubectl get namespace $*")
+    ("kdp" "kubectl delete pod $*")
+    ("ksn" "kubectl config set-context --current --namespace=$1")
+    ("kcn" "kubectl config view --minify --output 'jsonpath={..namespace}'; echo")
+    ("kl" "kubectl logs $* --all-containers")
+
+    ("clear" "clear-scrollback"))
+  "Custom eshell aliases.")
+
 (use-package eshell
   ;; built-in
   :init
   (defun sm/add-eshell-aliases ()
-    ;; Shell command aliases. I'd rather not keep track of the eshell
-    ;; aliases file.
-    (dolist (alias '(("cargo" "cargo --color=always $*")
-                     ;; kubectl
-                     ("kgp" "kubectl get pods $*")
-                     ("kgs" "kubectl get service $*")
-                     ("kgn" "kubectl get namespace $*")
-                     ("kdp" "kubectl delete pod $*")
-                     ("ksn" "kubectl config set-context --current --namespace=$1")
-                     ("kcn" "kubectl config view --minify --output 'jsonpath={..namespace}'; echo")
-                     ("kl" "kubectl logs $* --all-containers")))
+    (dolist (alias sm/eshell-aliases)
       (add-to-list 'eshell-command-aliases-list alias)))
-
-  (defun sm/eshell-append-history ()
-    "Append the most recent command in eshell's history ring to history file."
-    (when (and eshell-history-ring
-               sm/eshell-append-history-on-command)
-      (let ((newest-cmd-ring (make-ring 1)))
-        (ring-insert newest-cmd-ring (car (ring-elements eshell-history-ring)))
-        (let ((eshell-history-ring newest-cmd-ring))
-          (eshell-write-history eshell-history-file-name t)))))
 
   :config
   (defun sm/eshell-new ()
@@ -94,12 +89,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
         (eshell/cd (project-root project))
       (user-error "Not in project")))
 
-  (defun eshell/clear ()
-    "Clear the eshell buffer."
-    (let ((inhibit-read-only t))
-      (erase-buffer)
-      (eshell-send-input)))
-
   ;; Nearly identical to the default prompt function, but will display last
   ;; status if non-zero.
   (defun sm/eshell-prompt-function ()
@@ -109,12 +98,15 @@ If BUF-NAME is nil, the command will be used to name the buffer."
             (if (= (user-uid) 0) " # " " % ")))
 
   (setq eshell-prompt-function #'sm/eshell-prompt-function
-        eshell-prompt-regexp "^[^#%\n]* [#%] ")
+        eshell-prompt-regexp "^.* [#%] ")
 
-  (setq eshell-history-size 10000
-        eshell-save-history-on-exit nil ;; This is handled elsewhere.
-        eshell-cmpl-cycle-completions nil
-        eshell-banner-message (propertize "Mistake Not...\n\n" 'face 'font-lock-comment-face))
+  (setq eshell-cmpl-cycle-completions nil
+        eshell-banner-message
+        '(format "%s %s\n\n"
+                 (propertize (format " %s " (string-trim (buffer-name)))
+                             'face 'bold)
+                 (propertize (current-time-string)
+                             'face 'font-lock-keyword-face)))
 
   (defun sm/eshell-add-completions ()
     (when (featurep 'cape)
@@ -132,16 +124,27 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
-         (eshell-mode . sm/eshell-add-completions)
-         (eshell-pre-command . sm/eshell-append-history))
+         (eshell-mode . sm/eshell-add-completions))
   :bind (:map shell-prefix-map
               ("s" . eshell)
               ("n" . sm/eshell-new)))
 
 (use-package em-hist
   ;; built-in
+  :init
+  (setq eshell-history-size 512
+        eshell-hist-ignoredups t)
+
+  (defun sm/eshell-consult-history ()
+    "Put eshell into insert mode prior to consulting history."
+    (interactive)
+    (goto-char (point-max))
+    (eshell-bol)
+    (evil-insert 1)
+    (consult-history))
+
   :bind (:map eshell-hist-mode-map
-              ("C-c C-l" . consult-history)))
+              ("C-c C-l" . sm/eshell-consult-history)))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here
