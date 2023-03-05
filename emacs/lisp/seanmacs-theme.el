@@ -17,7 +17,9 @@
     (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 150)
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
-    (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)))
+    (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)
+    (when (eq system-type 'darwin)
+      (set-fontset-font t 'unicode (font-spec :name "Apple Color Emoji" :size 10 :weight 'normal) nil 'append))))
 
 ;; Set default font. When not running in a daemon, this will ensure the frame
 ;; has the appropriate font set.
