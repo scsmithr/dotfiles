@@ -212,7 +212,7 @@ loaded (e.g. sql-mode)."
   :hook ((ibuffer-mode . sm/ibuffer-switch-to-saved-filter-groups)
          (ibuffer . sm/ibuffer-jump-to-last-buffer))
   :bind (:map buffer-prefix-map
-         ("b" . ibuffer)))
+              ("b" . ibuffer)))
 
 (use-package dtrt-indent
   :straight t
@@ -275,7 +275,7 @@ window."
     "gk" #'rg-prev-file
     (kbd "SPC") #'compilation-display-error)
   :bind (:map app-prefix-map
-         ("r" . rg-menu)))
+              ("r" . rg-menu)))
 
 (use-package yasnippet
   :straight t
@@ -301,7 +301,7 @@ window."
   (setq edit-indirect-guess-mode-function #'sm/edit-indirect-guess-mode)
 
   :bind (:map buffer-prefix-map
-         ("e" . edit-indirect-region)))
+              ("e" . edit-indirect-region)))
 
 (use-package separedit
   :straight t
