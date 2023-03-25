@@ -35,6 +35,7 @@
  ("gnu-elpa-mirror" . "a8eb704c2a6d569160164c6c60741980b9ae4412")
  ("gnuplot" . "f99effa21f85a4c0963fec6a38e9112a8157d27e")
  ("goto-chg" . "278cd3e6d5107693aa2bb33189ca503f22f227d0")
+ ("gptel" . "1828dd3fa445fd558d4f9ac00574fe3644cbcb7e")
  ("let-alist" . "021fc10df2e44faba4728d849ee767cf890aa51a")
  ("magit" . "9f0f23fa25b4d60532147b48b79947d8365ced1f")
  ("marginalia" . "3d2774ea8a9c18c1ee478fdeddf66fa63e13cd94")

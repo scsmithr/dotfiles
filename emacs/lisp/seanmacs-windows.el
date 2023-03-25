@@ -19,6 +19,14 @@
          (window-height . 12)
          (side . bottom)
          (slot . 1))
+        ;; Right window
+        ("\\*\
+\\(ChatGPT\
+\\).*"
+         (sm/display-buffer-in-side-window-or-reuse-select)
+         (window-width . 80)
+         (side . right)
+         (slot . 1))
         ;; bottom side window
         ("\\*\
 \\(Completions\

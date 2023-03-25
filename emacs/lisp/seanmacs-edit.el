@@ -337,5 +337,14 @@ window."
   :config
   (setq bookmark-save-flag 1))
 
+(use-package gptel
+  :straight t
+  :config
+  (setq gptel-model "gpt-4")
+  :bind (:map app-prefix-map
+              ("g" . gptel)
+              :map gptel-mode-map
+              ("C-c C-c" . gptel-send)))
+
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here
