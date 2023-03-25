@@ -165,6 +165,7 @@ in
     fira-mono
     ibm-plex
     jetbrains-mono
+    dejavu_fonts
   ];
 
   home.file.".emacs.d" = {

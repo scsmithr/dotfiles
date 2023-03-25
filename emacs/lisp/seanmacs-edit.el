@@ -233,6 +233,7 @@ loaded (e.g. sql-mode)."
   (add-to-list 'dtrt-indent-hook-mapping-list '(rust-ts-mode c/c++/java rust-ts-mode-indent-offset))
   (add-to-list 'dtrt-indent-hook-mapping-list '(json-ts-mode javascript json-ts-mode-indent-offset))
   (add-to-list 'dtrt-indent-hook-mapping-list '(c-ts-base-mode c/c++/java c-ts-mode-indent-offset))
+  (add-to-list 'dtrt-indent-hook-mapping-list '(go-ts-mode c/c++/java go-ts-mode-indent-offset))
 
   (dtrt-indent-global-mode 1))
 
