@@ -86,6 +86,8 @@
        ;; Evil
        `(evil-ex-substitute-matches ((t :background ,bg-changed :foreground ,fg-changed :underline t)))
        `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
+       ;; Ansi
+       `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
        )))
 
   (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)
