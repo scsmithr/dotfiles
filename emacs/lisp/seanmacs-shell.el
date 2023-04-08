@@ -120,10 +120,21 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 
   (add-hook 'eshell-term-load-hook #'sm/add-eshell-visual-commands)
 
+  (defun sm/eshell-append-history ()
+    "Append the most recent command in eshell's history ring to history file."
+    (when eshell-history-ring
+      (let ((newest-cmd-ring (make-ring 1)))
+        (ring-insert newest-cmd-ring (car (ring-elements eshell-history-ring)))
+        (let ((eshell-history-ring newest-cmd-ring))
+          (eshell-write-history eshell-history-file-name t)))))
+
+  (setq eshell-save-history-on-exit nil) ;; This is handled by `sm/eshell-append-history'.
+
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
+         (eshell-pre-command . sm/eshell-append-history)
          (eshell-mode . sm/eshell-add-completions))
   :bind (:map shell-prefix-map
               ("s" . eshell)
@@ -132,7 +143,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 (use-package em-hist
   ;; built-in
   :init
-  (setq eshell-history-size 512
+  (setq eshell-history-size 2048
         eshell-hist-ignoredups t)
 
   (defun sm/eshell-consult-history ()
