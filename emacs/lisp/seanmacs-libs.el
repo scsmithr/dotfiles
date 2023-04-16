@@ -22,6 +22,14 @@
   (interactive)
   (dired sm/sync-dir))
 
+(defun sm/md-note (name)
+  "Open a new markdown note using NAME inside `sm/sync-dir'."
+  (interactive (list (read-string "Note name: ")))
+  (let* ((name (replace-regexp-in-string " " "-" name))
+         (date-str (format-time-string "%m-%d-%y"))
+         (file-name (format "%s/notes/md/%s-%s.md" sm/sync-dir date-str name)))
+    (find-file file-name)))
+
 ;; Useful string utilities, e.g. 's-contains-p'.
 (use-package s :straight t)
 
