@@ -75,6 +75,8 @@
 
 ;; `tsx-ts-mode' and `typescript-ts-mode' both derive from this.
 (use-package typescript-ts-base-mode
+  :init
+  (setq typescript-ts-mode-indent-offset 4)
   :hook ((typescript-ts-base-mode . eglot-ensure)
          (typescript-ts-base-mode . apheleia-mode))
   :bind (:map typescript-ts-base-mode-map

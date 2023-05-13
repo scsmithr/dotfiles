@@ -107,7 +107,8 @@
 (use-package eglot
   :commands (eglot eglot-ensure sm/add-server-program)
   :config
-  (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
+  (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
+                                            :inlayHintProvider))
 
   ;; Mostly done to ensure eglot is loaded before attempting to modify the
   ;; server programs list.
