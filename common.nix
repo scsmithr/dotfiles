@@ -171,6 +171,10 @@ in
       privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
       set = "custom";
     })
+    (iosevka.override {
+      privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
+      set = "sans";
+    })
   ];
 
   home.file.".emacs.d" = {

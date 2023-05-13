@@ -14,7 +14,7 @@
     (message "Setting frame fonts")
     (set-face-attribute 'default nil :family "Iosevka Custom" :height 140 :weight 'normal)
     (set-face-attribute 'fixed-pitch nil :family "Iosevka Custom")
-    (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 140)
+    (set-face-attribute 'variable-pitch nil :family "Iosevka Sans" :height 140)
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "Iosevka Custom" :weight 'normal))
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)
