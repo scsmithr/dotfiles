@@ -167,6 +167,10 @@ in
     jetbrains-mono
     dejavu_fonts
     inconsolata
+    (iosevka.override {
+      privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
+      set = "custom";
+    })
   ];
 
   home.file.".emacs.d" = {
