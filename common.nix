@@ -166,6 +166,7 @@ in
     ibm-plex
     jetbrains-mono
     dejavu_fonts
+    inconsolata
   ];
 
   home.file.".emacs.d" = {

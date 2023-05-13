@@ -54,7 +54,8 @@
 (use-package dired
   ;; built-in
   :config
-  (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
+  (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso"
+        dired-dwim-target t)
 
   (defun sm/dired-maybe-insert-subdir (dirnames)
     "Insert subdirs for all DIRNAMES.

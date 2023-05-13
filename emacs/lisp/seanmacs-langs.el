@@ -17,6 +17,8 @@
 
 (use-package go-ts-mode
   :init
+  (setq go-ts-mode-indent-offset 4)
+
   (defun sm/gopls-ensure ()
     (setq eglot-workspace-configuration
           `((gopls . (directoryFilters ,(vector "-node_modules"

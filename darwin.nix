@@ -15,6 +15,6 @@
   # Increase max number of open files per shell.
   #
   # Mac has a default of 256, and I very often hit this with emacs.
-  programs.bash.bashrcExtra = "ulimit -Sn 2048";
-  programs.zsh.initExtra = "ulimit -Sn 2048";
+  programs.bash.bashrcExtra = "ulimit -Sn 4096";
+  programs.zsh.initExtra = "ulimit -Sn 4096";
 }
