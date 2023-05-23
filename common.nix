@@ -73,6 +73,10 @@ in
     openssl.dev
     libiconv
 
+    # Security
+    tfsec
+    doppler
+
     # Speling
     aspell
     aspellDicts.en
