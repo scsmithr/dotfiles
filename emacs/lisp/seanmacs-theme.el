@@ -12,18 +12,18 @@
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
     (message "Setting frame fonts")
-    (set-face-attribute 'default nil :family "Iosevka Custom" :height 140 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :family "Iosevka Custom")
-    (set-face-attribute 'variable-pitch nil :family "Iosevka Sans" :height 140)
+    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono")
+    (set-face-attribute 'variable-pitch nil :family "Source Serif 4" :height 140)
     ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "Iosevka Custom" :weight 'normal))
+    (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
     (set-fontset-font t 'unicode (font-spec :name "DejaVu Sans" :weight 'normal) nil 'append)
     (when (eq system-type 'darwin)
       (set-fontset-font t 'unicode (font-spec :name "Apple Color Emoji" :size 10 :weight 'normal) nil 'append))))
 
 ;; Set default font. When not running in a daemon, this will ensure the frame
 ;; has the appropriate font set.
-(add-to-list 'default-frame-alist '(font . "Iosevka Custom"))
+(add-to-list 'default-frame-alist '(font . "PragmataPro Mono"))
 
 ;; If running as a daemon, make sure fonts are set everytime a new frame is
 ;; created. This ensures unicode fallbacks are set for all frames.
@@ -57,11 +57,22 @@
         modus-themes-org-blocks 'gray-background
         modus-themes-prompts '(italic))
 
-  (setq modus-themes-common-palette-overrides
-        '(
-          (fg-region unspecified)
-          (bg-region bg-ochre)
-          ))
+  (let ((common-overrides
+         '(
+           (bg-mode-line-active        bg-inactive)
+           (border-mode-line-active    fg-dim)
+           (bg-mode-line-inactive      bg-dim)
+           (border-mode-line-inactive  bg-active)
+
+           (fringe bg-dim)
+
+           (bg-line-number-inactive bg-dim)
+           (bg-line-number-active bg-dim)
+
+           (fg-region unspecified)
+           (bg-region bg-ochre)
+           )))
+    (setq modus-themes-common-palette-overrides common-overrides))
 
   (defun sm/customize-modus ()
     (modus-themes-with-colors
@@ -69,7 +80,7 @@
        ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-indentation ((t (:foreground ,bg-dim :background unspecified))))
-       `(whitespace-line ((t (:background ,bg-dim :inherit unspecified))))
+       `(whitespace-line ((t (:background ,bg-dim :inherit unspecified :foreground unspecified))))
        `(whitespace-newline ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))

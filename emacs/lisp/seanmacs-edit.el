@@ -16,9 +16,6 @@
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 (setq-default display-line-numbers-width-start t)
 
-;; Autowrap text modes
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-
 ;; Highlight current line
 (global-hl-line-mode +1)
 

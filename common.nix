@@ -114,8 +114,10 @@ in
     # TODO: clang and clangd
 
     # Python
-    python311
-    python3.pkgs.pip
+    # python311
+    # python3.pkgs.pip
+    # python3.pkgs.pandas
+    # python3.pkgs.numpy
 
     # Go
     go
@@ -214,6 +216,7 @@ in
       "node_modules/"
       ".log/"
       ".ccls-cache/"
+      ".DS_Store"
     ];
     extraConfig = {
       core = {
