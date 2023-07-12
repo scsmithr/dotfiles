@@ -390,5 +390,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
+;; Just
+
+(use-package just-mode
+  :straight t)
+
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

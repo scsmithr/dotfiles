@@ -72,6 +72,7 @@ in
     openssl
     openssl.dev
     libiconv
+    just
 
     # Security
     tfsec
@@ -113,11 +114,25 @@ in
     clang-tools
     # TODO: clang and clangd
 
+    # R
+    (rWrapper.override { packages = with rPackages; [
+                           ggplot2
+                           dplyr
+                           xts
+                           RPostgres
+                           DBI
+                         ]; })
+
     # Python
-    # python311
-    # python3.pkgs.pip
-    # python3.pkgs.pandas
-    # python3.pkgs.numpy
+    (python3.withPackages (ps: with ps; [
+      numpy
+      pandas
+      pip
+      virtualenv
+      duckdb
+      ipython
+      pyarrow
+    ]))
 
     # Go
     go

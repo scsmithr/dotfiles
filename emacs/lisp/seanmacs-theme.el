@@ -86,10 +86,10 @@
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
        ;; Region (unspecify distant foreground)
        `(region ((t :distant-foreground unspecified :background ,bg-region :foreground ,fg-region)))
+       ;; Highlight (mouse hover)
+       `(highlight ((t :distant-foreground unspecified :background ,bg-hover :foreground ,fg-region)))
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover-secondary :weight unspecified)))
-       `(eglot-diagnostic-tag-deprecated-face ((t :inherit unspecified)))
-       `(eglot-diagnostic-tag-unnecessary-face ((t :inherit unspecified)))
        ;; Flymake
        `(flymake-error-bitmap '(flymake-double-exclamation-mark modus-themes-subtle-red))
        `(flymake-warning-bitmap '(exclamation-mark modus-themes-subtle-yellow))
