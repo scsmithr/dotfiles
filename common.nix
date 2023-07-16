@@ -132,6 +132,8 @@ in
       duckdb
       ipython
       pyarrow
+      psycopg2
+      rich
     ]))
 
     # Go
@@ -188,6 +190,9 @@ in
     jetbrains-mono
     dejavu_fonts
     inconsolata
+    mononoki
+    cascadia-code
+    victor-mono
     (iosevka.override {
       privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
       set = "custom";

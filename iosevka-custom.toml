@@ -7,16 +7,20 @@ export-glyph-names = false
 no-ligation = true
 
 [buildPlans.iosevka-custom.variants.design]
-zero = "slashed-split"
 g = "double-storey"
+zero = "dotted"
 asterisk = "penta-low"
 number-sign = "slanted-open"
 ampersand = "upper-open"
+percent = "dots"
 dollar = "open"
 bar = "natural-slope"
-l = "zshaped"
-paren = "large-contour"
+l = "tailed-serifed"
+f = "flat-hook-serifless"
+t = "flat-hook"
+j = "flat-hook-serifed"
 
 [buildPlans.iosevka-custom.variants.italic]
-l = "tailed-serifed"
-
+f = "flat-hook-tailed"
+j = "serifed"
+g = "single-storey-serifless"

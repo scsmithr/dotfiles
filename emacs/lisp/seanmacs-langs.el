@@ -50,6 +50,9 @@
   :config
   (sm/add-server-program 'rust-ts-mode "rust-analyzer")
 
+  (setf (alist-get 'rustfmt  apheleia-formatters)
+        '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021"))
+
   :hook ((rust-ts-mode . cargo-minor-mode)
          (rust-ts-mode . eglot-ensure)
          (rust-ts-mode . apheleia-mode)))

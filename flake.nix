@@ -34,7 +34,13 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
-            config = {allowUnfree = true;};
+            config = {
+              allowUnfree = true;
+              # Needed for iosevka.
+              permittedInsecurePackages = [
+                "nodejs-16.20.1"
+              ];
+            };
             overlays = [
               fenix.overlays.default
               emacs-overlay.overlays.emacs
