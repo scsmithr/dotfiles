@@ -163,7 +163,8 @@
     (add-hook 'before-save-hook #'delete-trailing-whitespace 99 t))
 
   :hook ((org-capture-mode . evil-insert-state)
-         (org-mode . sm/org-set-before-save-hook))
+         (org-mode . sm/org-set-before-save-hook)
+         (org-mode . turn-on-auto-fill))
   :bind (("C-c c" . org-capture)
          ("C-c o" . org-agenda)
          ("C-c l" . org-store-link)))

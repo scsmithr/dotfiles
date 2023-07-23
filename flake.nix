@@ -36,9 +36,10 @@
             inherit system;
             config = {
               allowUnfree = true;
-              # Needed for iosevka.
+              
               permittedInsecurePackages = [
-                "nodejs-16.20.1"
+                "openssl-1.1.1u" # Needed for spark
+                "nodejs-16.20.1" # Needed for iosevka.
               ];
             };
             overlays = [

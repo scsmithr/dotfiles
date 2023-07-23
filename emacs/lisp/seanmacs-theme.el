@@ -89,10 +89,6 @@
        `(highlight ((t :distant-foreground unspecified :background ,bg-hover :foreground ,fg-region)))
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover-secondary :weight unspecified)))
-       ;; Flymake
-       `(flymake-error-bitmap '(flymake-double-exclamation-mark modus-themes-subtle-red))
-       `(flymake-warning-bitmap '(exclamation-mark modus-themes-subtle-yellow))
-       `(flymake-note-bitmap '(exclamation-mark modus-themes-subtle-cyan))
        ;; Evil
        `(evil-ex-substitute-matches ((t :background ,bg-changed :foreground ,fg-changed :underline t)))
        `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))

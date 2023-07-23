@@ -134,7 +134,9 @@ in
       pyarrow
       psycopg2
       rich
+      pyspark
     ]))
+    poetry
 
     # Go
     go
@@ -178,8 +180,7 @@ in
 
     # Haskell
     haskell.compiler.ghc942
-    # https://github.com/NixOS/nixpkgs/issues/140774
-    # ormolu
+    ormolu
 
     # Fonts
     source-sans
@@ -193,6 +194,7 @@ in
     mononoki
     cascadia-code
     victor-mono
+    fantasque-sans-mono
     (iosevka.override {
       privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
       set = "custom";

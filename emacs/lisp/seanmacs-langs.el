@@ -161,10 +161,12 @@
   :straight t
   :mode ("\\.mdx?\\'" . gfm-mode)
   :config
-  (setq-default markdown-hide-urls t)
+  (setq-default markdown-hide-urls nil)
   (setq markdown-url-compose-char ?#
         markdown-fontify-code-blocks-natively t)
-  :hook ((markdown-mode . visual-line-mode)))
+
+  :hook ((markdown-mode . visual-line-mode)
+         (markdown-mode . turn-on-auto-fill)))
 
 
 ;; Dockerfile
