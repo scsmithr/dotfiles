@@ -56,22 +56,45 @@
         modus-themes-org-blocks 'gray-background
         modus-themes-prompts '(italic))
 
-  (let ((common-overrides
-         '(
-           (bg-mode-line-active        bg-inactive)
-           (border-mode-line-active    fg-dim)
-           (bg-mode-line-inactive      bg-dim)
-           (border-mode-line-inactive  bg-active)
+  (setq modus-themes-common-palette-overrides
+        `(
+          ;; Tone down mode line.
+          (bg-mode-line-active        bg-inactive)
+          (border-mode-line-active    fg-dim)
+          (bg-mode-line-inactive      bg-dim)
+          (border-mode-line-inactive  bg-active)
 
-           (fringe bg-dim)
+          ;; Have fringe blend in with line numbers.
+          (fringe bg-dim)
 
-           (bg-line-number-inactive bg-dim)
-           (bg-line-number-active bg-dim)
+          ;; Make current line number stand out less.
+          (bg-line-number-inactive bg-dim)
+          (bg-line-number-active bg-dim)
 
-           (fg-region unspecified)
-           (bg-region bg-ochre)
-           )))
-    (setq modus-themes-common-palette-overrides common-overrides))
+          ;; More colorful region with no changes to foreground.
+          (fg-region unspecified)
+          (bg-region bg-ochre)
+          ))
+
+  (setq modus-operandi-palette-overrides
+        '(
+          ;; Hovers.
+          (bg-hover            bg-yellow-nuanced)
+          (bg-hover-secondary  bg-magenta-nuanced)
+
+          ;; Paren matches
+          (bg-paren-match bg-blue-subtle)
+          ))
+
+  (setq modus-vivendi-palette-overrides
+        '(
+          ;; Hovers.
+          (bg-hover            bg-yellow-subtle)
+          (bg-hover-secondary  bg-magenta-subtle)
+
+          ;; Paren matches.
+          (bg-paren-match bg-blue-intense)
+          ))
 
   (defun sm/customize-modus ()
     (modus-themes-with-colors
@@ -86,9 +109,9 @@
        ;; Region (unspecify distant foreground)
        `(region ((t :distant-foreground unspecified :background ,bg-region :foreground ,fg-region)))
        ;; Highlight (mouse hover)
-       `(highlight ((t :distant-foreground unspecified :background ,bg-hover :foreground ,fg-region)))
+       `(highlight ((t :distant-foreground unspecified :background ,bg-hover-secondary :foreground ,fg-region)))
        ;; Eglot
-       `(eglot-highlight-symbol-face ((t :background ,bg-hover-secondary :weight unspecified)))
+       `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))
        ;; Evil
        `(evil-ex-substitute-matches ((t :background ,bg-changed :foreground ,fg-changed :underline t)))
        `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
