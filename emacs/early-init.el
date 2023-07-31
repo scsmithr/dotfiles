@@ -5,10 +5,6 @@
 
 ;;; Code:
 
-;; See https://github.com/jrblevin/markdown-mode/issues/578
-(defvar native-comp-jit-compilation-deny-list nil)
-(add-to-list 'native-comp-jit-compilation-deny-list "markdown-mode\\.el$")
-
 ;; Hide some things.
 (unless (eq system-type 'darwin)
   (menu-bar-mode -1))

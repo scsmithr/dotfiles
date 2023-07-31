@@ -74,6 +74,11 @@ in
     libiconv
     just
 
+    # PDF rendering
+    # Stuff needed for nice pdf rendering using doc-view.
+    ghostscript
+    mupdf
+
     # Security
     tfsec
     doppler
@@ -195,14 +200,16 @@ in
     cascadia-code
     victor-mono
     fantasque-sans-mono
-    (iosevka.override {
-      privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
-      set = "custom";
-    })
-    (iosevka.override {
-      privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
-      set = "sans";
-    })
+
+    # These take way too long to build.
+    # (iosevka.override {
+    #   privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
+    #   set = "custom";
+    # })
+    # (iosevka.override {
+    #   privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
+    #   set = "sans";
+    # })
   ];
 
   home.file.".emacs.d" = {
@@ -212,7 +219,9 @@ in
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29;
+    package = pkgs.emacs29.pkgs.withPackages (epkgs: [
+      epkgs.treesit-grammars.with-all-grammars
+    ]);
   };
 
   programs.go = {

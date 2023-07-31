@@ -36,7 +36,6 @@
             inherit system;
             config = {
               allowUnfree = true;
-              
               permittedInsecurePackages = [
                 "openssl-1.1.1u" # Needed for spark
                 "nodejs-16.20.1" # Needed for iosevka.
@@ -47,7 +46,7 @@
               emacs-overlay.overlays.emacs
               # Emacs 29
               (final: prev: {
-                emacs29 = prev.emacsGit.overrideAttrs (old: {
+                emacs29 = prev.emacs-git.overrideAttrs (old: {
                   name = "emacs29";
                   version = emacs29-src.shortRev;
                   src = emacs29-src;

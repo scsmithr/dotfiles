@@ -48,9 +48,6 @@
   :bind (:map app-prefix-map
               ("d" . docker)))
 
-(use-package restclient
-  :straight t)
-
 (use-package dired
   ;; built-in
   :config
@@ -92,47 +89,16 @@ file at point will be used."
 (use-package diredfl
   :straight t)
 
-(use-package pdf-tools
-  :straight t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :config
-  ;; Sharper text on macos.
-  (setq pdf-view-use-scaling t
-        pdf-view-use-imagemagick nil)
+(use-package doc-view
+  ;; built-in
+  :init
 
-  (defvar sm/pdf-to-text-fill t
-    "Determine if the plain text should auto filled.")
+  ;; Disable highlight line specifically so it doesn't show up when rendering
+  ;; PDFs as SVGs.
+  (defun sm/doc-view-disable-hl-line ()
+    (setq-local global-hl-line-mode nil))
 
-  (defvar sm/pdf-to-text-command "pdftotext"
-    "Path to command for converting a pdf file to plain text.")
-
-  (defun sm/pdf-to-text (file)
-    "Convert a pdf file to plain text.
-
-The output will be put into a temporary buffer."
-    (interactive (list (buffer-file-name)))
-    (let* ((file (concat "\"" file "\""))
-           (cmd (string-join (list sm/pdf-to-text-command file "-") " "))
-           (output-buf (format "%s [text]" (file-name-nondirectory file))))
-      (message "cmd: %s" cmd)
-      (shell-command cmd output-buf)
-      (switch-to-buffer-other-window output-buf)
-      (text-mode)
-      (when sm/pdf-to-text-fill
-        (fill-region (point-min) (point-max))
-        (set-buffer-modified-p nil))))
-
-  (defun sm/pdf-outline-show-link ()
-    "Show link in pdf window, keeping focus in the outline."
-    (interactive)
-    (sm/save-window-excursion
-     (call-interactively 'pdf-outline-follow-link)))
-
-  (evil-collection-define-key 'normal 'pdf-outline-buffer-mode-map
-    (kbd "SPC") #'sm/pdf-outline-show-link)
-
-  :bind (:map pdf-view-mode-map
-              ("C-c C-t" . sm/pdf-to-text)))
+  :hook ((doc-view-mode . sm/doc-view-disable-hl-line)))
 
 (use-package ffap
   ;; built-in
@@ -179,12 +145,6 @@ opening the file."
   ;; built-in
   :config
   (setq tramp-verbose 3))
-
-(use-package nov
-  :straight t
-  :mode ("\\.epub\\'" . nov-mode)
-  :config
-  (setq nov-text-width 80))
 
 (use-package olivetti
   :straight t
