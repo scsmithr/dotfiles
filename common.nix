@@ -103,6 +103,7 @@ in
     # Dev utilities
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
+    awscli2
     docker
     protobuf
     sqlc

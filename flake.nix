@@ -9,6 +9,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Stable nixpkgs.
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
+
     # Rust toolchain
     fenix = {
       url = "github:nix-community/fenix";
@@ -28,8 +31,9 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, fenix, emacs-overlay, emacs29-src, ... }:
+  outputs = { nixpkgs, nixpkgs-stable, home-manager, fenix, emacs-overlay, emacs29-src, ... }:
     let
+
       mkHome = system: {modules}: (
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -52,6 +56,15 @@
                   src = emacs29-src;
                 });
               })
+              # GPG, 2.4.1 causes emacs to hang when saving files. 2.4.0
+              # (version on stable) does not hang.
+              (final: prev:
+                let
+                  stable = import nixpkgs-stable { inherit system; };
+                in {
+                  gnupg = stable.gnupg;
+                }
+              )
             ];
           };
           inherit modules;
