@@ -142,6 +142,11 @@
                    (org-agenda-prefix-format "%i %-12:c [%-5e] ")
                    (org-agenda-todo-ignore-scheduled 'all)))))))
 
+  (defun sm/org-agenda-day ()
+    "Go to custom day view for org agenda."
+    (interactive)
+    (org-agenda nil "d"))
+
   ;; Footnotes
   (setq org-footnote-section nil
         org-footnote-auto-label 'random)
@@ -166,7 +171,9 @@
          (org-mode . sm/org-set-before-save-hook)
          (org-mode . turn-on-auto-fill))
   :bind (("C-c c" . org-capture)
-         ("C-c o" . org-agenda)
+         ("C-c o a" . org-agenda)
+         ("C-c o d" . sm/org-agenda-day)
+         ("C-c o o" . consult-org-agenda)
          ("C-c l" . org-store-link)))
 
 (use-package org-crypt
