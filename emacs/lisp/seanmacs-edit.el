@@ -338,6 +338,7 @@ window."
   :straight t
   :config
   (setq-default gptel-model "gpt-3.5-turbo-16k")
+  :hook ((gptel-mode . turn-off-auto-fill))
   :bind (:map app-prefix-map
               ("g" . gptel)
               :map gptel-mode-map

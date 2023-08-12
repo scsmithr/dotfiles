@@ -23,7 +23,8 @@
   (setq tab-always-indent 'complete)
 
   (setq corfu-preview-current t
-        corfu-auto nil)
+        corfu-auto nil
+        corfu-max-width 80)
 
   (global-corfu-mode)
   :bind (:map corfu-map
@@ -79,11 +80,15 @@
          ("C-c h" . consult-history)
          ("C-c m" . consult-man)
          ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
          :map buffer-prefix-map
          ("s" . consult-imenu)
+         ("l" . consult-line)
+         ("f" . consult-focus-lines)
          :map project-prefix-map
          ("r" . consult-ripgrep)
          ("b" . consult-project-buffer)
