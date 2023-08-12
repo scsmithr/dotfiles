@@ -37,6 +37,10 @@
     (define-key evil-motion-state-map (kbd (concat "C-w " key)) def))
 
   (sm/evil-define-window-key "u" #'winner-undo)
+  (sm/evil-define-window-key "H" #'sm/swap-window-left)
+  (sm/evil-define-window-key "J" #'sm/swap-window-below)
+  (sm/evil-define-window-key "K" #'sm/swap-window-above)
+  (sm/evil-define-window-key "L" #'sm/swap-window-right)
 
   (evil-define-motion sm/evil-goto-first-line-no-comment (count)
     "Go to the first non-commented line, then move forward COUNT lines."

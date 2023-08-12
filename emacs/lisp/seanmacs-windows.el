@@ -62,5 +62,38 @@ The window displaying the buffer will be automatically selected."
     (select-window win)
     (delete-window orig-win)))
 
+(defun sm/swap-window (window direction)
+  "Swap WINDOW with other window in DIRECTION.
+
+This will never attempt to swap the window with the minibuffer,
+or dedicated windows."
+  (let ((neighbor (window-in-direction direction window nil nil nil 'never)))
+    (unless neighbor
+      (user-error "No window in direction: %s" direction))
+    (when (or (window-dedicated-p neighbor)
+              (window-dedicated-p window))
+      (user-error "Cannot swap dedicated windows"))
+    (window-swap-states window neighbor)))
+
+(defun sm/swap-window-above ()
+  "Swap current window above."
+  (interactive)
+  (sm/swap-window (selected-window) 'above))
+
+(defun sm/swap-window-below ()
+  "Swap current window below."
+  (interactive)
+  (sm/swap-window (selected-window) 'below))
+
+(defun sm/swap-window-left ()
+  "Swap current window left."
+  (interactive)
+  (sm/swap-window (selected-window) 'left))
+
+(defun sm/swap-window-right ()
+  "Swap current window right."
+  (interactive)
+  (sm/swap-window (selected-window) 'right))
+
 (provide 'seanmacs-windows)
 ;;; seanmacs-windows.el ends here
