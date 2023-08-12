@@ -157,6 +157,11 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   :bind (:map eshell-hist-mode-map
               ("C-c C-l" . sm/eshell-consult-history)))
 
+(use-package term
+  ;; built in
+  :bind (:map shell-prefix-map
+              ("t" . ansi-term)))
+
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here
 

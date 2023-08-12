@@ -163,7 +163,10 @@
   :config
   (setq-default markdown-hide-urls nil)
   (setq markdown-url-compose-char ?#
-        markdown-fontify-code-blocks-natively t)
+        markdown-fontify-code-blocks-natively t
+        markdown-italic-underscore t
+        markdown-spaces-after-code-fence 0
+        markdown-gfm-use-electric-backquote nil)
 
   :hook ((markdown-mode . visual-line-mode)
          (markdown-mode . turn-on-auto-fill)))
@@ -171,27 +174,7 @@
 
 ;; Dockerfile
 
-(use-package dockerfile-mode
-  :straight t)
-
-
-;; Plantuml
-
-(use-package plantuml-mode
-  :straight t
-  :config
-  (setq plantuml-default-exec-mode 'executable)
-
-  (defun sm/plantuml-save ()
-    "Execute plantuml against the current plantuml buffer."
-    (interactive)
-    (when (eq major-mode 'plantuml-mode)
-      (save-buffer)
-      (shell-command (string-join `(,plantuml-executable-path "-tsvg" ,buffer-file-name) " ")
-                     "*PLANTUML Output*")))
-
-  :bind (:map plantuml-mode-map
-              ("C-c C-s" . sm/plantuml-save)))
+(require 'dockerfile-ts-mode)
 
 
 ;; TLA+
@@ -302,10 +285,6 @@
   :config
   (put 'LaTeX-narrow-to-environment 'disabled nil)
 
-  ;; Default to pdf-tools when compiling files.
-  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
-
   ;; Use color instead of scaling section titles.
   (setq font-latex-fontify-sectioning 'color)
 
@@ -325,20 +304,7 @@
 
 (use-package sh-script
   ;; built in
-  :init
-  (sm/define-flymake-checker shellcheck
-                             :executable "shellcheck"
-                             :args ("-o" "all" "-f" "gcc" "-")
-                             :regexp "^.+?:\\([0-9]+\\):\\([0-9]+\\): \\(.*\\): \\(.*\\)$"
-                             :match-line 1
-                             :match-col 2
-                             :match-type (lambda ()
-                                           (pcase (match-string 3)
-                                             ("error" :error)
-                                             ("warning" :warning)
-                                             (other :note)))
-                             :match-msg 4)
-  :hook ((sh-mode . sm/flymake-checker-shellcheck-load)))
+  )
 
 
 ;; Nix

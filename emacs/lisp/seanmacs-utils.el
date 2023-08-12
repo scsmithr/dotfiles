@@ -146,6 +146,11 @@ opening the file."
   :config
   (setq tramp-verbose 3))
 
+(use-package proced
+  ;; built-in
+  :config
+  (setq proced-enable-color-flag t))
+
 (use-package olivetti
   :straight t
   :init

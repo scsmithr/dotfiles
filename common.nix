@@ -23,6 +23,8 @@ in
     EDITOR = "editor";
     PAGER = "cat"; # Works for now.
     JULIA_NUM_THREADS = "16";
+    # Easier to see what's happening with docker builds in eshell.
+    BUILDKIT_PROGRESS = "plain";
 
     # Ensure system packages can be found by pkg-config.
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
@@ -73,6 +75,7 @@ in
     openssl.dev
     libiconv
     just
+    neovim
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
@@ -141,6 +144,8 @@ in
       psycopg2
       rich
       pyspark
+      requests-cache
+      requests
     ]))
     poetry
 

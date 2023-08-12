@@ -21,8 +21,10 @@
                  args)))
 
   (setq tab-always-indent 'complete)
+
   (setq corfu-preview-current t
         corfu-auto nil)
+
   (global-corfu-mode)
   :bind (:map corfu-map
               ("C-j" . corfu-quit)

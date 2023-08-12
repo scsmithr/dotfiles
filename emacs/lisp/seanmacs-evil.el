@@ -72,4 +72,4 @@
   :config (global-evil-surround-mode 1))
 
 (provide 'seanmacs-evil)
-;;; seanmacs-keybinds.el ends here
+;;; seanmacs-evil.el ends here

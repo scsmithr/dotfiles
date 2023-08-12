@@ -83,7 +83,7 @@
           (bg-hover-secondary  bg-magenta-nuanced)
 
           ;; Paren matches
-          (bg-paren-match bg-blue-subtle)
+          (bg-paren-match bg-magenta-subtle)
           ))
 
   (setq modus-vivendi-palette-overrides

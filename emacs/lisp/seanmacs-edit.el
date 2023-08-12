@@ -337,7 +337,7 @@ window."
 (use-package gptel
   :straight t
   :config
-  (setq gptel-model "gpt-4")
+  (setq-default gptel-model "gpt-3.5-turbo-16k")
   :bind (:map app-prefix-map
               ("g" . gptel)
               :map gptel-mode-map
