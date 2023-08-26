@@ -53,8 +53,9 @@
 
   (setq modus-themes-italic-constructs nil
         modus-themes-bold-constructs nil
-        modus-themes-org-blocks 'gray-background
-        modus-themes-prompts '(italic))
+        modus-themes-org-blocks nil
+        modus-themes-prompts '(italic)
+        modus-themes-headings nil)
 
   (setq modus-themes-common-palette-overrides
         `(
@@ -64,12 +65,8 @@
           (bg-mode-line-inactive      bg-dim)
           (border-mode-line-inactive  bg-active)
 
-          ;; Have fringe blend in with line numbers.
-          (fringe bg-dim)
-
           ;; Make current line number stand out less.
-          (bg-line-number-inactive bg-dim)
-          (bg-line-number-active bg-dim)
+          (bg-line-number-active unspecified)
 
           ;; More colorful region with no changes to foreground.
           (fg-region unspecified)
@@ -117,6 +114,8 @@
        `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
        ;; Ansi
        `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
+       ;; Markdown (remove code block background)
+       `(markdown-code-face ((t :inherit modus-themes-fixed-pitch :background unspecified :extend t)))
        )))
 
   (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)

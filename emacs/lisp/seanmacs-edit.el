@@ -69,7 +69,7 @@
 (setq-default require-final-newline t)
 
 ;; Always use "y or n"
-(defalias 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 ;; Tab stuff
 (setq-default tab-width 4)
@@ -171,8 +171,8 @@ loaded (e.g. sql-mode)."
                                (mode . diff-mode)
                                (mode . github-review-mode)))
            ("Docs" (or
-                    (mode . pdf-view-mode)
-                    (mode . nov-mode))))))
+                    (mode . doc-view-mode)
+                    (mode . pdf-view-mode))))))
 
   (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Interactive" "Special"))
 

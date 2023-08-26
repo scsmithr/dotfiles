@@ -171,9 +171,9 @@
          (org-mode . sm/org-set-before-save-hook)
          (org-mode . turn-on-auto-fill))
   :bind (("C-c c" . org-capture)
-         ("C-c o a" . org-agenda)
+         ("C-c o o" . org-agenda)
          ("C-c o d" . sm/org-agenda-day)
-         ("C-c o o" . consult-org-agenda)
+         ("C-c o s" . consult-org-agenda)
          ("C-c l" . org-store-link)))
 
 (use-package org-crypt
