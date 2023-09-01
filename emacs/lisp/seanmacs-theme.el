@@ -53,7 +53,7 @@
 
   (setq modus-themes-italic-constructs nil
         modus-themes-bold-constructs nil
-        modus-themes-org-blocks nil
+        modus-themes-org-blocks 'gray-background
         modus-themes-prompts '(italic)
         modus-themes-headings nil)
 
@@ -114,8 +114,6 @@
        `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
        ;; Ansi
        `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
-       ;; Markdown (remove code block background)
-       `(markdown-code-face ((t :inherit modus-themes-fixed-pitch :background unspecified :extend t)))
        )))
 
   (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)
