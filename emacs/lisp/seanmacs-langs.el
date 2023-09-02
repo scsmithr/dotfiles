@@ -80,6 +80,25 @@
 (use-package typescript-ts-base-mode
   :init
   (setq typescript-ts-mode-indent-offset 4)
+
+  (defun sm/tsx-ts-mode--font-lock-compatibility-bb1f97b (language)
+    '((jsx_opening_element
+       [(nested_identifier (identifier)) (identifier)]
+       @typescript-ts-jsx-tag-face)
+
+      (jsx_closing_element
+       [(nested_identifier (identifier)) (identifier)]
+       @typescript-ts-jsx-tag-face)
+
+      (jsx_self_closing_element
+       [(nested_identifier (identifier)) (identifier)]
+       @typescript-ts-jsx-tag-face)))
+
+  ;; The original func has an error check to determin which query is should
+  ;; return for jsx tags, but the error still seems cause an issue with
+  ;; fontlock, making whitespace faces not be colorized correctly.
+  (advice-add 'tsx-ts-mode--font-lock-compatibility-bb1f97b :override #'sm/tsx-ts-mode--font-lock-compatibility-bb1f97b)
+
   :hook ((typescript-ts-base-mode . eglot-ensure)
          (typescript-ts-base-mode . apheleia-mode))
   :bind (:map typescript-ts-base-mode-map

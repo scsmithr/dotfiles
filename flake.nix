@@ -17,21 +17,9 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Pick different emacs sources.
-    emacs-overlay = {
-      url = "github:Nix-Community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Emacs 29 source.
-    emacs29-src = {
-      url = "github:emacs-mirror/emacs/emacs-29";
-      flake = false;
-    };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, home-manager, fenix, emacs-overlay, emacs29-src, ... }:
+  outputs = { nixpkgs, nixpkgs-stable, home-manager, fenix, ... }:
     let
 
       mkHome = system: {modules}: (
@@ -43,19 +31,11 @@
               permittedInsecurePackages = [
                 "openssl-1.1.1u" # Needed for spark
                 "nodejs-16.20.1" # Needed for iosevka.
+                "nodejs-16.20.2" # idk
               ];
             };
             overlays = [
               fenix.overlays.default
-              emacs-overlay.overlays.emacs
-              # Emacs 29
-              (final: prev: {
-                emacs29 = prev.emacs-git.overrideAttrs (old: {
-                  name = "emacs29";
-                  version = emacs29-src.shortRev;
-                  src = emacs29-src;
-                });
-              })
               # GPG, 2.4.1 causes emacs to hang when saving files. 2.4.0
               # (version on stable) does not hang.
               (final: prev:
