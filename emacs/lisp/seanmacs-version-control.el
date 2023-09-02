@@ -13,11 +13,7 @@
   :init
   (setq-default ediff-split-window-function #'split-window-horizontally
                 ediff-merge-split-window-function #'split-window-horizontally
-                ediff-window-setup-function #'ediff-setup-windows-plain)
-
-  ;; HACK: Evil collection bindings don't seem to get set immediately. Not sure
-  ;; which upgrade broke this.
-  :hook ((ediff-startup . evil-force-normal-state)))
+                ediff-window-setup-function #'ediff-setup-windows-plain))
 
 (use-package magit
   :straight t

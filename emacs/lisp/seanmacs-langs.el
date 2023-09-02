@@ -312,11 +312,11 @@
 
 ;; CSV
 
-(use-package csv-mode
-  :straight t
-  :config
-  (setq csv-align-padding 2)
-  :hook ((csv-mode . csv-align-mode)))
+(define-derived-mode csv-mode prog-mode "CSV")
+(add-to-list 'auto-mode-alist '("\\.csv\\'" . csv-mode))
+
+(define-derived-mode tsv-mode prog-mode "TSV")
+(add-to-list 'auto-mode-alist '("\\.tsv\\'" . tsv-mode))
 
 
 ;; Shell scripts
