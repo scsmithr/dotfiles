@@ -45,6 +45,10 @@
                   gnupg = stable.gnupg;
                 }
               )
+              # Quick hack until go points to 1.21
+              (final: prev: {
+                go = prev.go_1_21;
+              })
             ];
           };
           inherit modules;
