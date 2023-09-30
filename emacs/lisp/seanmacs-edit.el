@@ -146,6 +146,7 @@ loaded (e.g. sql-mode)."
         ibuffer-formats '((mark modified read-only
                                 " " (name 28 28 :left :elide)
                                 " " (mode 16 16 :left :elide)
+                                " " (size 9 -1 :right)
                                 " " filename-and-process))
         ibuffer-show-empty-filter-groups nil
         ibuffer-saved-filter-groups

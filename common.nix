@@ -163,8 +163,8 @@ in
       "rust-src"
       "rustc"
       "rustfmt"
-      "rust-analyzer"
     ])
+    rust-analyzer-nightly
 
     # Javascript/Typescript
     yarn
