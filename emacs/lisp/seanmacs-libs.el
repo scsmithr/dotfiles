@@ -181,6 +181,14 @@ directory immediately if it already exists."
           (with-selected-window (get-buffer-window buf)
             (dired clone-dir)))))))
 
+;; Text alignment
+
+(defun sm/align-whitespace (start end)
+  "Align columns by whitespace."
+  (interactive "r")
+  (align-regexp start end
+                "\\(\\s-*\\)\\s-" 1 1 t))
+
 ;; Misc
 
 (defun sm/scratch ()

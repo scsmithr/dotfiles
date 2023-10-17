@@ -76,6 +76,7 @@ in
     libiconv
     just
     neovim
+    ffmpeg
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.

@@ -12,6 +12,13 @@
     source = ./scripts/postgres-scratch-exposed;
   };
 
+  home.file.".cargo/config.toml" = {
+    text = ''
+    [env]
+    PYO3_PYTHON = "/Users/sean/.nix-profile/bin/python3"
+    '';
+  };
+
   # Increase max number of open files per shell.
   #
   # Mac has a default of 256, and I very often hit this with emacs.
