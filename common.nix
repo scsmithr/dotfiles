@@ -108,6 +108,7 @@ in
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     awscli2
+    azure-cli
     docker
     protobuf
     sqlc
@@ -193,6 +194,10 @@ in
     # Haskell
     haskell.compiler.ghc942
     ormolu
+
+    # Zig
+    zig
+    zls
 
     # Fonts
     source-sans

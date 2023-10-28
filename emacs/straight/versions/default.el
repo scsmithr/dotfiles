@@ -17,6 +17,7 @@
  ("elfeed" . "55fb162fa27e71b88effa59a83c57842e262b00f")
  ("emacs-aio" . "da93523e235529fa97d6f251319d9e1d6fc24a41")
  ("emacs-async" . "bb0509060ddc9c94bc7db7bddb12995acb3b53e4")
+ ("emacs-reformatter" . "bca1cf1e4caa87a67b5a39ea938806c6f78ce2e4")
  ("emacs-which-key" . "df6b0cb8449812e7fb200bc852107fa7eb708496")
  ("emacsmirror-mirror" . "09c5d38f75ccad8150cb4681d6e3fa6143238e49")
  ("emacsql" . "64012261f65fcdd7ea137d1973ef051af1dced42")
@@ -61,5 +62,6 @@
  ("web-mode" . "57856ba64b9382811b35df0d9ab0a24aede0c1f0")
  ("with-editor" . "d5f3f06cb830311e60c58f656988ef37c05a99e0")
  ("yaml.el" . "ee86566af1ed4975531ab3aa4eb4dba770c227f6")
- ("yasnippet" . "5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6"))
+ ("yasnippet" . "5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6")
+ ("zig-mode" . "079149a19fc869343130e69d7b944afd3a1813cc"))
 :gamma
