@@ -14,6 +14,12 @@
 (defvar sm/org-capture-templates-dir "~/.emacs.d/org-templates"
   "Directory containing capture templates.")
 
+(defvar sm/eng-meta-root "~/Code/github.com/glaredb/meta/"
+  "Root of the eng meta repo.")
+
+(defvar sm/eng-meta-log (concat sm/eng-meta-root "org/sean.org")
+  "Org log in eng meta.")
+
 (use-package org
   :config
   ;; Enable basic movement keys in agenda.
@@ -32,7 +38,7 @@
     (kbd "S-<return>") #'org-agenda-goto
     (kbd "g TAB") #'org-agenda-goto)
 
-  (setq org-default-notes-file (concat sm/notes-dir "log.org")
+  (setq org-default-notes-file sm/eng-meta-log
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
         org-refile-targets '((nil :maxlevel . 5)
                              (org-agenda-files :maxlevel . 5))
@@ -74,7 +80,7 @@
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "BLOCKED(b)" "IN-PROGRESS(i)" "|" "REFILED(r)" "DONE(d)" "CANCELED(c)")))
 
-  (setq org-agenda-files (list sm/notes-dir)
+  (setq org-agenda-files (list sm/notes-dir sm/eng-meta-log)
         org-agenda-restore-windows-after-quit t
         org-agenda-span 'fortnight
         org-agenda-window-setup 'current-window
