@@ -64,6 +64,7 @@
         ;; both the org buffer and the source at the same time.
         org-src-window-setup 'other-window
         org-log-into-drawer t
+        org-cycle-hide-drawer-startup nil
         org-global-properties '(("Effort_ALL" . "5min 15min 30min 1h 2h 4h 8h 1d"))
         org-ellipsis "…")
 
@@ -89,20 +90,20 @@
         org-agenda-time-grid
         '((daily today)
           (800 1000 1200 1400 1600 1800 2000)
-          "......"
-          "----------------")
-        org-agenda-current-time-string "** now **"
+          "      "
+          "────────────────")
+        org-agenda-current-time-string "───── now ──────"
         ;; Mostly default prefixes. Removes icon strings, and adds breadcrumbs
         ;; (%b) to the search view.
         org-agenda-prefix-format
-        '((agenda . " %-12:c%?-12t% s")
+        '((agenda . " %?-12t% s")
           (todo . " %-12:c")
           (tags . " %-12:c")
           (search . " %-12:c %b"))
         org-agenda-breadcrumbs-separator " > "
         org-agenda-search-view-always-boolean t
         org-show-context-detail '((default . canonical))
-        org-agenda-block-separator ?-)
+        org-agenda-block-separator ?─)
 
   (setq org-attach-store-link-p t
         org-attach-expert t
@@ -131,22 +132,25 @@
         '(("d" "Day overview"
            ((agenda ""
                     ((org-agenda-span 'day)
-                     (org-deadline-warning-days 1)))
-            (todo "IN-PROGRESS"
-                  ((org-agenda-overriding-header "In progress")
-                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Up next")
-                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")))
+                     (org-deadline-warning-days 1)
+                     (org-agenda-prefix-format " %?-12t% s")))
+            (todo "NEXT|IN-PROGRESS"
+                  ((org-agenda-overriding-header "Next and in progress")
+                   (org-agenda-prefix-format " [%-5e] ")))
+            (tags "CLOSED>=\"<-1d>\""
+                  ((org-agenda-overriding-header "Completed recently (1d)")
+                   (org-agenda-prefix-format " ")))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "TODOs")
+                   (org-agenda-prefix-format " [%-5e] %s")))
+            (todo ""
+                  ((org-agenda-overriding-header "Unscheduled")
+                   (org-agenda-prefix-format " [%-5e] ")
+                   (org-agenda-todo-ignore-scheduled 'all)))
             (tags "+revisit"
                   ((org-agenda-overriding-header "Revisit")
-                   (org-agenda-prefix-format "%i %-12:c ")
-                   (org-use-tag-inheritance nil)))))
-          ("u" "Unscheduled"
-           ((todo ""
-                  ((org-agenda-overriding-header "Unscheduled")
-                   (org-agenda-prefix-format "%i %-12:c [%-5e] ")
-                   (org-agenda-todo-ignore-scheduled 'all)))))))
+                   (org-agenda-prefix-format " ")
+                   (org-use-tag-inheritance nil)))))))
 
   (defun sm/org-agenda-day ()
     "Go to custom day view for org agenda."
