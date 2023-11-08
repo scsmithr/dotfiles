@@ -56,6 +56,7 @@ in
     jq
     ripgrep
     tree
+    bat
     docker
     gnupg
     gnugrep
@@ -86,6 +87,9 @@ in
     # Security
     tfsec
     doppler
+
+    # Profiling
+    samply
 
     # Speling
     aspell
@@ -170,10 +174,14 @@ in
 
     # Javascript/Typescript
     yarn
-    nodejs-16_x
+    nodejs_18
     nodePackages.typescript
     typescript-ls
     esbuild
+
+    # vscode extension template stuff
+    nodePackages.yo # yeoman
+    nodePackages.generator-code
 
     # Scheme
     guile
