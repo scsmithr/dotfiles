@@ -37,6 +37,7 @@
     "gj" #'org-agenda-next-item
     "gk" #'org-agenda-previous-item
     "gr" #'org-agenda-redo-all
+    "gg" #'evil-goto-first-line
     (kbd "C-w") 'evil-window-map
     (kbd "S-<return>") #'org-agenda-goto
     (kbd "g TAB") #'org-agenda-goto)
@@ -69,7 +70,8 @@
         org-log-into-drawer t
         org-cycle-hide-drawer-startup nil
         org-global-properties '(("Effort_ALL" . "5min 15min 30min 1h 2h 4h 8h 1d"))
-        org-ellipsis "…")
+        org-ellipsis "…"
+        org-fontify-quote-and-verse-blocks t)
 
   ;; Default except no special pdf handling. This will cause PDFs to open in
   ;; emacs.

@@ -71,7 +71,7 @@ in
     unixtools.getopt
     cloc
     poppler_utils
-    pkgconfig
+    pkg-config
     openssl
     openssl.dev
     libiconv
@@ -97,9 +97,6 @@ in
     aspellDicts.en-computers
     aspellDicts.en-science
 
-    # Find missing binaries.
-    nix-index
-
     # Shells
     bash
     zsh
@@ -113,11 +110,11 @@ in
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     awscli2
     azure-cli
+    azure-storage-azcopy
     docker
     protobuf
     sqlc
     kubectl
-    cloud-sql-proxy
     terraform
     skopeo
     gh
@@ -179,10 +176,6 @@ in
     typescript-ls
     esbuild
 
-    # vscode extension template stuff
-    nodePackages.yo # yeoman
-    nodePackages.generator-code
-
     # Scheme
     guile
 
@@ -220,15 +213,17 @@ in
     cascadia-code
     victor-mono
     fantasque-sans-mono
+    commit-mono
+    go-font
 
-    (iosevka.override {
-      privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
-      set = "custom";
-    })
-    (iosevka.override {
-      privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
-      set = "sans";
-    })
+    # (iosevka.override {
+    #   privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
+    #   set = "custom";
+    # })
+    # (iosevka.override {
+    #   privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
+    #   set = "sans";
+    # })
   ];
 
   home.file.".emacs.d" = {
