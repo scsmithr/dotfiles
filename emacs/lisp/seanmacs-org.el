@@ -20,6 +20,9 @@
 (defvar sm/eng-meta-log (concat sm/eng-meta-root "org/sean.org")
   "Org log in eng meta.")
 
+(defvar sm/default-log (concat sm/notes-dir "log.org")
+  "Default org log file.")
+
 (use-package org
   :config
   ;; Enable basic movement keys in agenda.
@@ -38,7 +41,7 @@
     (kbd "S-<return>") #'org-agenda-goto
     (kbd "g TAB") #'org-agenda-goto)
 
-  (setq org-default-notes-file sm/eng-meta-log
+  (setq org-default-notes-file sm/default-log
         org-archive-location "archive/%s_archive::" ;; Keep top level directory clean.
         org-refile-targets '((nil :maxlevel . 5)
                              (org-agenda-files :maxlevel . 5))
@@ -118,6 +121,10 @@
           ("a" "Annotate" entry (file+olp+datetree "")
            (file ,(concat sm/org-capture-templates-dir "/annotate"))
            :empty-lines 1)
+          ("d" "Date entry" entry (file+headline ,sm/eng-meta-log "Worklog")
+           (file ,(concat sm/org-capture-templates-dir "/date"))
+           :empty-lines 1
+           :prepend t)
           ("n" "Note" entry (file+olp+datetree "")
            (file ,(concat sm/org-capture-templates-dir "/note"))
            :empty-lines 1)

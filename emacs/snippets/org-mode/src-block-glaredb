@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: src block with glaredb commands
+# key: gl
+# --
+#+BEGIN_SRC shell :results verbatim :exports both :dir ~/Code/github.com/glaredb/glaredb :async
+cargo run --bin glaredb -q -- -q "
+$0
+"
+#+END_SRC
