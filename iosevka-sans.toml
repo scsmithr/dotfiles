@@ -7,7 +7,6 @@ export-glyph-names = false
 no-ligation = false
 
 [buildPlans.iosevka-sans.variants.design]
-g = "double-storey"
 zero = "dotted"
 asterisk = "penta-low"
 number-sign = "slanted-open"
@@ -15,10 +14,11 @@ ampersand = "upper-open"
 percent = "dots"
 dollar = "open"
 bar = "natural-slope"
-l = "tailed-serifed"
 f = "flat-hook-serifless"
+l = "tailed-serifed"
 t = "flat-hook"
 j = "flat-hook-serifed"
+g = "double-storey"
 
 [buildPlans.iosevka-sans.variants.italic]
 f = "flat-hook-tailed"

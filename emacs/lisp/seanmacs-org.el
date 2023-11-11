@@ -133,23 +133,23 @@
            ((agenda ""
                     ((org-agenda-span 'day)
                      (org-deadline-warning-days 1)
-                     (org-agenda-prefix-format " %?-12t% s")))
+                     (org-agenda-prefix-format " %-12:c%?-12t% s")))
             (todo "NEXT|IN-PROGRESS"
                   ((org-agenda-overriding-header "Next and in progress")
-                   (org-agenda-prefix-format " [%-5e] ")))
+                   (org-agenda-prefix-format " %-12:c [%-5e] ")))
             (tags "CLOSED>=\"<-1d>\""
                   ((org-agenda-overriding-header "Completed recently (1d)")
-                   (org-agenda-prefix-format " ")))
+                   (org-agenda-prefix-format " %-12:c ")))
             (todo "TODO"
                   ((org-agenda-overriding-header "TODOs")
-                   (org-agenda-prefix-format " [%-5e] %s")))
+                   (org-agenda-prefix-format " %-12:c [%-5e] %s")))
             (todo ""
                   ((org-agenda-overriding-header "Unscheduled")
-                   (org-agenda-prefix-format " [%-5e] ")
+                   (org-agenda-prefix-format " %-12:c [%-5e] ")
                    (org-agenda-todo-ignore-scheduled 'all)))
             (tags "+revisit"
                   ((org-agenda-overriding-header "Revisit")
-                   (org-agenda-prefix-format " ")
+                   (org-agenda-prefix-format " %-12:c ")
                    (org-use-tag-inheritance nil)))))))
 
   (defun sm/org-agenda-day ()

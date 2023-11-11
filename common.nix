@@ -174,7 +174,7 @@ in
 
     # Javascript/Typescript
     yarn
-    nodejs_18
+    nodejs_20
     nodePackages.typescript
     typescript-ls
     esbuild
@@ -221,15 +221,14 @@ in
     victor-mono
     fantasque-sans-mono
 
-    # These take way too long to build.
-    # (iosevka.override {
-    #   privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
-    #   set = "custom";
-    # })
-    # (iosevka.override {
-    #   privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
-    #   set = "sans";
-    # })
+    (iosevka.override {
+      privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
+      set = "custom";
+    })
+    (iosevka.override {
+      privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
+      set = "sans";
+    })
   ];
 
   home.file.".emacs.d" = {
