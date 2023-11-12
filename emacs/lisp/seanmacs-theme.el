@@ -14,7 +14,7 @@
     (message "Setting frame fonts")
     (set-face-attribute 'default nil :family "MonoLisa" :height 130 :weight 'normal)
     (set-face-attribute 'fixed-pitch nil :family "MonoLisa")
-    (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 150)
+    (set-face-attribute 'variable-pitch nil :family "Merriweather")
     ;; Unicode fallbacks.
     (set-fontset-font t 'unicode (font-spec :name "MonoLisa" :weight 'normal))
     (when (eq system-type 'darwin)
@@ -47,55 +47,31 @@
 
   (minions-mode 1))
 
-(use-package modus-themes
-  :straight (:host sourcehut :repo "protesilaos/modus-themes" :branch "main")
+(use-package ef-themes
+  :straight t
   :config
 
-  (setq modus-themes-italic-constructs nil
-        modus-themes-bold-constructs nil
-        modus-themes-org-blocks 'gray-background
-        modus-themes-prompts '(italic)
-        modus-themes-headings nil)
+  (setq ef-themes-mixed-fonts t)
 
-  (setq modus-themes-common-palette-overrides
-        `(
-          ;; Tone down mode line.
-          (bg-mode-line-active        bg-inactive)
-          (border-mode-line-active    fg-dim)
-          (bg-mode-line-inactive      bg-dim)
-          (border-mode-line-inactive  bg-active)
+  (setq ef-light-palette-overrides
+        '((cursor fg-main)))
 
-          ;; Make current line number stand out less.
-          (bg-line-number-active unspecified)
+  (setq ef-dark-palette-overrides
+        '((cursor fg-main)))
 
-          ;; More colorful region with no changes to foreground.
-          (fg-region unspecified)
-          (bg-region bg-ochre)
-          ))
-
-  (setq modus-operandi-palette-overrides
-        '(
-          ;; Hovers.
-          (bg-hover            bg-yellow-nuanced)
-          (bg-hover-secondary  bg-magenta-nuanced)
-
-          ;; Paren matches
-          (bg-paren-match bg-magenta-subtle)
-          ))
-
-  (setq modus-vivendi-palette-overrides
-        '(
-          ;; Hovers.
-          (bg-hover            bg-yellow-subtle)
-          (bg-hover-secondary  bg-magenta-subtle)
-
-          ;; Paren matches.
-          (bg-paren-match bg-magenta-intense)
-          ))
-
-  (defun sm/customize-modus ()
-    (modus-themes-with-colors
+  (defun sm/customize-ef-themes ()
+    (ef-themes-with-colors
       (custom-set-faces
+       ;; Remove some unwanted bold/italic properties.
+       `(font-lock-keyword-face ((t (:inherit unspecified))))
+       `(font-lock-builtin-face ((t (:inherit unspecified))))
+       `(font-lock-comment-face ((t (:inherit unspecified))))
+       `(font-lock-doc-face ((t (:inherit unspecified))))
+
+       ;; Fringe
+       `(fringe ((t (:background ,bg-inactive))))
+       `(line-number ((t (:background ,bg-inactive))))
+
        ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-indentation ((t (:foreground ,bg-dim :background unspecified))))
@@ -103,49 +79,53 @@
        `(whitespace-newline ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
-       ;; Region (unspecify distant foreground)
-       `(region ((t :distant-foreground unspecified :background ,bg-region :foreground ,fg-region)))
-       ;; Highlight (mouse hover)
-       `(highlight ((t :distant-foreground unspecified :background ,bg-hover-secondary :foreground ,fg-region)))
+
+       ;; Mode line
+       `(mode-line ((t (:background ,bg-dim :foreground ,fg-main :box (:line-width 1 :color ,bg-active)))))
+       `(mode-line-inactive ((t (:background ,bg-inactive :box (:line-width 1 :color ,bg-active)))))
+
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))
+       `(eglot-mode-line ((t (:inherit unspecified :foreground unspecified))))
+
        ;; Evil
        `(evil-ex-substitute-matches ((t :background ,bg-changed :foreground ,fg-changed :underline t)))
        `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
+
        ;; Ansi
        `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
        )))
 
-  (add-hook 'modus-themes-after-load-theme-hook 'sm/customize-modus)
+  (add-hook 'ef-themes-post-load-hook #'sm/customize-ef-themes)
 
   (defun sm/get-system-appearance ()
     "Get the system appearance.
 
-Defaults to light if running in terminal or not running on mac."
+ Defaults to light if running in terminal or not running on mac."
     (if (and (display-graphic-p)
              (eq system-type 'darwin))
         (ns-do-applescript "
-        tell application \"System Events\"
-          tell appearance preferences
-            if (dark mode) then
-              return \"dark\"
-            else
-              return \"light\"
-            end if
-          end tell
-        end tell
-        ")
+         tell application \"System Events\"
+           tell appearance preferences
+             if (dark mode) then
+               return \"dark\"
+             else
+               return \"light\"
+             end if
+           end tell
+         end tell
+         ")
       "light"))
 
   (defun sm/toggle-system-appearance ()
     "Toggle system appearance if running on mac."
     (if (eq system-type 'darwin)
         (ns-do-applescript "
-        tell application \"System Events\"
-          tell appearance preferences
-            set dark mode to not dark mode
-          end tell
-        end tell")))
+         tell application \"System Events\"
+           tell appearance preferences
+             set dark mode to not dark mode
+           end tell
+         end tell")))
 
   (defun sm/toggle-theme ()
     "Toggle the system theme along with the emacs theme."
@@ -159,10 +139,10 @@ Defaults to light if running in terminal or not running on mac."
     (let ((appearance (sm/get-system-appearance)))
       (message "syncing theme: %s" appearance)
       (if (string= appearance "dark")
-          (modus-themes-select 'modus-vivendi)
-        (modus-themes-select 'modus-operandi))))
+          (ef-themes-select 'ef-dark)
+        (ef-themes-select 'ef-light))))
 
-  (modus-themes-load-theme 'modus-operandi))
+  (ef-themes-select 'ef-light))
 
 ;; Fringe bitmaps
 

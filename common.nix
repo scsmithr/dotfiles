@@ -215,6 +215,8 @@ in
     fantasque-sans-mono
     commit-mono
     go-font
+    merriweather
+    merriweather-sans
 
     # (iosevka.override {
     #   privateBuildPlan = builtins.readFile ./iosevka-custom.toml;

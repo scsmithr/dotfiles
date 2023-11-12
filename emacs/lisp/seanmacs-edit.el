@@ -102,7 +102,7 @@ Defaults to opening file for the current buffer."
   ;; built-in
   :config
   (setq whitespace-line-column 80)
-  (setq whitespace-style '(face space-mark tab-mark lines-tail
+  (setq whitespace-style '(face space-mark tab-mark
                                 trailing tabs spaces))
   (setq whitespace-display-mappings
         '((space-mark   ?\  [?·])

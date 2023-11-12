@@ -154,7 +154,8 @@ opening the file."
 (use-package olivetti
   :straight t
   :init
-  (setq olivetti-body-width 92)
+  (setq olivetti-body-width 92
+        olivetti-style 'fancy)
   :bind (("C-c z" . zen-mode)))
 
 (defvar-local zen-mode-display-line-numbers-mode nil
