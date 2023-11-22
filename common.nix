@@ -65,6 +65,7 @@ in
     syncthing
     postgresql
     mysql
+    sqlcmd # SQL Server cli
     qemu
     findutils
     plantuml
