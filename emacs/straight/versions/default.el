@@ -18,6 +18,7 @@
  ("elfeed" . "55fb162fa27e71b88effa59a83c57842e262b00f")
  ("emacs-aio" . "da93523e235529fa97d6f251319d9e1d6fc24a41")
  ("emacs-async" . "3bade0e92e1ee8e716c5db14bc8315b17299f138")
+ ("emacs-eat" . "5aaad960c8f0caa2bc4c8b2f9da4dc0c809550fe")
  ("emacs-reformatter" . "af56cd5e47c3732f9d972fc8fd64ceca1e0bf4b7")
  ("emacs-which-key" . "4d20bc852545a2e602f59084a630f888542052b1")
  ("emacsmirror-mirror" . "f0ec94861109f5de6fb3671c75395696670c2b40")

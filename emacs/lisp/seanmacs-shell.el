@@ -117,6 +117,9 @@ If BUF-NAME is nil, the command will be used to name the buffer."
                  (propertize (current-time-string)
                              'face 'font-lock-keyword-face)))
 
+  ;; When using eat, programs that would normally go in this list just work.
+  (setq eshell-visual-commands nil)
+
   (defun sm/eshell-add-completions ()
     (when (featurep 'cape)
       (add-to-list 'completion-at-point-functions #'cape-file)
@@ -124,10 +127,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
       (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
       (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
 
-  (defun sm/add-eshell-visual-commands ()
-    (add-to-list 'eshell-visual-commands "watch"))
 
-  (add-hook 'eshell-term-load-hook #'sm/add-eshell-visual-commands)
 
   (defun sm/eshell-append-history ()
     "Append the most recent command in eshell's history ring to history file."
@@ -144,7 +144,8 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 
   :hook ((eshell-mode . sm/add-eshell-aliases)
          (eshell-pre-command . sm/eshell-append-history)
-         (eshell-mode . sm/eshell-add-completions))
+         (eshell-mode . sm/eshell-add-completions)
+         (eshell-mode . eat-eshell-mode))
   :bind (:map shell-prefix-map
               ("s" . eshell)
               ("n" . sm/eshell-new)))
@@ -170,6 +171,16 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   ;; built in
   :bind (:map shell-prefix-map
               ("t" . ansi-term)))
+
+(use-package eat
+  :straight (:type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el"))))
 
 (provide 'seanmacs-shell)
 ;;; seanmacs-shell.el ends here
