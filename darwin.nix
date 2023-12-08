@@ -19,7 +19,7 @@
     # linker that prevents backtraces from getting printed correctly.
     #
     # <https://github.com/rust-lang/rust/issues/113783>
-    rustflags=["-Clink-arg=-Wl,-ld_classic"]
+    # rustflags=["-Clink-arg=-Wl,-ld_classic"]
     '';
   };
 

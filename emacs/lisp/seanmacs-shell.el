@@ -58,7 +58,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   "Whether or not eshell should write to the history file before each command.")
 
 (defvar sm/eshell-aliases
-  '(("cargo" "cargo --color=always $*")
+  '(
     ;; kubectl
     ("kgp" "kubectl get pods $*")
     ("kgs" "kubectl get service $*")
