@@ -23,8 +23,6 @@ in
     EDITOR = "editor";
     PAGER = "cat"; # Works for now.
     JULIA_NUM_THREADS = "16";
-    # Easier to see what's happening with docker builds in eshell.
-    BUILDKIT_PROGRESS = "plain";
 
     # Ensure system packages can be found by pkg-config.
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
@@ -79,6 +77,8 @@ in
     just
     neovim
     ffmpeg
+    optipng
+    imagemagick
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
@@ -113,13 +113,17 @@ in
     azure-cli
     azure-storage-azcopy
     docker
-    protobuf
     sqlc
     kubectl
     terraform
     skopeo
     gh
     d2
+
+    # Protobuf
+    protobuf
+    protoc-gen-go
+    protoc-gen-go-grpc
 
     # C/C++
     cmake
