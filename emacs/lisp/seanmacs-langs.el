@@ -45,8 +45,8 @@
 
   :hook ((go-ts-mode . apheleia-mode)
          (go-ts-mode . sm/gopls-ensure))
-  :bind(:map go-ts-mode-map
-             ("C-c C-c C-t" . sm/go-test-package)))
+  :bind (:map go-ts-mode-map
+              ("C-c C-c C-t" . sm/go-test-package)))
 
 
 ;; Rust
@@ -60,23 +60,17 @@
   (setf (alist-get 'rustfmt  apheleia-formatters)
         '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021"))
 
-  :hook ((rust-ts-mode . cargo-minor-mode)
-         (rust-ts-mode . eglot-ensure)
-         (rust-ts-mode . apheleia-mode)))
+  (defun sm/cargo-test-crate ()
+    "Rune tests for the current crate."
+    (interactive)
+    (let ((cmd "cargo test") ;; Automatically detects which crate we're running in.
+          (buf-name "*Cargo Test*"))
+      (sm/compile cmd buf-name)))
 
-(use-package cargo
-  :straight t
-  :config
-  (setq cargo-process--command-doc "doc --document-private-items"
-        cargo-process--command-doc-open "doc --document-private-items --open")
-
-  (setq cargo-process--command-clippy "clippy")
-
-  (defun sm/set-cargo-process-scroll-bottom ()
-    (setq-local compilation-scroll-output t))
-
-  :hook ((cargo-process-mode . sm/set-cargo-process-scroll-bottom)
-         (cargo-process-mode . visual-line-mode)))
+  :hook ((rust-ts-mode . eglot-ensure)
+         (rust-ts-mode . apheleia-mode))
+  :bind (:map rust-ts-mode-map
+              ("C-c C-c C-t" . sm/cargo-test-crate)))
 
 
 ;; Typescript/ web stuff
@@ -329,45 +323,6 @@
   :config
   (setf (alist-get 'hcl-mode apheleia-mode-alist) 'terraform)
   :hook ((hcl-mode . apheleia-mode)))
-
-
-;; D2
-
-(defvar d2-mode-syntax-table
-  (let ((table (make-syntax-table)))
-    ;; Add '#' as a comment.
-    (modify-syntax-entry ?# "<" table)
-    (modify-syntax-entry ?\n ">" table)
-    (modify-syntax-entry ?\f ">" table)
-    table)
-  "Syntax table for `d2-mode'.")
-
-(defvar d2-mode-font-lock-keywords
-  '()
-  "Keywords specification for `d2-mode'.")
-
-(define-derived-mode d2-mode prog-mode "d2"
-  "A mode for for working with 'd2' files."
-  :syntax-table d2-mode-syntax-table
-  (setq-local comment-start "#"
-              comment-end "")
-
-  (setq-local font-lock-defaults '(d2-mode-font-lock-keywords))
-
-  (setq-local indent-tabs-mode nil
-              tab-width 2
-              indent-line-function 'insert-tab
-              electric-indent-mode nil)
-
-  (with-eval-after-load 'apheleia
-    (setf (alist-get 'd2 apheleia-formatters) '("d2" "fmt" "-"))
-    (setf (alist-get 'd2-mode apheleia-mode-alist) 'd2))
-
-  (run-hooks 'd2-mode-hook))
-
-(add-hook 'd2-mode-hook 'apheleia-mode)
-
-(add-to-list 'auto-mode-alist '("\\.d2\\'" . d2-mode))
 
 ;; Just
 

@@ -1,13 +1,12 @@
 # Home manager configuration shared across all machines.
 
-{config, pkgs, ...}:
+{config, pkgs, specialArgs, ...}:
 
 let
-  # Extra packages.
-  tygo = pkgs.callPackage ./pkgs/tygo.nix {};
-  goose = pkgs.callPackage ./pkgs/goose.nix {};
-  d2 = pkgs.callPackage ./pkgs/d2.nix {};
-  typescript-ls = pkgs.callPackage ./pkgs/typescript-ls.nix {};
+  rust-dev-packages = specialArgs.rust-dev-packages;
+  python-dev-packages = specialArgs.python-dev-packages;
+  go-dev-packages = specialArgs.go-dev-packages;
+  ts-dev-packages = specialArgs.ts-dev-packages;
 in
 {
   home.stateVersion = "22.05";
@@ -22,10 +21,6 @@ in
   home.sessionVariables = {
     EDITOR = "editor";
     PAGER = "cat"; # Works for now.
-    JULIA_NUM_THREADS = "16";
-
-    # Ensure system packages can be found by pkg-config.
-    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 
   home.file.".bin/editor" = {
@@ -43,7 +38,6 @@ in
   home.packages = with pkgs; [
     # Misc
     htop
-    fortune
     vim
     coreutils
     cacert
@@ -54,40 +48,28 @@ in
     jq
     ripgrep
     tree
-    bat
-    docker
     gnupg
     gnugrep
     gnutar
     gnused
-    syncthing
-    postgresql
-    mysql
-    sqlcmd # SQL Server cli
     qemu
     findutils
-    plantuml
     unixtools.getopt
     cloc
     poppler_utils
-    pkg-config
-    openssl
-    openssl.dev
-    libiconv
-    just
     neovim
     ffmpeg
     optipng
     imagemagick
+    docker
+
+    # For psql
+    postgresql
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
     ghostscript
     mupdf
-
-    # Security
-    tfsec
-    doppler
 
     # Profiling
     samply
@@ -104,106 +86,26 @@ in
 
     # Linting stuff
     shellcheck
-    golangci-lint
 
-    # Dev utilities
+    # Cloud utilities
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     awscli2
     azure-cli
     azure-storage-azcopy
-    docker
-    sqlc
     kubectl
-    terraform
-    skopeo
-    gh
-    d2
-
-    # Protobuf
-    protobuf
-    protoc-gen-go
-    protoc-gen-go-grpc
 
     # C/C++
     cmake
     doxygen
     clang-tools
-    # TODO: clang and clangd
-
-    # R
-    (rWrapper.override { packages = with rPackages; [
-                           ggplot2
-                           dplyr
-                           xts
-                           RPostgres
-                           DBI
-                         ]; })
-
-    # Python
-    (python3.withPackages (ps: with ps; [
-      numpy
-      pandas
-      pip
-      virtualenv
-      duckdb
-      ipython
-      pyarrow
-      psycopg2
-      rich
-      pyspark
-      requests-cache
-      requests
-    ]))
-    poetry
-
-    # Go
-    go
-    gopls
-    gotools
-    goose
-    tygo
-
-    # Rust
-    (fenix.stable.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
-    ])
-    rust-analyzer-nightly
-
-    # Javascript/Typescript
-    yarn
-    nodejs_20
-    nodePackages.typescript
-    typescript-ls
-    esbuild
-
-    # Scheme
-    guile
-
-    # Clojure
-    clojure
-
-    # Java
-    jdk
-
-    # Common lisp
-    sbcl
-
-    # Elixir/erlang
-    elixir
-    erlang
-
-    # Haskell
-    haskell.compiler.ghc942
-    ormolu
 
     # Zig
     zig
     zls
+
+    # Protobuf
+    protobuf
 
     # Fonts
     source-sans
@@ -212,30 +114,29 @@ in
     fira-mono
     ibm-plex
     jetbrains-mono
-    dejavu_fonts
-    inconsolata
-    mononoki
-    cascadia-code
-    victor-mono
-    fantasque-sans-mono
-    commit-mono
-    go-font
     merriweather
     merriweather-sans
-
-    # (iosevka.override {
-    #   privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
-    #   set = "custom";
-    # })
-    # (iosevka.override {
-    #   privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
-    #   set = "sans";
-    # })
-  ];
+  ]
+  ++ rust-dev-packages
+  ++ python-dev-packages
+  ++ go-dev-packages
+  ++ ts-dev-packages;
 
   home.file.".emacs.d" = {
     source = ./emacs;
     recursive = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+    config = {
+      whitelist = {
+        prefix = ["~/Code/github.com/glaredb/"];
+      };
+    };
   };
 
   programs.emacs = {
@@ -269,6 +170,8 @@ in
       ".log/"
       ".ccls-cache/"
       ".DS_Store"
+      ".envrc"
+      ".direnv/"
     ];
     extraConfig = {
       core = {

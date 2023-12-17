@@ -9,17 +9,27 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-utils.url = "github:numtide/flake-utils";
+
     # Stable nixpkgs.
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
-    # Rust toolchain
-    fenix = {
-      url = "github:nix-community/fenix";
+    # GlareDB dev env (rust, python)
+    dev-glaredb = {
+      url = "path:./flakes/glaredb";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    # Cloud dev env (go, ts)
+    dev-cloud = {
+      url = "path:./flakes/cloud";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, home-manager, fenix, ... }:
+  outputs = { nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
     let
 
       mkHome = system: {modules}: (
@@ -28,14 +38,8 @@
             inherit system;
             config = {
               allowUnfree = true;
-              permittedInsecurePackages = [
-                "openssl-1.1.1u" # Needed for spark
-                "nodejs-16.20.1" # Needed for iosevka.
-                "nodejs-16.20.2" # idk
-              ];
             };
             overlays = [
-              fenix.overlays.default
               # GPG, 2.4.1 causes emacs to hang when saving files. 2.4.0
               # (version on stable) does not hang.
               (final: prev:
@@ -45,11 +49,13 @@
                   gnupg = stable.gnupg;
                 }
               )
-              # Quick hack until go points to 1.21
-              (final: prev: {
-                go = prev.go_1_21;
-              })
             ];
+          };
+          extraSpecialArgs = {
+            rust-dev-packages = inputs.dev-glaredb.dev.${system}.rust-packages;
+            python-dev-packages = inputs.dev-glaredb.dev.${system}.python-packages;
+            go-dev-packages = inputs.dev-cloud.dev.${system}.go-packages;
+            ts-dev-packages = inputs.dev-cloud.dev.${system}.ts-packages;
           };
           inherit modules;
         }
