@@ -30,13 +30,7 @@
               "rustfmt"
             ])
             rust.rust-analyzer
-          ]
-          ++ (pkgs.lib.optional pkgs.stdenv.isDarwin [
-            # Packages required to build on mac.
-            pkgs.libiconv
-            pkgs.darwin.apple_sdk.frameworks.Security
-            pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
-          ]);
+          ];
 
           # Python with some common libs.
           pythonBuildInputs = with pkgs; [
@@ -85,7 +79,14 @@
           ]
           ++ rustBuildInputs
           ++ pythonBuildInputs
-          ++ rBuildInputs;
+          ++ rBuildInputs
+          ++ (pkgs.lib.optional pkgs.stdenv.isDarwin [
+            # Packages required to build on mac.
+            pkgs.libiconv
+            pkgs.darwin.apple_sdk.frameworks.Security
+            pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
+          ]);
+
         in
           {
             devShells.default = pkgs.mkShell {

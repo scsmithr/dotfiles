@@ -12,7 +12,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-dIEFld3uU5mluIv4b3/DepaUjHxxZtUEqRPMidsltQ8=",
+        "narHash": "sha256-b6VoRVeBblU9PqweM0hi/xPH58qRJ7ZgDM8JAsnWsxQ=",
         "path": "./flakes/cloud",
         "type": "path"
       },
@@ -33,7 +33,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-3WccpmNEJYre2xfDAfYKh1X4nAvFZ8c7EVWVEz0ahHU=",
+        "narHash": "sha256-cOaL+l2Hc5utLBq4qhQOOmC9ZcqHAKtypLYOLeT4EGw=",
         "path": "./flakes/glaredb",
         "type": "path"
       },

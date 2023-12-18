@@ -46,21 +46,11 @@
             vendorHash = "sha256-MiPbUq3iiCSZRG4FeC1NAny2BflBnlTxq4Id5Xc3Kxo=";
           };
 
-          typescript-ls = pkgs.symlinkJoin {
-            name = "typescript-language-server";
-            paths = [ pkgs.nodePackages.typescript-language-server ];
-            buildInputs = [ pkgs.makeWrapper ];
-            postBuild = ''
-                wrapProgram $out/bin/typescript-language-server \
-                    --add-flags --tsserver-path=${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/
-            '';
-          };
-
           tsBuildInputs = with pkgs; [
             yarn
             nodejs_20
             nodePackages.typescript
-            typescript-ls
+            nodePackages.typescript-language-server
             esbuild
           ];
 
@@ -89,7 +79,9 @@
             protobuf
             protoc-gen-go
             protoc-gen-go-grpc
-          ] ++ goBuildInputs ++ tsBuildInputs;
+          ]
+          ++ goBuildInputs
+          ++ tsBuildInputs;
         in
           {
             devShells.default = pkgs.mkShell {
