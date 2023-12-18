@@ -3,10 +3,35 @@
 {config, pkgs, specialArgs, ...}:
 
 let
-  rust-dev-packages = specialArgs.rust-dev-packages;
-  python-dev-packages = specialArgs.python-dev-packages;
-  go-dev-packages = specialArgs.go-dev-packages;
-  ts-dev-packages = specialArgs.ts-dev-packages;
+  tygo = pkgs.buildGoModule {
+    src = pkgs.fetchFromGitHub {
+      owner = "gzuidhof";
+      repo = "tygo";
+      rev = "v0.2.4";
+      sha256 = "sha256-pH60K7F8SRBBZIrog7AN/fa7ES/OQ5u9/0vbCEoTJq8=";
+    };
+
+    pname = "tygo";
+    name = "tygo";
+
+    vendorHash = "sha256-Suwo9xyj34IEBqu328EEl8GCS9QthFWnSKlU4gRUMAU=";
+  };
+
+  goose = pkgs.buildGoModule {
+    src = pkgs.fetchFromGitHub {
+      owner = "pressly";
+      repo = "goose";
+      rev = "v3.7.0";
+      sha256 = "sha256-2T+Mb9SCsYsrD2FqddpszVjcaSdJcLn3RnJMloxI4xQ=";
+    };
+
+    pname = "goose";
+    name = "goose";
+    # Tries to run tests with docker containers.
+    doCheck = false;
+
+    vendorHash = "sha256-MiPbUq3iiCSZRG4FeC1NAny2BflBnlTxq4Id5Xc3Kxo=";
+  };
 in
 {
   home.stateVersion = "22.05";
@@ -37,34 +62,45 @@ in
 
   home.packages = with pkgs; [
     # Misc
-    htop
-    vim
-    coreutils
     cacert
-    wget
+    cloc
+    coreutils
+    docker
+    ffmpeg
+    findutils
     git
+    gnugrep
     gnumake
     gnupg
+    gnupg
+    gnused
+    gnutar
+    htop
+    imagemagick
     jq
+    just
+    neovim
+    optipng
+    poppler_utils
+    qemu
     ripgrep
     tree
-    gnupg
-    gnugrep
-    gnutar
-    gnused
-    qemu
-    findutils
     unixtools.getopt
-    cloc
-    poppler_utils
-    neovim
-    ffmpeg
-    optipng
-    imagemagick
-    docker
+    vim
+    wget
 
-    # For psql
+    # Random build bullshit
+    libiconv
+
+    # Needed for compiling psycopg2 from source since it doesn't ship a
+    # wheel for mac.
+    openssl
+    openssl.dev
+
+    # SQL clients
     postgresql
+    mysql
+    sqlcmd # SQL Server cli
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
@@ -95,6 +131,13 @@ in
     azure-storage-azcopy
     kubectl
 
+    # Other cloud stuff
+    terraform
+
+    # Security
+    tfsec
+    doppler
+
     # C/C++
     cmake
     doxygen
@@ -106,6 +149,61 @@ in
 
     # Protobuf
     protobuf
+    protoc-gen-go
+    protoc-gen-go-grpc
+
+    # Rust
+    (fenix.stable.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+    ])
+    rust-analyzer-nightly
+
+    # Go
+    go
+    gopls
+    gotools
+    golangci-lint
+    goose
+    tygo
+    sqlc
+
+    # Javascript/Typescript
+    yarn
+    nodejs_20
+    nodePackages.typescript
+    nodePackages.typescript-language-server
+    esbuild
+
+    # Python with some common libs.
+    (python3.withPackages (ps: with ps; [
+      numpy
+      pandas
+      pip
+      virtualenv
+      duckdb
+      ipython
+      pyarrow
+      psycopg2
+      rich
+      pyspark
+      requests-cache
+      requests
+    ]))
+    poetry
+
+    # For R examples.
+    (rWrapper.override
+      { packages = with rPackages; [
+          ggplot2
+          dplyr
+          xts
+          RPostgres
+          DBI
+        ]; })
 
     # Fonts
     source-sans
@@ -116,27 +214,11 @@ in
     jetbrains-mono
     merriweather
     merriweather-sans
-  ]
-  ++ rust-dev-packages
-  ++ python-dev-packages
-  ++ go-dev-packages
-  ++ ts-dev-packages;
+  ];
 
   home.file.".emacs.d" = {
     source = ./emacs;
     recursive = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-    config = {
-      whitelist = {
-        prefix = ["~/Code/github.com/glaredb/"];
-      };
-    };
   };
 
   programs.emacs = {

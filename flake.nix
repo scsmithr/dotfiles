@@ -9,27 +9,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
-
     # Stable nixpkgs.
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
-    # GlareDB dev env (rust, python)
-    dev-glaredb = {
-      url = "path:./flakes/glaredb";
+    # Rust toolchain
+    fenix = {
+      url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
-    # Cloud dev env (go, ts)
-    dev-cloud = {
-      url = "path:./flakes/cloud";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-stable, home-manager, fenix, ... }@inputs:
     let
 
       mkHome = system: {modules}: (
@@ -40,6 +30,7 @@
               allowUnfree = true;
             };
             overlays = [
+              fenix.overlays.default
               # GPG, 2.4.1 causes emacs to hang when saving files. 2.4.0
               # (version on stable) does not hang.
               (final: prev:

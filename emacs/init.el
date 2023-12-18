@@ -63,11 +63,5 @@
 (require 'seanmacs-shell)
 (require 'seanmacs-password)
 
-;; Loaded last to ensure all advice gets prefixed.
-(use-package envrc
-  :straight t
-  :config
-  (envrc-global-mode))
-
 ;;; init.el ends here
 
