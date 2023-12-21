@@ -192,9 +192,14 @@ in
       pyspark
       requests-cache
       requests
-      python-lsp-server # pylsp
+
+      # Languge server (pylsp)
+      python-lsp-server
+      pyls-flake8
+      flake8
     ]))
     poetry
+    ruff
 
     # For R examples.
     (rWrapper.override

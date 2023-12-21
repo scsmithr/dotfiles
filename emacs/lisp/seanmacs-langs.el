@@ -74,11 +74,14 @@
 
 
 ;; Python
+
 (use-package python
   ;; built in
   :config
   (push '(python-mode . python-ts-mode) major-mode-remap-alist)
-  :hook ((python-ts-mode . eglot-ensure)))
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) 'ruff)
+  :hook ((python-ts-mode . eglot-ensure)
+         (python-ts-mode . apheleia-mode)))
 
 
 ;; Typescript/ web stuff

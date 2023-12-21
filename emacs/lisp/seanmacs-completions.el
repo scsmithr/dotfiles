@@ -117,6 +117,9 @@
   (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
                                             :inlayHintProvider))
 
+  (setq-default eglot-workspace-configuration
+                '(:pylsp (:plugins (:flake8 (:enabled t)))))
+
   ;; Mostly done to ensure eglot is loaded before attempting to modify the
   ;; server programs list.
   (defun sm/add-server-program (mode program)
