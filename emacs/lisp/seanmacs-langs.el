@@ -73,6 +73,14 @@
               ("C-c C-c C-t" . sm/cargo-test-crate)))
 
 
+;; Python
+(use-package python
+  ;; built in
+  :config
+  (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+  :hook ((python-ts-mode . eglot-ensure)))
+
+
 ;; Typescript/ web stuff
 
 (require 'typescript-ts-mode)

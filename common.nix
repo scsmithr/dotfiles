@@ -192,6 +192,7 @@ in
       pyspark
       requests-cache
       requests
+      python-lsp-server # pylsp
     ]))
     poetry
 
