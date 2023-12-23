@@ -104,7 +104,6 @@ in
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
-    ghostscript
     mupdf
 
     # Profiling

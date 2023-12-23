@@ -98,6 +98,10 @@ file at point will be used."
   (defun sm/doc-view-disable-hl-line ()
     (setq-local global-hl-line-mode nil))
 
+  :config
+
+  (setq doc-view-mupdf-use-svg t)
+
   :hook ((doc-view-mode . sm/doc-view-disable-hl-line)))
 
 (use-package ffap

@@ -159,7 +159,7 @@ loaded (e.g. sql-mode)."
                      (mode . shell-mode)))
            ("Dired" (or (mode . dired-mode)
                         (mode . image-dired-thumbnail-mode)))
-           ("Email" (name . "\*mu4e"))
+           ("ChatGPT" (name . "\*ChatGPT"))
            ("Scratch" (name . "\*scratch"))
            ("Search" (or
                       (mode . rg-mode)
@@ -175,7 +175,7 @@ loaded (e.g. sql-mode)."
                     (mode . doc-view-mode)
                     (mode . pdf-view-mode))))))
 
-  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Interactive" "Special"))
+  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "ChatGPT" "Interactive" "Special"))
 
   (defun sm/ibuffer-order-filter-groups (groups)
     "Sort GROUPS using `sm/ibuffer-filter-group-order' and then alphabetically."
@@ -338,7 +338,7 @@ window."
 (use-package gptel
   :straight t
   :config
-  (setq-default gptel-model "gpt-3.5-turbo-16k")
+  (setq-default gptel-model "gpt-4-1106-preview")
   :hook ((gptel-mode . turn-off-auto-fill))
   :bind (:map app-prefix-map
               ("g" . gptel)

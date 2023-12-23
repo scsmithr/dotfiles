@@ -40,6 +40,17 @@
                   gnupg = stable.gnupg;
                 }
               )
+
+              # Don't create a desktop entry for mupdf.
+              (final: prev:
+                let
+                  mupdf = prev.mupdf.overrideAttrs (attrs: {
+                    desktopItems = [];
+                  });
+                in {
+                  mupdf = mupdf;
+                }
+              )
             ];
           };
           extraSpecialArgs = {

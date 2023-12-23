@@ -81,8 +81,8 @@
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
 
        ;; Mode line
-       `(mode-line ((t (:background ,bg-dim :foreground ,fg-main :box (:line-width 1 :color ,bg-active)))))
-       `(mode-line-inactive ((t (:background ,bg-inactive :box (:line-width 1 :color ,bg-active)))))
+       `(mode-line ((t (:background ,bg-dim :foreground ,fg-main :box (:line-width 1 :color ,bg-alt)))))
+       `(mode-line-inactive ((t (:background ,bg-inactive :box (:line-width 1 :color ,bg-alt)))))
 
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))
