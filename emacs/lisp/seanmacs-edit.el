@@ -339,9 +339,17 @@ window."
   :straight t
   :config
   (setq-default gptel-model "gpt-4-1106-preview")
+
+  (defun sm/gptel-interactive ()
+    "Wrapper around `gptel' to call it interactively."
+    (interactive)
+    (let ((current-prefix-arg '(1)))
+      (call-interactively 'gptel)))
+
   :hook ((gptel-mode . turn-off-auto-fill))
   :bind (:map app-prefix-map
               ("g" . gptel)
+              ("G" . sm/gptel-interactive)
               :map gptel-mode-map
               ("C-c C-c" . gptel-send)))
 
