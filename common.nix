@@ -101,6 +101,7 @@ in
     postgresql
     mysql
     sqlcmd # SQL Server cli
+    clickhouse
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
