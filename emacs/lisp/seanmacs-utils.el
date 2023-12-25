@@ -11,7 +11,7 @@
 (use-package epg
   ;; built-in
   :init
-  (setq auth-sources '("~/.authinfo.gpg" "~/.netrc.gpg")
+  (setq auth-sources `(,(concat sm/sync-dir "authinfo.gpg") "~/.authinfo.gpg")
         epg-pinentry-mode 'loopback))
 
 (use-package tabulated-list
