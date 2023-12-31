@@ -63,7 +63,7 @@
   (defun sm/cargo-test-crate ()
     "Rune tests for the current crate."
     (interactive)
-    (let ((cmd "cargo test") ;; Automatically detects which crate we're running in.
+    (let ((cmd "cargo --color=always test") ;; Automatically detects which crate we're running in.
           (buf-name "*Cargo Test*"))
       (sm/compile cmd buf-name)))
 

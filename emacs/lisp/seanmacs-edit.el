@@ -283,6 +283,7 @@ window."
 (use-package which-key
   :straight t
   :config
+  (setq which-key-sort-order 'which-key-key-order-alpha)
   (which-key-mode 1))
 
 (use-package edit-indirect

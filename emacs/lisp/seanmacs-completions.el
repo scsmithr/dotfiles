@@ -118,7 +118,8 @@
                                             :inlayHintProvider))
 
   (setq-default eglot-workspace-configuration
-                '(:pylsp (:plugins (:flake8 (:enabled t)))))
+                '(:pylsp (:plugins (:flake8 (:enabled t)))
+                  :rust-analyzer (:rust (:analyzerTargetDir t))))
 
   ;; Mostly done to ensure eglot is loaded before attempting to modify the
   ;; server programs list.
