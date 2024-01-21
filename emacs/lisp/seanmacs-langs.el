@@ -291,19 +291,6 @@
 (add-to-list 'auto-mode-alist '("\\.slt\\'" . sqllogictest-mode))
 
 
-;; Tex/Latex
-
-(use-package tex-site
-  :straight auctex
-  :config
-  (put 'LaTeX-narrow-to-environment 'disabled nil)
-
-  ;; Use color instead of scaling section titles.
-  (setq font-latex-fontify-sectioning 'color)
-
-  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
-
-
 ;; CSV
 
 (define-derived-mode csv-mode prog-mode "CSV")

@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-# name: Eslint disable next line no useless fragment
-# --
-// eslint-disable-next-line react/jsx-no-useless-fragment

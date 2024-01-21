@@ -81,13 +81,16 @@ in
     just
     neovim
     optipng
+    pandoc
     poppler_utils
     qemu
     ripgrep
+    texlive.combined.scheme-full
     tree
     unixtools.getopt
     vim
     wget
+    xz
 
     # Random build bullshit
     libiconv
@@ -123,6 +126,9 @@ in
     # Linting stuff
     shellcheck
 
+    # Link checking
+    lychee
+
     # Cloud utilities
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
@@ -153,14 +159,18 @@ in
     protoc-gen-go-grpc
 
     # Rust
-    (fenix.stable.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
+    (with fenix; with stable; combine [
+      cargo
+      clippy
+      rust-src
+      rustc
+      rustfmt
+      targets.wasm32-unknown-unknown.stable.rust-std
     ])
     rust-analyzer-nightly
+
+    # Wasm
+    wasm-pack
 
     # Go
     go
@@ -177,6 +187,9 @@ in
     nodePackages.typescript
     nodePackages.typescript-language-server
     esbuild
+
+    # Java
+    jdk21_headless
 
     # Python with some common libs.
     (python3.withPackages (ps: with ps; [

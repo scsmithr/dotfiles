@@ -94,6 +94,9 @@
 
        ;; Ansi
        `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
+
+       ;; Eat
+       `(eat-term-faint ((t :foreground ,fg-dim :weight unspecified)))
        )))
 
   (add-hook 'ef-themes-post-load-hook #'sm/customize-ef-themes)
