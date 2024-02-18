@@ -141,8 +141,7 @@ loaded (e.g. sql-mode)."
         ;; gitlab.org). I don't want those showing up in ibuffer so make sure we
         ;; match on those.
         ibuffer-directory-abbrev-alist `(("^/\\(Users\\|home\\)/sean/Code/[a-zA-Z.]+/"    . "[c] ")
-                                         ("^/\\(Users\\|home\\)/sean/.go/src/[a-zA-Z.]+/" . "[g] ")
-                                         (,(concat "^" sm/sync-dir)                       . "[sync] "))
+                                         (,(concat "^" sm/sync-dir)                       . "[s] "))
         ibuffer-formats '((mark modified read-only
                                 " " (name 28 28 :left :elide)
                                 " " (mode 16 16 :left :elide)

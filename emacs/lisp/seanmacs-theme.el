@@ -97,6 +97,9 @@
 
        ;; Eat
        `(eat-term-faint ((t :foreground ,fg-dim :weight unspecified)))
+
+       ;; Forge
+       `(forge-dimmed ((t :foreground ,fg-dim)))
        )))
 
   (add-hook 'ef-themes-post-load-hook #'sm/customize-ef-themes)

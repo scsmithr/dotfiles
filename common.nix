@@ -159,15 +159,17 @@ in
     protoc-gen-go-grpc
 
     # Rust
-    (with fenix; with stable; combine [
-      cargo
-      clippy
-      rust-src
-      rustc
-      rustfmt
+    (with fenix; combine [
+      stable.cargo
+      stable.clippy
+      stable.rust-src
+      stable.rustc
+      latest.rustfmt
+      latest.miri
       targets.wasm32-unknown-unknown.stable.rust-std
     ])
     rust-analyzer-nightly
+    cargo-insta
 
     # Wasm
     wasm-pack
