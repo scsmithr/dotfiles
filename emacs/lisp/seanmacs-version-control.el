@@ -34,7 +34,8 @@
 (use-package forge
   :straight t
   :config
-  (setq forge-pull-notifications nil))
+  (setq forge-pull-notifications nil
+        forge-colorful-topic-summaries nil))
 
 (use-package git-link
   :straight t

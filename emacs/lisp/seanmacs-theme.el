@@ -48,7 +48,7 @@
   (minions-mode 1))
 
 (use-package ef-themes
-  :straight (:host sourcehut :repo "protesilaos/ef-themes" :branch "main")
+  :straight t
   :config
 
   (setq ef-themes-mixed-fonts t)
