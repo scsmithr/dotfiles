@@ -207,6 +207,7 @@ in
       pyspark
       requests-cache
       requests
+      dbt
 
       # Languge server (pylsp)
       python-lsp-server

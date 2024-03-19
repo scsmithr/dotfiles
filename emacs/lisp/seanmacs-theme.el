@@ -12,17 +12,17 @@
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
     (message "Setting frame fonts")
-    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono")
-    (set-face-attribute 'variable-pitch nil :family "Merriweather" :height 130)
+    (set-face-attribute 'default nil :family "IBM Plex Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono")
+    (set-face-attribute 'variable-pitch nil :family "IBM Plex Sans" :height 140)
     ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
+    (set-fontset-font t 'unicode (font-spec :name "IBM Plex Mono" :weight 'normal))
     (when (eq system-type 'darwin)
       (set-fontset-font t 'unicode (font-spec :name "Apple Color Emoji" :size 10 :weight 'normal) nil 'append))))
 
 ;; Set default font. When not running in a daemon, this will ensure the frame
 ;; has the appropriate font set.
-(add-to-list 'default-frame-alist '(font . "PragmataPro Mono"))
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono"))
 
 ;; If running as a daemon, make sure fonts are set everytime a new frame is
 ;; created. This ensures unicode fallbacks are set for all frames.
@@ -47,31 +47,17 @@
 
   (minions-mode 1))
 
-(use-package ef-themes
-  :straight t
+(use-package modus-themes
+  :straight (:host github :repo "protesilaos/modus-themes" :branch "main")
   :config
 
-  (setq ef-themes-mixed-fonts t)
+  (setq modus-themes-common-palette-overrides
+      '((bg-region bg-ochre)
+        (fg-region unspecified)))
 
-  (setq ef-light-palette-overrides
-        '((cursor fg-main)))
-
-  (setq ef-dark-palette-overrides
-        '((cursor fg-main)))
-
-  (defun sm/customize-ef-themes ()
-    (ef-themes-with-colors
+  (defun sm/customize-modus-themes ()
+    (modus-themes-with-colors
       (custom-set-faces
-       ;; Remove some unwanted bold/italic properties.
-       `(font-lock-keyword-face ((t (:inherit unspecified))))
-       `(font-lock-builtin-face ((t (:inherit unspecified))))
-       `(font-lock-comment-face ((t (:inherit unspecified))))
-       `(font-lock-doc-face ((t (:inherit unspecified))))
-
-       ;; Fringe
-       `(fringe ((t (:background ,bg-inactive))))
-       `(line-number ((t (:background ,bg-inactive))))
-
        ;; Whitespace
        `(whitespace-hspace ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-indentation ((t (:foreground ,bg-dim :background unspecified))))
@@ -80,17 +66,9 @@
        `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
 
-       ;; Mode line
-       `(mode-line ((t (:background ,bg-dim :foreground ,fg-main :box (:line-width 1 :color ,bg-alt)))))
-       `(mode-line-inactive ((t (:background ,bg-inactive :box (:line-width 1 :color ,bg-alt)))))
-
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))
        `(eglot-mode-line ((t (:inherit unspecified :foreground unspecified))))
-
-       ;; Evil
-       `(evil-ex-substitute-matches ((t :background ,bg-changed :foreground ,fg-changed :underline t)))
-       `(evil-ex-substitute-replacement ((t :background ,bg-added :foreground ,fg-added :underline t)))
 
        ;; Ansi
        `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
@@ -102,7 +80,7 @@
        `(forge-dimmed ((t :foreground ,fg-dim)))
        )))
 
-  (add-hook 'ef-themes-post-load-hook #'sm/customize-ef-themes)
+  (add-hook 'modus-themes-post-load-hook #'sm/customize-modus-themes)
 
   (defun sm/get-system-appearance ()
     "Get the system appearance.
@@ -145,10 +123,10 @@
     (let ((appearance (sm/get-system-appearance)))
       (message "syncing theme: %s" appearance)
       (if (string= appearance "dark")
-          (ef-themes-select 'ef-dark)
-        (ef-themes-select 'ef-light))))
+          (modus-themes-select 'modus-vivendi)
+        (modus-themes-select 'modus-operandi))))
 
-  (ef-themes-select 'ef-light))
+  (modus-themes-select 'modus-operandi))
 
 ;; Fringe bitmaps
 
