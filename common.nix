@@ -228,14 +228,16 @@ in
         ]; })
 
     # Fonts
-    source-sans
-    source-serif
-    source-code-pro
     fira-mono
     ibm-plex
+    inconsolata
+    iosevka
     jetbrains-mono
     merriweather
     merriweather-sans
+    source-code-pro
+    source-sans
+    source-serif
   ];
 
   home.file.".emacs.d" = {

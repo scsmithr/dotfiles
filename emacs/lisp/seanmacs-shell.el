@@ -19,15 +19,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
          #'(lambda (_mode) (or buf-name (format "*Compile: %s*" command)))))
     (compile command)))
 
-(defun sm/compile-add-error-syntax (name regexp file line &optional col level)
-  "Register new compilation error syntax."
-  (add-to-list 'compilation-error-regexp-alist name)
-  (add-to-list 'compilation-error-regexp-alist-alist
-               (list name regexp file line col level)))
-
-(sm/compile-add-error-syntax 'rust-pretty-logfile
- "^\s+ at \\(.*\\):\\([0-9]+\\)" 1 2)
-
 (defun sm/buffer-setenv (env val)
   "Set an environment variable for the buffer."
   (interactive (list (read-string "Environment variable: ")

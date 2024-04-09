@@ -12,17 +12,17 @@
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
     (message "Setting frame fonts")
-    (set-face-attribute 'default nil :family "IBM Plex Mono" :height 140 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono")
-    (set-face-attribute 'variable-pitch nil :family "IBM Plex Sans" :height 140)
+    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono")
+    (set-face-attribute 'variable-pitch nil :family "Merriweather" :height 140)
     ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "IBM Plex Mono" :weight 'normal))
+    (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
     (when (eq system-type 'darwin)
       (set-fontset-font t 'unicode (font-spec :name "Apple Color Emoji" :size 10 :weight 'normal) nil 'append))))
 
 ;; Set default font. When not running in a daemon, this will ensure the frame
 ;; has the appropriate font set.
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono"))
+(add-to-list 'default-frame-alist '(font . "PragmataPro Mono"))
 
 ;; If running as a daemon, make sure fonts are set everytime a new frame is
 ;; created. This ensures unicode fallbacks are set for all frames.
@@ -51,6 +51,8 @@
   :straight (:host github :repo "protesilaos/modus-themes" :branch "main")
   :config
 
+  (setq modus-themes-mixed-fonts t)
+
   (setq modus-themes-common-palette-overrides
       '((bg-region bg-ochre)
         (fg-region unspecified)))
@@ -65,6 +67,8 @@
        `(whitespace-newline ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
+
+       ;; Mode line
 
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))

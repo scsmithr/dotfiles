@@ -56,7 +56,6 @@
 (require 'seanmacs-completions)
 (require 'seanmacs-flymake)
 (require 'seanmacs-utils)
-(require 'seanmacs-elfeed)
 (require 'seanmacs-version-control)
 (require 'seanmacs-org)
 (require 'seanmacs-langs)

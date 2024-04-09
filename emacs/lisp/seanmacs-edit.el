@@ -168,8 +168,7 @@ loaded (e.g. sql-mode)."
            ("Special" (or (name . "\*")))
            ("Version control" (or
                                (name . "magit")
-                               (mode . diff-mode)
-                               (mode . github-review-mode)))
+                               (mode . diff-mode)))
            ("Docs" (or
                     (mode . doc-view-mode)
                     (mode . pdf-view-mode))))))
