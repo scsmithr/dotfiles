@@ -231,7 +231,14 @@ in
     fira-mono
     ibm-plex
     inconsolata
-    iosevka
+    (iosevka.override {
+      privateBuildPlan = builtins.readFile ./iosevka-custom.toml;
+      set = "custom";
+    })
+    (iosevka.override {
+      privateBuildPlan = builtins.readFile ./iosevka-sans.toml;
+      set = "sans";
+    })
     jetbrains-mono
     merriweather
     merriweather-sans

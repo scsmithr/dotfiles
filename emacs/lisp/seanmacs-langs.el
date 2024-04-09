@@ -182,6 +182,7 @@
         markdown-gfm-use-electric-backquote nil)
 
   :hook ((markdown-mode . visual-line-mode)
+         (markdown-mode . variable-pitch-mode)
          (markdown-mode . turn-on-auto-fill)))
 
 
