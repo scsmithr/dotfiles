@@ -1,0 +1,32 @@
+[buildPlans.IosevkaCustom]
+family = "Iosevka Custom"
+spacing = "fixed"
+serifs = "sans"
+noCvSs = true
+exportGlyphNames = false
+noLigation = true
+
+[buildPlans.IosevkaCustom.variants.design]
+zero = "dotted"
+asterisk = "penta-low"
+number-sign = "slanted-open"
+ampersand = "upper-open"
+dollar = "open"
+
+[buildPlans.IosevkaCustom.variants.italic]
+
+[buildPlans.IosevkaSans]
+family = "Iosevka Sans"
+spacing = "quasi-proportional"
+serifs = "sans"
+noCvSs = true
+exportGlyphNames = false
+
+[buildPlans.IosevkaSans.variants.design]
+zero = "dotted"
+asterisk = "penta-low"
+number-sign = "slanted-open"
+ampersand = "upper-open"
+dollar = "open"
+
+[buildPlans.IosevkaSans.variants.italic]

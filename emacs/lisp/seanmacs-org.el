@@ -178,8 +178,7 @@
 
   :hook ((org-capture-mode . evil-insert-state)
          (org-mode . sm/org-set-before-save-hook)
-         (org-mode . turn-on-auto-fill)
-         (org-mode . variable-pitch-mode))
+         (org-mode . turn-on-auto-fill))
   :bind (("C-c c" . org-capture)
          ("C-c o o" . org-agenda)
          ("C-c o d" . sm/org-agenda-day)

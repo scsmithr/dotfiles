@@ -41,16 +41,6 @@
         };
         overlays = [
           fenix.overlays.default
-          # GPG, 2.4.1 causes emacs to hang when saving files. 2.4.0
-          # (version on stable) does not hang.
-          (final: prev:
-            let
-              stable = import nixpkgs-stable { inherit system; };
-            in {
-              gnupg = stable.gnupg;
-            }
-          )
-
           # Don't create a desktop entry for mupdf.
           (final: prev:
             let

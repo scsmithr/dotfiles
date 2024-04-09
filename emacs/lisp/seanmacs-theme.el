@@ -12,17 +12,17 @@
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
     (message "Setting frame fonts")
-    (set-face-attribute 'default nil :family "Iosevka Custom" :height 140 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :family "Iosevka Custom")
-    (set-face-attribute 'variable-pitch nil :family "Iosevka Sans" :height 140)
+    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono")
+    (set-face-attribute 'variable-pitch nil :family "Open Sans" :height 140)
     ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "Iosevka Custom" :weight 'normal))
+    (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
     (when (eq system-type 'darwin)
       (set-fontset-font t 'unicode (font-spec :name "Apple Color Emoji" :size 10 :weight 'normal) nil 'append))))
 
 ;; Set default font. When not running in a daemon, this will ensure the frame
 ;; has the appropriate font set.
-(add-to-list 'default-frame-alist '(font . "Iosevka Custom"))
+(add-to-list 'default-frame-alist '(font . "PragmataPro Mono"))
 
 ;; If running as a daemon, make sure fonts are set everytime a new frame is
 ;; created. This ensures unicode fallbacks are set for all frames.
@@ -54,8 +54,11 @@
   (setq modus-themes-mixed-fonts t)
 
   (setq modus-themes-common-palette-overrides
-      '((bg-region bg-ochre)
-        (fg-region unspecified)))
+        '((bg-region                  bg-ochre)
+          (fg-region                  unspecified)
+
+          (border-mode-line-active    border)
+          (border-mode-line-inactive  border)))
 
   (defun sm/customize-modus-themes ()
     (modus-themes-with-colors
@@ -67,8 +70,6 @@
        `(whitespace-newline ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
-
-       ;; Mode line
 
        ;; Eglot
        `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))
@@ -86,13 +87,31 @@
 
   (add-hook 'modus-themes-post-load-hook #'sm/customize-modus-themes)
 
-  (defun sm/get-system-appearance ()
-    "Get the system appearance.
+  (defun sm/toggle-modus-theme ()
+    "Toggle the system theme along with the emacs theme."
+    (interactive)
+    (sm/toggle-system-appearance)
+    (sm/conditional-theme #'(lambda () (modus-themes-select 'modus-operandi))
+                          #'(lambda () (modus-themes-select 'modus-vivendi))))
+
+  (modus-themes-select 'modus-operandi))
+
+(defun sm/conditional-theme (light-fn dark-fn)
+  "Conditionally call LIGHT-FN or DARK-FN depending on the system theme."
+  (interactive)
+  (let ((appearance (sm/get-system-appearance)))
+    (message "syncing theme: %s" appearance)
+    (if (string= appearance "dark")
+        (funcall dark-fn)
+      (funcall light-fn))))
+
+(defun sm/get-system-appearance ()
+  "Get the system appearance.
 
  Defaults to light if running in terminal or not running on mac."
-    (if (and (display-graphic-p)
-             (eq system-type 'darwin))
-        (ns-do-applescript "
+  (if (and (display-graphic-p)
+           (eq system-type 'darwin))
+      (ns-do-applescript "
          tell application \"System Events\"
            tell appearance preferences
              if (dark mode) then
@@ -103,34 +122,17 @@
            end tell
          end tell
          ")
-      "light"))
+    "light"))
 
-  (defun sm/toggle-system-appearance ()
-    "Toggle system appearance if running on mac."
-    (if (eq system-type 'darwin)
-        (ns-do-applescript "
+(defun sm/toggle-system-appearance ()
+  "Toggle system appearance if running on mac."
+  (if (eq system-type 'darwin)
+      (ns-do-applescript "
          tell application \"System Events\"
            tell appearance preferences
              set dark mode to not dark mode
            end tell
          end tell")))
-
-  (defun sm/toggle-theme ()
-    "Toggle the system theme along with the emacs theme."
-    (interactive)
-    (sm/toggle-system-appearance)
-    (sm/sync-theme))
-
-  (defun sm/sync-theme ()
-    "Sync emacs theme with the system theme."
-    (interactive)
-    (let ((appearance (sm/get-system-appearance)))
-      (message "syncing theme: %s" appearance)
-      (if (string= appearance "dark")
-          (modus-themes-select 'modus-vivendi)
-        (modus-themes-select 'modus-operandi))))
-
-  (modus-themes-select 'modus-operandi))
 
 ;; Fringe bitmaps
 
