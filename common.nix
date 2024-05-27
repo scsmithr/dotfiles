@@ -134,10 +134,6 @@ in
     aspellDicts.en-computers
     aspellDicts.en-science
 
-    # Shells
-    bash
-    zsh
-
     # Linting stuff
     shellcheck
 
@@ -271,7 +267,7 @@ in
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29.pkgs.withPackages (epkgs: [
+    package = pkgs.emacs.pkgs.withPackages (epkgs: [
       epkgs.treesit-grammars.with-all-grammars
     ]);
   };

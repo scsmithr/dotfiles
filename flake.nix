@@ -9,9 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Stable nixpkgs.
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
-
     # Rust toolchain
     fenix = {
       url = "github:nix-community/fenix";
@@ -19,7 +16,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, home-manager, fenix, ... }@inputs:
+  outputs = { nixpkgs, home-manager, fenix, ... }@inputs:
     let
       systemConfs = [
         {
