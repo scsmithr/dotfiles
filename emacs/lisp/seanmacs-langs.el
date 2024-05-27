@@ -309,7 +309,7 @@
 
 ;; Nix
 
-(use-package nix-mode
+(use-package nix-ts-mode
   :straight t
   :mode "\\.nix\\'")
 
