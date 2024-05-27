@@ -158,7 +158,6 @@ loaded (e.g. sql-mode)."
                      (mode . shell-mode)))
            ("Dired" (or (mode . dired-mode)
                         (mode . image-dired-thumbnail-mode)))
-           ("ChatGPT" (name . "\*ChatGPT"))
            ("Scratch" (name . "\*scratch"))
            ("Search" (or
                       (mode . rg-mode)
@@ -173,7 +172,7 @@ loaded (e.g. sql-mode)."
                     (mode . doc-view-mode)
                     (mode . pdf-view-mode))))))
 
-  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "ChatGPT" "Interactive" "Special"))
+  (setq sm/ibuffer-filter-group-order '("Default" "Docs" "Shell" "Interactive" "Special"))
 
   (defun sm/ibuffer-order-filter-groups (groups)
     "Sort GROUPS using `sm/ibuffer-filter-group-order' and then alphabetically."
@@ -223,13 +222,6 @@ loaded (e.g. sql-mode)."
   (setq dtrt-indent-verbosity 0
         dtrt-indent-min-quality 65.0
         dtrt-indent-min-hard-tab-superiority 180.0)
-
-  ;; Treesitter modes.
-  (add-to-list 'dtrt-indent-hook-mapping-list '(typescript-ts-base-mode javascript typescript-ts-mode-indent-offset))
-  (add-to-list 'dtrt-indent-hook-mapping-list '(rust-ts-mode c/c++/java rust-ts-mode-indent-offset))
-  (add-to-list 'dtrt-indent-hook-mapping-list '(json-ts-mode javascript json-ts-mode-indent-offset))
-  (add-to-list 'dtrt-indent-hook-mapping-list '(c-ts-base-mode c/c++/java c-ts-mode-indent-offset))
-  (add-to-list 'dtrt-indent-hook-mapping-list '(go-ts-mode c/c++/java go-ts-mode-indent-offset))
 
   (dtrt-indent-global-mode 1))
 
@@ -301,15 +293,6 @@ window."
   :bind (:map buffer-prefix-map
               ("e" . edit-indirect-region)))
 
-(use-package separedit
-  :straight t
-  :config
-  (setq separedit-default-mode 'gfm-mode
-        separedit-remove-trailing-spaces-in-comment t
-        separedit-continue-fill-column t)
-  :bind (:map prog-mode-map
-              ("C-c '" . separedit)))
-
 (use-package apheleia
   :straight t
   :config
@@ -333,24 +316,6 @@ window."
   ;; built-in
   :config
   (setq bookmark-save-flag 1))
-
-(use-package gptel
-  :straight t
-  :config
-  (setq-default gptel-model "gpt-4-1106-preview")
-
-  (defun sm/gptel-interactive ()
-    "Wrapper around `gptel' to call it interactively."
-    (interactive)
-    (let ((current-prefix-arg '(1)))
-      (call-interactively 'gptel)))
-
-  :hook ((gptel-mode . turn-off-auto-fill))
-  :bind (:map app-prefix-map
-              ("g" . gptel)
-              ("G" . sm/gptel-interactive)
-              :map gptel-mode-map
-              ("C-c C-c" . gptel-send)))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

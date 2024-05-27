@@ -58,7 +58,8 @@
           (fg-region                  unspecified)
 
           (border-mode-line-active    border)
-          (border-mode-line-inactive  border)))
+          (border-mode-line-inactive  border)
+          ))
 
   (defun sm/customize-modus-themes ()
     (modus-themes-with-colors
@@ -87,7 +88,7 @@
 
   (add-hook 'modus-themes-post-load-hook #'sm/customize-modus-themes)
 
-  (defun sm/toggle-modus-theme ()
+  (defun sm/toggle-theme ()
     "Toggle the system theme along with the emacs theme."
     (interactive)
     (sm/toggle-system-appearance)

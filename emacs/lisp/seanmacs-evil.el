@@ -13,7 +13,6 @@
   :config
   (winner-mode 1))
 
-;; evil
 (use-package evil
   :straight t
   :init

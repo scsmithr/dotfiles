@@ -118,8 +118,6 @@ If BUF-NAME is nil, the command will be used to name the buffer."
       (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
       (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
 
-
-
   (defun sm/eshell-append-history ()
     "Append the most recent command in eshell's history ring to history file."
     (when eshell-history-ring
@@ -129,6 +127,12 @@ If BUF-NAME is nil, the command will be used to name the buffer."
           (eshell-write-history eshell-history-file-name t)))))
 
   (setq eshell-save-history-on-exit nil) ;; This is handled by `sm/eshell-append-history'.
+
+  ;; Remove hook that prevents the cursor from going back after hitting escape.
+  ;; This throws me off so much.
+  ;;
+  ;; Added in https://github.com/emacs-evil/evil-collection/commit/a81b6c8f5537b3646e6a66a6e60ec634848d1926
+  (remove-hook 'eshell-mode-hook 'evil-collection-eshell-escape-stay)
 
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)

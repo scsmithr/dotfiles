@@ -32,6 +32,21 @@ let
 
     vendorHash = "sha256-MiPbUq3iiCSZRG4FeC1NAny2BflBnlTxq4Id5Xc3Kxo=";
   };
+
+  cloud-provider-kind = pkgs.buildGoModule {
+    src = pkgs.fetchFromGitHub {
+      owner = "kubernetes-sigs";
+      repo = "cloud-provider-kind";
+      rev = "v0.1.0";
+      sha256 = "sha256-PWdw0B4RwrJfqq4tTBKGZXkt3zcxEa6p7j/0UCLhDnA=";
+    };
+
+    pname = "cloud-provider-kind";
+    name = "cloud-provider-kind";
+
+    vendorHash = null;
+  };
+
 in
 {
   home.stateVersion = "22.05";
@@ -135,7 +150,12 @@ in
     awscli2
     azure-cli
     azure-storage-azcopy
+
+    # k8s
     kubectl
+    kubernetes-helm
+    kind
+    cloud-provider-kind
 
     # Other cloud stuff
     terraform
@@ -157,6 +177,9 @@ in
     protobuf
     protoc-gen-go
     protoc-gen-go-grpc
+
+    # Flatbuffers
+    flatbuffers
 
     # Rust
     (with fenix; combine [

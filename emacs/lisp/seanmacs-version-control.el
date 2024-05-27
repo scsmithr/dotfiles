@@ -13,17 +13,25 @@
   :init
   (setq-default ediff-split-window-function #'split-window-horizontally
                 ediff-merge-split-window-function #'split-window-horizontally
-                ediff-window-setup-function #'ediff-setup-windows-plain))
+                ediff-window-setup-function #'ediff-setup-windows-plain)
+
+  ;; Disable hl in the "control" buffer because it looks nicer.
+  (defun sm/ediff-disable-hl-line ()
+    (setq-local global-hl-line-mode nil))
+
+  :hook ((ediff-mode . sm/ediff-disable-hl-line)))
 
 (use-package magit
   :straight t
   :config
   (add-to-list 'magit-status-sections-hook 'magit-insert-modules t)
+
   (setq magit-blame-echo-style 'margin
         magit-module-sections-nested nil
         magit-diff-refine-hunk t ;; Show whitespace changes in status buffer.
         magit-bury-buffer-function 'magit-mode-quit-window
         magit-section-visibility-indicator '(right-arrow . down-arrow))
+
   :bind (:map git-prefix-map
               ("g" . magit-status)
               ("f" . magit-file-dispatch)))

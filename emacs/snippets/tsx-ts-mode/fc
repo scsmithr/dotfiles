@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: React functional component boilerplate
+# key: fc
+# --
+interface $1Props {}
+
+const $1: FC<$1Props> = ({}) => {
+  return (<div><span>$1</span></div>)
+}
