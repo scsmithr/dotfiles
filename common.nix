@@ -165,10 +165,6 @@ in
     doxygen
     clang-tools
 
-    # Zig
-    zig
-    zls
-
     # Protobuf
     protobuf
     protoc-gen-go
