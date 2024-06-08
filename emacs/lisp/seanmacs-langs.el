@@ -67,8 +67,14 @@
           (buf-name "*Cargo Test*"))
       (sm/compile cmd buf-name)))
 
+  ;; Unset the fill paragraph function that gets set to the c-ts fill function.
+  ;; The default seems to handle doc comments better.
+  (defun sm/rust-unset-fill-paragraph-function ()
+    (setq-local fill-paragraph-function nil))
+
   :hook ((rust-ts-mode . eglot-ensure)
-         (rust-ts-mode . apheleia-mode))
+         (rust-ts-mode . apheleia-mode)
+         (rust-ts-mode . sm/rust-unset-fill-paragraph-function))
   :bind (:map rust-ts-mode-map
               ("C-c C-c C-t" . sm/cargo-test-crate)))
 
