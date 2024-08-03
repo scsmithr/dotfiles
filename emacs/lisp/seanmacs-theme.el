@@ -59,6 +59,8 @@
 
           (border-mode-line-active    border)
           (border-mode-line-inactive  border)
+
+          (docstring                  yellow-faint)
           ))
 
   (defun sm/customize-modus-themes ()

@@ -188,6 +188,7 @@ in
 
     # Wasm
     wasm-pack
+    wasm-bindgen-cli
 
     # Go
     go
