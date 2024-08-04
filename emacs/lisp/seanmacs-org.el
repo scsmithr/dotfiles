@@ -52,7 +52,7 @@
         org-imenu-depth 9
         org-outline-path-complete-in-steps nil ;; Show entire path when refiling.
         org-confirm-babel-evaluate nil ;; I trust myself.
-        org-catch-invisible-edits 'show-and-error ;; I don't trust myself.
+        org-fold-catch-invisible-edits 'show-and-error ;; I don't trust myself.
         org-fontify-done-headline nil
         org-adapt-indentation nil
         org-hide-emphasis-markers nil

@@ -11,13 +11,6 @@
 (require 'treesit)
 
 
-;; Zig
-
-(use-package zig-mode
-  :straight t
-  :hook ((zig-mode . eglot-ensure)))
-
-
 ;; Go
 
 (require 'go-ts-mode)
