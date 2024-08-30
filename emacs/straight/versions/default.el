@@ -23,6 +23,7 @@
  ("evil-commentary" . "c5945f28ce47644c828aac1f5f6ec335478d17fb")
  ("evil-surround" . "da05c60b0621cf33161bb4335153f75ff5c29d91")
  ("forge" . "c85cfeec4322aeab9d60347d72d769af8240981e")
+ ("framemove" . "0faa8a4937f398e4971fc877b1c294100506b645")
  ("ghub" . "772c3352307a86f40fc1519fe868a4a14ceb8d39")
  ("git-link" . "0acdfd6152fad132cecf25f6971c7f6b430dca15")
  ("gnu-elpa-mirror" . "c7c879e92cb2cfe5af56b8877d24a1d9b2adf14e")

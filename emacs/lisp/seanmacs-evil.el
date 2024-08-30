@@ -13,6 +13,11 @@
   :config
   (winner-mode 1))
 
+(use-package framemove
+  :straight t
+  :init
+  (setq framemove-hook-into-windmove t))
+
 (use-package evil
   :straight t
   :init

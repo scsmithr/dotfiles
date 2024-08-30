@@ -74,10 +74,6 @@
        `(whitespace-space ((t (:foreground ,bg-dim :background unspecified))))
        `(whitespace-tab ((t (:foreground ,bg-dim :background unspecified))))
 
-       ;; Eglot
-       `(eglot-highlight-symbol-face ((t :background ,bg-hover :weight unspecified)))
-       `(eglot-mode-line ((t (:inherit unspecified :foreground unspecified))))
-
        ;; Ansi
        `(ansi-color-faint ((t :foreground ,fg-dim :weight unspecified)))
 

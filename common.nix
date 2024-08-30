@@ -7,8 +7,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "gzuidhof";
       repo = "tygo";
-      rev = "v0.2.4";
-      sha256 = "sha256-pH60K7F8SRBBZIrog7AN/fa7ES/OQ5u9/0vbCEoTJq8=";
+      rev = "v0.2.15";
+      sha256 = "sha256-2kj6zAzqxHuvp7xrOMypLwnkcMLat2fFrjkIYSqn09U=";
     };
 
     pname = "tygo";
