@@ -107,6 +107,9 @@ in
     wget
     xz
 
+    # Github
+    gh
+
     # Random build bullshit
     libiconv
 
@@ -204,6 +207,7 @@ in
     nodejs_20
     nodePackages.typescript
     nodePackages.typescript-language-server
+    nodePackages.vercel
     esbuild
 
     # Java
@@ -232,6 +236,8 @@ in
     ]))
     poetry
     ruff
+    maturin
+    pyenv
 
     # For R examples.
     (rWrapper.override
