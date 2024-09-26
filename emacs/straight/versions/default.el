@@ -37,7 +37,7 @@
  ("markdown-mode" . "8a7773f87733866a961ea4c518a4a2f283f21970")
  ("melpa" . "beb0c20ca9de0c948592ee6c28b5cb5c2d98af13")
  ("minions" . "f263ccb8a5a16022a6be3c1015ab008edf55a06d")
- ("modus-themes" . "cb2ce8bedfbe9c6f7cc3009e85ae6756b77c3258")
+ ("modus-themes" . "95be7968f3ff91740e2079c7736e5bfe8623e301")
  ("nix-ts-mode" . "59ad17690576190811e0746c12ad6809596ca3ac")
  ("nongnu-elpa" . "f031337c6ee125455a98e2de899a563388e5de19")
  ("ob-async" . "9aac486073f5c356ada20e716571be33a350a982")
