@@ -176,6 +176,9 @@ in
     # Flatbuffers
     flatbuffers
 
+    # Thrift
+    thrift
+
     # Rust
     (with fenix; combine [
       stable.cargo
@@ -188,6 +191,7 @@ in
       targets.wasm32-unknown-unknown.stable.rust-std
     ])
     rust-analyzer
+    cargo-flamegraph
 
     # Wasm
     wasm-pack

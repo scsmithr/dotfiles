@@ -117,6 +117,10 @@
   (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
                                             :inlayHintProvider))
 
+  ;; Disable events buffer. Seems to help with rust-analyzer speed on large
+  ;; files, especially when refactoring causing a bunch of errors.
+  (setq eglot-events-buffer-size 0)
+
   (setq-default eglot-workspace-configuration
                 '(:pylsp (:plugins (:flake8 (:enabled t)))
                   :rust-analyzer (:rust (:analyzerTargetDir t))))
