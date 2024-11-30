@@ -148,7 +148,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 (use-package em-hist
   ;; built-in
   :init
-  (setq eshell-history-size 2048
+  (setq eshell-history-size (* 10 1048)
         eshell-hist-ignoredups t)
 
   (defun sm/eshell-consult-history ()
