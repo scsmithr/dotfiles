@@ -29,6 +29,7 @@
  ("gnu-elpa-mirror" . "c1792e74257d63ea3245d686f773db5127e5c123")
  ("gnuplot" . "d2c035592568f08a58eff2391903bfeffa9f7733")
  ("goto-chg" . "72f556524b88e9d30dc7fc5b0dc32078c166fda7")
+ ("gptel" . "77fcb02cd715a66069cf4ba7388f59459d493fa5")
  ("hcl-mode" . "1da895ed75d28d9f87cbf9b74f075d90ba31c0ed")
  ("just-mode.el" . "4c0df4cc4b8798f1a7e99fb78b79c4bf7eec12c1")
  ("let-alist" . "8141e7c941105c92e89bba44e73aae6cdd962b49")

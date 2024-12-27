@@ -181,5 +181,16 @@ opening the file."
         (display-line-numbers-mode 1))
       (olivetti-mode -1))))
 
+(use-package gptel
+  :straight t
+  :config
+
+  (setq gptel-model 'gpt-4o)
+
+  :hook ((gptel-mode . turn-off-auto-fill)
+         ((gptel-mode . zen-mode)))
+  :bind (:map app-prefix-map
+              ("g" . gptel)))
+
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here
