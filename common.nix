@@ -3,36 +3,6 @@
 {config, pkgs, specialArgs, ...}:
 
 let
-  tygo = pkgs.buildGoModule {
-    src = pkgs.fetchFromGitHub {
-      owner = "gzuidhof";
-      repo = "tygo";
-      rev = "v0.2.15";
-      sha256 = "sha256-2kj6zAzqxHuvp7xrOMypLwnkcMLat2fFrjkIYSqn09U=";
-    };
-
-    pname = "tygo";
-    name = "tygo";
-
-    vendorHash = "sha256-Suwo9xyj34IEBqu328EEl8GCS9QthFWnSKlU4gRUMAU=";
-  };
-
-  goose = pkgs.buildGoModule {
-    src = pkgs.fetchFromGitHub {
-      owner = "pressly";
-      repo = "goose";
-      rev = "v3.7.0";
-      sha256 = "sha256-2T+Mb9SCsYsrD2FqddpszVjcaSdJcLn3RnJMloxI4xQ=";
-    };
-
-    pname = "goose";
-    name = "goose";
-    # Tries to run tests with docker containers.
-    doCheck = false;
-
-    vendorHash = "sha256-MiPbUq3iiCSZRG4FeC1NAny2BflBnlTxq4Id5Xc3Kxo=";
-  };
-
   cloud-provider-kind = pkgs.buildGoModule {
     src = pkgs.fetchFromGitHub {
       owner = "kubernetes-sigs";
@@ -100,7 +70,6 @@ in
     poppler_utils
     qemu
     ripgrep
-    texlive.combined.scheme-full
     tree
     unixtools.getopt
     vim
@@ -120,7 +89,7 @@ in
 
     # SQL clients
     postgresql
-    mysql
+    mariadb
     sqlcmd # SQL Server cli
     clickhouse
 
@@ -141,12 +110,12 @@ in
     shellcheck
 
     # Link checking
-    lychee
+    # lychee
 
     # Cloud utilities
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
-    awscli2
+    # awscli2
     azure-cli
     azure-storage-azcopy
 
@@ -202,9 +171,6 @@ in
     gopls
     gotools
     golangci-lint
-    goose
-    tygo
-    sqlc
 
     # Javascript/Typescript
     yarn
