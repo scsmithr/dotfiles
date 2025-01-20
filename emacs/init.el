@@ -60,7 +60,6 @@
 (require 'seanmacs-org)
 (require 'seanmacs-langs)
 (require 'seanmacs-shell)
-(require 'seanmacs-password)
 
 ;;; init.el ends here
 

@@ -60,7 +60,7 @@
           (border-mode-line-active    border)
           (border-mode-line-inactive  border)
 
-          (docstring                  yellow-faint)
+          (docstring                  fg-alt)
           ))
 
   (defun sm/customize-modus-themes ()
