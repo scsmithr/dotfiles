@@ -135,7 +135,6 @@ in
     # C/C++
     cmake
     doxygen
-    clang-tools
 
     # Protobuf
     protobuf
@@ -161,6 +160,7 @@ in
     ])
     rust-analyzer
     cargo-flamegraph
+    critcmp
 
     # Wasm
     wasm-pack

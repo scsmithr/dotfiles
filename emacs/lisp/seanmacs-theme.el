@@ -12,17 +12,17 @@
   "Setup fonts for currently active frame."
   (when (display-graphic-p)
     (message "Setting frame fonts")
-    (set-face-attribute 'default nil :family "PragmataPro Mono" :height 140 :weight 'normal)
-    (set-face-attribute 'fixed-pitch nil :family "PragmataPro Mono")
+    (set-face-attribute 'default nil :family "MonoLisa" :height 130 :weight 'normal)
+    (set-face-attribute 'fixed-pitch nil :family "MonoLisa")
     (set-face-attribute 'variable-pitch nil :family "Open Sans" :height 140)
     ;; Unicode fallbacks.
-    (set-fontset-font t 'unicode (font-spec :name "PragmataPro Mono" :weight 'normal))
+    (set-fontset-font t 'unicode (font-spec :name "MonoLisa" :weight 'normal))
     (when (eq system-type 'darwin)
       (set-fontset-font t 'unicode (font-spec :name "Apple Color Emoji" :size 10 :weight 'normal) nil 'append))))
 
 ;; Set default font. When not running in a daemon, this will ensure the frame
 ;; has the appropriate font set.
-(add-to-list 'default-frame-alist '(font . "PragmataPro Mono"))
+(add-to-list 'default-frame-alist '(font . "MonoLisa"))
 
 ;; If running as a daemon, make sure fonts are set everytime a new frame is
 ;; created. This ensures unicode fallbacks are set for all frames.
@@ -60,7 +60,7 @@
           (border-mode-line-active    border)
           (border-mode-line-inactive  border)
 
-          (docstring                  fg-alt)
+          (docstring                  yellow-faint)
           ))
 
   (defun sm/customize-modus-themes ()

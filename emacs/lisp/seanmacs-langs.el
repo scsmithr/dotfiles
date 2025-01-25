@@ -54,7 +54,7 @@
         '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021"))
 
   (defun sm/cargo-test-crate ()
-    "Rune tests for the current crate."
+    "Runs tests for the current crate."
     (interactive)
     (let ((cmd "cargo --color=always test") ;; Automatically detects which crate we're running in.
           (buf-name "*Cargo Test*"))

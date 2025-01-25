@@ -42,7 +42,15 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   (defun sm/colorize-compile-buffer ()
     (ansi-color-apply-on-region compilation-filter-start (point)))
 
-  (setq compilation-scroll-output 'first-error)
+  (add-to-list 'compilation-error-regexp-alist-alist
+               '(rust-error
+                 "^error\\[E[0-9]+\\]:.*\n[ ]*--> \\(.*\\):\\([0-9]+\\):\\([0-9]+\\)"
+                 1 2 3))
+
+  (add-to-list 'compilation-error-regexp-alist 'rust-error)
+
+  (setq compilation-scroll-output t)
+
   :hook ((compilation-filter . sm/colorize-compile-buffer)))
 
 (defvar sm/eshell-append-history-on-command t
