@@ -220,7 +220,7 @@ loaded (e.g. sql-mode)."
 
   :config
   (setq dtrt-indent-verbosity 0
-        dtrt-indent-min-quality 65.0
+        dtrt-indent-min-quality 80.0
         dtrt-indent-min-hard-tab-superiority 180.0)
 
   (dtrt-indent-global-mode 1))

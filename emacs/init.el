@@ -12,8 +12,8 @@
       warning-suppress-log-types '((comp)))
 
 ;; GC things
-(setq gc-cons-threshold 20000000)
-(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold (expt 2 23)) ;; 8MB
+(setq read-process-output-max (* 4 1024 1024))
 
 ;; Make sure there's no gaps around the window when full screening
 (setq frame-resize-pixelwise t)

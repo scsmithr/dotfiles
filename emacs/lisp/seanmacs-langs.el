@@ -51,7 +51,7 @@
   (sm/add-server-program 'rust-ts-mode "rust-analyzer")
 
   (setf (alist-get 'rustfmt  apheleia-formatters)
-        '("rustfmt" "--quiet" "--emit" "stdout" "--edition" "2021"))
+        '("rustfmt" "+nightly" "--quiet" "--emit" "stdout"))
 
   (defun sm/cargo-test-crate ()
     "Runs tests for the current crate."

@@ -148,19 +148,7 @@ in
     thrift
 
     # Rust
-    (with fenix; combine [
-      stable.cargo
-      stable.clippy
-      stable.rust-src
-      stable.rustc
-      stable.rust-std
-      latest.rustfmt
-      latest.miri
-      targets.wasm32-unknown-unknown.stable.rust-std
-    ])
-    rust-analyzer
-    cargo-flamegraph
-    critcmp
+    rustup
 
     # Wasm
     wasm-pack

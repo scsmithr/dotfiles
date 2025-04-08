@@ -37,7 +37,6 @@
           allowUnfree = true;
         };
         overlays = [
-          fenix.overlays.default
           # Don't create a desktop entry for mupdf.
           (final: prev:
             let
