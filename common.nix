@@ -177,15 +177,11 @@ in
       pandas
       pip
       virtualenv
-      duckdb
-      ipython
       pyarrow
       psycopg2
-      rich
       pyspark
       requests-cache
       requests
-      dbt
 
       # Languge server (pylsp)
       python-lsp-server

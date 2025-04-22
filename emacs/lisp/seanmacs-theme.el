@@ -61,6 +61,12 @@
           (border-mode-line-inactive  border)
 
           (docstring                  yellow-faint)
+
+          ;; Make the fringe not have its own background
+          (fringe unspecified)
+
+          ;; Do not use a background for line numbers (current and others)
+          (bg-line-number-inactive unspecified)
           ))
 
   (defun sm/customize-modus-themes ()

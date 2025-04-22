@@ -155,42 +155,5 @@ opening the file."
   :config
   (setq proced-enable-color-flag t))
 
-(use-package olivetti
-  :straight t
-  :init
-  (setq olivetti-body-width 92
-        olivetti-style 'fancy)
-  :bind (("C-c z" . zen-mode)))
-
-(defvar-local zen-mode-display-line-numbers-mode nil
-  "Non-nil if the `display-line-numbers-mode' was enabled.")
-
-(define-minor-mode zen-mode
-  "Mode that centers the current buffer and disables line numbers."
-  :init-value nil
-  :global nil
-  :lighter "Zen"
-  (if zen-mode
-      (progn
-        (when (bound-and-true-p display-line-numbers-mode)
-          (setq zen-mode-display-line-numbers-mode t)
-          (display-line-numbers-mode -1))
-        (olivetti-mode 1))
-    (progn
-      (when zen-mode-display-line-numbers-mode
-        (display-line-numbers-mode 1))
-      (olivetti-mode -1))))
-
-(use-package gptel
-  :straight t
-  :config
-
-  (setq gptel-model 'gpt-4o)
-
-  :hook ((gptel-mode . turn-off-auto-fill)
-         ((gptel-mode . zen-mode)))
-  :bind (:map app-prefix-map
-              ("g" . gptel)))
-
 (provide 'seanmacs-utils)
 ;;; seanmacs-utils.el ends here

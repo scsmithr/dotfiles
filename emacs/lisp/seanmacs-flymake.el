@@ -14,7 +14,6 @@
   :config
   (setq flymake-start-on-save-buffer t
         flymake-no-changes-timeout 1
-        flymake-fringe-indicator-position 'right-fringe
         flymake-mode-line-lighter "")
 
   (defun sm/flymake-sort-entries (entries)

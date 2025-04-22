@@ -321,10 +321,5 @@
   (setf (alist-get 'hcl-mode apheleia-mode-alist) 'terraform)
   :hook ((hcl-mode . apheleia-mode)))
 
-;; Just
-
-(use-package just-mode
-  :straight t)
-
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here
