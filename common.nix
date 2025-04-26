@@ -224,7 +224,13 @@ in
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs.pkgs.withPackages (epkgs: [
+    package = (
+      # https://github.com/NixOS/nixpkgs/issues/395169
+      pkgs.emacs.override {
+        withNativeCompilation = false;
+      }
+    )
+    .pkgs.withPackages (epkgs: [
       epkgs.treesit-grammars.with-all-grammars
     ]);
   };
