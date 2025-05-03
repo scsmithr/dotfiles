@@ -22,12 +22,7 @@
         {
           name = "sean-darwin";
           system = "aarch64-darwin";
-          modules = [./common.nix ./darwin.nix];
-        }
-        {
-          name = "sean-linux";
-          system = "x86_64-linux";
-          modules = [./common.nix ./linux.nix];
+          modules = [./common.nix];
         }
       ];
 

@@ -22,6 +22,22 @@ in
   home.stateVersion = "22.05";
   programs.home-manager.enable = true;
 
+  home.username = "sean";
+  home.homeDirectory = "/Users/sean";
+
+  # Use the exposed script since docker desktop will only make explicitly
+  # exposed ports available.
+  home.file.".bin/postgres-scratch" = {
+    executable = true;
+    source = ./scripts/postgres-scratch-exposed;
+  };
+
+  # Increase max number of open files per shell.
+  #
+  # Mac has a default of 256, and I very often hit this with emacs.
+  programs.bash.bashrcExtra = "ulimit -Sn 8192";
+  programs.zsh.initExtra = "ulimit -Sn 8192";
+
   home.sessionPath = [
     "$HOME/.bin"
     "$HOME/.cargo/bin"
@@ -115,7 +131,7 @@ in
     # Cloud utilities
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
-    # awscli2
+    awscli2
     azure-cli
     azure-storage-azcopy
 
@@ -135,6 +151,7 @@ in
     # C/C++
     cmake
     doxygen
+    ninja
 
     # Protobuf
     protobuf

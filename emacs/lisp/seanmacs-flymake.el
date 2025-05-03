@@ -9,7 +9,6 @@
   (require 'use-package))
 
 (use-package flymake
-  ;; built-in, ish. Eglot pulls in development versions.
   :demand t
   :config
   (setq flymake-start-on-save-buffer t
