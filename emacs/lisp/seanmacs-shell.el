@@ -121,10 +121,7 @@ If BUF-NAME is nil, the command will be used to name the buffer."
 
   (defun sm/eshell-add-completions ()
     (when (featurep 'cape)
-      (add-to-list 'completion-at-point-functions #'cape-file)
-
-      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-      (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
+      (add-to-list 'completion-at-point-functions #'cape-file)))
 
   (defun sm/eshell-append-history ()
     "Append the most recent command in eshell's history ring to history file."
