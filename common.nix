@@ -126,7 +126,7 @@ in
     shellcheck
 
     # Link checking
-    # lychee
+    lychee
 
     # Cloud utilities
     (pkgs.google-cloud-sdk.withExtraComponents

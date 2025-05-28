@@ -289,6 +289,43 @@
 
 (add-to-list 'auto-mode-alist '("\\.slt\\'" . sqllogictest-mode))
 
+;; sqlbench (homegrown files). Essentially the same as sqllogictest with some
+;; tweaked keywords.
+
+(defvar sqlbench-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    ;; Add '#' as a comment.
+    (modify-syntax-entry ?# "<" table)
+    (modify-syntax-entry ?\n ">" table)
+    (modify-syntax-entry ?\f ">" table)
+    table)
+  "Syntax table for `sqlbench-mode'.")
+
+(defvar sqlbench-mode-font-lock-keywords
+  '(("^\\(setup\\|run\\)" . font-lock-keyword-face)
+    ("^----" . font-lock-doc-markup-face))
+  "Keywords specification for `sqllogictest-mode'.")
+
+(defvar sqlbench-mode-imenu-generic-expression
+  '(("Setup" "^setup.+[\r\n]\\(.+\\)" 1)
+    ("Run" "^run.+[\r\n]\\(.+\\)" 1))
+  "Imenu expression for `sqlbench-mode'.")
+
+(define-derived-mode sqlbench-mode prog-mode "sqlbench"
+  "A mode for for working with 'sqlbench' files."
+  :syntax-table sqlbench-mode-syntax-table
+  (setq-local comment-start "#"
+              comment-end "")
+
+  (setq-local font-lock-defaults '(sqlbench-mode-font-lock-keywords))
+  (setq-local imenu-generic-expression sqlbench-mode-imenu-generic-expression
+              imenu-case-fold-search t)
+
+  (run-hooks 'sqlbench-mode-hook))
+
+(add-to-list 'auto-mode-alist '("\\.bench\\'" . sqlbench-mode))
+
+
 
 ;; CSV
 
