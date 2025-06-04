@@ -316,5 +316,10 @@ window."
   :config
   (setq bookmark-save-flag 1))
 
+(use-package olivetti
+  :straight t
+  :bind (:map buffer-prefix-map
+              ("o" . olivetti-mode)))
+
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

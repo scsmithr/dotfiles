@@ -41,6 +41,7 @@
  ("nongnu-elpa" . "0ef91e3285d0a55b9783ee12c7d346d99aa4af56")
  ("ob-async" . "9aac486073f5c356ada20e716571be33a350a982")
  ("ob-http" . "b1428ea2a63bcb510e7382a1bf5fe82b19c104a7")
+ ("olivetti" . "845eb7a95a3ca3325f1120c654d761b91683f598")
  ("orderless" . "254f2412489bbbf62700f9d3d5f18e537841dcc3")
  ("orgit" . "25024744862eff562fa203587122b5af0ecdc2f3")
  ("protobuf" . "51d290914914470388fa3949e3c205b6c7a71a26")
