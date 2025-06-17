@@ -318,6 +318,8 @@ window."
 
 (use-package olivetti
   :straight t
+  :config
+  (setq-default olivetti-body-width 90)
   :bind (:map buffer-prefix-map
               ("o" . olivetti-mode)))
 
