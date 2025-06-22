@@ -36,7 +36,7 @@ in
   #
   # Mac has a default of 256, and I very often hit this with emacs.
   programs.bash.bashrcExtra = "ulimit -Sn 8192";
-  programs.zsh.initExtra = "ulimit -Sn 8192";
+  programs.zsh.initContent = "ulimit -Sn 8192";
 
   home.sessionPath = [
     "$HOME/.bin"
@@ -91,6 +91,9 @@ in
     vim
     wget
     xz
+
+    # Take my job
+    claude-code
 
     # Github
     gh
