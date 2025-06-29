@@ -90,7 +90,7 @@
 ;; `tsx-ts-mode' and `typescript-ts-mode' both derive from this.
 (use-package typescript-ts-base-mode
   :init
-  (setq typescript-ts-mode-indent-offset 4)
+  (setq typescript-ts-mode-indent-offset 2)
 
   :hook ((typescript-ts-base-mode . eglot-ensure)
          (typescript-ts-base-mode . apheleia-mode))

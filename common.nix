@@ -140,6 +140,7 @@ in
 
     # k8s
     kubectl
+    kustomize
     kubernetes-helm
     kind
     cloud-provider-kind
@@ -228,7 +229,7 @@ in
     ibm-plex
     inconsolata
     iosevka
-    jetbrains-mono
+    # jetbrains-mono # Build error
     merriweather
     merriweather-sans
     open-sans
