@@ -94,7 +94,6 @@ in
 
     # Take my job
     claude-code
-    gemini-cli
 
     # Github
     gh
@@ -109,9 +108,6 @@ in
 
     # SQL clients
     postgresql
-    mariadb
-    sqlcmd # SQL Server cli
-    clickhouse
 
     # PDF rendering
     # Stuff needed for nice pdf rendering using doc-view.
@@ -136,8 +132,6 @@ in
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     awscli2
-    azure-cli
-    azure-storage-azcopy
 
     # k8s
     kubectl
@@ -199,9 +193,6 @@ in
       pandas
       pip
       virtualenv
-      pyarrow
-      psycopg2
-      pyspark
       requests-cache
       requests
 
@@ -214,16 +205,6 @@ in
     ruff
     maturin
     pyenv
-
-    # For R examples.
-    (rWrapper.override
-      { packages = with rPackages; [
-          ggplot2
-          dplyr
-          xts
-          RPostgres
-          DBI
-        ]; })
 
     # Fonts
     fira-mono
