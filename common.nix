@@ -94,6 +94,7 @@ in
 
     # Take my job
     claude-code
+    gemini-cli
 
     # Github
     gh

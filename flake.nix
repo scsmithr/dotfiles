@@ -8,15 +8,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Rust toolchain
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { nixpkgs, home-manager, fenix, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }@inputs:
     let
       systemConfs = [
         {
