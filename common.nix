@@ -81,6 +81,7 @@ in
     jq
     just
     neovim
+    helix
     optipng
     pandoc
     poppler_utils
@@ -94,6 +95,7 @@ in
 
     # Take my job
     claude-code
+    codex
 
     # Github
     gh
@@ -140,11 +142,7 @@ in
     kind
     cloud-provider-kind
 
-    # Other cloud stuff
-    terraform
-
     # Security
-    tfsec
     doppler
 
     # C/C++
@@ -178,7 +176,7 @@ in
 
     # Javascript/Typescript
     yarn
-    nodejs_20
+    nodejs
     nodePackages.typescript
     nodePackages.typescript-language-server
     nodePackages.vercel
@@ -205,6 +203,7 @@ in
     ruff
     maturin
     pyenv
+    uv
 
     # Fonts
     fira-mono
