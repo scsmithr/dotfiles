@@ -1,2 +1,18 @@
 #!/usr/bin/env bash
-emacsclient -a '' "$@"
+
+# Check if daemon is running, if not start it from the .app bundle
+# to ensure proper icon handling on macOS
+if ! emacsclient -e '(server-running-p)' &>/dev/null; then
+  # Find the Emacs.app from home-manager
+  emacs_app="$HOME/Applications/Home Manager Apps/Emacs.app"
+  if [ -d "$emacs_app" ]; then
+    open -a "$emacs_app" --args --daemon
+    # Wait for daemon to start
+    sleep 2
+  else
+    # Fallback to regular emacs daemon
+    emacs --daemon
+  fi
+fi
+
+emacsclient "$@"

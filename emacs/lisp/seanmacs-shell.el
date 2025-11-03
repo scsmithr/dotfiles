@@ -142,10 +142,13 @@ If BUF-NAME is nil, the command will be used to name the buffer."
   ;; Expand !<n> and !!
   (add-hook 'eshell-expand-input-functions #'eshell-expand-history-references)
 
+  (with-eval-after-load 'eshell
+    (eat-eshell-mode +1)
+    (eat-eshell-visual-command-mode +1))
+
   :hook ((eshell-mode . sm/add-eshell-aliases)
          (eshell-pre-command . sm/eshell-append-history)
-         (eshell-mode . sm/eshell-add-completions)
-         (eshell-mode . eat-eshell-mode))
+         (eshell-mode . sm/eshell-add-completions))
   :bind (:map shell-prefix-map
               ("s" . eshell)
               ("n" . sm/eshell-new)))

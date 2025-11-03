@@ -243,13 +243,37 @@ in
 
   programs.emacs = {
     enable = true;
-    package = (
+    package = let
+      liquidGlassIcons = pkgs.fetchFromGitHub {
+        owner = "jimeh";
+        repo = "emacs-liquid-glass-icons";
+        rev = "main";
+        sha256 = "09ymkmxbr6imj6pl5wnfnwkwg8z8r4rk37r683mmbbfan2h30q6f";
+      };
+
       # https://github.com/NixOS/nixpkgs/issues/395169
-      pkgs.emacs.override {
+      baseEmacs = pkgs.emacs.override {
         withNativeCompilation = false;
-      }
-    )
-    .pkgs.withPackages (epkgs: [
+      };
+
+      emacsWithIcons = baseEmacs.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          # For macOS 26+ - use Assets.car approach
+          if [ -d $out/Applications/Emacs.app/Contents/Resources ]; then
+            echo "Installing liquid glass icons..."
+            cp -v ${liquidGlassIcons}/Resources/Assets.car \
+               $out/Applications/Emacs.app/Contents/Resources/Assets.car
+
+            # Update Info.plist to set CFBundleIconName using PlistBuddy
+            plistFile=$out/Applications/Emacs.app/Contents/Info.plist
+            /usr/libexec/PlistBuddy -c "Add :CFBundleIconName string EmacsLG1" "$plistFile" 2>/dev/null || \
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIconName EmacsLG1" "$plistFile"
+
+            echo "Icon installation complete"
+          fi
+        '';
+      });
+    in (pkgs.emacsPackagesFor emacsWithIcons).withPackages (epkgs: [
       epkgs.treesit-grammars.with-all-grammars
     ]);
   };
