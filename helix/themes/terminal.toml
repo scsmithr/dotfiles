@@ -1,0 +1,65 @@
+# Uses terminal colors; good defaults for a dark background
+"ui.background" = "default"
+"ui.text"       = "default"
+"ui.text.focus" = "blue"
+"ui.cursor"     = { fg = "default", bg = "light-gray" }
+ 
+# Gutter / line numbers
+"ui.gutter"              = { fg = "gray" }
+"ui.gutter.selected"     = { fg = "light-gray" }
+"ui.linenr"              = { fg = "gray" }
+"ui.linenr.selected"     = { fg = "light-gray", modifiers = ["bold"] }
+
+"ui.statusline" = { fg = "default", bg = "gray" }
+"ui.statusline.inactive" = { fg = "default", bg = "light-gray" }
+
+# Window chrome (use low contrast for separators)
+"ui.window"              = { fg = "light-gray" }
+"ui.virtual.indent-guide"= { fg = "light-gray" }
+"ui.virtual.whitespace"  = { fg = "light-gray" }
+"ui.virtual.ruler"       = { fg = "light-gray" }
+"ui.virtual.wrap"        = { fg = "gray" }
+"ui.virtual.inlay-hint"  = { fg = "gray", modifiers = ["italic"] }
+
+# Cursor line & selections
+"ui.cursorline.primary"  = { bg = "light-gray" }
+"ui.cursorline.secondary"= { bg = "light-gray" }
+"ui.selection"           = { bg = "light-yellow" }
+"ui.highlight"           = { bg = "light-blue" }           # search highlight
+"ui.cursor.match"        = { fg = "magenta",  modifiers = ["bold"] } # matching bracket
+
+# Menus / popups / help
+"ui.menu"                = { fg = "default", bg = "default" }
+"ui.menu.selected"       = { fg = "white", bg = "blue", modifiers = ["bold"] }
+"ui.popup"               = { fg = "default", bg = "default" }
+"ui.popup.info"          = { fg = "default", bg = "default" }
+"ui.help"                = { fg = "default", bg = "default" }
+"ui.virtual.jump-label"  = { fg = "white", bg = "light-yellow" }
+
+# Git gutters
+"diff.plus"   = { fg = "green" }
+"diff.minus"  = { fg = "red" }
+"diff.delta"  = { fg = "blue" }
+
+# Underlines for diagnostics (kept subtle but readable on light bg)
+"diagnostic.error".underline   = { style = "curl", color = "red" }
+"diagnostic.warning".underline = { style = "curl", color = "yellow" }
+"diagnostic.info".underline    = { style = "curl", color = "blue" }
+"diagnostic.hint".underline    = { style = "curl", color = "cyan" }
+
+# Syntax (basic, readable)
+"comment"                  = { fg = "gray", modifiers = ["italic"] }
+"string"                   = { fg = "green" }
+"constant"                 = { fg = "yellow" }
+"keyword"                  = { fg = "magenta" }
+
+"type"                     = { fg = "blue" }
+"function"                 = { fg = "cyan" }
+"constructor"              = { fg = "cyan" }
+"attribute"                = { fg = "magenta" }
+
+"variable"                 = { fg = "light-cyan" }
+"variable.other.member"    = { fg = "light-yellow" }
+"property"                 = { fg = "light-yellow" }
+"namespace"                = { fg = "blue" }
+"label"                    = { fg = "blue" }
