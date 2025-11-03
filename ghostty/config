@@ -1,3 +1,7 @@
-fontFamily = "MonoLisa"
+font-family = "MonoLisa"
+font-size = 13
+font-thicken = true
+font-thicken-strength = 0
 theme = "Apple System Colors Light"
+
 keybind = ctrl+[=text:\x1b

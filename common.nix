@@ -64,6 +64,10 @@ in
     source = ./ghostty/config;
   };
 
+  home.file.".config/helix/config.toml" = {
+    source = ./helix/config.toml;
+  }
+
   # Packages
 
   home.packages = with pkgs; [
