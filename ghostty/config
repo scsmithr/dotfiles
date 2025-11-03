@@ -1,7 +1,0 @@
-font-family = "MonoLisa"
-font-size = 13
-font-thicken = true
-font-thicken-strength = 0
-theme = "pleasant-light"
-
-keybind = ctrl+[=text:\x1b

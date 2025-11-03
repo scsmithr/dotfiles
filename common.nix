@@ -59,23 +59,6 @@ in
     et = "editor -nw";
   };
 
-  # Ghostty configuration
-  home.file.".config/ghostty/config" = {
-    source = ./ghostty/config;
-  };
-  home.file.".config/ghostty/themes/pleasant-light" = {
-    source = ./ghostty/themes/pleasant-light;
-  };
-
-
-  # Helix configuration
-  home.file.".config/helix/config.toml" = {
-    source = ./helix/config.toml;
-  };
-  home.file.".config/helix/themes/terminal.toml" = {
-    source = ./helix/themes/terminal.toml;
-  };
-
   # Packages
 
   home.packages = with pkgs; [
