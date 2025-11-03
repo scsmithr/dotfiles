@@ -18,6 +18,9 @@
 ;; Make sure there's no gaps around the window when full screening
 (setq frame-resize-pixelwise t)
 
+;; No bell
+(setq ring-bell-function 'ignore)
+
 ;; Get straight.el
 (defvar bootstrap-version)
 (setq straight-repository-branch "develop")

@@ -59,6 +59,11 @@ in
     et = "editor -nw";
   };
 
+  # Ghostty configuration
+  home.file.".config/ghostty/config" = {
+    source = ./ghostty/config;
+  };
+
   # Packages
 
   home.packages = with pkgs; [
