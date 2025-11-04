@@ -36,9 +36,6 @@
               ("g" . magit-status)
               ("f" . magit-file-dispatch)))
 
-(use-package orgit
-  :straight t)
-
 (use-package forge
   :straight t
   :config

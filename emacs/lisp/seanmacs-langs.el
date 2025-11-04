@@ -189,19 +189,6 @@
 (require 'dockerfile-ts-mode)
 
 
-;; TLA+
-
-(define-derived-mode tlaplus-mode prog-mode "TLA+"
-  "Mode for working with TLA+ files."
-  (setq-local comment-start "(*"
-              comment-end "*)"))
-
-(add-to-list 'auto-mode-alist '("\\.tla\\'" . tlaplus-mode))
-
-;; Nice to have things updated immediately when running 'pcal'.
-(add-hook 'tlaplus-mode-hook #'auto-revert-mode)
-
-
 ;; C/C++
 
 (require 'c-ts-mode)
@@ -225,28 +212,6 @@
 (use-package sql
   ;; built-in
   :config
-
-  (defun sm/sql-glaredb-local (&optional buf-name)
-    "Connect to locally running glaredb instance."
-    (interactive "P")
-    (let ((sql-connection-alist '((glaredb-psql (sql-product 'postgres)
-                                                (sql-database "glaredb")
-                                                (sql-user "glaredb")
-                                                (sql-password "")
-                                                (sql-server "localhost")
-                                                (sql-port 6543)))))
-      (sql-connect 'glaredb-psql buf-name)))
-
-  (defun sm/sql-postgres-generic (&optional buf-name)
-    "Connect to a database via a postgres connection string."
-    (interactive "P")
-    (let ((sql-connection-alist '((generic-psql (sql-product 'postgres)
-                                                (sql-database (read-string "Connection: "))
-                                                (sql-user "")
-                                                (sql-server "")
-                                                (sql-port 0)))))
-      (sql-connect 'generic-psql buf-name)))
-
   (advice-add 'sql-highlight-product :after #'sm/reinitialize-whitespace-mode)
   :hook ((sql-mode . sqlind-minor-mode)))
 
@@ -348,15 +313,6 @@
 (use-package nix-ts-mode
   :straight t
   :mode "\\.nix\\'")
-
-;; Terraform/HCL
-
-(use-package hcl-mode
-  :straight t
-  :mode "\\.tf\\|.tfvars\\'"
-  :config
-  (setf (alist-get 'hcl-mode apheleia-mode-alist) 'terraform)
-  :hook ((hcl-mode . apheleia-mode)))
 
 (provide 'seanmacs-langs)
 ;;; seanmacs-langs.el ends here

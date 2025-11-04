@@ -191,19 +191,8 @@
         org-crypt-tag-matcher "encrypt")
   (org-crypt-use-before-save-magic))
 
-(use-package ob-http
-  :straight t)
-
-(use-package gnuplot
-  :straight t)
-
-(use-package ob-async
-  :straight t)
-
 (use-package ob
   :config
-  (setq org-plantuml-exec-mode 'plantuml)
-
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell      . t)
@@ -211,13 +200,10 @@
      (lisp       . t)
      (scheme     . t)
      (sql        . t)
-     (http       . t)
-     (gnuplot    . t)
      (calc       . t)
      (sql        . t)
      (python     . t)
-     (R          . t)
-     (plantuml   . t)))
+     (R          . t)))
   :hook ((org-babel-after-execute . org-redisplay-inline-images)))
 
 (provide 'seanmacs-org)

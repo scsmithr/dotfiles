@@ -51,7 +51,9 @@
   :straight (:host github :repo "protesilaos/modus-themes" :branch "main")
   :config
 
-  (setq modus-themes-mixed-fonts t)
+  (setq modus-themes-mixed-fonts t
+        modus-themes-bold-constructs nil
+        modus-themes-italic-constructs t)
 
   (setq modus-themes-common-palette-overrides
         '((bg-region                  bg-ochre)
@@ -60,13 +62,12 @@
           (border-mode-line-active    border)
           (border-mode-line-inactive  border)
 
-          (docstring                  yellow-faint)
-
           ;; Make the fringe not have its own background
           (fringe unspecified)
 
           ;; Do not use a background for line numbers (current and others)
           (bg-line-number-inactive unspecified)
+          (bg-line-number-active unspecified)
           ))
 
   (defun sm/customize-modus-themes ()

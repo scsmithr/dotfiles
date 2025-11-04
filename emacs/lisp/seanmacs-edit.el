@@ -16,9 +16,6 @@
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 (setq-default display-line-numbers-width-start t)
 
-;; Highlight current line
-(global-hl-line-mode +1)
-
 ;; Wrap column
 (setq-default fill-column 80)
 
@@ -315,13 +312,6 @@ window."
   ;; built-in
   :config
   (setq bookmark-save-flag 1))
-
-(use-package olivetti
-  :straight t
-  :config
-  (setq-default olivetti-body-width 90)
-  :bind (:map buffer-prefix-map
-              ("o" . olivetti-mode)))
 
 (provide 'seanmacs-edit)
 ;;; seanmacs-edit.el ends here

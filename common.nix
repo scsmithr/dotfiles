@@ -84,7 +84,6 @@ in
     helix
     optipng
     pandoc
-    poppler_utils
     qemu
     ripgrep
     tree
@@ -236,7 +235,7 @@ in
 
       # https://github.com/NixOS/nixpkgs/issues/395169
       baseEmacs = pkgs.emacs.override {
-        withNativeCompilation = false;
+        withNativeCompilation = true;
       };
 
       emacsWithIcons = baseEmacs.overrideAttrs (old: {
