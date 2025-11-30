@@ -91,6 +91,7 @@
 (use-package typescript-ts-base-mode
   :init
   (setq typescript-ts-mode-indent-offset 2)
+  (setf (alist-get 'typescript-ts-mode apheleia-mode-alist) 'biome)
 
   :hook ((typescript-ts-base-mode . eglot-ensure)
          (typescript-ts-base-mode . apheleia-mode))

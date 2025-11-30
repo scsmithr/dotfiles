@@ -67,6 +67,7 @@ in
     cloc
     coreutils
     docker
+    duckdb
     ffmpeg
     findutils
     git
@@ -132,6 +133,7 @@ in
     # Cloud utilities
     (pkgs.google-cloud-sdk.withExtraComponents
       ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
+    google-cloud-sql-proxy
     awscli2
 
     # k8s
