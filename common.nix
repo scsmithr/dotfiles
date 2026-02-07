@@ -182,6 +182,7 @@ in
     nodePackages.typescript-language-server
     nodePackages.vercel
     esbuild
+    bun
 
     # Java
     jdk21_headless
@@ -264,13 +265,28 @@ in
 
   programs.go = {
     enable = true;
-    goPath = ".go";
+    env.GOPATH = [
+      "${config.home.homeDirectory}/.go"
+    ];
   };
 
   programs.git = {
     enable = true;
-    userEmail = "scsmithr@gmail.com";
-    userName = "Sean Smith";
+    settings = {
+      user = {
+        email = "scsmithr@gmail.com";
+        name = "Sean Smith";
+      };
+      core = {
+        editor = "editor";
+      };
+      github = {
+        user = "scsmithr";
+      };
+      init = {
+        defaultBranch = "main";
+      };
+    };
     signing = {
       key = "BA3E3A399960AD0D";
       signByDefault = true;
@@ -289,17 +305,6 @@ in
       ".envrc"
       ".direnv/"
     ];
-    extraConfig = {
-      core = {
-        editor = "editor";
-      };
-      github = {
-        user = "scsmithr";
-      };
-      init = {
-        defaultBranch = "main";
-      };
-    };
   };
 
   programs.man = {

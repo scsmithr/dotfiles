@@ -53,7 +53,7 @@
 
   (setq modus-themes-mixed-fonts t
         modus-themes-bold-constructs nil
-        modus-themes-italic-constructs t)
+        modus-themes-italic-constructs nil)
 
   (setq modus-themes-common-palette-overrides
         '((bg-region                  bg-ochre)
@@ -61,6 +61,8 @@
 
           (border-mode-line-active    border)
           (border-mode-line-inactive  border)
+
+          (docstring                  yellow-faint)
 
           ;; Make the fringe not have its own background
           (fringe unspecified)
