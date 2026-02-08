@@ -189,8 +189,6 @@ in
 
     # Python with some common libs.
     (python3.withPackages (ps: with ps; [
-      numpy
-      pandas
       pip
       virtualenv
       requests-cache
@@ -201,7 +199,6 @@ in
       pyls-flake8
       flake8
     ]))
-    poetry
     ruff
     maturin
     pyenv
