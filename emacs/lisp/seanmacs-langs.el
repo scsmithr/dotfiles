@@ -210,7 +210,6 @@
 (define-derived-mode metal-mode c++-ts-mode "Metal"
   "Major mode for Metal shader files.")
 
-(add-to-list 'auto-mode-alist '("\\.m\\'" . metal-mode))
 (add-to-list 'auto-mode-alist '("\\.metal\\'" . metal-mode))
 
 
