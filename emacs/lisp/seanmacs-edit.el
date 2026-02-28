@@ -45,8 +45,6 @@
 (use-package elec-pair
   ;; built-in
   :config
-  ;; Helps a lot with triple quoting.
-  (setq electric-pair-inhibit-predicate #'electric-pair-conservative-inhibit)
   (electric-pair-mode 1))
 
 ;; Folding

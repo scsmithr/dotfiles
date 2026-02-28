@@ -198,6 +198,9 @@ in
       python-lsp-server
       pyls-flake8
       flake8
+
+      # Huggingface
+      huggingface-hub
     ]))
     ruff
     maturin
