@@ -213,6 +213,14 @@
 (add-to-list 'auto-mode-alist '("\\.metal\\'" . metal-mode))
 
 
+;; CUDA
+
+(define-derived-mode cuda-mode c++-ts-mode "CUDA"
+  "Major mode for CUDA shader files.")
+
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
+
+
 ;; SQL
 
 (use-package sql-indent

@@ -30,7 +30,7 @@
         magit-module-sections-nested nil
         magit-diff-refine-hunk t ;; Show whitespace changes in status buffer.
         magit-bury-buffer-function 'magit-mode-quit-window
-        magit-section-visibility-indicator '("…" . t))
+        magit-section-visibility-indicators '(("…" . t) ("…" . t)))
 
   :bind (:map git-prefix-map
               ("g" . magit-status)

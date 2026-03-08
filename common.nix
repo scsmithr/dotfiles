@@ -70,6 +70,7 @@ in
     duckdb
     ffmpeg
     findutils
+    fswatch
     git
     gnugrep
     gnumake
@@ -180,7 +181,6 @@ in
     nodejs
     nodePackages.typescript
     nodePackages.typescript-language-server
-    nodePackages.vercel
     esbuild
     bun
 
