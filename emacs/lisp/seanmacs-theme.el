@@ -91,6 +91,9 @@
 
        ;; Forge
        `(forge-dimmed ((t :foreground ,fg-dim)))
+
+       ;; Vertico
+       `(vertico-group-title ((t :height unspecified))) ;; Remove height
        )))
 
   (add-hook 'modus-themes-post-load-hook #'sm/customize-modus-themes)
