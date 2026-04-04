@@ -279,6 +279,7 @@ in
       };
       core = {
         editor = "editor";
+        hooksPath = "/dev/null";
       };
       github = {
         user = "scsmithr";
