@@ -183,6 +183,7 @@ in
     nodePackages.typescript-language-server
     esbuild
     bun
+    pnpm
 
     # Java
     jdk21_headless
