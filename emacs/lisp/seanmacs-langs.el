@@ -65,8 +65,12 @@
   (defun sm/rust-unset-fill-paragraph-function ()
     (setq-local fill-paragraph-function nil))
 
+  (defun sm/rust-disable-clippy-flymake ()
+    (remove-hook 'flymake-diagnostic-functions #'rust-ts-flymake t))
+
   :hook ((rust-ts-mode . eglot-ensure)
          (rust-ts-mode . apheleia-mode)
+         (rust-ts-mode . sm/rust-disable-clippy-flymake)
          (rust-ts-mode . sm/rust-unset-fill-paragraph-function))
   :bind (:map rust-ts-mode-map
               ("C-c C-c C-t" . sm/cargo-test-crate)))

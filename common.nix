@@ -179,8 +179,8 @@ in
     # Javascript/Typescript
     yarn
     nodejs
-    nodePackages.typescript
-    nodePackages.typescript-language-server
+    typescript
+    typescript-language-server
     esbuild
     bun
     pnpm
@@ -212,7 +212,7 @@ in
     fira-mono
     ibm-plex
     inconsolata
-    iosevka
+    # iosevka
     # jetbrains-mono # Build error
     merriweather
     merriweather-sans
