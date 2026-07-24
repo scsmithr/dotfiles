@@ -17,6 +17,21 @@ let
     vendorHash = null;
   };
 
+  # claude-code moves faster than nixpkgs, so pin the release ourselves.
+  # Bump with `scripts/update-claude-code.sh [version]`, which rewrites
+  # claude-code.json, then `home-manager switch`.
+  claude-code =
+    let
+      pin = pkgs.lib.importJSON ./claude-code.json;
+    in
+    pkgs.claude-code.overrideAttrs (old: {
+      inherit (pin) version;
+      src = pkgs.fetchurl {
+        url = "https://downloads.claude.ai/claude-code-releases/${pin.version}/darwin-arm64/claude";
+        sha256 = pin.checksum;
+      };
+    });
+
 in
 {
   home.stateVersion = "22.05";
