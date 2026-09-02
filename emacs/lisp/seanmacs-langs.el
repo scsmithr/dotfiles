@@ -121,6 +121,12 @@
   (setq css-fontify-colors nil))
 
 
+;; Swift
+
+(use-package swift-mode
+  :straight t)
+
+
 ;; Protobuf
 
 (use-package protobuf-mode

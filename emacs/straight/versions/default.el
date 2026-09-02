@@ -43,6 +43,7 @@
  ("seq" . "da86da9bf111f68fb81efd466d76d53af5aebc00")
  ("sql-indent" . "0e93fb4878aa3788084ce44b8e8ec8919af708a4")
  ("straight.el" . "09b789a8596cacca6bbff866500373541a85ffa2")
+ ("swift-mode" . "a81a6e5edc3077ea34ded55a6179f5d6166a3008")
  ("tablist" . "fcd37147121fabdf003a70279cf86fbe08cfac6f")
  ("transient" . "b4b5cc2624e156d7889b776a3855a3e46a227a05")
  ("treepy.el" . "651e2634f01f346da9ec8a64613c51f54b444bc3")
