@@ -35,6 +35,8 @@ vim.opt.wrap = false
 -- System clipboard
 vim.opt.clipboard = "unnamedplus"
 
+vim.g.netrw_banner = 0
+
 local function project_root()
   return vim.fs.root(0, { ".git" })
     or vim.fs.root(0, {
@@ -97,6 +99,24 @@ end
 
 vim.keymap.set("n", "<C-p>", fuzzy_find, { desc = "Fuzzy Find Files" })
 vim.keymap.set("n", "<leader>g", fuzzy_grep, { desc = "Fuzzy Grep Project" })
+vim.keymap.set("n", "<leader>e", function()
+  vim.cmd("Explore " .. vim.fn.fnameescape(project_root()))
+end, { desc = "Explore Project" })
+
+vim.keymap.set("n", "<leader>d", function()
+  local path = vim.api.nvim_buf_get_name(0)
+  local directory
+
+  if path == "" then
+    directory = vim.fn.getcwd()
+  elseif vim.fn.isdirectory(path) == 1 then
+    directory = path
+  else
+    directory = vim.fs.dirname(path)
+  end
+
+  vim.cmd("Explore " .. vim.fn.fnameescape(directory))
+end, { desc = "Explore Buffer Directory" })
 
 local language_servers = {
   rust_analyzer = {
