@@ -44,33 +44,36 @@ local function fuzzy_find()
 end
 
 local function fuzzy_grep()
-  vim.ui.input({ prompt = "Grep> " }, function(query)
-    if not query or query == "" then
-      return
-    end
+  local reload = table.concat({
+    "query={q};",
+    "if [ ${#query} -lt 3 ]; then",
+    "  true;",
+    "else",
+    "  rg --column --line-number --no-heading --color=never --smart-case -- \"$query\" || true;",
+    "fi",
+  }, " ")
 
-    vim.fn["fzf#run"]({
-      source = table.concat({
-        "rg --column --line-number --no-heading --color=never --smart-case --",
-        vim.fn.shellescape(query),
-      }, " "),
-      sink = function(match)
-        local path, line, column = match:match("^(.-):(%d+):(%d+):")
-        if not path then
-          return
-        end
+  vim.fn["fzf#run"]({
+    source = "true",
+    sink = function(match)
+      local path, line, column = match:match("^(.-):(%d+):(%d+):")
+      if not path then
+        return
+      end
 
-        vim.cmd.edit(vim.fn.fnameescape(path))
-        vim.api.nvim_win_set_cursor(0, { tonumber(line), tonumber(column) - 1 })
-      end,
-      options = {
-        "--delimiter", ":",
-        "--nth", "4..",
-        "--prompt", "Matches> ",
-      },
-      window = { width = 0.9, height = 0.6 },
-    })
-  end)
+      vim.cmd.edit(vim.fn.fnameescape(path))
+      vim.api.nvim_win_set_cursor(0, { tonumber(line), tonumber(column) - 1 })
+    end,
+    options = {
+      "--disabled",
+      "--delimiter", ":",
+      "--nth", "4..",
+      "--prompt", "Grep> ",
+      "--header", "Type at least 3 characters",
+      "--bind", "change:reload(" .. reload .. ")",
+    },
+    window = { width = 0.9, height = 0.6 },
+  })
 end
 
 vim.keymap.set("n", "<C-p>", fuzzy_find, { desc = "Fuzzy Find Files" })
