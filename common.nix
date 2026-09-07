@@ -17,6 +17,23 @@ let
     vendorHash = null;
   };
 
+  # Codex moves faster than nixpkgs, so pin the release ourselves.
+  codex = pkgs.codex.overrideAttrs (_: rec {
+    version = "0.153.3";
+    src = pkgs.fetchFromGitHub {
+      owner = "openai";
+      repo = "codex";
+      tag = "rust-v${version}";
+      hash = "sha256-JujjJx9GHcTgirqEFr9tc4Ghzx65YNOqpNCc7rtthfI=";
+    };
+    cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+      pname = "codex";
+      inherit version src;
+      sourceRoot = "${src.name}/codex-rs";
+      hash = "sha256-GG6kOXmCdq+bZLU2ul0DIVL8lDuweayvZvXn6+bcUZw=";
+    };
+  });
+
   # # claude-code moves faster than nixpkgs, so pin the release ourselves.
   # # Bump with `scripts/update-claude-code.sh [version]`, which rewrites
   # # claude-code.json, then `home-manager switch`.
@@ -60,7 +77,7 @@ in
   ];
 
   home.sessionVariables = {
-    EDITOR = "editor";
+    EDITOR = "nvim";
     PAGER = "cat"; # Works for now.
   };
 
@@ -70,6 +87,7 @@ in
   };
 
   home.shellAliases = {
+    ls = "ls --color=auto";
     ec = "editor -nc";
     et = "editor -nw";
   };
@@ -103,6 +121,7 @@ in
     pandoc
     qemu
     ripgrep
+    tmux
     tree
     unixtools.getopt
     vim
@@ -239,6 +258,11 @@ in
     source-sans
     source-serif
   ];
+
+  home.file.".config/nvim" = {
+    source = ./nvim;
+    recursive = true;
+  };
 
   home.file.".emacs.d" = {
     source = ./emacs;
