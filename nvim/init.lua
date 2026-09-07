@@ -118,6 +118,61 @@ vim.keymap.set("n", "<leader>d", function()
   vim.cmd("Explore " .. vim.fn.fnameescape(directory))
 end, { desc = "Explore Buffer Directory" })
 
+local function find_project_terminal(root)
+  for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buffer) and vim.b[buffer].project_terminal_root == root then
+      local job = vim.b[buffer].terminal_job_id
+      if type(job) == "number" and vim.fn.jobwait({ job }, 0)[1] == -1 then
+        return buffer
+      end
+    end
+  end
+end
+
+local function open_terminal_float(buffer, root)
+  for _, window in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_buf(window) == buffer then
+      vim.api.nvim_set_current_win(window)
+      return
+    end
+  end
+
+  local width = math.floor(vim.o.columns * 0.85)
+  local height = math.floor((vim.o.lines - vim.o.cmdheight) * 0.8)
+
+  vim.api.nvim_open_win(buffer, true, {
+    relative = "editor",
+    row = math.max(0, math.floor((vim.o.lines - height) / 2) - 1),
+    col = math.floor((vim.o.columns - width) / 2),
+    width = width,
+    height = height,
+    style = "minimal",
+    border = "rounded",
+    title = " Terminal: " .. vim.fs.basename(root) .. " ",
+    title_pos = "center",
+  })
+end
+
+vim.keymap.set("n", "<leader>t", function()
+  local root = vim.b.project_terminal_root or project_root()
+
+  local terminal = find_project_terminal(root)
+  if terminal then
+    open_terminal_float(terminal, root)
+    vim.cmd.startinsert()
+    return
+  end
+
+  terminal = vim.api.nvim_create_buf(false, true)
+  open_terminal_float(terminal, root)
+  vim.b[terminal].project_terminal_root = root
+  vim.fn.jobstart({ vim.o.shell }, {
+    cwd = root,
+    term = true,
+  })
+  vim.cmd.startinsert()
+end, { desc = "Terminal at Project Root" })
+
 local language_servers = {
   rust_analyzer = {
     cmd = { "rust-analyzer" },
