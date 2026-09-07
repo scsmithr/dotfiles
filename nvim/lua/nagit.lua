@@ -1,42 +1,8 @@
 local M = {}
 
+local transient = require("transient")
 local namespace = vim.api.nvim_create_namespace("nagit")
 local states = {}
-local floats = {}
-local rounded_border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-
-local function float_config(width_ratio, height_ratio)
-  local available_height = vim.o.lines - vim.o.cmdheight
-  local width = math.max(1, math.floor(vim.o.columns * width_ratio))
-  local height = math.max(1, math.floor(available_height * height_ratio))
-  return {
-    relative = "editor",
-    width = width,
-    height = height,
-    col = math.floor((vim.o.columns - width) / 2),
-    row = math.max(0, math.floor((available_height - height) / 2)),
-    style = "minimal",
-    border = rounded_border,
-  }
-end
-
-local function open_float(buffer, width_ratio, height_ratio)
-  local window = vim.api.nvim_open_win(buffer, true, float_config(width_ratio, height_ratio))
-  floats[window] = { width = width_ratio, height = height_ratio }
-  return window
-end
-
-vim.api.nvim_create_autocmd("VimResized", {
-  callback = function()
-    for window, spec in pairs(floats) do
-      if vim.api.nvim_win_is_valid(window) then
-        vim.api.nvim_win_set_config(window, float_config(spec.width, spec.height))
-      else
-        floats[window] = nil
-      end
-    end
-  end,
-})
 
 local function notify(message, level)
   vim.notify(message, level or vim.log.levels.INFO, { title = "Nagit" })
@@ -186,8 +152,9 @@ local function render(buffer, requested_focus)
     "Nagit  " .. state.root,
     "Branch: " .. state.branch,
     "",
-    "<Tab> diff   s stage   u unstage   x discard   <Enter> visit   c commit   g refresh   q quit",
-    "Visual s/u/x acts on selected changed lines",
+    transient.hint(state.file_actions),
+    transient.hint(state.repo_actions),
+    "Visual: " .. transient.hint(state.visual_actions),
     "",
   }
   local line_items = {}
@@ -196,6 +163,7 @@ local function render(buffer, requested_focus)
     { "Identifier", 2 },
     { "Comment", 4 },
     { "Comment", 5 },
+    { "Comment", 6 },
   }
   local focus_line
 
@@ -897,12 +865,84 @@ local function visit_file(buffer)
   end
 end
 
-local function close_window(window)
-  if window and vim.api.nvim_win_is_valid(window) then
-    floats[window] = nil
-    vim.api.nvim_win_close(window, true)
+local function show_log(status_buffer)
+  local state = states[status_buffer]
+  if state.log_window and vim.api.nvim_win_is_valid(state.log_window) then
+    vim.api.nvim_set_current_win(state.log_window)
+    return
   end
+
+  run_git(state.root, { "log", "--graph", "--decorate", "--oneline", "--all", "--max-count=200" }, function(result)
+    state = states[status_buffer]
+    if not state then
+      return
+    end
+    if result.code ~= 0 then
+      git_error(result)
+      return
+    end
+    local buffer = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_name(buffer, "nagit-log://" .. buffer)
+    vim.bo[buffer].buftype = "nofile"
+    vim.bo[buffer].bufhidden = "wipe"
+    vim.bo[buffer].buflisted = false
+    vim.bo[buffer].swapfile = false
+    vim.bo[buffer].filetype = "git"
+    local output = vim.trim(result.stdout or "")
+    local lines = output == "" and { "(no commits)" } or vim.split(output, "\n", { plain = true })
+    vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
+    vim.bo[buffer].modifiable = false
+    vim.bo[buffer].modified = false
+
+    local window = transient.open_window(buffer, { width = 0.9, height = 0.82 })
+    state.log_buffer = buffer
+    state.log_window = window
+    vim.wo[window].number = false
+    vim.wo[window].relativenumber = false
+    vim.wo[window].signcolumn = "no"
+    transient.bind(buffer, {
+      {
+        key = "q",
+        label = "quit",
+        callback = function()
+          transient.close_window(window)
+        end,
+      },
+    })
+    vim.api.nvim_create_autocmd("BufWipeout", {
+      buffer = buffer,
+      once = true,
+      callback = function()
+        transient.forget_window(window)
+        if states[status_buffer] then
+          states[status_buffer].log_buffer = nil
+          states[status_buffer].log_window = nil
+        end
+      end,
+    })
+  end)
 end
+
+local function push(buffer)
+  local state = states[buffer]
+  if state.busy then
+    notify("Git operation in progress")
+    return
+  end
+  state.busy = true
+  run_git(state.root, { "push" }, function(result)
+    state.busy = false
+    if result.code ~= 0 then
+      git_error(result)
+      return
+    end
+    local message = vim.trim((result.stdout or "") .. "\n" .. (result.stderr or ""))
+    notify(message ~= "" and message or "Push complete")
+    refresh(buffer)
+  end)
+end
+
+local close_window = transient.close_window
 
 local function open_commit(status_buffer)
   local state = states[status_buffer]
@@ -935,7 +975,7 @@ local function open_commit(status_buffer)
   end
   vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
   vim.bo[buffer].modified = false
-  local window = open_float(buffer, 0.78, 0.65)
+  local window = transient.open_window(buffer, { width = 0.78, height = 0.65 })
   state.commit_buffer = buffer
   state.commit_window = window
   vim.wo[window].number = false
@@ -954,7 +994,9 @@ local function open_commit(status_buffer)
     end
     close_window(window)
   end
-  vim.keymap.set("n", "q", cancel, { buffer = buffer, silent = true, desc = "Cancel commit" })
+  transient.bind(buffer, {
+    { key = "q", label = "cancel", desc = "Cancel commit", callback = cancel },
+  })
   vim.api.nvim_create_autocmd("BufWriteCmd", {
     buffer = buffer,
     callback = function()
@@ -1007,6 +1049,7 @@ local function close_status(buffer)
   local state = states[buffer]
   if state then
     close_window(state.commit_window)
+    close_window(state.log_window)
     close_window(state.window)
   end
 end
@@ -1050,7 +1093,7 @@ function M.open()
   vim.bo[buffer].buflisted = false
   vim.bo[buffer].swapfile = false
   vim.bo[buffer].filetype = "nagit"
-  local window = open_float(buffer, 0.9, 0.7)
+  local window = transient.open_window(buffer, { width = 0.9, height = 0.7 })
   vim.wo[window].cursorline = true
   vim.wo[window].number = false
   vim.wo[window].relativenumber = false
@@ -1067,44 +1110,125 @@ function M.open()
     window = window,
   }
 
-  vim.keymap.set("n", "g", function()
-    refresh(buffer)
-  end, { buffer = buffer, silent = true, desc = "Refresh" })
-  vim.keymap.set("n", "<Tab>", function()
-    toggle_diff(buffer)
-  end, { buffer = buffer, silent = true, desc = "Toggle diff" })
-  vim.keymap.set("n", "s", function()
-    stage(buffer)
-  end, { buffer = buffer, silent = true, desc = "Stage file or hunk" })
-  vim.keymap.set("n", "u", function()
-    unstage(buffer)
-  end, { buffer = buffer, silent = true, desc = "Unstage file or hunk" })
-  vim.keymap.set("x", "s", function()
-    selection(buffer, false)
-  end, { buffer = buffer, silent = true, desc = "Stage selected lines" })
-  vim.keymap.set("x", "u", function()
-    selection(buffer, true)
-  end, { buffer = buffer, silent = true, desc = "Unstage selected lines" })
-  vim.keymap.set("n", "x", function()
-    discard(buffer)
-  end, { buffer = buffer, silent = true, desc = "Discard file or hunk" })
-  vim.keymap.set("x", "x", function()
-    discard_selection(buffer)
-  end, { buffer = buffer, silent = true, desc = "Discard selected lines" })
-  vim.keymap.set("n", "<CR>", function()
-    visit_file(buffer)
-  end, { buffer = buffer, silent = true, desc = "Visit file" })
-  vim.keymap.set("n", "c", function()
-    open_commit(buffer)
-  end, { buffer = buffer, silent = true, desc = "Commit" })
-  vim.keymap.set("n", "q", function()
-    close_status(buffer)
-  end, { buffer = buffer, silent = true, desc = "Close" })
+  local state = states[buffer]
+  state.file_actions = {
+    {
+      key = "<Tab>",
+      display = "<Tab>",
+      label = "diff",
+      desc = "Toggle diff",
+      callback = function()
+        toggle_diff(buffer)
+      end,
+    },
+    {
+      key = "s",
+      label = "stage",
+      desc = "Stage file or hunk",
+      callback = function()
+        stage(buffer)
+      end,
+    },
+    {
+      key = "u",
+      label = "unstage",
+      desc = "Unstage file or hunk",
+      callback = function()
+        unstage(buffer)
+      end,
+    },
+    {
+      key = "x",
+      label = "discard",
+      desc = "Discard file or hunk",
+      callback = function()
+        discard(buffer)
+      end,
+    },
+    {
+      key = "<CR>",
+      display = "<Enter>",
+      label = "visit",
+      desc = "Visit file",
+      callback = function()
+        visit_file(buffer)
+      end,
+    },
+  }
+  state.repo_actions = {
+    {
+      key = "c",
+      label = "commit",
+      callback = function()
+        open_commit(buffer)
+      end,
+    },
+    {
+      key = "l",
+      label = "log",
+      callback = function()
+        show_log(buffer)
+      end,
+    },
+    {
+      key = "p",
+      label = "push",
+      callback = function()
+        push(buffer)
+      end,
+    },
+    {
+      key = "g",
+      label = "refresh",
+      callback = function()
+        refresh(buffer)
+      end,
+    },
+    {
+      key = "q",
+      label = "quit",
+      callback = function()
+        close_status(buffer)
+      end,
+    },
+  }
+  state.visual_actions = {
+    {
+      mode = "x",
+      key = "s",
+      label = "stage",
+      desc = "Stage selected lines",
+      callback = function()
+        selection(buffer, false)
+      end,
+    },
+    {
+      mode = "x",
+      key = "u",
+      label = "unstage",
+      desc = "Unstage selected lines",
+      callback = function()
+        selection(buffer, true)
+      end,
+    },
+    {
+      mode = "x",
+      key = "x",
+      label = "discard",
+      desc = "Discard selected lines",
+      callback = function()
+        discard_selection(buffer)
+      end,
+    },
+  }
+  transient.bind(buffer, state.file_actions)
+  transient.bind(buffer, state.repo_actions)
+  transient.bind(buffer, state.visual_actions)
   vim.api.nvim_create_autocmd("BufWipeout", {
     buffer = buffer,
     once = true,
     callback = function()
-      floats[window] = nil
+      transient.forget_window(window)
       states[buffer] = nil
     end,
   })
