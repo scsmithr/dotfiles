@@ -30,5 +30,3 @@ end
 
 -- Bind it to Ctrl + P
 vim.keymap.set("n", "<C-p>", fuzzy_find, { desc = "Fuzzy Find Files" })
-
-vim.keymap.set("n", "<leader>gg", require("nagit").open, { desc = "Nagit" })
