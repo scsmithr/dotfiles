@@ -67,8 +67,14 @@ in
   # Increase max number of open files per shell.
   #
   # Mac has a default of 256, and I very often hit this with emacs.
-  programs.bash.bashrcExtra = "ulimit -Sn 8192";
-  programs.zsh.initContent = "ulimit -Sn 8192";
+  programs.bash.bashrcExtra = ''
+    ulimit -Sn 8192
+    PS1='\[\033[01;31m\]$(exit_code=$?; if [ "$exit_code" -ne 0 ]; then printf "[%d] " "$exit_code"; fi)\[\033[00m\]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  '';
+  programs.zsh.initContent = ''
+    ulimit -Sn 8192
+    PROMPT='%(?..%B%F{red}[%?] %f%b)%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%(#.#.$) '
+  '';
 
   home.sessionPath = [
     "$HOME/.bin"
@@ -86,8 +92,21 @@ in
   };
 
   home.shellAliases = {
+    g = "git";
+    ga = "git add";
+    gb = "git branch";
+    gc = "git commit";
+    gd = "git diff";
+    gds = "git diff --staged";
+    gf = "git fetch --all --prune";
+    gl = "git log --graph --decorate --oneline";
+    gp = "git push";
+    gpl = "git pull --ff-only";
+    gs = "git status --short --branch";
+    gsw = "git switch";
+    gswc = "git switch --create";
     ls = "ls --color=auto";
-    cdc = ''{ _cdc_dir="$(${pkgs.findutils}/bin/find "$HOME/Code" -mindepth 1 -maxdepth 3 \( -name ".*" -o -name node_modules -o -name target \) -prune -o -type d -print | fzf --prompt="Code> ")"; [ -n "$_cdc_dir" ] && cd "$_cdc_dir"; unset _cdc_dir; }'';
+    cdc = ''{ _cdc_dir="$(${pkgs.findutils}/bin/find "$HOME/Code" -mindepth 1 -maxdepth 3 \( -name ".*" -o -name node_modules -o -name target \) -prune -o -type d -print | fzf --layout=reverse --prompt="Code> ")"; [ -n "$_cdc_dir" ] && cd "$_cdc_dir"; unset _cdc_dir; }'';
     ec = "editor -nc";
     et = "editor -nw";
   };
@@ -362,8 +381,6 @@ in
 
   programs.bash = {
     enable = true;
-    # Be consistent so eshell regex can match this.
-    initExtra = "PS1='[\\u@\\h \\W]\\$ '";
   };
 
   programs.zsh = {

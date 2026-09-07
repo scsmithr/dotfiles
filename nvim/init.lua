@@ -58,7 +58,7 @@ local function fuzzy_find()
     sink = function(path)
       vim.cmd.edit(vim.fn.fnameescape(path))
     end,
-    options = { "--prompt", "Files> ", "--scheme", "path" },
+    options = { "--layout", "reverse", "--prompt", "Files> ", "--scheme", "path" },
     window = { width = 0.9, height = 0.6 },
   })
 end
@@ -87,6 +87,7 @@ local function fuzzy_grep()
     end,
     options = {
       "--disabled",
+      "--layout", "reverse",
       "--delimiter", ":",
       "--nth", "4..",
       "--prompt", "Grep> ",
