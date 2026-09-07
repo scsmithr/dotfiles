@@ -88,6 +88,7 @@ in
 
   home.shellAliases = {
     ls = "ls --color=auto";
+    cdc = ''{ _cdc_dir="$(${pkgs.findutils}/bin/find "$HOME/Code" -mindepth 1 -maxdepth 3 \( -name ".*" -o -name node_modules -o -name target \) -prune -o -type d -print | fzf --prompt="Code> ")"; [ -n "$_cdc_dir" ] && cd "$_cdc_dir"; unset _cdc_dir; }'';
     ec = "editor -nc";
     et = "editor -nw";
   };
@@ -104,6 +105,7 @@ in
     ffmpeg
     findutils
     fswatch
+    fzf
     git
     gnugrep
     gnumake
