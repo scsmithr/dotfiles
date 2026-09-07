@@ -5,7 +5,22 @@ vim.g.maplocalleader = " "
 vim.opt.termguicolors = false
 vim.cmd.colorscheme("lunaperche")
 
+-- Lunaperche gives the completion menu and its border a grey background.
+-- Keep its foreground colors, but let the terminal background show through.
+vim.cmd([[
+  highlight Pmenu ctermbg=NONE guibg=NONE
+  highlight PmenuMatch ctermbg=NONE guibg=NONE
+  highlight PmenuKind ctermbg=NONE guibg=NONE
+  highlight PmenuExtra ctermbg=NONE guibg=NONE
+  highlight PmenuBorder ctermbg=NONE guibg=NONE
+]])
+vim.api.nvim_set_hl(0, "FloatBorder", { link = "PmenuBorder" })
+
+vim.opt.pumborder = "rounded"
+vim.opt.winborder = "rounded"
+
 vim.opt.number = true
+vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.splitright = true
@@ -28,5 +43,106 @@ local function fuzzy_find()
   })
 end
 
--- Bind it to Ctrl + P
+local function fuzzy_grep()
+  vim.ui.input({ prompt = "Grep> " }, function(query)
+    if not query or query == "" then
+      return
+    end
+
+    vim.fn["fzf#run"]({
+      source = table.concat({
+        "rg --column --line-number --no-heading --color=never --smart-case --",
+        vim.fn.shellescape(query),
+      }, " "),
+      sink = function(match)
+        local path, line, column = match:match("^(.-):(%d+):(%d+):")
+        if not path then
+          return
+        end
+
+        vim.cmd.edit(vim.fn.fnameescape(path))
+        vim.api.nvim_win_set_cursor(0, { tonumber(line), tonumber(column) - 1 })
+      end,
+      options = {
+        "--delimiter", ":",
+        "--nth", "4..",
+        "--prompt", "Matches> ",
+      },
+      window = { width = 0.9, height = 0.6 },
+    })
+  end)
+end
+
 vim.keymap.set("n", "<C-p>", fuzzy_find, { desc = "Fuzzy Find Files" })
+vim.keymap.set("n", "<leader>g", fuzzy_grep, { desc = "Fuzzy Grep Project" })
+
+local language_servers = {
+  rust_analyzer = {
+    cmd = { "rust-analyzer" },
+    filetypes = { "rust" },
+    root_markers = { "Cargo.toml", "rust-project.json", ".git" },
+  },
+  gopls = {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_markers = { "go.work", "go.mod", ".git" },
+  },
+  ts_ls = {
+    cmd = { "typescript-language-server", "--stdio" },
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+    },
+    root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+  },
+  clangd = {
+    cmd = { "clangd" },
+    filetypes = { "c", "cpp", "objc", "objcpp" },
+    root_markers = {
+      ".clangd",
+      "compile_commands.json",
+      "compile_flags.txt",
+      ".git",
+    },
+  },
+}
+
+for name, config in pairs(language_servers) do
+  vim.lsp.config(name, config)
+  vim.lsp.enable(name)
+end
+
+vim.opt.completeopt = { "menuone", "noselect" }
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(event)
+    local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
+
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+      buffer = event.buf,
+      desc = "LSP Go to Definition",
+    })
+
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, event.buf, {
+        autotrigger = false,
+      })
+
+      vim.keymap.set("i", "<Tab>", function()
+        if vim.fn.pumvisible() == 0 then
+          vim.lsp.completion.get()
+          return
+        end
+
+        local selected = vim.fn.complete_info({ "selected" }).selected
+        local keys = selected == -1 and "<C-n><C-y>" or "<C-y>"
+        vim.api.nvim_feedkeys(vim.keycode(keys), "n", false)
+      end, {
+        buffer = event.buf,
+        desc = "LSP Completion",
+      })
+    end
+  end,
+})

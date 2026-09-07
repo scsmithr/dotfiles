@@ -78,7 +78,6 @@ in
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    PAGER = "cat"; # Works for now.
   };
 
   home.file.".bin/editor" = {
@@ -117,6 +116,7 @@ in
     imagemagick
     jq
     just
+    lazygit
     neovim
     helix
     optipng
@@ -323,7 +323,7 @@ in
         name = "Sean Smith";
       };
       core = {
-        editor = "editor";
+        editor = "nvim";
         hooksPath = "/dev/null";
       };
       github = {
