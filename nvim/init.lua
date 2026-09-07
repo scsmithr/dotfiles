@@ -16,6 +16,9 @@ vim.cmd([[
 ]])
 vim.api.nvim_set_hl(0, "FloatBorder", { link = "PmenuBorder" })
 
+vim.opt.fillchars:append({ vert = "│" })
+vim.cmd("highlight WinSeparator ctermbg=NONE guibg=NONE")
+
 vim.opt.pumborder = "rounded"
 vim.opt.winborder = "rounded"
 
@@ -32,8 +35,23 @@ vim.opt.wrap = false
 -- System clipboard
 vim.opt.clipboard = "unnamedplus"
 
+local function project_root()
+  return vim.fs.root(0, { ".git" })
+    or vim.fs.root(0, {
+      "go.work",
+      "go.mod",
+      "Cargo.toml",
+      "package.json",
+      "pyproject.toml",
+      "CMakeLists.txt",
+      "flake.nix",
+    })
+    or vim.fn.getcwd()
+end
+
 local function fuzzy_find()
   vim.fn["fzf#run"]({
+    dir = project_root(),
     source = "rg --files",
     sink = function(path)
       vim.cmd.edit(vim.fn.fnameescape(path))
@@ -54,6 +72,7 @@ local function fuzzy_grep()
   }, " ")
 
   vim.fn["fzf#run"]({
+    dir = project_root(),
     source = "true",
     sink = function(match)
       local path, line, column = match:match("^(.-):(%d+):(%d+):")
