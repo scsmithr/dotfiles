@@ -96,6 +96,7 @@ in
   home.shellAliases = {
     g = "git";
     ga = "git add";
+    gap = "git add --patch";
     gb = "git branch";
     gc = "git commit";
     gd = "git diff";
@@ -335,6 +336,17 @@ in
     env.GOPATH = [
       "${config.home.homeDirectory}/.go"
     ];
+  };
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      detect-dark-light = "auto";
+      line-numbers = true;
+      navigate = true;
+      hyperlinks = true;
+    };
   };
 
   programs.git = {
