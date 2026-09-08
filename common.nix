@@ -73,6 +73,8 @@ in
   '';
   programs.zsh.initContent = ''
     ulimit -Sn 8192
+    # Keep shell shortcuts in Emacs mode even when EDITOR is nvim.
+    bindkey -e
     PROMPT='%(?..%B%F{red}[%?] %f%b)%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%(#.#.$) '
   '';
 
