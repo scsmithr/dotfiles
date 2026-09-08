@@ -3,7 +3,7 @@ vim.g.maplocalleader = " "
 
 -- Use terminal profile colors.
 vim.opt.termguicolors = false
-vim.cmd.colorscheme("lunaperche")
+vim.cmd.colorscheme("wildcharm")
 
 -- Lunaperche gives the completion menu and its border a grey background.
 -- Keep its foreground colors, but let the terminal background show through.
@@ -31,6 +31,7 @@ vim.opt.splitbelow = true
 vim.opt.scrolloff = 2
 
 vim.opt.wrap = false
+vim.opt.textwidth = 80
 
 -- System clipboard
 vim.opt.clipboard = "unnamedplus"

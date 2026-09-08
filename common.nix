@@ -107,6 +107,7 @@ in
     gswc = "git switch --create";
     ls = "ls --color=auto";
     cdc = ''{ _cdc_dir="$(${pkgs.findutils}/bin/find "$HOME/Code" -mindepth 1 -maxdepth 3 \( -name ".*" -o -name node_modules -o -name target \) -prune -o -type d -print | fzf --layout=reverse --prompt="Code> ")"; [ -n "$_cdc_dir" ] && cd "$_cdc_dir"; unset _cdc_dir; }'';
+    cdn = ''cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/notes'';
     ec = "editor -nc";
     et = "editor -nw";
   };
