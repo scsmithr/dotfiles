@@ -242,6 +242,9 @@ for name, config in pairs(language_servers) do
   vim.lsp.enable(name)
 end
 
+-- Too much syntax highlighting with this.
+vim.lsp.semantic_tokens.enable(false)
+
 vim.opt.completeopt = { "menuone", "noselect" }
 
 vim.api.nvim_create_autocmd("LspAttach", {
