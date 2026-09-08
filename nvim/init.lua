@@ -100,6 +100,7 @@ local function fuzzy_grep()
 end
 
 vim.keymap.set("n", "<C-p>", fuzzy_find, { desc = "Fuzzy Find Files" })
+vim.keymap.set("n", "<leader>p", fuzzy_find, { desc = "Fuzzy Find Files" })
 vim.keymap.set("n", "<leader>g", fuzzy_grep, { desc = "Fuzzy Grep Project" })
 vim.keymap.set("n", "<leader>e", function()
   vim.cmd("Explore " .. vim.fn.fnameescape(project_root()))

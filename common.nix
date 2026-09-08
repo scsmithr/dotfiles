@@ -352,6 +352,9 @@ in
       init = {
         defaultBranch = "main";
       };
+      push = {
+        autoSetupRemote = true;
+      };
     };
     signing = {
       key = "BA3E3A399960AD0D";
