@@ -205,6 +205,34 @@ local language_servers = {
       ".git",
     },
   },
+  sourcekit = {
+    cmd = { "sourcekit-lsp" },
+    filetypes = { "swift" },
+    root_dir = function(bufnr, on_dir)
+      on_dir(vim.fs.root(bufnr, {
+        { "buildServer.json", ".bsp" },
+        function(name)
+          return vim.endswith(name, ".xcodeproj")
+            or vim.endswith(name, ".xcworkspace")
+        end,
+        { "compile_commands.json", "Package.swift" },
+        ".git",
+      }))
+    end,
+    capabilities = {
+      workspace = {
+        didChangeWatchedFiles = {
+          dynamicRegistration = true,
+        },
+      },
+      textDocument = {
+        diagnostic = {
+          dynamicRegistration = true,
+          relatedDocumentSupport = true,
+        },
+      },
+    },
+  },
 }
 
 for name, config in pairs(language_servers) do
