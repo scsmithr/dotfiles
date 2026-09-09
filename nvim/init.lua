@@ -12,6 +12,14 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "@markup.raw.block.markdown", { link = "Statement" })
   end,
 })
+
+-- Use the regular comment style for Rust line and block doc comments.
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("RustDocColors", { clear = true }),
+  callback = function()
+    vim.api.nvim_set_hl(0, "rustCommentLineDoc", { link = "Comment" })
+  end,
+})
 vim.cmd.colorscheme("wildcharm")
 
 -- Lunaperche gives the completion menu and its border a grey background.
