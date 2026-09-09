@@ -3,6 +3,15 @@ vim.g.maplocalleader = " "
 
 -- Use terminal profile colors.
 vim.opt.termguicolors = false
+
+-- Markdown code defaults to Comment; use the theme's blue instead.
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("MarkdownCodeColors", { clear = true }),
+  callback = function()
+    vim.api.nvim_set_hl(0, "@markup.raw.markdown_inline", { link = "Statement" })
+    vim.api.nvim_set_hl(0, "@markup.raw.block.markdown", { link = "Statement" })
+  end,
+})
 vim.cmd.colorscheme("wildcharm")
 
 -- Lunaperche gives the completion menu and its border a grey background.

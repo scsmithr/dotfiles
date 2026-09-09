@@ -113,6 +113,7 @@ in
     cdn = ''cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/notes'';
     ec = "editor -nc";
     et = "editor -nw";
+    nv = "nvim";
   };
 
   # Packages
