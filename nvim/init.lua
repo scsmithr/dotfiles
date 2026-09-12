@@ -268,6 +268,32 @@ vim.lsp.semantic_tokens.enable(false)
 
 vim.opt.completeopt = { "menuone", "noselect" }
 
+vim.keymap.set("i", "<Tab>", function()
+  if vim.fn.pumvisible() == 0 then
+    local col = vim.api.nvim_win_get_cursor(0)[2]
+    local line = vim.api.nvim_get_current_line()
+    if col == 0 or line:sub(col, col):match("%s") then
+      vim.api.nvim_feedkeys(vim.keycode("<Tab>"), "n", false)
+      return
+    end
+
+    local clients = vim.lsp.get_clients({
+      bufnr = 0,
+      method = "textDocument/completion",
+    })
+    if #clients > 0 then
+      vim.lsp.completion.get()
+    else
+      vim.api.nvim_feedkeys(vim.keycode("<C-n>"), "n", false)
+    end
+    return
+  end
+
+  local selected = vim.fn.complete_info({ "selected" }).selected
+  local keys = selected == -1 and "<C-n><C-y>" or "<C-y>"
+  vim.api.nvim_feedkeys(vim.keycode(keys), "n", false)
+end, { desc = "Completion" })
+
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
     local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
@@ -280,27 +306,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/completion") then
       vim.lsp.completion.enable(true, client.id, event.buf, {
         autotrigger = false,
-      })
-
-      vim.keymap.set("i", "<Tab>", function()
-        if vim.fn.pumvisible() == 0 then
-          local col = vim.api.nvim_win_get_cursor(0)[2]
-          local line = vim.api.nvim_get_current_line()
-          if col == 0 or line:sub(col, col):match("%s") then
-            vim.api.nvim_feedkeys(vim.keycode("<Tab>"), "n", false)
-            return
-          end
-
-          vim.lsp.completion.get()
-          return
-        end
-
-        local selected = vim.fn.complete_info({ "selected" }).selected
-        local keys = selected == -1 and "<C-n><C-y>" or "<C-y>"
-        vim.api.nvim_feedkeys(vim.keycode(keys), "n", false)
-      end, {
-        buffer = event.buf,
-        desc = "LSP Completion",
       })
     end
   end,
