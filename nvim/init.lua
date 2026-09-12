@@ -193,6 +193,10 @@ vim.keymap.set("n", "<leader>t", function()
   vim.cmd.startinsert()
 end, { desc = "Terminal at Project Root" })
 
+vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], {
+  desc = "Exit Terminal Mode",
+})
+
 local language_servers = {
   rust_analyzer = {
     cmd = { "rust-analyzer" },
