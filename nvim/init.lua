@@ -284,6 +284,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
       vim.keymap.set("i", "<Tab>", function()
         if vim.fn.pumvisible() == 0 then
+          local col = vim.api.nvim_win_get_cursor(0)[2]
+          local line = vim.api.nvim_get_current_line()
+          if col == 0 or line:sub(col, col):match("%s") then
+            vim.api.nvim_feedkeys(vim.keycode("<Tab>"), "n", false)
+            return
+          end
+
           vim.lsp.completion.get()
           return
         end
