@@ -294,6 +294,39 @@ vim.keymap.set("i", "<Tab>", function()
   vim.api.nvim_feedkeys(vim.keycode(keys), "n", false)
 end, { desc = "Completion" })
 
+vim.keymap.set("i", "<CR>", function()
+  if vim.fn.pumvisible() == 1
+      and vim.fn.complete_info({ "selected" }).selected >= 0 then
+    return "<C-y>"
+  end
+  return "<CR>"
+end, { expr = true, desc = "Accept Completion or Newline" })
+
+vim.opt.wildmode = "noselect:full"
+
+vim.keymap.set("c", "<Tab>", function()
+  if vim.fn.wildmenumode() == 1 then
+    local selected = vim.fn.cmdcomplete_info().selected
+    return selected == -1 and "<C-n><C-y>" or "<C-y>"
+  end
+
+  local col = vim.fn.getcmdpos() - 1
+  local line = vim.fn.getcmdline()
+  if col == 0 or line:sub(col, col):match("%s") then
+    return "<C-v><Tab>"
+  end
+
+  return "<C-z>"
+end, { expr = true, desc = "Command-line Completion" })
+
+vim.keymap.set("c", "<CR>", function()
+  if vim.fn.wildmenumode() == 1
+      and vim.fn.cmdcomplete_info().selected >= 0 then
+    return "<C-y>"
+  end
+  return "<CR>"
+end, { expr = true, desc = "Accept Completion or Execute Command" })
+
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
     local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
