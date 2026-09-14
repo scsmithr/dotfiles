@@ -50,14 +50,19 @@ vim.opt.scrolloff = 2
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+vim.opt.softtabstop = 0
 vim.opt.wrap = false
 vim.opt.textwidth = 80
 
 -- System clipboard
 vim.opt.clipboard = "unnamedplus"
 
-vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 1
+vim.g.netrw_sizestyle = "H"
+vim.g.netrw_timefmt = "%Y-%m-%d %H:%M"
+vim.g.netrw_sort_by = "name"
+-- Long listings pad directory names with spaces before size and date.
+vim.g.netrw_sort_sequence = [[\/\%(\s\|$\),*]]
 
 local function project_root()
   return vim.fs.root(0, { ".git" })
