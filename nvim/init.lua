@@ -87,6 +87,9 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.opt.clipboard = "unnamedplus"
 
 vim.g.netrw_liststyle = 1
+-- Hide the current and parent directory entries.
+vim.g.netrw_list_hide = [[^\.\.\?/]]
+vim.g.netrw_hide = 1
 vim.g.netrw_sizestyle = "H"
 vim.g.netrw_timefmt = "%Y-%m-%d %H:%M"
 vim.g.netrw_sort_by = "name"
