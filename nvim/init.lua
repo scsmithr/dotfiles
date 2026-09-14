@@ -55,6 +55,34 @@ vim.opt.smarttab = false
 vim.opt.wrap = false
 vim.opt.textwidth = 80
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("IndentDefaults", { clear = true }),
+  callback = function(event)
+    local opts = vim.bo[event.buf]
+    if opts.buftype ~= "" then
+      return
+    end
+
+    local use_tabs = vim.tbl_contains({ "go", "gomod", "gowork", "make" }, event.match)
+    local width = 4
+    if use_tabs then
+      width = 8
+    elseif vim.tbl_contains({
+      "javascript", "javascriptreact", "typescript", "typescriptreact",
+      "json", "jsonc", "yaml", "html", "css", "scss", "sass",
+      "vue", "svelte", "lua", "nix",
+    }, event.match) then
+      width = 2
+    end
+
+    opts.expandtab = not use_tabs
+    opts.tabstop = width
+    opts.shiftwidth = width
+    -- Filetype scripts may enable soft tabs; keep single-space Backspace.
+    opts.softtabstop = 0
+  end,
+})
+
 -- System clipboard
 vim.opt.clipboard = "unnamedplus"
 
