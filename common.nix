@@ -358,7 +358,7 @@ in
         name = "Sean Smith";
       };
       core = {
-        editor = "nvim";
+        editor = "vex";
         hooksPath = "/dev/null";
       };
       github = {
