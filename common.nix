@@ -69,13 +69,13 @@ in
   # Mac has a default of 256, and I very often hit this with emacs.
   programs.bash.bashrcExtra = ''
     ulimit -Sn 8192
-    PS1='\[\033[01;31m\]$(exit_code=$?; if [ "$exit_code" -ne 0 ]; then printf "[%d] " "$exit_code"; fi)\[\033[00m\]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033[01;31m\]$(exit_code=$?; if [ "$exit_code" -ne 0 ]; then printf "[%d] " "$exit_code"; fi)\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\]\$ '
   '';
   programs.zsh.initContent = ''
     ulimit -Sn 8192
     # Keep shell shortcuts in Emacs mode even when EDITOR is nvim.
     bindkey -e
-    PROMPT='%(?..%B%F{red}[%?] %f%b)%B%F{green}%n@%m%f%b:%B%F{blue}%~%f%b%(#.#.$) '
+    PROMPT='%(?..%B%F{red}[%?] %f%b)%B%F{blue}%~%f%b%(#.#.$) '
   '';
 
   home.sessionPath = [
